@@ -22,7 +22,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import org.h2.jdbcx.JdbcDataSource;
+import org.hsqldb.jdbc.JDBCDataSource;
+import org.hsqldb.jdbc.pool.JDBCPooledDataSource;
 
 import net.mad.ads.base.api.BaseContext;
 import net.mad.ads.base.api.EmbeddedBaseContext;
@@ -36,27 +37,29 @@ import net.mad.ads.base.api.track.events.ImpressionTrackEvent;
 import net.mad.ads.base.api.track.events.TrackEvent;
 import net.mad.ads.base.api.track.impl.local.bdb.BDBTrackingService;
 import net.mad.ads.base.api.track.impl.local.h2.H2TrackingService;
+import net.mad.ads.base.api.track.impl.local.h2.HSQLDBTrackingService;
 import net.mad.ads.base.api.utils.DateHelper;
 
 /**
  * 
  * @author tmarx
  */
-public class H2Test {
+public class HSQLDBTest {
 	public static void main(String[] args) throws Exception {
+
 		
 		long before = System.currentTimeMillis();
-
-		JdbcDataSource ds = new JdbcDataSource();
-//		ds.setURL("jdbc:h2:mem:test");
-		ds.setURL("jdbc:h2:file:/tmp/test_h2");
+		
+		JDBCPooledDataSource ds = new JDBCPooledDataSource();
+//		ds.setUrl("jdbc:hsqldb:mem:test");
+		ds.setUrl("jdbc:hsqldb:file:/tmp/test_hsqldb");
 		ds.setUser("sa");
 		ds.setPassword("sa");
 
 		EmbeddedBaseContext context = new EmbeddedBaseContext();
 		context.put(EmbeddedBaseContext.EMBEDDED_TRACKING_DATASOURCE, ds);
 
-		TrackingService ts = new H2TrackingService();
+		TrackingService ts = new HSQLDBTrackingService();
 
 		ts.open(context);
 
@@ -128,7 +131,8 @@ public class H2Test {
 		
 		ts.close();
 	}
-
+	
+	
 	private static void printTime (String message, long start) {
 		System.out.println(message + " : " + (System.currentTimeMillis() - start));
 	}
@@ -149,6 +153,7 @@ public class H2Test {
 		} else {
 			event = new ImpressionTrackEvent();
 		}
+		
 		event.put(EventAttribute.TIME, DateHelper.format(created.getTime()));
 		event.setTime(created.getTime().getTime());
 		event.setCampaign("c1");
