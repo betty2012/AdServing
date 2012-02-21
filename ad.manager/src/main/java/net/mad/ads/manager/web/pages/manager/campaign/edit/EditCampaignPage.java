@@ -31,6 +31,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
@@ -46,7 +47,13 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.odlabs.wiquery.core.options.ArrayItemOptions;
+import org.odlabs.wiquery.core.options.IntegerItemOptions;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
+import org.odlabs.wiquery.ui.slider.AjaxSlider;
+import org.odlabs.wiquery.ui.slider.Slider;
+import org.odlabs.wiquery.ui.slider.SliderRange;
+import org.odlabs.wiquery.ui.slider.SliderRange.RangeEnum;
 import org.odlabs.wiquery.ui.tabs.Tabs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -161,8 +168,20 @@ public class EditCampaignPage extends BasePage {
 
 					item.add(new TextField<Time>("from", new Model<Time>(condition
 							.getFrom())));
-					item.add(new TextField<Time>("to", new Model<Time>(condition
-							.getFrom())));
+					item.add(new TextField<Time>("to", new Model<Time>(condition.getFrom())));
+					item.add(new HiddenField<Long>("id", new Model<Long>(condition.getId())));
+					
+					AjaxSlider slider = new AjaxSlider("timeSlide", 0, 24);
+					
+					slider.setRange(new SliderRange(true));
+//					ArrayItemOptions<IntegerItemOptions> options = 
+//                            new ArrayItemOptions<IntegerItemOptions>(); 
+//                    options.add(new IntegerItemOptions(0)); 
+//                    options.add(new IntegerItemOptions(24));
+                    
+                    slider.setValues(0, 24);
+					
+					item.add(slider);
 
 					item.add(new RemoveButton("remove"));
 				}
