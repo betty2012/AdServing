@@ -43,9 +43,9 @@ public class Campaign extends ExtendedBaseModel {
 	 */
 	private List<TimeCondition> timeConditions = new ArrayList<TimeCondition>();
 	/*
-	 * The dates this campaign is valid
+	 * The dates (from and to) this campaign is valid
 	 */
-	private List<DateCondition> dateConditions = new ArrayList<DateCondition>();
+	private DateCondition dateCondition;
 
 	
 	public Campaign () {
@@ -72,16 +72,16 @@ public class Campaign extends ExtendedBaseModel {
 	/**
 	 * @return the dateConditions
 	 */
-	public List<DateCondition> getDateConditions() {
-		return dateConditions;
+	public DateCondition getDateCondition() {
+		return dateCondition;
 	}
 
 
 	/**
 	 * @param dateConditions the dateConditions to set
 	 */
-	public void setDateConditions(List<DateCondition> dateConditions) {
-		this.dateConditions = dateConditions;
+	public void setDateCondition(DateCondition dateCondition) {
+		this.dateCondition = dateCondition;
 	}
 	
 	

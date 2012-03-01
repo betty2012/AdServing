@@ -70,8 +70,11 @@ public class HibernateCampaignService extends HibernateService implements
 
 			temp.setDescription(obj.getDescription());
 			temp.setName(obj.getName());
-			temp.getDateConditions().clear();
-			temp.getDateConditions().addAll(obj.getDateConditions());
+//			temp.setDateCondition(obj.getDateCondition());
+			if (obj.getDateCondition() == null && temp.getDateCondition() != null) {
+				session.delete(temp.getDateCondition());
+				temp.setDateCondition(null);
+			}
 			temp.getTimeConditions().clear();
 			temp.getTimeConditions().addAll(obj.getTimeConditions());
 

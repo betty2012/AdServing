@@ -198,8 +198,8 @@ public class HibernateCampaignServiceTest {
 		s1.setDescription("Das ist eine Seite zum testen");
 		s1.setName("testseite");
 		
-		s1.getDateConditions().add(new DateCondition(new Date(1l), new Date(2l)));
-		s1.getDateConditions().add(new DateCondition(new Date(5l), new Date(6l)));
+		s1.setDateCondition(new DateCondition(new Date(1l), new Date(2l)));
+//		s1.getDateConditions().add(new DateCondition(new Date(5l), new Date(6l)));
 		
 		s1.getTimeConditions().add(new TimeCondition(new Time(1l), new Time(2l)));
 		s1.getTimeConditions().add(new TimeCondition(new Time(5l), new Time(6l)));
@@ -211,7 +211,7 @@ public class HibernateCampaignServiceTest {
 		s1.setDescription("Das ist eine Seite zum demo");
 		s1.setName("demoseite");
 		
-		s1.getDateConditions().add(new DateCondition(new Date(23223l), new Date(34324l)));
+		s1.setDateCondition(new DateCondition(new Date(23223l), new Date(34324l)));
 		
 		
 		campaigns.update(s1);
@@ -221,7 +221,7 @@ public class HibernateCampaignServiceTest {
 		assertNotNull(s1);
 		assertEquals("wrong description", "Das ist eine Seite zum demo", s1.getDescription());
 		assertEquals("wrong name", "demoseite", s1.getName());
-		assertEquals(3, s1.getDateConditions().size());
+		assertNotNull(s1.getDateCondition());
 	}
 	
 	@Test
@@ -230,8 +230,8 @@ public class HibernateCampaignServiceTest {
 		s1.setDescription("Das ist eine Seite zum testen");
 		s1.setName("testseite");
 		
-		s1.getDateConditions().add(new DateCondition(new Date(1l), new Date(2l)));
-		s1.getDateConditions().add(new DateCondition(new Date(5l), new Date(6l)));
+		s1.setDateCondition(new DateCondition(new Date(1l), new Date(2l)));
+//		s1.setDateCondition(new DateCondition(new Date(5l), new Date(6l)));
 		
 		s1.getTimeConditions().add(new TimeCondition(new Time(1l), new Time(2l)));
 		s1.getTimeConditions().add(new TimeCondition(new Time(5l), new Time(6l)));
@@ -243,7 +243,7 @@ public class HibernateCampaignServiceTest {
 		s1.setDescription("Das ist eine Seite zum demo");
 		s1.setName("demoseite");
 		
-		s1.getDateConditions().clear();
+		s1.setDateCondition(null);
 		
 		
 		campaigns.update(s1);
@@ -254,7 +254,7 @@ public class HibernateCampaignServiceTest {
 		assertNotNull(s1);
 		assertEquals("wrong description", "Das ist eine Seite zum demo", s1.getDescription());
 		assertEquals("wrong name", "demoseite", s1.getName());
-		assertEquals(0, s1.getDateConditions().size());
+		assertNull(s1.getDateCondition());
 	}
 
 }

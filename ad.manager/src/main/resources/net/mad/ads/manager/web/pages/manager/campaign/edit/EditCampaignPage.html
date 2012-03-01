@@ -64,25 +64,24 @@
 						<li><a href="#tab2"><wicket:message key="tab.time.title" /></a></li>
 					</ul>
 					<div id="tab1">
+						<input type="text" wicket:id="datePickerFrom" /> <input
+							type="text" wicket:id="datePickerTo" />
+					</div>
+					<div id="tab2">
 						<h4>Time</h4>
 						<button wicket:id="addTimeButton">Add</button>
 						<div wicket:id="timeConditions">
-							
-								<p>
-									<input wicket:id="from" type="text" size="2" /> <input wicket:id="to" type="text" size="2" />
-									<input wicket:id="id" type="hidden" size="2" />
-										<br/>
-										<div wicket:id="timeSlide"></div>
-										<br/>
-									<button wicket:id="remove">Delete</button>
-								</p>
-							
+
+							<p>
+								<input wicket:id="from" type="text" size="2" /> <input
+									wicket:id="to" type="text" size="2" /> <input wicket:id="id"
+									type="hidden" size="2" /> <br />
+							<div wicket:id="timeSlide"></div>
+							<br />
+							<button wicket:id="remove">Delete</button>
+							</p>
+
 						</div>
-					</div>
-					<div id="tab2">
-						<h4>Tab 2</h4>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							Morbi facilisis porta nisi.</p>
 					</div>
 				</div>
 			</div>

@@ -19,6 +19,7 @@ package net.mad.ads.manager.web.pages.manager.campaign.edit;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -50,6 +51,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.odlabs.wiquery.core.options.ArrayItemOptions;
 import org.odlabs.wiquery.core.options.IntegerItemOptions;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
+import org.odlabs.wiquery.ui.datepicker.DatePicker;
 import org.odlabs.wiquery.ui.slider.AjaxSlider;
 import org.odlabs.wiquery.ui.slider.Slider;
 import org.odlabs.wiquery.ui.slider.SliderRange;
@@ -137,7 +139,10 @@ public class EditCampaignPage extends BasePage {
 
 	private class InputForm extends Form<Campaign> {
 		
-		private final ListEditor<TimeCondition> timeEditor;
+		private ListEditor<TimeCondition> timeEditor;
+		
+		private DatePicker<Date> datePickerFrom;
+		private DatePicker<Date> datePickerTo;
 		/**
 		 * Construct.
 		 * 
@@ -158,7 +163,14 @@ public class EditCampaignPage extends BasePage {
 			
 			Tabs tabs = new Tabs("tabs");
 			add(tabs);
-
+			
+			datePickerFrom = new DatePicker<Date>("datePickerFrom", new PropertyModel(this, "dateFrom"));
+			tabs.add(datePickerFrom);
+			
+			datePickerTo = new DatePicker<Date>("datePickerTo", new PropertyModel(this, "dateTo"));
+			tabs.add(datePickerTo);
+			
+			
 			timeEditor = new ListEditor<TimeCondition>("timeConditions", new PropertyModel(
 					this, "timeConditionsList")) {
 				@Override
@@ -196,6 +208,7 @@ public class EditCampaignPage extends BasePage {
 	            }
 	        }.setDefaultFormProcessing(false));
 	        tabs.add(timeEditor);
+	        
 		}
 
 		/**
@@ -222,8 +235,23 @@ public class EditCampaignPage extends BasePage {
 			return campaign.getTimeConditions();
 		}
 
-		public List<DateCondition> getDateConditionsList() {
-			return campaign.getDateConditions();
+//		public List<DateCondition> getDateConditionsList() {
+//			return campaign.getDateConditions();
+//		}
+		public DateCondition getDateCondition () {
+			return campaign.getDateCondition();
+		}
+		public Date getDateFrom () {
+			if (campaign.getDateCondition() != null) {
+				return campaign.getDateCondition().getFrom();
+			}
+			return null;
+		}
+		public Date getDateTo () {
+			if (campaign.getDateCondition() != null) {
+				return campaign.getDateCondition().getTo();
+			}
+			return null;
 		}
 	}
 
