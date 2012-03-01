@@ -25,9 +25,9 @@ import java.util.Map;
 
 import net.mad.ads.db.enums.BannerFormat;
 import net.mad.ads.db.enums.BannerType;
-import net.mad.ads.db.enums.Country;
+import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
-import net.mad.ads.db.enums.State;
+import net.mad.ads.db.model.State;
 import net.mad.ads.db.utils.geo.GeoLocation;
 
 public class AdRequest {

@@ -26,9 +26,9 @@ import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.definition.BannerDefinition;
-import net.mad.ads.db.enums.Country;
+import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
-import net.mad.ads.db.enums.State;
+import net.mad.ads.db.model.State;
 
 public class DocumentHelper {
 	private static DocumentHelper INSTANCE = null;

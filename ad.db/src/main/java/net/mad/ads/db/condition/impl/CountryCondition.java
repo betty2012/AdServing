@@ -33,7 +33,7 @@ import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.BannerDefinition;
 import net.mad.ads.db.definition.condition.CountryConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.enums.Country;
+import net.mad.ads.db.model.Country;
 
 /**
  * Bedingung für das Land in dem ein Banner angezeigt werden soll
@@ -50,14 +50,14 @@ public class CountryCondition implements Condition {
 		}
 		
 		String country = request.getCountry().getCode();
-		if (country.equals(Country.ALL.getCode()) || country.equals(Country.UNKNOWN.getCode())) {
+		if (country.equals(Country.ALL.getCode())) {
 			return;
 		}
 		BooleanQuery query = new BooleanQuery();
 		
 		BooleanQuery temp = new BooleanQuery();
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_COUNTRY, String.valueOf(country))), Occur.SHOULD);
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_COUNTRY, String.valueOf(Country.ALL.getCode()))), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_COUNTRY, country.toLowerCase())), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_COUNTRY, Country.ALL.getCode())), Occur.SHOULD);
 		
 		query.add(temp, Occur.MUST);
 		mainQuery.add(query, Occur.MUST);
@@ -74,10 +74,10 @@ public class CountryCondition implements Condition {
 		if (cdef != null && cdef.getCountries().size() > 0) {
 			List<Country> list = cdef.getCountries();
 			for (Country c : list) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_COUNTRY, c.getCode(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_COUNTRY, c.getCode().toLowerCase(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 			}
 		} else {
-			bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_COUNTRY, AdDBConstants.ADDB_BANNER_COUNTRY_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_COUNTRY, Country.ALL.getCode(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 		}
 	}
 

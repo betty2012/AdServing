@@ -34,6 +34,8 @@ import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.enums.BannerFormat;
 import net.mad.ads.db.enums.BannerType;
 import net.mad.ads.db.enums.Day;
+import net.mad.ads.db.model.Country;
+import net.mad.ads.db.model.State;
 import net.mad.ads.db.utils.geo.GeoLocation;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;
@@ -82,6 +84,9 @@ public class RequestHelper {
 					GeoLocation geo = new GeoLocation(Double.parseDouble(loc.getLatitude()), Double.parseDouble(loc.getLongitude()));
 					
 					adRequest.setGeoLocation(geo);
+					
+					adRequest.setCountry(new Country(loc.getCountry()));
+					adRequest.setState(new State(loc.getRegionName()));
 				} catch (NumberFormatException nfe) {
 //					logger.error("", nfe);
 				}

@@ -32,9 +32,8 @@ import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
 import net.mad.ads.db.enums.BannerFormat;
 import net.mad.ads.db.enums.BannerType;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.enums.Country;
 import net.mad.ads.db.enums.Day;
-import net.mad.ads.db.enums.State;
+
 
 import junit.framework.TestCase;
 
@@ -62,7 +61,7 @@ public class DayConditionTest extends TestCase {
 		b = new ImageBannerDefinition();
 		b.setId("2");
 		sdef = new DayConditionDefinition();
-		sdef.addDay(Day.All);
+		sdef.addDay(Day.ALL);
 		b.addConditionDefinition(ConditionDefinitions.DAY, sdef);
 		b.setFormat(BannerFormat.FULL_BANNER);
 		db.addBanner(b);

@@ -36,9 +36,9 @@ import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
 import net.mad.ads.db.enums.BannerFormat;
 import net.mad.ads.db.enums.BannerType;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.enums.Country;
+import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
-import net.mad.ads.db.enums.State;
+import net.mad.ads.db.model.State;
 
 public class SearchTest {
 	public SearchTest () {
@@ -95,7 +95,7 @@ public class SearchTest {
 		b.setId("1");
 		
 		StateConditionDefinition sdef = new StateConditionDefinition();
-		sdef.addState(State.BB);
+		sdef.addState(new State("BB"));
 		b.addConditionDefinition(ConditionDefinitions.STATE, sdef);
 		
 		b.setFormat(BannerFormat.FULL_BANNER);
@@ -110,12 +110,12 @@ public class SearchTest {
 		List<BannerType> types = new ArrayList<BannerType>();
 		types.add(BannerType.IMAGE);
 		request.setTypes(types);
-		request.setState(State.BE);
+		request.setState(new State("BE"));
 		
 		List<BannerDefinition> result = db.search(request);
 		System.out.println(result);
 		
-		request.setState(State.BB);
+		request.setState(new State("BB"));
 		
 		result = db.search(request);
 		System.out.println(result);
@@ -219,7 +219,7 @@ public class SearchTest {
 		b.setId("1");
 		
 		CountryConditionDefinition cdef = new CountryConditionDefinition();
-		cdef.addCountry(Country.DE);
+		cdef.addCountry(new Country("DE"));
 		b.addConditionDefinition(ConditionDefinitions.COUNTRY, cdef);
 		
 		b.setFormat(BannerFormat.FULL_BANNER);
@@ -234,12 +234,12 @@ public class SearchTest {
 		List<BannerType> types = new ArrayList<BannerType>();
 		types.add(BannerType.IMAGE);
 		request.setTypes(types);
-		request.setCountry(Country.DE);
+		request.setCountry(new Country("DE"));
 		
 		List<BannerDefinition> result = db.search(request);
 		System.out.println(result);
 		
-		request.setCountry(Country.UK);
+		request.setCountry(new Country("UK"));
 		
 		result = db.search(request);
 		System.out.println(result);
@@ -257,7 +257,7 @@ public class SearchTest {
 		b.setId("1");
 
 		CountryConditionDefinition cdef = new CountryConditionDefinition();
-		cdef.addCountry(Country.DE);
+		cdef.addCountry(new Country("DE"));
 		b.addConditionDefinition(ConditionDefinitions.COUNTRY, cdef);
 
 		b.setFormat(BannerFormat.FULL_BANNER);
@@ -296,7 +296,7 @@ public class SearchTest {
 		b.setId("1");
 		
 		CountryConditionDefinition cdef = new CountryConditionDefinition();
-		cdef.addCountry(Country.DE);
+		cdef.addCountry(new Country("DE"));
 		b.addConditionDefinition(ConditionDefinitions.COUNTRY, cdef);
 		b.setFormat(BannerFormat.FULL_BANNER);
 

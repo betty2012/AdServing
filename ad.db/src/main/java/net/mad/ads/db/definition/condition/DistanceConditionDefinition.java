@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.mad.ads.db.definition.ConditionDefinition;
-import net.mad.ads.db.enums.Country;
 import net.mad.ads.db.utils.geo.GeoLocation;
 
 /**

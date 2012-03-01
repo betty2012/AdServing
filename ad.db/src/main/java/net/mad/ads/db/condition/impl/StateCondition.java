@@ -32,7 +32,7 @@ import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.BannerDefinition;
 import net.mad.ads.db.definition.condition.StateConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.enums.State;
+import net.mad.ads.db.model.State;
 
 public class StateCondition implements Condition {
 
@@ -41,15 +41,15 @@ public class StateCondition implements Condition {
 		if (request.getState() == null) {
 			return;
 		}
-		int state = request.getState().getState();
-		if (state == State.All.getState() || state == State.UNKNOWN.getState()) {
+		String state = request.getState().getCode();
+		if (state.equals(State.ALL.getCode())) {
 			return;
 		}
 		BooleanQuery query = new BooleanQuery();
 		
 		BooleanQuery temp = new BooleanQuery();
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_STATE, String.valueOf(state))), Occur.SHOULD);
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_STATE, String.valueOf(State.All.getState()))), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_STATE, state.toLowerCase())), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_STATE, State.ALL.getCode())), Occur.SHOULD);
 		
 		query.add(temp, Occur.MUST);
 		
@@ -67,7 +67,7 @@ public class StateCondition implements Condition {
 		if (stDef != null && stDef.getStates().size() > 0) {
 			List<State> list = stDef.getStates();
 			for (State state : list) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_STATE, String.valueOf(state.getState()), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_STATE, state.getCode().toLowerCase(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 			}
 		} else {
 			bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_STATE, AdDBConstants.ADDB_BANNER_STATE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));

@@ -43,7 +43,6 @@ import net.mad.ads.db.definition.condition.DistanceConditionDefinition;
 import net.mad.ads.db.definition.condition.ExcludeSiteConditionDefinition;
 import net.mad.ads.db.definition.condition.SiteConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.enums.Country;
 
 
 /**

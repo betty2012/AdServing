@@ -23,9 +23,9 @@ import java.util.List;
 import net.mad.ads.db.enums.BannerFormat;
 import net.mad.ads.db.enums.BannerType;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.enums.Country;
+import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
-import net.mad.ads.db.enums.State;
+import net.mad.ads.db.model.State;
 import net.mad.ads.db.utils.geo.GeoLocation;
 
 public interface BannerDefinition extends Serializable {

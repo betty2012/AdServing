@@ -34,8 +34,7 @@ import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
 import net.mad.ads.db.enums.BannerFormat;
 import net.mad.ads.db.enums.BannerType;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.enums.Country;
-import net.mad.ads.db.enums.State;
+
 
 import junit.framework.TestCase;
 

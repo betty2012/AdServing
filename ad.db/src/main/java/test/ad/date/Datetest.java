@@ -38,7 +38,7 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.RAMDirectory;
 
 import net.mad.ads.db.enums.Day;
-import net.mad.ads.db.enums.State;
+import net.mad.ads.db.model.State;
 
 public class Datetest {
 	
@@ -51,9 +51,9 @@ public class Datetest {
 		
 	
 		List<Day> days = new ArrayList<Day>();
-		days.add(Day.All);
+		days.add(Day.ALL);
 		List<State> states= new ArrayList<State>();
-		states.add(State.All);
+		states.add(State.ALL);
 		writer.addDocument(getDoc("b1", "0600", "0800", "all", "all", days, states));
 		writer.addDocument(getDoc("b2", "all", "all", "all", "all", days, states));
 		writer.addDocument(getDoc("b3", "0600", "0700", "all", "all", days, states));
@@ -67,16 +67,16 @@ public class Datetest {
 		searcher = new IndexSearcher(dir);
 		
 		System.out.println("\n6Uhr");
-		searchTest("0600", "20101221", Day.All, 4);
+		searchTest("0600", "20101221", Day.ALL, 4);
 		
 		System.out.println("\n6:30Uhr");
-		searchTest("0630", null, Day.All, 5);
+		searchTest("0630", null, Day.ALL, 5);
 		
 		System.out.println("\n5Uhr");
-		searchTest("0500", null, Day.All, 2);
+		searchTest("0500", null, Day.ALL, 2);
 		
 		System.out.println("\n8:30Uhr");
-		searchTest("0830", null, Day.All, 2);
+		searchTest("0830", null, Day.ALL, 2);
 		
 		dir.close();
 	}
@@ -113,14 +113,14 @@ public class Datetest {
 	}
 	
 	public static Query getDayQuery (int day) {
-		if (day == Day.All.getDay()) {
+		if (day == Day.ALL.getDay()) {
 			return null;
 		}
 		BooleanQuery query = new BooleanQuery();
 		
 		BooleanQuery temp = new BooleanQuery();
 		temp.add(new TermQuery(new Term("day", String.valueOf(day))), Occur.SHOULD);
-		temp.add(new TermQuery(new Term("day", String.valueOf(Day.All.getDay()))), Occur.SHOULD);
+		temp.add(new TermQuery(new Term("day", String.valueOf(Day.ALL.getDay()))), Occur.SHOULD);
 		
 		query.add(temp, Occur.MUST);
 		
@@ -128,15 +128,15 @@ public class Datetest {
 		return query;
 	}
 	
-	public static Query getStateQuery (int state) {
-		if (state == State.All.getState()) {
+	public static Query getStateQuery (String state) {
+		if (state == State.ALL.getCode()) {
 			return null;
 		}
 		BooleanQuery query = new BooleanQuery();
 		
 		BooleanQuery temp = new BooleanQuery();
 		temp.add(new TermQuery(new Term("state", String.valueOf(state))), Occur.SHOULD);
-		temp.add(new TermQuery(new Term("state", String.valueOf(State.All.getState()))), Occur.SHOULD);
+		temp.add(new TermQuery(new Term("state", State.ALL.getCode())), Occur.SHOULD);
 		
 		query.add(temp, Occur.MUST);
 		
@@ -199,14 +199,14 @@ public class Datetest {
 				doc.add(new Field("day", String.valueOf(day.getDay()), Store.NO, Index.NOT_ANALYZED_NO_NORMS));
 			}
 		} else {
-			doc.add(new Field("day", String.valueOf(Day.All.getDay()), Store.NO, Index.NOT_ANALYZED_NO_NORMS));
+			doc.add(new Field("day", String.valueOf(Day.ALL.getDay()), Store.NO, Index.NOT_ANALYZED_NO_NORMS));
 		}
 		if (states != null) {
 			for (State state : states) {
-				doc.add(new Field("state", String.valueOf(state.getState()), Store.NO, Index.NOT_ANALYZED_NO_NORMS));
+				doc.add(new Field("state", state.getCode(), Store.NO, Index.NOT_ANALYZED_NO_NORMS));
 			}
 		} else {
-			doc.add(new Field("state", String.valueOf(State.All.getState()), Store.NO, Index.NOT_ANALYZED_NO_NORMS));
+			doc.add(new Field("state", State.ALL.getCode(), Store.NO, Index.NOT_ANALYZED_NO_NORMS));
 		}
 		doc.add(new Field("time_from", timefrom, Store.NO, Index.NOT_ANALYZED_NO_NORMS));
 		doc.add(new Field("time_from", timefrom, Store.NO, Index.NOT_ANALYZED_NO_NORMS));

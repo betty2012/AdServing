@@ -29,7 +29,7 @@ public enum Day implements Serializable {
 	Friday(5),
 	Saturday(6),
 	Sunday(7),
-	All(0);
+	ALL(0);
 	
 	private int day = 0;
 	private Day (int day) {
@@ -66,6 +66,6 @@ public enum Day implements Serializable {
 			return Day.Sunday;
 		}
 		
-		 return All;
+		 return ALL;
 	}
 }

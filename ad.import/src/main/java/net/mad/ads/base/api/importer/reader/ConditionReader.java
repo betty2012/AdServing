@@ -42,10 +42,10 @@ import net.mad.ads.db.definition.condition.StateConditionDefinition;
 import net.mad.ads.db.definition.condition.TimeConditionDefinition;
 import net.mad.ads.db.definition.condition.ViewExpirationConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.enums.Country;
+import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
 import net.mad.ads.db.enums.ExpirationResolution;
-import net.mad.ads.db.enums.State;
+import net.mad.ads.db.model.State;
 import net.mad.ads.db.utils.geo.GeoLocation;
 
 public class ConditionReader {
@@ -68,11 +68,11 @@ public class ConditionReader {
 			
 			
 			DayConditionDefinition ddef = new DayConditionDefinition();
-			ddef.addDay(Day.All);
+			ddef.addDay(Day.ALL);
 			definition.addConditionDefinition(ConditionDefinitions.DAY, ddef);
 			
 			StateConditionDefinition stDef = new StateConditionDefinition();
-			stDef.addState(State.All);
+			stDef.addState(State.ALL);
 			definition.addConditionDefinition(ConditionDefinitions.STATE, stDef);
 			
 			CountryConditionDefinition cdef = new CountryConditionDefinition();
@@ -180,7 +180,7 @@ public class ConditionReader {
 				}
 			} else {
 				DayConditionDefinition ddef = new DayConditionDefinition();
-				ddef.addDay(Day.All);
+				ddef.addDay(Day.ALL);
 				definition.addConditionDefinition(ConditionDefinitions.DAY, ddef);
 			}
 			elem = conditions.getChild("states");
@@ -191,7 +191,7 @@ public class ConditionReader {
 					for (Element e : childs) {
 						String text = e.getTextTrim();
 						try {
-							State s = State.getStateForInt(Integer.valueOf(text));
+							State s = new State(text);
 							stDef.addState(s);
 						} catch (Exception ex) {
 							logger.error("", e);
@@ -201,7 +201,7 @@ public class ConditionReader {
 				}
 			} else {
 				StateConditionDefinition stDef = new StateConditionDefinition();
-				stDef.addState(State.All);
+				stDef.addState(State.ALL);
 				definition.addConditionDefinition(ConditionDefinitions.STATE, stDef);
 			}
 			elem = conditions.getChild("countries");
@@ -212,7 +212,7 @@ public class ConditionReader {
 					for (Element e : childs) {
 						String text = e.getTextTrim();
 						try {
-							Country c = Country.getCountryForString(text);
+							Country c = new Country(text);
 							cdef.addCountry(c);
 						} catch (Exception ex) {
 							logger.error("", e);

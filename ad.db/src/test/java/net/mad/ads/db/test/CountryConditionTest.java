@@ -31,8 +31,8 @@ import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
 import net.mad.ads.db.enums.BannerFormat;
 import net.mad.ads.db.enums.BannerType;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.enums.Country;
-import net.mad.ads.db.enums.State;
+import net.mad.ads.db.model.Country;
+import net.mad.ads.db.model.State;
 
 import junit.framework.TestCase;
 
@@ -51,7 +51,7 @@ public class CountryConditionTest extends TestCase {
 		b.setId("1");
 		
 		CountryConditionDefinition sdef = new CountryConditionDefinition();
-		sdef.addCountry(Country.DE);
+		sdef.addCountry(new Country("DE"));
 		b.addConditionDefinition(ConditionDefinitions.COUNTRY, sdef);
 		b.setFormat(BannerFormat.FULL_BANNER);
 		db.addBanner(b);
@@ -65,12 +65,12 @@ public class CountryConditionTest extends TestCase {
 		List<BannerType> types = new ArrayList<BannerType>();
 		types.add(BannerType.IMAGE);
 		request.setTypes(types);
-		request.setCountry(Country.AT);
+		request.setCountry(new Country("AT"));
 		
 		List<BannerDefinition> result = db.search(request);
 		assertTrue(result.isEmpty());
 		
-		request.setCountry(Country.DE);
+		request.setCountry(new Country("DE"));
 		result = db.search(request);
 		assertEquals(result.size(), 1);
 		

@@ -15,36 +15,22 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.db.definition.condition;
+package net.mad.ads.db.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
-import net.mad.ads.db.definition.ConditionDefinition;
-import net.mad.ads.db.model.Country;
+import net.mad.ads.db.AdDBConstants;
 
-/**
- * Steuerung der Länder in denen das Banner angezeigt werden soll
- * 
- * @author tmarx
- *
- */
-public class CountryConditionDefinition implements ConditionDefinition {
-
-	private List<Country> countries = new ArrayList<Country>();
+public class Country implements Serializable {
 	
-	public CountryConditionDefinition () {
-		
+	public static Country ALL = new Country(AdDBConstants.ADDB_BANNER_COUNTRY_ALL); 
+	
+	private String code = "";
+	public Country (String code) {
+		this.code = code;
 	}
 	
-	/**
-	 * in welchen Ländern soll das Banner angezeigt werden
-	 * @return
-	 */
-	public List<Country> getCountries () {
-		return this.countries;
-	}
-	public void addCountry (Country country) {
-		this.countries.add(country);
+	public String getCode () {
+		return this.code;
 	}
 }

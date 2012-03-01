@@ -30,7 +30,7 @@ import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
 import net.mad.ads.db.enums.BannerFormat;
 import net.mad.ads.db.enums.BannerType;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.enums.State;
+import net.mad.ads.db.model.State;
 
 import junit.framework.TestCase;
 
@@ -49,7 +49,7 @@ public class StateConditionTest extends TestCase {
 		b.setId("1");
 		
 		StateConditionDefinition sdef = new StateConditionDefinition();
-		sdef.addState(State.BB);
+		sdef.addState(new State("BB"));
 		b.addConditionDefinition(ConditionDefinitions.STATE, sdef);
 		b.setFormat(BannerFormat.FULL_BANNER);
 		db.addBanner(b);
@@ -63,12 +63,12 @@ public class StateConditionTest extends TestCase {
 		List<BannerType> types = new ArrayList<BannerType>();
 		types.add(BannerType.IMAGE);
 		request.setTypes(types);
-		request.setState(State.BE);
+		request.setState(new State("BE"));
 		
 		List<BannerDefinition> result = db.search(request);
 		assertTrue(result.isEmpty());
 		
-		request.setState(State.BB);
+		request.setState(new State("BB"));
 		
 		result = db.search(request);
 		assertEquals(result.size(), 1);

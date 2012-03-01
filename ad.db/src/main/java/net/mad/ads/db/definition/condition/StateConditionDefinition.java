@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.mad.ads.db.definition.ConditionDefinition;
-import net.mad.ads.db.enums.State;
+import net.mad.ads.db.model.State;
 /**
  * Steuerung, für welches Bundesland das Banner gefunden werden soll
  * @author tmarx

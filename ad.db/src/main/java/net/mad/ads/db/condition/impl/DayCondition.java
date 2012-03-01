@@ -57,14 +57,14 @@ public class DayCondition implements Condition {
 			return;
 		}
 		int day = request.getDay().getDay();
-		if (day == Day.All.getDay()) {
+		if (day == Day.ALL.getDay()) {
 			return;
 		}
 		BooleanQuery query = new BooleanQuery();
 		
 		BooleanQuery temp = new BooleanQuery();
 		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_DAY, String.valueOf(day))), Occur.SHOULD);
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_DAY, String.valueOf(Day.All.getDay()))), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_DAY, String.valueOf(Day.ALL.getDay()))), Occur.SHOULD);
 		
 		query.add(temp, Occur.MUST);
 

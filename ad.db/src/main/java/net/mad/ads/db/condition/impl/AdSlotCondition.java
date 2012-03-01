@@ -35,7 +35,6 @@ import net.mad.ads.db.definition.Keyword;
 import net.mad.ads.db.definition.condition.AdSlotConditionDefinition;
 import net.mad.ads.db.definition.condition.SiteConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.enums.Country;
 
 /**
  * Beschränkung der Anzeige eines Banners oder Products auf einen bestimmten Anzeige Platz (AdSlot)

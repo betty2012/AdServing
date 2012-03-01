@@ -31,9 +31,9 @@ import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
 import net.mad.ads.db.enums.BannerFormat;
 import net.mad.ads.db.enums.BannerType;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.enums.Country;
+import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
-import net.mad.ads.db.enums.State;
+import net.mad.ads.db.model.State;
 import net.mad.ads.db.utils.geo.GeoLocation;
 
 public class ConditionFilterTest {
@@ -51,7 +51,7 @@ public class ConditionFilterTest {
 		b.setId("1");
 		
 		CountryConditionDefinition cdef = new CountryConditionDefinition();
-		cdef.addCountry(Country.DE);
+		cdef.addCountry(new Country("DE"));
 		b.addConditionDefinition(ConditionDefinitions.COUNTRY, cdef);
 		
 		b.setFormat(BannerFormat.FULL_BANNER);

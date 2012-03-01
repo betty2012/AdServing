@@ -33,8 +33,8 @@ import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
 import net.mad.ads.db.enums.BannerFormat;
 import net.mad.ads.db.enums.BannerType;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.enums.Country;
-import net.mad.ads.db.enums.State;
+import net.mad.ads.db.model.Country;
+
 
 
 import junit.framework.TestCase;
@@ -55,7 +55,7 @@ public class RealtimeTest extends TestCase {
 			BannerDefinition b = new ImageBannerDefinition();
 			b.setId("" + (i+1));
 			CountryConditionDefinition sdef = new CountryConditionDefinition();
-			sdef.addCountry(Country.DE);
+			sdef.addCountry(new Country("DE"));
 			b.addConditionDefinition(ConditionDefinitions.COUNTRY, sdef);
 			b.setFormat(BannerFormat.FULL_BANNER);
 			db.addBanner(b);

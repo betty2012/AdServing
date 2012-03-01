@@ -34,9 +34,9 @@ import net.mad.ads.db.definition.impl.banner.extern.ExternBannerDefinition;
 import net.mad.ads.db.definition.impl.banner.flash.FlashBannerDefinition;
 import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
 import net.mad.ads.db.enums.BannerFormat;
-import net.mad.ads.db.enums.Country;
+import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
-import net.mad.ads.db.enums.State;
+import net.mad.ads.db.model.State;
 import net.mad.ads.db.utils.mapper.BannerTypeMapping;
 
 public class AdXmlReader {

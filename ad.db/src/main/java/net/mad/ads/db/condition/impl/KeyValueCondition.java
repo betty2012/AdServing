@@ -35,7 +35,7 @@ import net.mad.ads.db.definition.Keyword;
 import net.mad.ads.db.definition.condition.KeyValueConditionDefinition;
 import net.mad.ads.db.definition.condition.KeywordConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.enums.Country;
+
 
 /**
  * Keyword-Bedingung

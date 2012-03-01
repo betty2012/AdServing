@@ -60,6 +60,7 @@ public class Location {
 		return regionName;
 	}
 
+	
 	public String getCity() {
 		return city;
 	}
