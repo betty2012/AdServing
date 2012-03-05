@@ -17,16 +17,13 @@
  */
 package net.mad.ads.server.utils.helper;
 
-import net.minidev.json.JSONObject;
-import net.minidev.json.JSONStyle;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import net.mad.ads.base.api.exception.ServiceException;
 import net.mad.ads.base.api.track.events.TrackEvent;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;
+import net.minidev.json.JSONObject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TrackingHelper {
 	public static final Logger logger = LoggerFactory.getLogger(TrackingHelper.class);

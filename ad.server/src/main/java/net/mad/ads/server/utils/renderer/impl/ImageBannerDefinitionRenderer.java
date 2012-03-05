@@ -17,22 +17,17 @@
  */
 package net.mad.ads.server.utils.renderer.impl;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import net.mad.ads.base.api.render.BannerRenderer;
 import net.mad.ads.base.api.render.RenderContext;
-import net.mad.ads.base.api.render.impl.freemarker.FreemarkerBannerRenderer;
-import net.mad.ads.db.definition.BannerDefinition;
 import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
 import net.mad.ads.db.enums.BannerType;
 import net.mad.ads.server.utils.AdServerConstants;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.renderer.BannerDefinitionRenderer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Renderer für die Bannerdefinitionen des Types Image

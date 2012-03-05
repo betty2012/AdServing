@@ -21,39 +21,21 @@ package net.mad.ads.server.utils.listener;
 
 
 import java.io.File;
-
-import java.io.FileFilter;
-import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.net.URL;
-import java.util.List;
 import java.util.Timer;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-
-import org.apache.log4j.PropertyConfigurator;
-import org.infinispan.Cache;
-import org.infinispan.manager.DefaultCacheManager;
-import org.infinispan.manager.EmbeddedCacheManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
 import net.mad.ads.base.api.importer.Importer;
-import net.mad.ads.base.api.importer.reader.*;
-import net.mad.ads.base.api.BaseContext;
+import net.mad.ads.base.api.importer.reader.AdXmlReader;
 import net.mad.ads.base.api.track.TrackingService;
 import net.mad.ads.base.api.utils.logging.LogWrapper;
 import net.mad.ads.common.template.TemplateManager;
 import net.mad.ads.common.template.impl.freemarker.FMTemplateManager;
 import net.mad.ads.common.util.Properties2;
 import net.mad.ads.common.util.Strings;
-import net.mad.ads.common.util.XProperties;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.definition.BannerDefinition;
 import net.mad.ads.db.enums.BannerType;
@@ -62,6 +44,14 @@ import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.listener.configuration.AdServerModule;
 import net.mad.ads.server.utils.runnable.AdDbUpdateTask;
 import net.mad.ads.services.geo.IPLocationDB;
+
+import org.apache.log4j.PropertyConfigurator;
+import org.infinispan.manager.DefaultCacheManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 
 /**

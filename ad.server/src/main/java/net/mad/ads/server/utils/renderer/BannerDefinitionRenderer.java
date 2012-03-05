@@ -17,8 +17,6 @@
  */
 package net.mad.ads.server.utils.renderer;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import net.mad.ads.db.definition.BannerDefinition;

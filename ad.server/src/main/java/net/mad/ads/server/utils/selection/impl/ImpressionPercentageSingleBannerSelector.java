@@ -24,11 +24,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.collect.Collections2;
-
 import net.mad.ads.base.api.track.Criterion;
 import net.mad.ads.base.api.track.events.EventType;
 import net.mad.ads.db.definition.BannerDefinition;
@@ -38,6 +33,9 @@ import net.mad.ads.db.enums.ExpirationResolution;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;
 import net.mad.ads.server.utils.selection.BannerSelector;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Das Banner wird aufgrund der prozentualen Anzeige-Häufigkeit ausgewählt.

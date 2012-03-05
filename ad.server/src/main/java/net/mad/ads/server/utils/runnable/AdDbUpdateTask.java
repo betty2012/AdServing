@@ -19,10 +19,10 @@ package net.mad.ads.server.utils.runnable;
 
 import java.util.TimerTask;
 
+import net.mad.ads.server.utils.RuntimeContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.mad.ads.server.utils.RuntimeContext;
 
 
 
