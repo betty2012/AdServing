@@ -27,9 +27,6 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.enums.BannerFormat;
 import net.mad.ads.db.enums.BannerType;
@@ -41,6 +38,9 @@ import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;
 import net.mad.ads.server.utils.http.KeywordUtils;
 import net.mad.ads.services.geo.Location;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Helper zum erzeugen des AdRequest aus dem HttpRequest

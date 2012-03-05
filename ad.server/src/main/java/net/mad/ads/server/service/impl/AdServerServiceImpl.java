@@ -18,12 +18,12 @@
 package net.mad.ads.server.service.impl;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import net.mad.ads.base.api.service.adserver.AdServerService;
 import net.mad.ads.db.definition.BannerDefinition;
 import net.mad.ads.server.utils.RuntimeContext;
-import net.mad.ads.base.api.service.adserver.AdServerService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class AdServerServiceImpl implements AdServerService {

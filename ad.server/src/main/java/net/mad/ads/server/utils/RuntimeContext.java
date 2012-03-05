@@ -21,9 +21,6 @@ package net.mad.ads.server.utils;
 import java.util.HashMap;
 import java.util.Properties;
 
-import org.infinispan.Cache;
-import org.infinispan.manager.EmbeddedCacheManager;
-
 import net.mad.ads.base.api.importer.Importer;
 import net.mad.ads.base.api.render.BannerRenderer;
 import net.mad.ads.base.api.render.impl.freemarker.FreemarkerBannerRenderer;
@@ -32,6 +29,9 @@ import net.mad.ads.base.api.utils.logging.LogWrapper;
 import net.mad.ads.common.template.TemplateManager;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.services.geo.IPLocationDB;
+
+import org.infinispan.Cache;
+import org.infinispan.manager.EmbeddedCacheManager;
 
 
 public class RuntimeContext {

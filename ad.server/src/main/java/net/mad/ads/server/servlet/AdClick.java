@@ -18,8 +18,6 @@
 package net.mad.ads.server.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Enumeration;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -27,17 +25,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.mad.ads.base.api.track.events.ClickTrackEvent;
-import net.mad.ads.base.api.track.events.ImpressionTrackEvent;
 import net.mad.ads.base.api.track.events.TrackEvent;
 import net.mad.ads.db.definition.BannerDefinition;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;
 import net.mad.ads.server.utils.helper.TrackingHelper;
 import net.mad.ads.server.utils.http.listener.AdContextListener;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Servlet implementation class AdClick

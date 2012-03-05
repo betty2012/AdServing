@@ -17,45 +17,27 @@
  */
 package net.mad.ads.server.servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
-import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-import net.mad.ads.base.api.track.events.ClickTrackEvent;
 import net.mad.ads.base.api.track.events.ImpressionTrackEvent;
 import net.mad.ads.base.api.track.events.TrackEvent;
-import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.BannerDefinition;
-import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
-import net.mad.ads.db.enums.BannerFormat;
 import net.mad.ads.db.enums.BannerType;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;
-import net.mad.ads.server.utils.filter.ClickExpirationFilter;
-import net.mad.ads.server.utils.filter.DuplicatBannerFilter;
-import net.mad.ads.server.utils.filter.ViewExpirationFilter;
 import net.mad.ads.server.utils.helper.TrackingHelper;
 import net.mad.ads.server.utils.http.listener.AdContextListener;
+import net.mad.ads.server.utils.renderer.impl.ExpandableImageBannerDefinitionRenderer;
 import net.mad.ads.server.utils.renderer.impl.ExternBannerDefinitionRenderer;
 import net.mad.ads.server.utils.renderer.impl.FlashBannerDefinitionRenderer;
-import net.mad.ads.server.utils.renderer.impl.ExpandableImageBannerDefinitionRenderer;
 import net.mad.ads.server.utils.renderer.impl.ImageBannerDefinitionRenderer;
-import net.mad.ads.server.utils.request.RequestHelper;
 import net.mad.ads.server.utils.selection.BannerProvider;
-import net.mad.ads.server.utils.selection.BannerSelector;
-import net.mad.ads.server.utils.selection.impl.RandomSingleBannerSelector;
 
 /**
  * Servlet implementation class AdSelect
@@ -143,6 +125,8 @@ public class AdSelect extends HttpServlet {
 				 * im DuplicateBannerFilter die Information verwenden zu können
 				 * 
 				 * Als Request gelten alle Aufrufe, die durch den selben Pageview erzeugt werden
+				 * 
+				 * pv = pageview (all request from a single pageview)
 				 */
 				RuntimeContext.getRequestBanners().put("pv" + context.getRequestid() + "_" + banner.getId(), Boolean.TRUE);
 				/*
@@ -150,11 +134,15 @@ public class AdSelect extends HttpServlet {
 				 * Auf diese Art kann später z.B. geregelt werden, dass ein USER ein Banner maximal 5 mal sehen soll
 				 * 
 				 * TODO: hier muss noch die TimeToLife für das Cacheobjekte gesetzt werden
+				 * 
+				 * u = user
 				 */
 				RuntimeContext.getRequestBanners().put("u" + context.getUserid() + "_" + banner.getId(), Boolean.TRUE);
 				
 				/*
 				 * Damit wir später die passenden Banner für die Produkte anzeigen können, merken wir uns auch das Produkt
+				 * 
+				 * prod = product
 				 */
 				if (banner.isProduct()) {
 					RuntimeContext.getRequestBanners().put("prod" + context.getRequestid() + "_" + banner.getProduct(), Boolean.TRUE);

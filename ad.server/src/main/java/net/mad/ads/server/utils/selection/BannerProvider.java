@@ -25,8 +25,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.google.common.collect.Collections2;
-
 import net.mad.ads.common.util.Strings;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.BannerDefinition;
@@ -42,7 +40,8 @@ import net.mad.ads.server.utils.filter.FlashVersionBannerFilter;
 import net.mad.ads.server.utils.filter.ViewExpirationFilter;
 import net.mad.ads.server.utils.request.RequestHelper;
 import net.mad.ads.server.utils.selection.impl.ImpressionPercentageSingleBannerSelector;
-import net.mad.ads.server.utils.selection.impl.RandomSingleBannerSelector;
+
+import com.google.common.collect.Collections2;
 
 
 /**

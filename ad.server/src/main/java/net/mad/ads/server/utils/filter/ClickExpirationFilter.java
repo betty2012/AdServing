@@ -20,13 +20,6 @@ package net.mad.ads.server.utils.filter;
 import java.util.Calendar;
 import java.util.Locale;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Predicate;
-
-
-
 import net.mad.ads.base.api.exception.ServiceException;
 import net.mad.ads.base.api.track.Criterion;
 import net.mad.ads.base.api.track.events.EventType;
@@ -35,6 +28,11 @@ import net.mad.ads.db.definition.condition.ViewExpirationConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.enums.ExpirationResolution;
 import net.mad.ads.server.utils.RuntimeContext;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Predicate;
 
 /**
  * Filter für das entfernen von Bannern, die die konfigurierte Anzahl

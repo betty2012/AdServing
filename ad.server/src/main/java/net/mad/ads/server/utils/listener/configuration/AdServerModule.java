@@ -17,29 +17,23 @@
  */
 package net.mad.ads.server.utils.listener.configuration;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import net.mad.ads.base.api.EmbeddedBaseContext;
+import net.mad.ads.base.api.exception.ServiceException;
+import net.mad.ads.base.api.track.TrackingService;
+import net.mad.ads.base.api.track.impl.local.h2.H2TrackingService;
+import net.mad.ads.server.utils.AdServerConstants;
+import net.mad.ads.server.utils.RuntimeContext;
+import net.mad.ads.services.geo.IPLocationDB;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.inject.AbstractModule;
-
-import net.mad.ads.base.api.EmbeddedBaseContext;
-import net.mad.ads.base.api.exception.ServiceException;
-import net.mad.ads.base.api.track.TrackingService;
-import net.mad.ads.base.api.track.impl.local.bdb.BDBTrackingService;
-import net.mad.ads.base.api.track.impl.local.h2.H2TrackingService;
-import net.mad.ads.common.util.Strings;
-import net.mad.ads.server.utils.AdServerConstants;
-import net.mad.ads.server.utils.RuntimeContext;
-import net.mad.ads.services.geo.IPLocationDB;
-import net.mad.ads.services.geo.MaxmindIpLocationDB;
 
 public class AdServerModule extends AbstractModule {
 
