@@ -125,6 +125,8 @@ public class AdSelect extends HttpServlet {
 				 * im DuplicateBannerFilter die Information verwenden zu können
 				 * 
 				 * Als Request gelten alle Aufrufe, die durch den selben Pageview erzeugt werden
+				 * 
+				 * pv = pageview (all request from a single pageview)
 				 */
 				RuntimeContext.getRequestBanners().put("pv" + context.getRequestid() + "_" + banner.getId(), Boolean.TRUE);
 				/*
@@ -132,11 +134,15 @@ public class AdSelect extends HttpServlet {
 				 * Auf diese Art kann später z.B. geregelt werden, dass ein USER ein Banner maximal 5 mal sehen soll
 				 * 
 				 * TODO: hier muss noch die TimeToLife für das Cacheobjekte gesetzt werden
+				 * 
+				 * u = user
 				 */
 				RuntimeContext.getRequestBanners().put("u" + context.getUserid() + "_" + banner.getId(), Boolean.TRUE);
 				
 				/*
 				 * Damit wir später die passenden Banner für die Produkte anzeigen können, merken wir uns auch das Produkt
+				 * 
+				 * prod = product
 				 */
 				if (banner.isProduct()) {
 					RuntimeContext.getRequestBanners().put("prod" + context.getRequestid() + "_" + banner.getProduct(), Boolean.TRUE);
