@@ -76,10 +76,10 @@ public class TrackEvent extends EnumMap<EventAttribute, String> implements Seria
 	}
 	
 	public String getBannerId () {
-		return get(EventAttribute.BANNER_ID);
+		return get(EventAttribute.AD_ID);
 	}
 	public void setBannerId (String bannerid) {
-		put(EventAttribute.BANNER_ID, bannerid);
+		put(EventAttribute.AD_ID, bannerid);
 	}
 
 

@@ -103,7 +103,7 @@ public class BDBTest {
 		event.setTime(created.getTime().getTime());
 		// System.out.println(DateHelper.format(created.getTime()));
 		event.setSite("demo Site");
-		event.put(EventAttribute.BANNER_ID, "b1");
+		event.put(EventAttribute.AD_ID, "b1");
 		event.setUser("user1");
 		ts.track(event);
 
@@ -113,7 +113,7 @@ public class BDBTest {
 		event.setTime(created.getTime().getTime());
 		// System.out.println(DateHelper.format(created.getTime()));
 		event.setSite("demo Site");
-		event.put(EventAttribute.BANNER_ID, "b1");
+		event.put(EventAttribute.AD_ID, "b1");
 		event.setUser("user1");
 		ts.track(event);
 
@@ -123,7 +123,7 @@ public class BDBTest {
 		event.setTime(created.getTime().getTime());
 		// System.out.println(DateHelper.format(created.getTime()));
 		event.setSite("demo Site");
-		event.put(EventAttribute.BANNER_ID, "b1");
+		event.put(EventAttribute.AD_ID, "b1");
 		event.setUser("user1");
 		ts.track(event);
 		event.setUser("user2");

@@ -24,7 +24,7 @@ public enum EventAttribute {
 	USER ("user"),
 	SITE ("site"),
 	CAMPAIGN ("campaign"),
-	BANNER_ID ("banner_id"),
+	AD_ID ("ad_id"),
 	IP ("ip"),
 	UNKNOWN ("unknown");
 	
