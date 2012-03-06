@@ -24,10 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 import net.mad.ads.db.enums.AdFormat;
-import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
 import net.mad.ads.db.model.State;
+import net.mad.ads.db.model.type.AdType;
 import net.mad.ads.db.utils.geo.GeoLocation;
 
 public class AdRequest {

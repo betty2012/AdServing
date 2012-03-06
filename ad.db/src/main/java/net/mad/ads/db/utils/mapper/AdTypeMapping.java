@@ -23,7 +23,8 @@ import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
 import net.mad.ads.db.definition.impl.ad.flash.FlashAdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import net.mad.ads.db.definition.impl.ad.text.TextlinkAdDefinition;
-import net.mad.ads.db.enums.AdType;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.services.AdTypes;
 
 public class AdTypeMapping {
 	private static AdTypeMapping INSTANCE = new AdTypeMapping();
@@ -39,7 +40,7 @@ public class AdTypeMapping {
 	}
 	
 	public AdType getBannerTypeFromString (String type) {
-		return AdType.valueOf(type);
+		return AdTypes.forName(type);
 	}
 	
 	/**
@@ -48,27 +49,9 @@ public class AdTypeMapping {
 	 * @return
 	 */
 	public AdDefinition getDefinition (String type) {
-		AdType btype = AdType.valueOf(type);
-		AdDefinition def = null;
+		AdType btype = AdTypes.forName(type);
 		
-		switch (btype) {
-			case IMAGE:
-				def = new ImageAdDefinition();
-				break;
-			case EXTERN:
-				def = new ExternAdDefinition();
-				break;
-			case TEXTLINK:
-				def = new TextlinkAdDefinition();
-				break;
-			case FLASH:
-				def = new FlashAdDefinition();
-				break;
-			case EXPANDABLEIMAGE:
-				def = new ExpandableImageAdDefinition();
-				break;
-		}
 		
-		return def;
+		return btype.getAdDefinition();
 	}
 }

@@ -61,7 +61,6 @@ import net.mad.ads.db.db.store.impl.AdDBBDBStore;
 import net.mad.ads.db.db.store.impl.AdDBMapStore;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.enums.AdFormat;
-import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.utils.ConditionHelper;
 import net.mad.ads.db.utils.DocumentHelper;
 import net.mad.ads.db.utils.QueryHelper;

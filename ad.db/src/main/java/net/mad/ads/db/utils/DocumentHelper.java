@@ -47,7 +47,7 @@ public class DocumentHelper {
 		Document doc = new Document();
 		doc.add(new Field(AdDBConstants.ADDB_AD_ID, String.valueOf(banner.getId()), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
 		doc.add(new Field(AdDBConstants.ADDB_AD_FORMAT, banner.getFormat().getCompoundName(), Field.Store.NO, Field.Index.ANALYZED));
-		doc.add(new Field(AdDBConstants.ADDB_AD_TYPE, banner.getType().name(), Field.Store.NO, Field.Index.ANALYZED));
+		doc.add(new Field(AdDBConstants.ADDB_AD_TYPE, banner.getType().getName(), Field.Store.NO, Field.Index.ANALYZED));
 		
 		if (banner.isProduct()) {
 			doc.add(new Field(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_TRUE, Field.Store.NO, Field.Index.ANALYZED));
