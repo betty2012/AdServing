@@ -37,8 +37,8 @@ import net.mad.ads.common.template.impl.freemarker.FMTemplateManager;
 import net.mad.ads.common.util.Properties2;
 import net.mad.ads.common.util.Strings;
 import net.mad.ads.db.db.AdDB;
-import net.mad.ads.db.definition.BannerDefinition;
-import net.mad.ads.db.enums.BannerType;
+import net.mad.ads.db.definition.AdDefinition;
+import net.mad.ads.db.enums.AdType;
 import net.mad.ads.server.utils.AdServerConstants;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.listener.configuration.AdServerModule;
@@ -183,7 +183,7 @@ public class StartupPlugIn implements ServletContextListener {
 		
 		RuntimeContext.getBannerRenderer().init(templatePath);
 		
-		for (BannerType type : BannerType.values()) {
+		for (AdType type : AdType.values()) {
 			RuntimeContext.getBannerRenderer().registerTemplate(type.getName().toLowerCase(), type.getName().toLowerCase()+".ftl");
 		}
 	}
@@ -223,7 +223,7 @@ public class StartupPlugIn implements ServletContextListener {
 			});
 			
 			for (String banner : banners) {
-				BannerDefinition b = AdXmlReader.readBannerDefinition(bannerPath + File.separator + banner);
+				AdDefinition b = AdXmlReader.readBannerDefinition(bannerPath + File.separator + banner);
 				RuntimeContext.getAdDB().addBanner(b);
 			}
 		}

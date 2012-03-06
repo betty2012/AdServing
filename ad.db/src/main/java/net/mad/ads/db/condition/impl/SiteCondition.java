@@ -29,7 +29,7 @@ import org.apache.lucene.search.BooleanClause.Occur;
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.Keyword;
 import net.mad.ads.db.definition.condition.SiteConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
@@ -58,7 +58,7 @@ public class SiteCondition implements Condition {
 	}
 
 	@Override
-	public void addFields(Document bannerDoc, BannerDefinition bannerDefinition) {
+	public void addFields(Document bannerDoc, AdDefinition bannerDefinition) {
 		
 		SiteConditionDefinition sdef = null;
 		if (bannerDefinition.hasConditionDefinition(ConditionDefinitions.SITE)) {

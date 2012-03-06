@@ -30,7 +30,7 @@ import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdSlot;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.Keyword;
 import net.mad.ads.db.definition.condition.AdSlotConditionDefinition;
 import net.mad.ads.db.definition.condition.SiteConditionDefinition;
@@ -69,7 +69,7 @@ public class AdSlotCondition implements Condition {
 	}
 
 	@Override
-	public void addFields(Document bannerDoc, BannerDefinition bannerDefinition) {
+	public void addFields(Document bannerDoc, AdDefinition bannerDefinition) {
 		
 		AdSlotConditionDefinition sdef = null;
 		if (bannerDefinition.hasConditionDefinition(ConditionDefinitions.ADSLOT)) {

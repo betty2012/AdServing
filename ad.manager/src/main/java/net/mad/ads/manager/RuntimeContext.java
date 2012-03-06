@@ -19,7 +19,7 @@ package net.mad.ads.manager;
 
 import java.util.Properties;
 
-import net.mad.ads.base.api.service.banner.CampaignService;
+import net.mad.ads.base.api.service.ad.CampaignService;
 import net.mad.ads.base.api.service.site.PlaceService;
 import net.mad.ads.base.api.service.site.SiteService;
 import net.mad.ads.base.api.service.user.UserService;

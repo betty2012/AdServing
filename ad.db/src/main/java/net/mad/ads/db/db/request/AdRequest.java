@@ -23,8 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.mad.ads.db.enums.BannerFormat;
-import net.mad.ads.db.enums.BannerType;
+import net.mad.ads.db.enums.AdFormat;
+import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
 import net.mad.ads.db.model.State;
@@ -40,9 +40,9 @@ public class AdRequest {
 	/*
 	 * Liste mit Formaten, die geladen werden sollen
 	 */
-	private List<BannerFormat> formats = new ArrayList<BannerFormat>();
+	private List<AdFormat> formats = new ArrayList<AdFormat>();
 	
-	private List<BannerType> types = new ArrayList<BannerType>();
+	private List<AdType> types = new ArrayList<AdType>();
 	
 	/*
 	 * Conditions
@@ -164,19 +164,19 @@ public class AdRequest {
 		this.count = count;
 	}
 
-	public List<BannerFormat> getFormats() {
+	public List<AdFormat> getFormats() {
 		return formats;
 	}
 
-	public void setFormats(List<BannerFormat> formats) {
+	public void setFormats(List<AdFormat> formats) {
 		this.formats = formats;
 	}
 
-	public List<BannerType> getTypes() {
+	public List<AdType> getTypes() {
 		return types;
 	}
 
-	public void setTypes(List<BannerType> types) {
+	public void setTypes(List<AdType> types) {
 		this.types = types;
 	}
 

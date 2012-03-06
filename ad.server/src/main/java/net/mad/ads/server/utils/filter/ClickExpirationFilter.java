@@ -23,7 +23,7 @@ import java.util.Locale;
 import net.mad.ads.base.api.exception.ServiceException;
 import net.mad.ads.base.api.track.Criterion;
 import net.mad.ads.base.api.track.events.EventType;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.ViewExpirationConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.enums.ExpirationResolution;
@@ -41,7 +41,7 @@ import com.google.common.base.Predicate;
  * @author tmarx
  *
  */
-public class ClickExpirationFilter implements Predicate<BannerDefinition> {
+public class ClickExpirationFilter implements Predicate<AdDefinition> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ClickExpirationFilter.class);
 	
@@ -52,7 +52,7 @@ public class ClickExpirationFilter implements Predicate<BannerDefinition> {
 //	}
 	
 	@Override
-	public boolean apply(BannerDefinition banner) {
+	public boolean apply(AdDefinition banner) {
 		// Banner enthält keine View-Beschränkung
 		if (!banner.hasConditionDefinition(ConditionDefinitions.CLICK_EXPIRATION)){
 			return true;

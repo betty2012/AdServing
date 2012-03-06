@@ -37,7 +37,7 @@ import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.condition.Filter;
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.Keyword;
 import net.mad.ads.db.definition.condition.DistanceConditionDefinition;
 import net.mad.ads.db.definition.condition.ExcludeSiteConditionDefinition;
@@ -74,7 +74,7 @@ public class ExcludeSiteCondition implements Condition/*, Filter */{
 	}
 
 	@Override
-	public void addFields(Document bannerDoc, BannerDefinition bannerDefinition) {
+	public void addFields(Document bannerDoc, AdDefinition bannerDefinition) {
 		
 		ExcludeSiteConditionDefinition sdef = null;
 		if (bannerDefinition.hasConditionDefinition(ConditionDefinitions.EXCLUDE_SITE)) {
@@ -91,10 +91,10 @@ public class ExcludeSiteCondition implements Condition/*, Filter */{
 	}
 
 	// @Override
-	public Predicate<BannerDefinition> getFilterPredicate(final AdRequest request) {
-		Predicate<BannerDefinition> predicate = new Predicate<BannerDefinition>() {
+	public Predicate<AdDefinition> getFilterPredicate(final AdRequest request) {
+		Predicate<AdDefinition> predicate = new Predicate<AdDefinition>() {
 			@Override
-			public boolean apply(BannerDefinition type) {
+			public boolean apply(AdDefinition type) {
 				
 				/*
 				if (true) {

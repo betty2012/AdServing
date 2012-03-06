@@ -22,14 +22,14 @@ import java.util.List;
 
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.Keyword;
 import net.mad.ads.db.definition.condition.CountryConditionDefinition;
 import net.mad.ads.db.definition.condition.DistanceConditionDefinition;
-import net.mad.ads.db.definition.impl.banner.extern.ExternBannerDefinition;
-import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
-import net.mad.ads.db.enums.BannerFormat;
-import net.mad.ads.db.enums.BannerType;
+import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
+import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
+import net.mad.ads.db.enums.AdFormat;
+import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
@@ -47,14 +47,14 @@ public class ConditionFilterTest {
 		
 		db.open();
 		
-		BannerDefinition b = new ExternBannerDefinition();
+		AdDefinition b = new ExternAdDefinition();
 		b.setId("1");
 		
 		CountryConditionDefinition cdef = new CountryConditionDefinition();
 		cdef.addCountry(new Country("DE"));
 		b.addConditionDefinition(ConditionDefinitions.COUNTRY, cdef);
 		
-		b.setFormat(BannerFormat.FULL_BANNER);
+		b.setFormat(AdFormat.FULL_BANNER);
 		GeoLocation gl = new GeoLocation(51.4844, 7.2188);
 		DistanceConditionDefinition dcdef = new DistanceConditionDefinition();
 		dcdef.setGeoLocation(gl);
@@ -66,17 +66,17 @@ public class ConditionFilterTest {
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
-		List<BannerFormat> formats = new ArrayList<BannerFormat>();
-		formats.add(BannerFormat.FULL_BANNER);
+		List<AdFormat> formats = new ArrayList<AdFormat>();
+		formats.add(AdFormat.FULL_BANNER);
 		request.setFormats(formats);
-		List<BannerType> types = new ArrayList<BannerType>();
-		types.add(BannerType.EXTERN);
+		List<AdType> types = new ArrayList<AdType>();
+		types.add(AdType.EXTERN);
 		request.setTypes(types);
 		
 		gl = new GeoLocation(51.4863, 7.180);
 		request.setGeoLocation(gl);
 		
-		List<BannerDefinition> result = db.search(request);
+		List<AdDefinition> result = db.search(request);
 		System.out.println(result.size());
 		
 		

@@ -28,8 +28,8 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.enums.BannerFormat;
-import net.mad.ads.db.enums.BannerType;
+import net.mad.ads.db.enums.AdFormat;
+import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.enums.Day;
 import net.mad.ads.db.model.Country;
 import net.mad.ads.db.model.State;
@@ -97,8 +97,8 @@ public class RequestHelper {
 			// Type
 			String type = (String) request.getParameter(RequestHelper.type);
 
-			adRequest.getFormats().add(BannerFormat.fromCompoundName(format));
-			adRequest.getTypes().add(BannerType.forType(Integer.valueOf(type)));
+			adRequest.getFormats().add(AdFormat.fromCompoundName(format));
+			adRequest.getTypes().add(AdType.forType(Integer.valueOf(type)));
 			
 			adRequest.setKeywords(KeywordUtils.getKeywords(request));
 			

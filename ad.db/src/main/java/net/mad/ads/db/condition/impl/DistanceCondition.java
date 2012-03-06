@@ -28,7 +28,7 @@ import com.javadocmd.simplelatlng.util.LengthUnit;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.condition.Filter;
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.DistanceConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
 
@@ -42,10 +42,10 @@ import net.mad.ads.db.enums.ConditionDefinitions;
 public class DistanceCondition implements Condition, Filter {
 
 	@Override
-	public Predicate<BannerDefinition> getFilterPredicate(final AdRequest request) {
-		Predicate<BannerDefinition> predicate = new Predicate<BannerDefinition>() {
+	public Predicate<AdDefinition> getFilterPredicate(final AdRequest request) {
+		Predicate<AdDefinition> predicate = new Predicate<AdDefinition>() {
 			@Override
-			public boolean apply(BannerDefinition type) {
+			public boolean apply(AdDefinition type) {
 				
 				if (!type.hasConditionDefinition(ConditionDefinitions.DISTANCE)) {
 					return true;
@@ -89,7 +89,7 @@ public class DistanceCondition implements Condition, Filter {
 	}
 
 	@Override
-	public void addFields(Document bannerDoc, BannerDefinition bannerDefinition) {
+	public void addFields(Document bannerDoc, AdDefinition bannerDefinition) {
 		// aktuell wird kein Radius Query unterstützt
 	}
 

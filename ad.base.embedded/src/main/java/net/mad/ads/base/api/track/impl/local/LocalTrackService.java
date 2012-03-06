@@ -68,8 +68,8 @@ public class LocalTrackService implements TrackingService {
 
 	@Override
 	public void track(TrackEvent event) throws ServiceException {
-		if (!bannerEvents.containsKey(event.get(EventAttribute.BANNER_ID))) {
-			bannerEvents.put(event.get(EventAttribute.BANNER_ID), new TrackTree<TrackEvent>(1000));
+		if (!bannerEvents.containsKey(event.get(EventAttribute.AD_ID))) {
+			bannerEvents.put(event.get(EventAttribute.AD_ID), new TrackTree<TrackEvent>(1000));
 		}
 		if (!siteEvents.containsKey(event.get(EventAttribute.SITE))) {
 			siteEvents.put(event.get(EventAttribute.SITE), new TrackTree<TrackEvent>(1000));
@@ -77,7 +77,7 @@ public class LocalTrackService implements TrackingService {
 		
 		try {
 			TrackKey key = new TrackKey(java.util.UUID.randomUUID().toString(), DateHelper.parse(event.get(EventAttribute.TIME)).getTime());
-			bannerEvents.get(event.get(EventAttribute.BANNER_ID)).put(key, event);
+			bannerEvents.get(event.get(EventAttribute.AD_ID)).put(key, event);
 			siteEvents.get(event.get(EventAttribute.SITE)).put(key, event);
 		} catch (Exception e) {
 			logger.error("", e);

@@ -21,15 +21,15 @@ import java.io.IOException;
 import java.util.List;
 
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 
 public interface AdDBIndex {
 	public void open() throws IOException;
 	public void close() throws IOException;
 	public void reopen () throws IOException;
-	public void addBanner (BannerDefinition banner) throws IOException;
+	public void addBanner (AdDefinition banner) throws IOException;
 	public void deleteBanner (String id) throws IOException;
-	public List<BannerDefinition> search (AdRequest request) throws IOException;
+	public List<AdDefinition> search (AdRequest request) throws IOException;
 	
 	public int size ();
 }

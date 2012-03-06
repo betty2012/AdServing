@@ -153,7 +153,7 @@ public class H2Test {
 		event.setTime(created.getTime().getTime());
 		event.setCampaign("c1");
 		event.setSite("demo Site");
-		event.put(EventAttribute.BANNER_ID, "b1");
+		event.put(EventAttribute.AD_ID, "b1");
 		event.setUser("user1");
 		event.setId(id);
 		event.setIp("ip1");

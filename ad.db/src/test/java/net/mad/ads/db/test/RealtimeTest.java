@@ -26,12 +26,12 @@ import org.junit.Test;
 import net.mad.ads.common.benchmark.StopWatch;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.CountryConditionDefinition;
 import net.mad.ads.db.definition.condition.StateConditionDefinition;
-import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
-import net.mad.ads.db.enums.BannerFormat;
-import net.mad.ads.db.enums.BannerType;
+import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
+import net.mad.ads.db.enums.AdFormat;
+import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.model.Country;
 
@@ -52,12 +52,12 @@ public class RealtimeTest extends TestCase {
 		StopWatch sw = new StopWatch();
 		sw.start();
 		for (int i = 0; i < 500; i++) {
-			BannerDefinition b = new ImageBannerDefinition();
+			AdDefinition b = new ImageAdDefinition();
 			b.setId("" + (i+1));
 			CountryConditionDefinition sdef = new CountryConditionDefinition();
 			sdef.addCountry(new Country("DE"));
 			b.addConditionDefinition(ConditionDefinitions.COUNTRY, sdef);
-			b.setFormat(BannerFormat.FULL_BANNER);
+			b.setFormat(AdFormat.FULL_BANNER);
 			db.addBanner(b);
 		}
 		

@@ -20,7 +20,7 @@ package net.mad.ads.manager.web.pages.manager.campaign.data;
 import net.mad.ads.base.api.model.ads.Campaign;
 import net.mad.ads.base.api.model.site.Place;
 import net.mad.ads.base.api.model.site.Site;
-import net.mad.ads.base.api.service.banner.CampaignService;
+import net.mad.ads.base.api.service.ad.CampaignService;
 import net.mad.ads.base.api.service.site.PlaceService;
 import net.mad.ads.base.api.service.site.SiteService;
 import net.mad.ads.manager.RuntimeContext;

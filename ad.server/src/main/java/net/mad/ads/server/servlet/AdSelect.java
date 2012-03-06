@@ -27,17 +27,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.mad.ads.base.api.track.events.ImpressionTrackEvent;
 import net.mad.ads.base.api.track.events.TrackEvent;
-import net.mad.ads.db.definition.BannerDefinition;
-import net.mad.ads.db.enums.BannerType;
+import net.mad.ads.db.definition.AdDefinition;
+import net.mad.ads.db.enums.AdType;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;
 import net.mad.ads.server.utils.helper.TrackingHelper;
 import net.mad.ads.server.utils.http.listener.AdContextListener;
-import net.mad.ads.server.utils.renderer.impl.ExpandableImageBannerDefinitionRenderer;
-import net.mad.ads.server.utils.renderer.impl.ExternBannerDefinitionRenderer;
-import net.mad.ads.server.utils.renderer.impl.FlashBannerDefinitionRenderer;
-import net.mad.ads.server.utils.renderer.impl.ImageBannerDefinitionRenderer;
-import net.mad.ads.server.utils.selection.BannerProvider;
+import net.mad.ads.server.utils.renderer.impl.ExpandableImageAdDefinitionRenderer;
+import net.mad.ads.server.utils.renderer.impl.ExternAdDefinitionRenderer;
+import net.mad.ads.server.utils.renderer.impl.FlashAdDefinitionRenderer;
+import net.mad.ads.server.utils.renderer.impl.ImageAdDefinitionRenderer;
+import net.mad.ads.server.utils.selection.AdProvider;
 
 /**
  * Servlet implementation class AdSelect
@@ -81,7 +81,7 @@ public class AdSelect extends HttpServlet {
 			 * 
 			 * Aktuell wird dies zufällig gemacht!
 			 */
-			BannerDefinition banner = BannerProvider.getInstance().getBanner(context, request);
+			AdDefinition banner = AdProvider.getInstance().getBanner(context, request);
 			
 			StringBuilder sb = new StringBuilder();
 			if (banner != null) {
@@ -92,14 +92,14 @@ public class AdSelect extends HttpServlet {
 				 * z.B. Flashbanner auf Imagebanner
 				 *  
 				 */
-				if (banner.getType().equals(BannerType.EXTERN)) {
-					sb.append(ExternBannerDefinitionRenderer.getInstance().render(banner, request));
-				} else if (banner.getType().equals(BannerType.IMAGE)) {
-					sb.append(ImageBannerDefinitionRenderer.getInstance().render(banner, request));
-				} else if (banner.getType().equals(BannerType.FLASH)) {
-					sb.append(FlashBannerDefinitionRenderer.getInstance().render(banner, request));
-				} else if (banner.getType().equals(BannerType.EXPANDABLEIMAGE)) {
-					sb.append(ExpandableImageBannerDefinitionRenderer.getInstance().render(banner, request));
+				if (banner.getType().equals(AdType.EXTERN)) {
+					sb.append(ExternAdDefinitionRenderer.getInstance().render(banner, request));
+				} else if (banner.getType().equals(AdType.IMAGE)) {
+					sb.append(ImageAdDefinitionRenderer.getInstance().render(banner, request));
+				} else if (banner.getType().equals(AdType.FLASH)) {
+					sb.append(FlashAdDefinitionRenderer.getInstance().render(banner, request));
+				} else if (banner.getType().equals(AdType.EXPANDABLEIMAGE)) {
+					sb.append(ExpandableImageAdDefinitionRenderer.getInstance().render(banner, request));
 				}
 				
 				TrackEvent trackEvent = new ImpressionTrackEvent();

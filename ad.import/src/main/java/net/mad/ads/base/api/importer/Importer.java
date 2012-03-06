@@ -43,7 +43,7 @@ import net.mad.ads.base.api.importer.job.jobs.UpdateJob;
 import net.mad.ads.base.api.importer.reader.AdXmlReader;
 import net.mad.ads.common.util.Strings;
 import net.mad.ads.db.db.AdDB;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 
 
 public class Importer {
@@ -141,12 +141,12 @@ public class Importer {
 					addb.deleteBanner(((DeleteJob)job).getId());
 				} else if (job.getType().equals(Job.Type.Import)) {
 					String bannerdef = ((ImportJob)job).getBannerDefinition();
-					BannerDefinition banner = AdXmlReader.readBannerDefinition(this.basePath + "/import/" + bannerdef);
+					AdDefinition banner = AdXmlReader.readBannerDefinition(this.basePath + "/import/" + bannerdef);
 					
 					addb.addBanner(banner);
 				} else if (job.getType().equals(Job.Type.Update)) {
 					String bannerdef = ((UpdateJob)job).getBannerDefinition();
-					BannerDefinition banner = AdXmlReader.readBannerDefinition(this.basePath + "/import/" + bannerdef);
+					AdDefinition banner = AdXmlReader.readBannerDefinition(this.basePath + "/import/" + bannerdef);
 					
 					addb.deleteBanner(banner.getId());
 					addb.addBanner(banner);
