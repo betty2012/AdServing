@@ -20,7 +20,8 @@ package net.mad.ads.db.definition.impl.ad.image;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.impl.ad.AbstractAdDefinition;
 import net.mad.ads.db.enums.AdFormat;
-import net.mad.ads.db.enums.AdType;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.services.AdTypes;
 
 /**
  * Einfaches Imagebanner
@@ -41,7 +42,7 @@ public class ImageAdDefinition extends AbstractAdDefinition {
 		super(type);
 	}
 	public ImageAdDefinition () {
-		super(AdType.IMAGE);
+		super(AdTypes.forType(2));
 	}
 	
 	public final String getImageUrl() {

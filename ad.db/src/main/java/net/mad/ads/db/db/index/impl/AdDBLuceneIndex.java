@@ -47,7 +47,7 @@ import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.db.search.AdCollector;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.enums.AdFormat;
-import net.mad.ads.db.enums.AdType;
+import net.mad.ads.db.model.type.AdType;
 import net.mad.ads.db.utils.DocumentHelper;
 import net.mad.ads.db.utils.QueryHelper;
 
@@ -128,7 +128,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 		BooleanQuery typeQuery = new BooleanQuery();
 		for (AdType type : request.getTypes()) {
 			TermQuery tq = new TermQuery(new Term(
-					AdDBConstants.ADDB_AD_TYPE, type.name()));
+					AdDBConstants.ADDB_AD_TYPE, type.getName()));
 			typeQuery.add(tq, Occur.SHOULD);
 		}
 		mainQuery.add(typeQuery, Occur.MUST);

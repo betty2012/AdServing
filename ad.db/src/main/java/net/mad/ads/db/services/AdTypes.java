@@ -27,4 +27,8 @@ public class AdTypes {
 	public static AdType forType (int type) {
 		return idLookup.get(type);
 	}
+	
+	public static AdType forName (String name) {
+		return nameLookup.get(name);
+	}
 }
