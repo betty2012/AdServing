@@ -53,15 +53,15 @@ import org.slf4j.LoggerFactory;
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.index.AdDBIndex;
-import net.mad.ads.db.db.index.AdDBLuceneIndex;
+import net.mad.ads.db.db.index.impl.AdDBLuceneIndex;
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.db.search.BannerCollector;
+import net.mad.ads.db.db.search.AdCollector;
 import net.mad.ads.db.db.store.AdDBStore;
 import net.mad.ads.db.db.store.impl.AdDBBDBStore;
 import net.mad.ads.db.db.store.impl.AdDBMapStore;
-import net.mad.ads.db.definition.BannerDefinition;
-import net.mad.ads.db.enums.BannerFormat;
-import net.mad.ads.db.enums.BannerType;
+import net.mad.ads.db.definition.AdDefinition;
+import net.mad.ads.db.enums.AdFormat;
+import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.utils.ConditionHelper;
 import net.mad.ads.db.utils.DocumentHelper;
 import net.mad.ads.db.utils.QueryHelper;
@@ -109,7 +109,7 @@ public class AdDB {
 	 * @param banner
 	 * @throws IOException
 	 */
-	public void addBanner (BannerDefinition banner) throws IOException {
+	public void addBanner (AdDefinition banner) throws IOException {
 		this.adIndex.addBanner(banner);
 		this.adStore.addBanner(banner);
 	}
@@ -131,8 +131,8 @@ public class AdDB {
 	 * @return
 	 * @throws IOException
 	 */
-	public List<BannerDefinition> search (AdRequest request) throws IOException {
-		List<BannerDefinition> result = this.adIndex.search(request);
+	public List<AdDefinition> search (AdRequest request) throws IOException {
+		List<AdDefinition> result = this.adIndex.search(request);
 		
 		/*
 		 * Zu letzt wird das Ergebnis gefiltert
@@ -152,7 +152,7 @@ public class AdDB {
 	 * @param id Die ID des Banners
 	 * @return
 	 */
-	public BannerDefinition getBanner (String id) {
+	public AdDefinition getBanner (String id) {
 		return this.adStore.getBanner(id);
 	}
 	

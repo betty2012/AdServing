@@ -21,7 +21,7 @@ package net.mad.ads.db.condition;
 import com.google.common.base.Predicate;
 
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 
 /**
  * Filter werden nach der Suche  über das Ergebnis laufen gelassen. Dadurch können 
@@ -37,5 +37,5 @@ public interface Filter {
 	 * @param request
 	 * @return
 	 */
-	public Predicate<BannerDefinition> getFilterPredicate (AdRequest request);
+	public Predicate<AdDefinition> getFilterPredicate (AdRequest request);
 }

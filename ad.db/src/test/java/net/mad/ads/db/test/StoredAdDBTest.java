@@ -24,10 +24,10 @@ import java.util.List;
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.BannerDefinition;
-import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
-import net.mad.ads.db.enums.BannerFormat;
-import net.mad.ads.db.enums.BannerType;
+import net.mad.ads.db.definition.AdDefinition;
+import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
+import net.mad.ads.db.enums.AdFormat;
+import net.mad.ads.db.enums.AdType;
 
 public class StoredAdDBTest {
 
@@ -39,23 +39,23 @@ public class StoredAdDBTest {
 		AdDBManager.getInstance().getContext().tempDir = "D:/www/applicationData/adserver/temp/";
 		AdDBManager.getInstance().getAdDB().open();
 		
-		ImageBannerDefinition ib = new ImageBannerDefinition();
-		ib.setFormat(BannerFormat.MEDIUM_RECTANGLE);
+		ImageAdDefinition ib = new ImageAdDefinition();
+		ib.setFormat(AdFormat.MEDIUM_RECTANGLE);
 		ib.setId("1");
 		AdDBManager.getInstance().getAdDB().addBanner(ib);
 		
-		ib = new ImageBannerDefinition();
-		ib.setFormat(BannerFormat.MEDIUM_RECTANGLE);
+		ib = new ImageAdDefinition();
+		ib.setFormat(AdFormat.MEDIUM_RECTANGLE);
 		ib.setId("2");
 		AdDBManager.getInstance().getAdDB().addBanner(ib);
 		
 		AdDBManager.getInstance().getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
-		request.getFormats().add(BannerFormat.MEDIUM_RECTANGLE);
-		request.getTypes().add(BannerType.IMAGE);
+		request.getFormats().add(AdFormat.MEDIUM_RECTANGLE);
+		request.getTypes().add(AdType.IMAGE);
 		
-		List<BannerDefinition> result = AdDBManager.getInstance().getAdDB().search(request);
+		List<AdDefinition> result = AdDBManager.getInstance().getAdDB().search(request);
 		
 		System.out.println(result.size());
 		

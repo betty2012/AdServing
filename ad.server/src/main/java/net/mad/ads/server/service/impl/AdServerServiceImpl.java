@@ -19,7 +19,7 @@ package net.mad.ads.server.service.impl;
 
 
 import net.mad.ads.base.api.service.adserver.AdServerService;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.server.utils.RuntimeContext;
 
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class AdServerServiceImpl implements AdServerService {
 	private static final Logger logger = LoggerFactory.getLogger(AdServerServiceImpl.class);
 	
 	@Override
-	public boolean add(BannerDefinition banner) {
+	public boolean add(AdDefinition banner) {
 		try {
 			RuntimeContext.getAdDB().addBanner(banner);
 			

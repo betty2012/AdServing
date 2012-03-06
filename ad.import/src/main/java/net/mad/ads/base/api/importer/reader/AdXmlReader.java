@@ -27,20 +27,20 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 
 import net.mad.ads.db.AdDBConstants;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.Keyword;
-import net.mad.ads.db.definition.impl.banner.expandable.ExpandableImageBannerDefinition;
-import net.mad.ads.db.definition.impl.banner.extern.ExternBannerDefinition;
-import net.mad.ads.db.definition.impl.banner.flash.FlashBannerDefinition;
-import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
-import net.mad.ads.db.enums.BannerFormat;
+import net.mad.ads.db.definition.impl.ad.expandable.ExpandableImageAdDefinition;
+import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
+import net.mad.ads.db.definition.impl.ad.flash.FlashAdDefinition;
+import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
+import net.mad.ads.db.enums.AdFormat;
 import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
 import net.mad.ads.db.model.State;
-import net.mad.ads.db.utils.mapper.BannerTypeMapping;
+import net.mad.ads.db.utils.mapper.AdTypeMapping;
 
 public class AdXmlReader {
-	public static BannerDefinition readBannerDefinition (String filename) throws IOException{
+	public static AdDefinition readBannerDefinition (String filename) throws IOException{
 		
 		SAXBuilder builder = new SAXBuilder();
 	    Document doc;
@@ -51,11 +51,11 @@ public class AdXmlReader {
 		    Element root = doc.getRootElement();
 		    
 		    String type = root.getAttributeValue("type");
-		    BannerDefinition banner = BannerTypeMapping.getInstance().getDefinition(type);
+		    AdDefinition banner = AdTypeMapping.getInstance().getDefinition(type);
 		    
 		    banner.setId(root.getAttributeValue("id"));
 		    Element fe = root.getChild("format");
-		    banner.setFormat(BannerFormat.valueOf(fe.getAttributeValue("name")));
+		    banner.setFormat(AdFormat.valueOf(fe.getAttributeValue("name")));
 		    
 		    fe = root.getChild("targetUrl");
 		    banner.setTargetUrl(fe.getTextTrim());
@@ -91,7 +91,7 @@ public class AdXmlReader {
 	
 	
 	
-	private static BannerDefinition processBannerType (BannerDefinition definition, Element banner) {
+	private static AdDefinition processBannerType (AdDefinition definition, Element banner) {
 		
 		switch (definition.getType()) {
 			case IMAGE:
@@ -108,42 +108,42 @@ public class AdXmlReader {
 		return definition;
 	}
 	
-	private static BannerDefinition processExpandableImageBannerDefinition (BannerDefinition definition, Element banner) {
+	private static AdDefinition processExpandableImageBannerDefinition (AdDefinition definition, Element banner) {
 		
 		
-		((ExpandableImageBannerDefinition)definition).setExpandedImageUrl(banner.getChildTextTrim("expandedImageUrl"));
-		((ExpandableImageBannerDefinition)definition).setExpandedImageWidth(banner.getChildTextTrim("expandedImageWidth"));
-		((ExpandableImageBannerDefinition)definition).setExpandedImageHeight(banner.getChildTextTrim("expandedImageHeight"));
-		
-		return definition;
-	}
-	
-	private static BannerDefinition processImageBannerDefinition (BannerDefinition definition, Element banner) {
-		
-		((ImageBannerDefinition)definition).setImageUrl(banner.getChildTextTrim("imageUrl"));
+		((ExpandableImageAdDefinition)definition).setExpandedImageUrl(banner.getChildTextTrim("expandedImageUrl"));
+		((ExpandableImageAdDefinition)definition).setExpandedImageWidth(banner.getChildTextTrim("expandedImageWidth"));
+		((ExpandableImageAdDefinition)definition).setExpandedImageHeight(banner.getChildTextTrim("expandedImageHeight"));
 		
 		return definition;
 	}
 	
-	private static BannerDefinition processFlashBannerDefinition (BannerDefinition definition, Element banner) {
+	private static AdDefinition processImageBannerDefinition (AdDefinition definition, Element banner) {
+		
+		((ImageAdDefinition)definition).setImageUrl(banner.getChildTextTrim("imageUrl"));
+		
+		return definition;
+	}
+	
+	private static AdDefinition processFlashBannerDefinition (AdDefinition definition, Element banner) {
 		// Url auf den Flashfilm
-		((FlashBannerDefinition)definition).setMovieUrl(banner.getChildTextTrim("movieUrl"));
+		((FlashAdDefinition)definition).setMovieUrl(banner.getChildTextTrim("movieUrl"));
 		// Die minimale Flashversion
 		if (banner.getChild("minFlashVersion") != null) {
-			((FlashBannerDefinition)definition).setMinFlashVersion(Integer.parseInt(banner.getChildTextTrim("minFlashVersion")));
+			((FlashAdDefinition)definition).setMinFlashVersion(Integer.parseInt(banner.getChildTextTrim("minFlashVersion")));
 		}
 		// Fallback für das Imagebanner
-		((FlashBannerDefinition)definition).setFallbackImageUrl(banner.getChildTextTrim("fallbackImageUrl"));
+		((FlashAdDefinition)definition).setFallbackImageUrl(banner.getChildTextTrim("fallbackImageUrl"));
 		
 		return definition;
 	}
 	
-	private static BannerDefinition processExternBannerDefinition (BannerDefinition definition, Element banner) {
+	private static AdDefinition processExternBannerDefinition (AdDefinition definition, Element banner) {
 		
 		Element e = banner.getChild("externContent");
 		if (e != null) {
 			
-			((ExternBannerDefinition)definition).setExternContent(e.getText());
+			((ExternAdDefinition)definition).setExternContent(e.getText());
 		}
 		
 		return definition;

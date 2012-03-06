@@ -25,7 +25,7 @@ import org.apache.lucene.document.Field;
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.condition.Condition;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
 import net.mad.ads.db.model.State;
@@ -43,7 +43,7 @@ public class DocumentHelper {
 		return INSTANCE;
 	}
 	
-	public Document getBannerDocument (BannerDefinition banner) {
+	public Document getBannerDocument (AdDefinition banner) {
 		Document doc = new Document();
 		doc.add(new Field(AdDBConstants.ADDB_BANNER_ID, String.valueOf(banner.getId()), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
 		doc.add(new Field(AdDBConstants.ADDB_BANNER_FORMAT, banner.getFormat().getCompoundName(), Field.Store.NO, Field.Index.ANALYZED));
@@ -60,7 +60,7 @@ public class DocumentHelper {
 		return doc;
 	}
 	
-	private Document addConditions (BannerDefinition banner, Document doc) {
+	private Document addConditions (AdDefinition banner, Document doc) {
 		
 		for (Condition condition : AdDBManager.getInstance().getConditions()) {
 			condition.addFields(doc, banner);

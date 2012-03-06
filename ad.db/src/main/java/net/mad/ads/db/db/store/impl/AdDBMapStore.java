@@ -26,17 +26,17 @@ import org.slf4j.LoggerFactory;
 
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.store.AdDBStore;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 
 public class AdDBMapStore implements AdDBStore {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdDBMapStore.class);
 	
-	private Map<String, BannerDefinition> banners = null;
+	private Map<String, AdDefinition> banners = null;
 	
 	@Override
 	public void open() throws IOException {
-		this.banners = new HashMap<String, BannerDefinition>();
+		this.banners = new HashMap<String, AdDefinition>();
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class AdDBMapStore implements AdDBStore {
 	}
 
 	@Override
-	public void addBanner(BannerDefinition banner) throws IOException {
+	public void addBanner(AdDefinition banner) throws IOException {
 		this.banners.put(banner.getId(), banner);
 	}
 
@@ -55,7 +55,7 @@ public class AdDBMapStore implements AdDBStore {
 	}
 
 	@Override
-	public BannerDefinition getBanner(String id) {
+	public AdDefinition getBanner(String id) {
 		return this.banners.get(id);
 	}
 

@@ -21,9 +21,9 @@ package net.mad.ads.base.api.render.impl.freemarker.test;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.mad.ads.base.api.render.BannerRenderer;
+import net.mad.ads.base.api.render.AdRenderer;
 import net.mad.ads.base.api.render.RenderContext;
-import net.mad.ads.base.api.render.impl.freemarker.FreemarkerBannerRenderer;
+import net.mad.ads.base.api.render.impl.freemarker.FreemarkerAdRenderer;
 
 
 public class FmTest {
@@ -34,7 +34,7 @@ public class FmTest {
 		context.put("server", "www.myserver1.de");
 		
 		
-		BannerRenderer tm = new FreemarkerBannerRenderer();
+		AdRenderer tm = new FreemarkerAdRenderer();
 		tm.init("testdata/templates");
 		tm.registerTemplate("test", "test.ftl");
 		

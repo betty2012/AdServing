@@ -22,7 +22,7 @@ import java.util.List;
 
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.Keyword;
 import net.mad.ads.db.definition.condition.CountryConditionDefinition;
 import net.mad.ads.db.definition.condition.DateConditionDefinition;
@@ -31,10 +31,10 @@ import net.mad.ads.db.definition.condition.KeywordConditionDefinition;
 import net.mad.ads.db.definition.condition.SiteConditionDefinition;
 import net.mad.ads.db.definition.condition.StateConditionDefinition;
 import net.mad.ads.db.definition.condition.TimeConditionDefinition;
-import net.mad.ads.db.definition.impl.banner.extern.ExternBannerDefinition;
-import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
-import net.mad.ads.db.enums.BannerFormat;
-import net.mad.ads.db.enums.BannerType;
+import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
+import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
+import net.mad.ads.db.enums.AdFormat;
+import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
@@ -51,7 +51,7 @@ public class SearchTest {
 		
 		db.open();
 		
-		BannerDefinition b = new ImageBannerDefinition();
+		AdDefinition b = new ImageAdDefinition();
 		b.setId("1");
 		
 		DayConditionDefinition ddef = new DayConditionDefinition();
@@ -59,22 +59,22 @@ public class SearchTest {
 		b.addConditionDefinition(ConditionDefinitions.DAY, ddef);
 		
 		
-		b.setFormat(BannerFormat.FULL_BANNER);
+		b.setFormat(AdFormat.FULL_BANNER);
 		db.addBanner(b);
 		
 		
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
-		List<BannerFormat> formats = new ArrayList<BannerFormat>();
-		formats.add(BannerFormat.FULL_BANNER);
+		List<AdFormat> formats = new ArrayList<AdFormat>();
+		formats.add(AdFormat.FULL_BANNER);
 		request.setFormats(formats);
-		List<BannerType> types = new ArrayList<BannerType>();
-		types.add(BannerType.IMAGE);
+		List<AdType> types = new ArrayList<AdType>();
+		types.add(AdType.IMAGE);
 		request.setTypes(types);
 		request.setDay(Day.Monday);
 		
-		List<BannerDefinition> result = db.search(request);
+		List<AdDefinition> result = db.search(request);
 		System.out.println(result);
 		
 		request.setDay(Day.Saturday);
@@ -91,28 +91,28 @@ public class SearchTest {
 		
 		db.open();
 		
-		BannerDefinition b = new ImageBannerDefinition();
+		AdDefinition b = new ImageAdDefinition();
 		b.setId("1");
 		
 		StateConditionDefinition sdef = new StateConditionDefinition();
 		sdef.addState(new State("BB"));
 		b.addConditionDefinition(ConditionDefinitions.STATE, sdef);
 		
-		b.setFormat(BannerFormat.FULL_BANNER);
+		b.setFormat(AdFormat.FULL_BANNER);
 		db.addBanner(b);
 		
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
-		List<BannerFormat> formats = new ArrayList<BannerFormat>();
-		formats.add(BannerFormat.FULL_BANNER);
+		List<AdFormat> formats = new ArrayList<AdFormat>();
+		formats.add(AdFormat.FULL_BANNER);
 		request.setFormats(formats);
-		List<BannerType> types = new ArrayList<BannerType>();
-		types.add(BannerType.IMAGE);
+		List<AdType> types = new ArrayList<AdType>();
+		types.add(AdType.IMAGE);
 		request.setTypes(types);
 		request.setState(new State("BE"));
 		
-		List<BannerDefinition> result = db.search(request);
+		List<AdDefinition> result = db.search(request);
 		System.out.println(result);
 		
 		request.setState(new State("BB"));
@@ -129,7 +129,7 @@ public class SearchTest {
 		
 		db.open();
 		
-		BannerDefinition b = new ImageBannerDefinition();
+		AdDefinition b = new ImageAdDefinition();
 		b.setId("1");
 		
 		TimeConditionDefinition tdef = new TimeConditionDefinition();
@@ -138,21 +138,21 @@ public class SearchTest {
 		
 		b.addConditionDefinition(ConditionDefinitions.TIME, tdef);
 
-		b.setFormat(BannerFormat.FULL_BANNER);
+		b.setFormat(AdFormat.FULL_BANNER);
 		db.addBanner(b);
 		
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
-		List<BannerFormat> formats = new ArrayList<BannerFormat>();
-		formats.add(BannerFormat.FULL_BANNER);
+		List<AdFormat> formats = new ArrayList<AdFormat>();
+		formats.add(AdFormat.FULL_BANNER);
 		request.setFormats(formats);
-		List<BannerType> types = new ArrayList<BannerType>();
-		types.add(BannerType.IMAGE);
+		List<AdType> types = new ArrayList<AdType>();
+		types.add(AdType.IMAGE);
 		request.setTypes(types);
 		request.setTime("0800");
 		
-		List<BannerDefinition> result = db.search(request);
+		List<AdDefinition> result = db.search(request);
 		System.out.println(result);
 		
 		request.setTime("1100");
@@ -168,38 +168,38 @@ public class SearchTest {
 		
 		db.open();
 		
-		BannerDefinition b = new ImageBannerDefinition();
+		AdDefinition b = new ImageAdDefinition();
 		b.setId("1");
 		
 		DateConditionDefinition dateDef = new DateConditionDefinition();
 		dateDef.addPeriod("20100623", "20100723");
 		b.addConditionDefinition(ConditionDefinitions.DATE, dateDef);
 		
-		b.setFormat(BannerFormat.FULL_BANNER);
+		b.setFormat(AdFormat.FULL_BANNER);
 		db.addBanner(b);
 		
-		b = new ImageBannerDefinition();
+		b = new ImageAdDefinition();
 		b.setId("1");
 		
 		dateDef = new DateConditionDefinition();
 		dateDef.addPeriod("20100623", null);
 		b.addConditionDefinition(ConditionDefinitions.DATE, dateDef);
 		
-		b.setFormat(BannerFormat.FULL_BANNER);
+		b.setFormat(AdFormat.FULL_BANNER);
 		db.addBanner(b);
 		
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
-		List<BannerFormat> formats = new ArrayList<BannerFormat>();
-		formats.add(BannerFormat.FULL_BANNER);
+		List<AdFormat> formats = new ArrayList<AdFormat>();
+		formats.add(AdFormat.FULL_BANNER);
 		request.setFormats(formats);
-		List<BannerType> types = new ArrayList<BannerType>();
-		types.add(BannerType.IMAGE);
+		List<AdType> types = new ArrayList<AdType>();
+		types.add(AdType.IMAGE);
 		request.setTypes(types);
 		request.setDate("20100623");
 		
-		List<BannerDefinition> result = db.search(request);
+		List<AdDefinition> result = db.search(request);
 		System.out.println(result);
 		
 		request.setDate("20100724");
@@ -215,28 +215,28 @@ public class SearchTest {
 		
 		db.open();
 		
-		BannerDefinition b = new ImageBannerDefinition();
+		AdDefinition b = new ImageAdDefinition();
 		b.setId("1");
 		
 		CountryConditionDefinition cdef = new CountryConditionDefinition();
 		cdef.addCountry(new Country("DE"));
 		b.addConditionDefinition(ConditionDefinitions.COUNTRY, cdef);
 		
-		b.setFormat(BannerFormat.FULL_BANNER);
+		b.setFormat(AdFormat.FULL_BANNER);
 		db.addBanner(b);
 		
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
-		List<BannerFormat> formats = new ArrayList<BannerFormat>();
-		formats.add(BannerFormat.FULL_BANNER);
+		List<AdFormat> formats = new ArrayList<AdFormat>();
+		formats.add(AdFormat.FULL_BANNER);
 		request.setFormats(formats);
-		List<BannerType> types = new ArrayList<BannerType>();
-		types.add(BannerType.IMAGE);
+		List<AdType> types = new ArrayList<AdType>();
+		types.add(AdType.IMAGE);
 		request.setTypes(types);
 		request.setCountry(new Country("DE"));
 		
-		List<BannerDefinition> result = db.search(request);
+		List<AdDefinition> result = db.search(request);
 		System.out.println(result);
 		
 		request.setCountry(new Country("UK"));
@@ -253,14 +253,14 @@ public class SearchTest {
 		
 		db.open();
 		
-		BannerDefinition b = new ExternBannerDefinition();
+		AdDefinition b = new ExternAdDefinition();
 		b.setId("1");
 
 		CountryConditionDefinition cdef = new CountryConditionDefinition();
 		cdef.addCountry(new Country("DE"));
 		b.addConditionDefinition(ConditionDefinitions.COUNTRY, cdef);
 
-		b.setFormat(BannerFormat.FULL_BANNER);
+		b.setFormat(AdFormat.FULL_BANNER);
 		Keyword kw = new Keyword("Esprit");
 		KeywordConditionDefinition kdef = new KeywordConditionDefinition();
 		kdef.addKeyword(kw);
@@ -270,17 +270,17 @@ public class SearchTest {
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
-		List<BannerFormat> formats = new ArrayList<BannerFormat>();
-		formats.add(BannerFormat.FULL_BANNER);
+		List<AdFormat> formats = new ArrayList<AdFormat>();
+		formats.add(AdFormat.FULL_BANNER);
 		request.setFormats(formats);
-		List<BannerType> types = new ArrayList<BannerType>();
-		types.add(BannerType.EXTERN);
+		List<AdType> types = new ArrayList<AdType>();
+		types.add(AdType.EXTERN);
 		request.setTypes(types);
 		
 		request.getKeywords().add("Puma");
 //		request.getKeywords().add("Esprit");
 		
-		List<BannerDefinition> result = db.search(request);
+		List<AdDefinition> result = db.search(request);
 		System.out.println(result.size());
 		
 		db.close();
@@ -292,13 +292,13 @@ public class SearchTest {
 		
 		db.open();
 		
-		BannerDefinition b = new ExternBannerDefinition();
+		AdDefinition b = new ExternAdDefinition();
 		b.setId("1");
 		
 		CountryConditionDefinition cdef = new CountryConditionDefinition();
 		cdef.addCountry(new Country("DE"));
 		b.addConditionDefinition(ConditionDefinitions.COUNTRY, cdef);
-		b.setFormat(BannerFormat.FULL_BANNER);
+		b.setFormat(AdFormat.FULL_BANNER);
 
 		SiteConditionDefinition sdef = new SiteConditionDefinition();
 		sdef.addSite("test_site");
@@ -309,15 +309,15 @@ public class SearchTest {
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
-		List<BannerFormat> formats = new ArrayList<BannerFormat>();
-		formats.add(BannerFormat.FULL_BANNER);
+		List<AdFormat> formats = new ArrayList<AdFormat>();
+		formats.add(AdFormat.FULL_BANNER);
 		request.setFormats(formats);
-		List<BannerType> types = new ArrayList<BannerType>();
-		types.add(BannerType.EXTERN);
+		List<AdType> types = new ArrayList<AdType>();
+		types.add(AdType.EXTERN);
 		request.setTypes(types);
 		
 		
-		List<BannerDefinition> result = db.search(request);
+		List<AdDefinition> result = db.search(request);
 		System.out.println(result.size());
 		
 		request.setSite("demo_site");

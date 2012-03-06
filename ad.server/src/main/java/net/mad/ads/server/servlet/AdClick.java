@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.mad.ads.base.api.track.events.ClickTrackEvent;
 import net.mad.ads.base.api.track.events.TrackEvent;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;
 import net.mad.ads.server.utils.helper.TrackingHelper;
@@ -74,7 +74,7 @@ public class AdClick extends HttpServlet {
 			IOException {
 		String id = (String) request.getParameter("id");
 		
-		BannerDefinition banner = RuntimeContext.getAdDB().getBanner(id);
+		AdDefinition banner = RuntimeContext.getAdDB().getBanner(id);
 		
 		try {
 			AdContext context = AdContextListener.ADCONTEXT.get();

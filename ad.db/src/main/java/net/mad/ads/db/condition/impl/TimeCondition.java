@@ -29,7 +29,7 @@ import org.apache.lucene.search.BooleanClause.Occur;
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.TimeConditionDefinition;
 import net.mad.ads.db.definition.condition.TimeConditionDefinition.Period;
 import net.mad.ads.db.enums.ConditionDefinitions;
@@ -83,7 +83,7 @@ public class TimeCondition implements Condition {
 	}
 
 	@Override
-	public void addFields(Document bannerDoc, BannerDefinition bannerDefinition) {
+	public void addFields(Document bannerDoc, AdDefinition bannerDefinition) {
 		TimeConditionDefinition tdef = null;
 		if (bannerDefinition.hasConditionDefinition(ConditionDefinitions.TIME)) {
 			tdef = (TimeConditionDefinition) bannerDefinition.getConditionDefinition(ConditionDefinitions.TIME);

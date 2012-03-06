@@ -29,7 +29,7 @@ import org.apache.lucene.search.BooleanClause.Occur;
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.DayConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.enums.Day;
@@ -72,7 +72,7 @@ public class DayCondition implements Condition {
 	}
 
 	@Override
-	public void addFields(Document bannerDoc, BannerDefinition bannerDefinition) {
+	public void addFields(Document bannerDoc, AdDefinition bannerDefinition) {
 		DayConditionDefinition ddef = null;
 		
 		if (bannerDefinition.hasConditionDefinition(ConditionDefinitions.DAY)) {

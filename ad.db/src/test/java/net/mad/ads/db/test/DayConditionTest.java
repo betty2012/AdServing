@@ -24,13 +24,13 @@ import org.junit.Test;
 
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.CountryConditionDefinition;
 import net.mad.ads.db.definition.condition.DayConditionDefinition;
 import net.mad.ads.db.definition.condition.StateConditionDefinition;
-import net.mad.ads.db.definition.impl.banner.image.ImageBannerDefinition;
-import net.mad.ads.db.enums.BannerFormat;
-import net.mad.ads.db.enums.BannerType;
+import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
+import net.mad.ads.db.enums.AdFormat;
+import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.enums.Day;
 
@@ -48,37 +48,37 @@ public class DayConditionTest extends TestCase {
 		
 		db.open();
 		
-		BannerDefinition b = new ImageBannerDefinition();
+		AdDefinition b = new ImageAdDefinition();
 		b.setId("1");
 		
 		DayConditionDefinition sdef = new DayConditionDefinition();
 		sdef.addDay(Day.Monday);
 		sdef.addDay(Day.Wednesday);
 		b.addConditionDefinition(ConditionDefinitions.DAY, sdef);
-		b.setFormat(BannerFormat.FULL_BANNER);
+		b.setFormat(AdFormat.FULL_BANNER);
 		db.addBanner(b);
 		
-		b = new ImageBannerDefinition();
+		b = new ImageAdDefinition();
 		b.setId("2");
 		sdef = new DayConditionDefinition();
 		sdef.addDay(Day.ALL);
 		b.addConditionDefinition(ConditionDefinitions.DAY, sdef);
-		b.setFormat(BannerFormat.FULL_BANNER);
+		b.setFormat(AdFormat.FULL_BANNER);
 		db.addBanner(b);
 		
 		db.reopen();
 		System.out.println(db.size());
 		
 		AdRequest request = new AdRequest();
-		List<BannerFormat> formats = new ArrayList<BannerFormat>();
-		formats.add(BannerFormat.FULL_BANNER);
+		List<AdFormat> formats = new ArrayList<AdFormat>();
+		formats.add(AdFormat.FULL_BANNER);
 		request.setFormats(formats);
-		List<BannerType> types = new ArrayList<BannerType>();
-		types.add(BannerType.IMAGE);
+		List<AdType> types = new ArrayList<AdType>();
+		types.add(AdType.IMAGE);
 		request.setTypes(types);
 		request.setDay(Day.Tuesday);
 		
-		List<BannerDefinition> result = db.search(request);
+		List<AdDefinition> result = db.search(request);
 		assertEquals(1, result.size());
 		
 		request.setDay(Day.Monday);

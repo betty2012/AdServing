@@ -17,21 +17,21 @@
  */
 package net.mad.ads.base.api.render;
 
-import net.mad.ads.db.enums.BannerFormat;
-import net.mad.ads.db.enums.BannerType;
+import net.mad.ads.db.enums.AdFormat;
+import net.mad.ads.db.enums.AdType;
 
 public class DisplayTemplatesNames {
 	public static void main (String [] args) {
-		BannerFormat[] formats = BannerFormat.values();
-		for (BannerFormat format : formats) {
-			BannerType[] types = BannerType.values();
-			for (BannerType type : types) {
+		AdFormat[] formats = AdFormat.values();
+		for (AdFormat format : formats) {
+			AdType[] types = AdType.values();
+			for (AdType type : types) {
 				System.out.println(getTemplateName(format, type));
 			}
 		}
 	}
 
-	public static String getTemplateName (BannerFormat format, BannerType type) {
+	public static String getTemplateName (AdFormat format, AdType type) {
 		String f = format.getCompoundName();
 		String t = type.getName();
 		

@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import net.mad.ads.base.api.importer.Importer;
-import net.mad.ads.base.api.render.BannerRenderer;
-import net.mad.ads.base.api.render.impl.freemarker.FreemarkerBannerRenderer;
+import net.mad.ads.base.api.render.AdRenderer;
+import net.mad.ads.base.api.render.impl.freemarker.FreemarkerAdRenderer;
 import net.mad.ads.base.api.track.TrackingService;
 import net.mad.ads.base.api.utils.logging.LogWrapper;
 import net.mad.ads.common.template.TemplateManager;
@@ -44,7 +44,7 @@ public class RuntimeContext {
 	public static LogWrapper clickLogger; // = new LogWrapper(RuntimeContext.class, "logger_clicks.properties");
     public static LogWrapper impressionLogger; // = new LogWrapper(RuntimeContext.class, "logger_impression.properties");
 	
-	private static BannerRenderer bannerRenderer = new FreemarkerBannerRenderer();
+	private static AdRenderer bannerRenderer = new FreemarkerAdRenderer();
 	
 	private static TemplateManager templateManager = null;
 	
@@ -110,7 +110,7 @@ public class RuntimeContext {
 	public static void setTrackService(TrackingService trackService) {
 		RuntimeContext.trackService = trackService;
 	}
-	public static BannerRenderer getBannerRenderer() {
+	public static AdRenderer getBannerRenderer() {
 		return bannerRenderer;
 	}
 	public static IPLocationDB getIpDB() {

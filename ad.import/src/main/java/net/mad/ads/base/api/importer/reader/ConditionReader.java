@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.definition.AdSlot;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.KeyValue;
 import net.mad.ads.db.definition.Keyword;
 import net.mad.ads.db.definition.condition.AdSlotConditionDefinition;
@@ -52,7 +52,7 @@ public class ConditionReader {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ConditionReader.class);
 	
-	public static BannerDefinition processConditions (BannerDefinition definition, Element conditions) {
+	public static AdDefinition processConditions (AdDefinition definition, Element conditions) {
 		
 		if (conditions == null || conditions.getChildren() == null || conditions.getChildren().size() == 0) {
 			

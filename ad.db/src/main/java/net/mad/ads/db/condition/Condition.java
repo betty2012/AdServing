@@ -25,7 +25,7 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
 
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 
 /**
  * Bedingung die ein Banner erfüllen kann oder muss
@@ -51,5 +51,5 @@ public interface Condition {
 	 * @param bannerDoc
 	 * @param bannerDefinition
 	 */
-	public void addFields (Document bannerDoc, BannerDefinition bannerDefinition);
+	public void addFields (Document bannerDoc, AdDefinition bannerDefinition);
 }

@@ -40,7 +40,7 @@ import com.sleepycat.je.EnvironmentConfig;
 
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.store.AdDBStore;
-import net.mad.ads.db.definition.BannerDefinition;
+import net.mad.ads.db.definition.AdDefinition;
 
 
 public class AdDBBDBStore implements AdDBStore {
@@ -51,7 +51,7 @@ public class AdDBBDBStore implements AdDBStore {
 	private ClassCatalog catalog;
     private Environment env;
 	
-	private Map<String, BannerDefinition> banners = null;
+	private Map<String, AdDefinition> banners = null;
 	
 	@Override
 	public void open() throws IOException {
@@ -74,7 +74,7 @@ public class AdDBBDBStore implements AdDBStore {
         catalog = new StoredClassCatalog(catalogDb);
 		
 		StringBinding keyBinding = new StringBinding();
-		SerialBinding<BannerDefinition> valueBinding = new SerialBinding<BannerDefinition>(catalog, BannerDefinition.class);
+		SerialBinding<AdDefinition> valueBinding = new SerialBinding<AdDefinition>(catalog, AdDefinition.class);
 		/* Open a data store. */
         
         this.db = env.openDatabase(null, "banner.db", dbConfig);
@@ -83,7 +83,7 @@ public class AdDBBDBStore implements AdDBStore {
          * Now create a collection style map view of the data store so that it
          * is easy to work with the data in the database.
          */
-        this.banners = new StoredSortedMap<String, BannerDefinition>
+        this.banners = new StoredSortedMap<String, AdDefinition>
             (db, keyBinding, valueBinding, true);
 	}
 
@@ -104,7 +104,7 @@ public class AdDBBDBStore implements AdDBStore {
 	}
 
 	@Override
-	public void addBanner(BannerDefinition banner) throws IOException {
+	public void addBanner(AdDefinition banner) throws IOException {
 		this.banners.put(banner.getId(), banner);
 	}
 
@@ -114,7 +114,7 @@ public class AdDBBDBStore implements AdDBStore {
 	}
 
 	@Override
-	public BannerDefinition getBanner(String id) {
+	public AdDefinition getBanner(String id) {
 		return this.banners.get(id);
 	}
 
