@@ -17,8 +17,6 @@
  */
 package net.mad.ads.db.enums;
 
-import java.awt.Dimension;
-import java.awt.geom.Dimension2D;
 import java.io.Serializable;
 
 /**

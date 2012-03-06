@@ -65,7 +65,7 @@ public class ExcludeSiteCondition implements Condition/*, Filter */{
 		BooleanQuery temp = new BooleanQuery();
 		
 		// Seite einfügen
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_SITE_EXCLUDE, request.getSite())), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_SITE_EXCLUDE, request.getSite())), Occur.SHOULD);
 		
 		query.add(temp, Occur.MUST);
 		mainQuery.add(query, Occur.MUST_NOT);
@@ -85,7 +85,7 @@ public class ExcludeSiteCondition implements Condition/*, Filter */{
 			// Sites im Dokument speichern
 			List<String> sites = sdef.getSites();
 			for (String site : sites) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_SITE_EXCLUDE, site, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_SITE_EXCLUDE, site, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 			}
 		}
 	}

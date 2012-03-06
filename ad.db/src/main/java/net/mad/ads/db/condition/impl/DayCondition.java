@@ -63,8 +63,8 @@ public class DayCondition implements Condition {
 		BooleanQuery query = new BooleanQuery();
 		
 		BooleanQuery temp = new BooleanQuery();
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_DAY, String.valueOf(day))), Occur.SHOULD);
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_DAY, String.valueOf(Day.ALL.getDay()))), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_DAY, String.valueOf(day))), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_DAY, String.valueOf(Day.ALL.getDay()))), Occur.SHOULD);
 		
 		query.add(temp, Occur.MUST);
 
@@ -83,10 +83,10 @@ public class DayCondition implements Condition {
 		if (ddef != null && ddef.getDays().size() > 0) {
 			List<Day> list = ddef.getDays();
 			for (Day day : list) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_DAY, String.valueOf(day.getDay()), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_DAY, String.valueOf(day.getDay()), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 			}
 		} else {
-			bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_DAY, AdDBConstants.ADDB_BANNER_DAY_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_DAY, AdDBConstants.ADDB_AD_DAY_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 		}
 	}
 

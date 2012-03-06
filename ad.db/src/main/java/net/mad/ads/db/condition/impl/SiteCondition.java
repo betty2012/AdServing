@@ -49,9 +49,9 @@ public class SiteCondition implements Condition {
 		BooleanQuery temp = new BooleanQuery();
 		
 		// Seite einfügen
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_SITE, request.getSite())), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_SITE, request.getSite())), Occur.SHOULD);
 		// all Seiten einfügen
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_SITE, AdDBConstants.ADDB_BANNER_SITE_ALL)), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_SITE, AdDBConstants.ADDB_AD_SITE_ALL)), Occur.SHOULD);
 		
 		query.add(temp, Occur.MUST);
 		mainQuery.add(query, Occur.MUST);
@@ -69,13 +69,13 @@ public class SiteCondition implements Condition {
 			// Sites im Dokument speichern
 			List<String> sites = sdef.getSites();
 			for (String site : sites) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_SITE, site, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_SITE, site, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 			}
 		} else {
 			/*
 			 * Banner, die keine Einschräkung auf eine spezielle Seite haben
 			 */
-			bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_SITE, AdDBConstants.ADDB_BANNER_SITE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_SITE, AdDBConstants.ADDB_AD_SITE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 		}
 	}
 

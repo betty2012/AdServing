@@ -56,8 +56,8 @@ public class CountryCondition implements Condition {
 		BooleanQuery query = new BooleanQuery();
 		
 		BooleanQuery temp = new BooleanQuery();
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_COUNTRY, country.toLowerCase())), Occur.SHOULD);
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_COUNTRY, Country.ALL.getCode())), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_COUNTRY, country.toLowerCase())), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_COUNTRY, Country.ALL.getCode())), Occur.SHOULD);
 		
 		query.add(temp, Occur.MUST);
 		mainQuery.add(query, Occur.MUST);
@@ -74,10 +74,10 @@ public class CountryCondition implements Condition {
 		if (cdef != null && cdef.getCountries().size() > 0) {
 			List<Country> list = cdef.getCountries();
 			for (Country c : list) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_COUNTRY, c.getCode().toLowerCase(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_COUNTRY, c.getCode().toLowerCase(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 			}
 		} else {
-			bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_COUNTRY, Country.ALL.getCode(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_COUNTRY, Country.ALL.getCode(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 		}
 	}
 

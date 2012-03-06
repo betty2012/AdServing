@@ -57,10 +57,10 @@ public class KeywordCondition implements Condition {
 		
 		// keywords einfügen
 		for (String k : request.getKeywords()) {
-			temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_KEYWORD, k)), Occur.SHOULD);
+			temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_KEYWORD, k)), Occur.SHOULD);
 		}
 		// all keywords einfügen
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_KEYWORD, AdDBConstants.ADDB_BANNER_KEYWORD_ALL)), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_KEYWORD, AdDBConstants.ADDB_AD_KEYWORD_ALL)), Occur.SHOULD);
 		
 		query.add(temp, Occur.MUST);
 		mainQuery.add(query, Occur.MUST);
@@ -78,13 +78,13 @@ public class KeywordCondition implements Condition {
 			// keywords im Dokument speichern
 			List<Keyword> kws = kdef.getKeywords();
 			for (Keyword k : kws) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_KEYWORD, k.word, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYWORD, k.word, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 			}
 		} else {
 			/*
 			 * für alle Banner ohne angegebenem Keyword wird das default ALL-Keyword gesetzt
 			 */
-			bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_KEYWORD, AdDBConstants.ADDB_BANNER_KEYWORD_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYWORD, AdDBConstants.ADDB_AD_KEYWORD_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 		}
 	}
 

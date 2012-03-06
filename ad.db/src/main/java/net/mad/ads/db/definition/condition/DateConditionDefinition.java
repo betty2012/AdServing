@@ -42,8 +42,8 @@ public class DateConditionDefinition implements ConditionDefinition {
 
 	public static final Period ALL_TIMES = new Period();
 	static {
-		ALL_TIMES.setFrom(AdDBConstants.ADDB_BANNER_DATE_ALL);
-		ALL_TIMES.setTo(AdDBConstants.ADDB_BANNER_DATE_ALL);
+		ALL_TIMES.setFrom(AdDBConstants.ADDB_AD_DATE_ALL);
+		ALL_TIMES.setTo(AdDBConstants.ADDB_AD_DATE_ALL);
 	}
 	public static final int MAX_PERIOD_COUNT = 6;
 
@@ -62,13 +62,13 @@ public class DateConditionDefinition implements ConditionDefinition {
 		if (from != null) {
 			p.setFrom(from);
 		} else {
-			p.setFrom(AdDBConstants.ADDB_BANNER_DATE_ALL);
+			p.setFrom(AdDBConstants.ADDB_AD_DATE_ALL);
 		}
 		
 		if (to != null) {
 			p.setTo(to);
 		} else {
-			p.setTo(AdDBConstants.ADDB_BANNER_DATE_ALL);
+			p.setTo(AdDBConstants.ADDB_AD_DATE_ALL);
 		}
 		
 		periods.add(p);

@@ -80,7 +80,7 @@ public class ConditionReader {
 			definition.addConditionDefinition(ConditionDefinitions.COUNTRY, cdef);
 			
 			// keine Keyword Einschwänkung für dieses Banner
-			Keyword kw = new Keyword(AdDBConstants.ADDB_BANNER_KEYWORD_ALL);
+			Keyword kw = new Keyword(AdDBConstants.ADDB_AD_KEYWORD_ALL);
 			
 			KeywordConditionDefinition kdef = new KeywordConditionDefinition();
 			kdef.addKeyword(kw);
@@ -88,7 +88,7 @@ public class ConditionReader {
 			
 			// Banner soll auf allen Seiten angezeeit werden
 			SiteConditionDefinition sdef = new SiteConditionDefinition();
-			sdef.addSite(AdDBConstants.ADDB_BANNER_SITE_ALL);
+			sdef.addSite(AdDBConstants.ADDB_AD_SITE_ALL);
 			definition.addConditionDefinition(ConditionDefinitions.SITE, sdef);
 			
 			AdSlotConditionDefinition adsdef = new AdSlotConditionDefinition();
@@ -111,12 +111,12 @@ public class ConditionReader {
 						if (perion.getChild("from") != null) {
 							timep.setFrom(elem.getChildText("from"));
 						} else {
-							timep.setFrom(AdDBConstants.ADDB_BANNER_TIME_ALL);
+							timep.setFrom(AdDBConstants.ADDB_AD_TIME_ALL);
 						}
 						if (perion.getChild("to") != null) {
 							timep.setTo(elem.getChildText("to"));
 						} else {
-							timep.setTo(AdDBConstants.ADDB_BANNER_TIME_ALL);
+							timep.setTo(AdDBConstants.ADDB_AD_TIME_ALL);
 						}
 						tdef.getPeriods().add(timep);
 					}
@@ -145,12 +145,12 @@ public class ConditionReader {
 						if (perion.getChild("from") != null) {
 							timep.setFrom(elem.getChildText("from"));
 						} else {
-							timep.setFrom(AdDBConstants.ADDB_BANNER_DATE_ALL);
+							timep.setFrom(AdDBConstants.ADDB_AD_DATE_ALL);
 						}
 						if (perion.getChild("to") != null) {
 							timep.setTo(elem.getChildText("to"));
 						} else {
-							timep.setTo(AdDBConstants.ADDB_BANNER_DATE_ALL);
+							timep.setTo(AdDBConstants.ADDB_AD_DATE_ALL);
 						}
 						dateDef.getPeriods().add(timep);
 					}
@@ -264,7 +264,7 @@ public class ConditionReader {
 					definition.addConditionDefinition(ConditionDefinitions.KEYWORD, kdef);
 				}
 			} else {
-				Keyword kw = new Keyword(AdDBConstants.ADDB_BANNER_KEYWORD_ALL);
+				Keyword kw = new Keyword(AdDBConstants.ADDB_AD_KEYWORD_ALL);
 				
 				KeywordConditionDefinition kdef = new KeywordConditionDefinition();
 				kdef.addKeyword(kw);
@@ -290,7 +290,7 @@ public class ConditionReader {
 					definition.addConditionDefinition(ConditionDefinitions.KEYVALUE, kdef);
 				}
 			} else {
-				KeyValue kw = new KeyValue(AdDBConstants.ADDB_BANNER_KEYVALUE, AdDBConstants.ADDB_BANNER_KEYVALUE_ALL);
+				KeyValue kw = new KeyValue(AdDBConstants.ADDB_AD_KEYVALUE, AdDBConstants.ADDB_AD_KEYVALUE_ALL);
 				
 				KeyValueConditionDefinition kdef = new KeyValueConditionDefinition();
 				kdef.addKeyValue(kw);
@@ -312,7 +312,7 @@ public class ConditionReader {
 				}
 			} else {
 				SiteConditionDefinition sdef = new SiteConditionDefinition();
-				sdef.addSite(AdDBConstants.ADDB_BANNER_SITE_ALL);
+				sdef.addSite(AdDBConstants.ADDB_AD_SITE_ALL);
 				definition.addConditionDefinition(ConditionDefinitions.SITE, sdef);
 			}
 			
