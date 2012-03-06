@@ -1,0 +1,5 @@
+net.mad.ads.db.model.type.impl.ExpandableImageAdType
+net.mad.ads.db.model.type.impl.ExternAdType
+net.mad.ads.db.model.type.impl.FlashAdType
+net.mad.ads.db.model.type.impl.ImageAdType
+net.mad.ads.db.model.type.impl.TextlinkAdType
