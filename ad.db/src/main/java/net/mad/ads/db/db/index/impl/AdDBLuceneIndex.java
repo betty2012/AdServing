@@ -114,7 +114,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 
 	@Override
 	public void deleteBanner(String id) throws IOException {
-		this.writer.deleteDocuments(new Term(AdDBConstants.ADDB_BANNER_ID, id));
+		this.writer.deleteDocuments(new Term(AdDBConstants.ADDB_AD_ID, id));
 	}
 
 	@Override
@@ -128,7 +128,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 		BooleanQuery typeQuery = new BooleanQuery();
 		for (AdType type : request.getTypes()) {
 			TermQuery tq = new TermQuery(new Term(
-					AdDBConstants.ADDB_BANNER_TYPE, type.name()));
+					AdDBConstants.ADDB_AD_TYPE, type.name()));
 			typeQuery.add(tq, Occur.SHOULD);
 		}
 		mainQuery.add(typeQuery, Occur.MUST);
@@ -137,7 +137,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 		BooleanQuery formatQuery = new BooleanQuery();
 		for (AdFormat format : request.getFormats()) {
 			TermQuery tq = new TermQuery(new Term(
-					AdDBConstants.ADDB_BANNER_FORMAT, format.getCompoundName()));
+					AdDBConstants.ADDB_AD_FORMAT, format.getCompoundName()));
 			formatQuery.add(tq, Occur.SHOULD);
 		}
 		mainQuery.add(formatQuery, Occur.MUST);
@@ -152,9 +152,9 @@ public class AdDBLuceneIndex implements AdDBIndex {
 		 * Es sollen nur Produkte geliefert werden
 		 */
 		if (request.isProducts()) {
-			mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_PRODUCT, AdDBConstants.ADDB_BANNER_PRODUCT_TRUE)), Occur.MUST);
+			mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_TRUE)), Occur.MUST);
 		} else {
-			mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_PRODUCT, AdDBConstants.ADDB_BANNER_PRODUCT_FALSE)), Occur.MUST);
+			mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_FALSE)), Occur.MUST);
 			
 		}
  
@@ -168,7 +168,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 		List<AdDefinition> result = new ArrayList<AdDefinition>();
 		for (int i = hits.nextSetBit(0); i != -1; i = hits.nextSetBit(i + 1)) {
 			Document doc = this.reader.document(i);
-			result.add(addb.getBanner(doc.get(AdDBConstants.ADDB_BANNER_ID)));
+			result.add(addb.getBanner(doc.get(AdDBConstants.ADDB_AD_ID)));
 		}
 
 		return result;

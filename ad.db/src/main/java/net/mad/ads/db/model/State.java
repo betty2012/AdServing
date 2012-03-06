@@ -23,7 +23,7 @@ import net.mad.ads.db.AdDBConstants;
 
 public class State implements Serializable {
 	
-	public static State ALL = new State(AdDBConstants.ADDB_BANNER_STATE_ALL); 
+	public static State ALL = new State(AdDBConstants.ADDB_AD_STATE_ALL); 
 	
 	private String code = "";
 	public State (String code) {

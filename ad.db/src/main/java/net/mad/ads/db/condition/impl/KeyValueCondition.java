@@ -59,10 +59,10 @@ public class KeyValueCondition implements Condition {
 		
 		// keyvalues einfügen
 		for (String k : request.getKeyValues().keySet()) {
-			temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_KEYVALUE + "_" + k , request.getKeyValues().get(k))), Occur.SHOULD);
+			temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k , request.getKeyValues().get(k))), Occur.SHOULD);
 		}
 		// all keyvalues einfügen
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_KEYVALUE, AdDBConstants.ADDB_BANNER_KEYVALUE_ALL)), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_KEYVALUE, AdDBConstants.ADDB_AD_KEYVALUE_ALL)), Occur.SHOULD);
 		
 		query.add(temp, Occur.MUST);
 		mainQuery.add(query, Occur.MUST);
@@ -80,13 +80,13 @@ public class KeyValueCondition implements Condition {
 			// keyvalues im Dokument speichern
 			List<KeyValue> kws = kdef.getKeyValues();
 			for (KeyValue k : kws) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_KEYVALUE + "_" + k.key, k.value, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k.key, k.value, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 			}
 		} else {
 			/*
 			 * für alle Banner ohne angegebenem KeyValue wird das default ALL-KeyValue gesetzt
 			 */
-			bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_KEYVALUE, AdDBConstants.ADDB_BANNER_KEYVALUE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYVALUE, AdDBConstants.ADDB_AD_KEYVALUE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 		}
 	}
 

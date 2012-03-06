@@ -23,7 +23,7 @@ import net.mad.ads.db.AdDBConstants;
 
 public class Country implements Serializable {
 	
-	public static Country ALL = new Country(AdDBConstants.ADDB_BANNER_COUNTRY_ALL); 
+	public static Country ALL = new Country(AdDBConstants.ADDB_AD_COUNTRY_ALL); 
 	
 	private String code = "";
 	public Country (String code) {

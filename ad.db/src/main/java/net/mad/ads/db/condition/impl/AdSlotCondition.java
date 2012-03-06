@@ -59,10 +59,10 @@ public class AdSlotCondition implements Condition {
 		 */
 		if (request.getAdSlot() != null) {
 			// AdSlot einfügen
-			temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_ADSLOT, request.getAdSlot())), Occur.SHOULD);
+			temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_ADSLOT, request.getAdSlot())), Occur.SHOULD);
 		}
 		// all AdSlots einfügen
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_ADSLOT, AdDBConstants.ADDB_BANNER_ADSLOT_ALL)), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_ADSLOT, AdDBConstants.ADDB_AD_ADSLOT_ALL)), Occur.SHOULD);
 		
 		query.add(temp, Occur.MUST);
 		mainQuery.add(query, Occur.MUST);
@@ -80,13 +80,13 @@ public class AdSlotCondition implements Condition {
 			// AdSlots im Dokument speichern
 			List<AdSlot> slots = sdef.getSlots();
 			for (AdSlot slot : slots) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_ADSLOT, slot.toString(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_ADSLOT, slot.toString(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 			}
 		} else {
 			/*
 			 * Banner, die keine Einschräkung auf einen spezielle AdSlot haben
 			 */
-			bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_ADSLOT, AdDBConstants.ADDB_BANNER_ADSLOT_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_ADSLOT, AdDBConstants.ADDB_AD_ADSLOT_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 		}
 	}
 

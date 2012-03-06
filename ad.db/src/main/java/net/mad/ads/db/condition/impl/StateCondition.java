@@ -48,8 +48,8 @@ public class StateCondition implements Condition {
 		BooleanQuery query = new BooleanQuery();
 		
 		BooleanQuery temp = new BooleanQuery();
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_STATE, state.toLowerCase())), Occur.SHOULD);
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_STATE, State.ALL.getCode())), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_STATE, state.toLowerCase())), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_STATE, State.ALL.getCode())), Occur.SHOULD);
 		
 		query.add(temp, Occur.MUST);
 		
@@ -67,10 +67,10 @@ public class StateCondition implements Condition {
 		if (stDef != null && stDef.getStates().size() > 0) {
 			List<State> list = stDef.getStates();
 			for (State state : list) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_STATE, state.getCode().toLowerCase(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_STATE, state.getCode().toLowerCase(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 			}
 		} else {
-			bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_STATE, AdDBConstants.ADDB_BANNER_STATE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_STATE, AdDBConstants.ADDB_AD_STATE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 		}
 	}
 

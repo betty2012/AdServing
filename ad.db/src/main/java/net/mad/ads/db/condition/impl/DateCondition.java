@@ -55,16 +55,16 @@ public class DateCondition implements Condition {
 				BooleanQuery query = new BooleanQuery();
 				
 				BooleanQuery temp = new BooleanQuery();
-				TermRangeQuery tQuery = new TermRangeQuery(AdDBConstants.ADDB_BANNER_DATE_FROM + i, null, request.getDate(), true, true);
+				TermRangeQuery tQuery = new TermRangeQuery(AdDBConstants.ADDB_AD_DATE_FROM + i, null, request.getDate(), true, true);
 				temp.add(tQuery, Occur.SHOULD);
-				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_DATE_FROM + i, AdDBConstants.ADDB_BANNER_DATE_ALL)), Occur.SHOULD);
+				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_DATE_FROM + i, AdDBConstants.ADDB_AD_DATE_ALL)), Occur.SHOULD);
 				
 				query.add(temp, Occur.MUST);
 				
 				temp = new BooleanQuery();
-				tQuery = new TermRangeQuery(AdDBConstants.ADDB_BANNER_DATE_TO + i, request.getDate(), null, true, true);
+				tQuery = new TermRangeQuery(AdDBConstants.ADDB_AD_DATE_TO + i, request.getDate(), null, true, true);
 				temp.add(tQuery, Occur.SHOULD);
-				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_BANNER_DATE_TO + i, AdDBConstants.ADDB_BANNER_DATE_ALL)), Occur.SHOULD);
+				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_DATE_TO + i, AdDBConstants.ADDB_AD_DATE_ALL)), Occur.SHOULD);
 				
 				query.add(temp, Occur.MUST);
 				
@@ -91,21 +91,21 @@ public class DateCondition implements Condition {
 			int count = 0;
 			for (Period p : ddef.getPeriods()) {
 				if (p.getFrom() != null) {
-					bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_DATE_FROM + count, p.getFrom(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+					bannerDoc.add(new Field(AdDBConstants.ADDB_AD_DATE_FROM + count, p.getFrom(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 				} else {
-					bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_DATE_FROM + count, AdDBConstants.ADDB_BANNER_DATE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+					bannerDoc.add(new Field(AdDBConstants.ADDB_AD_DATE_FROM + count, AdDBConstants.ADDB_AD_DATE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 				}
 				
 				if (p.getFrom() != null) {
-					bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_DATE_TO + count, p.getTo(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+					bannerDoc.add(new Field(AdDBConstants.ADDB_AD_DATE_TO + count, p.getTo(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 				} else {
-					bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_DATE_TO + count, AdDBConstants.ADDB_BANNER_DATE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+					bannerDoc.add(new Field(AdDBConstants.ADDB_AD_DATE_TO + count, AdDBConstants.ADDB_AD_DATE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 				}
 				count++;
 			}
 		} else {
-			bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_DATE_FROM + 0, AdDBConstants.ADDB_BANNER_DATE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
-			bannerDoc.add(new Field(AdDBConstants.ADDB_BANNER_DATE_TO + 0, AdDBConstants.ADDB_BANNER_DATE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_DATE_FROM + 0, AdDBConstants.ADDB_AD_DATE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_DATE_TO + 0, AdDBConstants.ADDB_AD_DATE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 		}
 	}
 
