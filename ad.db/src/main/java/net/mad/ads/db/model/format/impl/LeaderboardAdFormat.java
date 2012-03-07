@@ -19,6 +19,11 @@ package net.mad.ads.db.model.format.impl;
 
 import net.mad.ads.db.model.format.AbstractAdFormat;
 
+/**
+ * Leaderboard or Super Banner
+ * @author marx
+ *
+ */
 public class LeaderboardAdFormat extends AbstractAdFormat {
 
 	public LeaderboardAdFormat() {
