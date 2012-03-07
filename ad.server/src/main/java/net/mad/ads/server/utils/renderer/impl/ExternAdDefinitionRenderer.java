@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.mad.ads.base.api.render.RenderContext;
 import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.model.type.impl.ExpandableImageAdType;
 import net.mad.ads.db.model.type.impl.ExternAdType;
 import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.AdServerConstants;
@@ -40,18 +42,18 @@ public class ExternAdDefinitionRenderer implements AdDefinitionRenderer<ExternAd
 	
 	private static final Logger logger = LoggerFactory.getLogger(ExternAdDefinitionRenderer.class);
 	
-	public static AdDefinitionRenderer<ExternAdDefinition> INSTANCE = null;
+//	public static AdDefinitionRenderer<ExternAdDefinition> INSTANCE = null;
 	
-	private ExternAdDefinitionRenderer () {
+	public ExternAdDefinitionRenderer () {
 	}
 	
-	public static synchronized AdDefinitionRenderer getInstance () {
-		if (INSTANCE == null) {
-			INSTANCE = new ExternAdDefinitionRenderer();
-		}
-		
-		return INSTANCE;
-	}
+//	public static synchronized AdDefinitionRenderer getInstance () {
+//		if (INSTANCE == null) {
+//			INSTANCE = new ExternAdDefinitionRenderer();
+//		}
+//		
+//		return INSTANCE;
+//	}
 	
 	/* (non-Javadoc)
 	 * @see net.mad.ads.server.utils.renderer.BannerDefinitionRenderer#render(net.mad.ads.api.definition.impl.image.ImageBannerDefinition)
@@ -76,6 +78,11 @@ public class ExternAdDefinitionRenderer implements AdDefinitionRenderer<ExternAd
 		}
 		
 		return "";
+	}
+	
+	@Override
+	public AdType getType() {
+		return AdTypes.forType(ExternAdType.TYPE);
 	}
 
 }

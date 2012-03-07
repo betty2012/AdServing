@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.mad.ads.base.api.render.RenderContext;
 import net.mad.ads.db.definition.impl.ad.flash.FlashAdDefinition;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.model.type.impl.ExpandableImageAdType;
 import net.mad.ads.db.model.type.impl.FlashAdType;
 import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.AdServerConstants;
@@ -40,18 +42,18 @@ public class FlashAdDefinitionRenderer implements AdDefinitionRenderer<FlashAdDe
 	
 	public static final Logger logger = LoggerFactory.getLogger(FlashAdDefinitionRenderer.class);
 	
-	public static AdDefinitionRenderer<FlashAdDefinition> INSTANCE = null;
+//	public static AdDefinitionRenderer<FlashAdDefinition> INSTANCE = null;
 	
-	private FlashAdDefinitionRenderer () {
+	public FlashAdDefinitionRenderer () {
 	}
 	
-	public static synchronized AdDefinitionRenderer getInstance () {
-		if (INSTANCE == null) {
-			INSTANCE = new FlashAdDefinitionRenderer();
-		}
-		
-		return INSTANCE;
-	}
+//	public static synchronized AdDefinitionRenderer getInstance () {
+//		if (INSTANCE == null) {
+//			INSTANCE = new FlashAdDefinitionRenderer();
+//		}
+//		
+//		return INSTANCE;
+//	}
 	
 	/* (non-Javadoc)
 	 * @see net.mad.ads.server.utils.renderer.BannerDefinitionRenderer#render(net.mad.ads.api.definition.impl.image.ImageBannerDefinition)
@@ -77,5 +79,10 @@ public class FlashAdDefinitionRenderer implements AdDefinitionRenderer<FlashAdDe
 		}
 		
 		return "";
+	}
+	
+	@Override
+	public AdType getType() {
+		return AdTypes.forType(FlashAdType.TYPE);
 	}
 }

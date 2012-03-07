@@ -20,8 +20,11 @@ package net.mad.ads.server.utils.renderer;
 import javax.servlet.http.HttpServletRequest;
 
 import net.mad.ads.db.definition.AdDefinition;
+import net.mad.ads.db.model.type.AdType;
 
 public interface AdDefinitionRenderer<T extends AdDefinition> {
 
 	public String render(T banner, HttpServletRequest request);
+	
+	public AdType getType();
 }
