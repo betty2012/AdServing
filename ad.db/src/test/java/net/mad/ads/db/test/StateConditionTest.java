@@ -27,10 +27,13 @@ import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.StateConditionDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import net.mad.ads.db.enums.AdFormat;
-import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.model.State;
+import net.mad.ads.db.model.format.AdFormat;
+import net.mad.ads.db.model.format.impl.FullBannerAdFormat;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.model.type.impl.ImageAdType;
+import net.mad.ads.db.services.AdTypes;
 
 import junit.framework.TestCase;
 
@@ -51,17 +54,17 @@ public class StateConditionTest extends TestCase {
 		StateConditionDefinition sdef = new StateConditionDefinition();
 		sdef.addState(new State("BB"));
 		b.addConditionDefinition(ConditionDefinitions.STATE, sdef);
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 		db.addBanner(b);
 		
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
-		formats.add(AdFormat.FULL_BANNER);
+		formats.add(new FullBannerAdFormat());
 		request.setFormats(formats);
 		List<AdType> types = new ArrayList<AdType>();
-		types.add(AdType.IMAGE);
+		types.add(AdTypes.forType(ImageAdType.TYPE));
 		request.setTypes(types);
 		request.setState(new State("BE"));
 		

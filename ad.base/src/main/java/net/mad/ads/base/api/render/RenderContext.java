@@ -43,7 +43,7 @@ public class RenderContext extends BaseObject {
 		AdDefinition bd = getBannerDefinition();
 		
 		String format = bd.getFormat().getCompoundName();
-		String type = bd.getType().getTypeAsString();
+		String type = bd.getType().getType();
 		
 		return (format + type).toLowerCase();
 	}

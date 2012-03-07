@@ -33,9 +33,12 @@ import net.mad.ads.db.definition.condition.KeyValueConditionDefinition;
 import net.mad.ads.db.definition.condition.SiteConditionDefinition;
 import net.mad.ads.db.definition.condition.StateConditionDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import net.mad.ads.db.enums.AdFormat;
-import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.enums.ConditionDefinitions;
+import net.mad.ads.db.model.format.AdFormat;
+import net.mad.ads.db.model.format.impl.FullBannerAdFormat;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.model.type.impl.ImageAdType;
+import net.mad.ads.db.services.AdTypes;
 
 
 import junit.framework.TestCase;
@@ -56,7 +59,7 @@ public class KeyValueConditionTest extends TestCase {
 		KeyValueConditionDefinition sdef = new KeyValueConditionDefinition();
 		sdef.getKeyValues().add(new KeyValue("k1", "v1"));
 		b.addConditionDefinition(ConditionDefinitions.KEYVALUE, sdef);
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 		db.addBanner(b);
 		
 		b = new ImageAdDefinition();
@@ -64,17 +67,17 @@ public class KeyValueConditionTest extends TestCase {
 		sdef = new KeyValueConditionDefinition();
 		sdef.getKeyValues().add(new KeyValue("k1", "v2"));
 		b.addConditionDefinition(ConditionDefinitions.KEYVALUE, sdef);
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 		db.addBanner(b);
 		
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
-		formats.add(AdFormat.FULL_BANNER);
+		formats.add(new FullBannerAdFormat());
 		request.setFormats(formats);
 		List<AdType> types = new ArrayList<AdType>();
-		types.add(AdType.IMAGE);
+		types.add(AdTypes.forType(ImageAdType.TYPE));
 		request.setTypes(types);
 		request.getKeyValues().put("k2", "none");
 		

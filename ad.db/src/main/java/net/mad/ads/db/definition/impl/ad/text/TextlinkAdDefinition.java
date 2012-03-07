@@ -19,7 +19,7 @@ package net.mad.ads.db.definition.impl.ad.text;
 
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.impl.ad.AbstractAdDefinition;
-import net.mad.ads.db.enums.AdFormat;
+import net.mad.ads.db.model.type.impl.TextlinkAdType;
 import net.mad.ads.db.services.AdTypes;
 
 /**
@@ -33,7 +33,7 @@ public class TextlinkAdDefinition extends AbstractAdDefinition {
 	private String text = null;
 	
 	public TextlinkAdDefinition () {
-		super(AdTypes.forType(3));
+		super(AdTypes.forType(TextlinkAdType.TYPE));
 	}
 	
 	public final String getText() {

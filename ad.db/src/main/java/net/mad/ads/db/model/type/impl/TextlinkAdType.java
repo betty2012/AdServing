@@ -6,8 +6,10 @@ import net.mad.ads.db.model.type.AbstractAdType;
 
 public class TextlinkAdType extends AbstractAdType {
 
-	public TextlinkAdType(String name, int type) {
-		super("Textlink", 3);
+	public static final String TYPE = "textlink";
+	
+	public TextlinkAdType() {
+		super("Textlink", TYPE);
 	}
 
 	@Override

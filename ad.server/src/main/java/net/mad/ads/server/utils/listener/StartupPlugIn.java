@@ -38,7 +38,8 @@ import net.mad.ads.common.util.Properties2;
 import net.mad.ads.common.util.Strings;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.enums.AdType;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.AdServerConstants;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.listener.configuration.AdServerModule;
@@ -183,7 +184,7 @@ public class StartupPlugIn implements ServletContextListener {
 		
 		RuntimeContext.getBannerRenderer().init(templatePath);
 		
-		for (AdType type : AdType.values()) {
+		for (AdType type : AdTypes.getTypes()) {
 			RuntimeContext.getBannerRenderer().registerTemplate(type.getName().toLowerCase(), type.getName().toLowerCase()+".ftl");
 		}
 	}

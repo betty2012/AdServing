@@ -17,9 +17,12 @@
  */
 package net.mad.ads.db.definition.impl.ad.expandable;
 
+import java.security.spec.ECParameterSpec;
+
 import net.mad.ads.db.definition.impl.ad.AbstractAdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.model.type.impl.ExpandableImageAdType;
 import net.mad.ads.db.services.AdTypes;
 
 /**
@@ -39,7 +42,7 @@ public class ExpandableImageAdDefinition extends ImageAdDefinition {
 	private String expandedImageHeight = null;
 	
 	public ExpandableImageAdDefinition () {
-		super(AdTypes.forType(5));
+		super(AdTypes.forType(ExpandableImageAdType.TYPE));
 	}
 
 	public String getExpandedImageUrl() {

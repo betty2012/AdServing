@@ -30,10 +30,9 @@ import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.CountryConditionDefinition;
 import net.mad.ads.db.definition.condition.StateConditionDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import net.mad.ads.db.enums.AdFormat;
-import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.model.Country;
+import net.mad.ads.db.model.format.impl.FullBannerAdFormat;
 
 
 
@@ -57,7 +56,7 @@ public class RealtimeTest extends TestCase {
 			CountryConditionDefinition sdef = new CountryConditionDefinition();
 			sdef.addCountry(new Country("DE"));
 			b.addConditionDefinition(ConditionDefinitions.COUNTRY, sdef);
-			b.setFormat(AdFormat.FULL_BANNER);
+			b.setFormat(new FullBannerAdFormat());
 			db.addBanner(b);
 		}
 		

@@ -32,4 +32,14 @@ public abstract class AbstractAdFormat implements AdFormat {
 	public String getCompoundName () {
 		return width + "x" + height;
 	}
+	@Override
+	public int compareTo(AdFormat comp) {
+		return name.compareTo(comp.getName());
+	}
+	@Override
+	public int hashCode() {
+		return name.hashCode();
+	}
+	
+	
 }

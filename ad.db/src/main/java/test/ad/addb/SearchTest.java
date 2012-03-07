@@ -33,12 +33,16 @@ import net.mad.ads.db.definition.condition.StateConditionDefinition;
 import net.mad.ads.db.definition.condition.TimeConditionDefinition;
 import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import net.mad.ads.db.enums.AdFormat;
-import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
 import net.mad.ads.db.model.State;
+import net.mad.ads.db.model.format.AdFormat;
+import net.mad.ads.db.model.format.impl.FullBannerAdFormat;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.model.type.impl.ExternAdType;
+import net.mad.ads.db.model.type.impl.ImageAdType;
+import net.mad.ads.db.services.AdTypes;
 
 public class SearchTest {
 	public SearchTest () {
@@ -59,7 +63,7 @@ public class SearchTest {
 		b.addConditionDefinition(ConditionDefinitions.DAY, ddef);
 		
 		
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 		db.addBanner(b);
 		
 		
@@ -67,10 +71,10 @@ public class SearchTest {
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
-		formats.add(AdFormat.FULL_BANNER);
+		formats.add(new FullBannerAdFormat());
 		request.setFormats(formats);
 		List<AdType> types = new ArrayList<AdType>();
-		types.add(AdType.IMAGE);
+		types.add(AdTypes.forType(ImageAdType.TYPE));
 		request.setTypes(types);
 		request.setDay(Day.Monday);
 		
@@ -98,17 +102,17 @@ public class SearchTest {
 		sdef.addState(new State("BB"));
 		b.addConditionDefinition(ConditionDefinitions.STATE, sdef);
 		
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 		db.addBanner(b);
 		
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
-		formats.add(AdFormat.FULL_BANNER);
+		formats.add(new FullBannerAdFormat());
 		request.setFormats(formats);
 		List<AdType> types = new ArrayList<AdType>();
-		types.add(AdType.IMAGE);
+		types.add(AdTypes.forType(ImageAdType.TYPE));
 		request.setTypes(types);
 		request.setState(new State("BE"));
 		
@@ -138,17 +142,17 @@ public class SearchTest {
 		
 		b.addConditionDefinition(ConditionDefinitions.TIME, tdef);
 
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 		db.addBanner(b);
 		
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
-		formats.add(AdFormat.FULL_BANNER);
+		formats.add(new FullBannerAdFormat());
 		request.setFormats(formats);
 		List<AdType> types = new ArrayList<AdType>();
-		types.add(AdType.IMAGE);
+		types.add(AdTypes.forType(ImageAdType.TYPE));
 		request.setTypes(types);
 		request.setTime("0800");
 		
@@ -175,7 +179,7 @@ public class SearchTest {
 		dateDef.addPeriod("20100623", "20100723");
 		b.addConditionDefinition(ConditionDefinitions.DATE, dateDef);
 		
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 		db.addBanner(b);
 		
 		b = new ImageAdDefinition();
@@ -185,17 +189,17 @@ public class SearchTest {
 		dateDef.addPeriod("20100623", null);
 		b.addConditionDefinition(ConditionDefinitions.DATE, dateDef);
 		
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 		db.addBanner(b);
 		
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
-		formats.add(AdFormat.FULL_BANNER);
+		formats.add(new FullBannerAdFormat());
 		request.setFormats(formats);
 		List<AdType> types = new ArrayList<AdType>();
-		types.add(AdType.IMAGE);
+		types.add(AdTypes.forType(ImageAdType.TYPE));
 		request.setTypes(types);
 		request.setDate("20100623");
 		
@@ -222,17 +226,17 @@ public class SearchTest {
 		cdef.addCountry(new Country("DE"));
 		b.addConditionDefinition(ConditionDefinitions.COUNTRY, cdef);
 		
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 		db.addBanner(b);
 		
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
-		formats.add(AdFormat.FULL_BANNER);
+		formats.add(new FullBannerAdFormat());
 		request.setFormats(formats);
 		List<AdType> types = new ArrayList<AdType>();
-		types.add(AdType.IMAGE);
+		types.add(AdTypes.forType(ImageAdType.TYPE));
 		request.setTypes(types);
 		request.setCountry(new Country("DE"));
 		
@@ -260,7 +264,7 @@ public class SearchTest {
 		cdef.addCountry(new Country("DE"));
 		b.addConditionDefinition(ConditionDefinitions.COUNTRY, cdef);
 
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 		Keyword kw = new Keyword("Esprit");
 		KeywordConditionDefinition kdef = new KeywordConditionDefinition();
 		kdef.addKeyword(kw);
@@ -271,10 +275,10 @@ public class SearchTest {
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
-		formats.add(AdFormat.FULL_BANNER);
+		formats.add(new FullBannerAdFormat());
 		request.setFormats(formats);
 		List<AdType> types = new ArrayList<AdType>();
-		types.add(AdType.EXTERN);
+		types.add(AdTypes.forType(ExternAdType.TYPE));
 		request.setTypes(types);
 		
 		request.getKeywords().add("Puma");
@@ -298,7 +302,7 @@ public class SearchTest {
 		CountryConditionDefinition cdef = new CountryConditionDefinition();
 		cdef.addCountry(new Country("DE"));
 		b.addConditionDefinition(ConditionDefinitions.COUNTRY, cdef);
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 
 		SiteConditionDefinition sdef = new SiteConditionDefinition();
 		sdef.addSite("test_site");
@@ -310,10 +314,10 @@ public class SearchTest {
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
-		formats.add(AdFormat.FULL_BANNER);
+		formats.add(new FullBannerAdFormat());
 		request.setFormats(formats);
 		List<AdType> types = new ArrayList<AdType>();
-		types.add(AdType.EXTERN);
+		types.add(AdTypes.forType(ExternAdType.TYPE));
 		request.setTypes(types);
 		
 		

@@ -30,9 +30,14 @@ import net.mad.ads.db.definition.condition.CountryConditionDefinition;
 import net.mad.ads.db.definition.condition.DateConditionDefinition;
 import net.mad.ads.db.definition.condition.StateConditionDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import net.mad.ads.db.enums.AdFormat;
-import net.mad.ads.db.enums.AdType;
+
+
 import net.mad.ads.db.enums.ConditionDefinitions;
+import net.mad.ads.db.model.format.AdFormat;
+import net.mad.ads.db.model.format.impl.FullBannerAdFormat;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.model.type.impl.ImageAdType;
+import net.mad.ads.db.services.AdTypes;
 
 import junit.framework.TestCase;
 
@@ -53,17 +58,17 @@ public class DateConditionTest extends TestCase {
 		sdef.addPeriod("20110215", "20110220");
 		sdef.addPeriod("20110315", "20110320");
 		b.addConditionDefinition(ConditionDefinitions.DATE, sdef);
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 		db.addBanner(b);
 		
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
-		formats.add(AdFormat.FULL_BANNER);
+		formats.add(new FullBannerAdFormat());
 		request.setFormats(formats);
 		List<AdType> types = new ArrayList<AdType>();
-		types.add(AdType.IMAGE);
+		types.add(AdTypes.forType(ImageAdType.TYPE));
 		request.setTypes(types);
 		
 		request.setDate("20110214");

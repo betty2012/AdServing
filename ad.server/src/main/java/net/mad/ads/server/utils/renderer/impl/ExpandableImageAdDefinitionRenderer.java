@@ -21,7 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.mad.ads.base.api.render.RenderContext;
 import net.mad.ads.db.definition.impl.ad.expandable.ExpandableImageAdDefinition;
-import net.mad.ads.db.enums.AdType;
+import net.mad.ads.db.model.type.impl.ExpandableImageAdType;
+import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.AdServerConstants;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.renderer.AdDefinitionRenderer;
@@ -81,7 +82,7 @@ public class ExpandableImageAdDefinitionRenderer implements AdDefinitionRenderer
 		}
 		
 		try {
-			return RuntimeContext.getBannerRenderer().render(AdType.EXPANDABLEIMAGE.getName().toLowerCase(), context);
+			return RuntimeContext.getBannerRenderer().render(AdTypes.forType(ExpandableImageAdType.TYPE).getName().toLowerCase(), context);
 		} catch (Exception e) {
 			logger.error("", e);
 		}

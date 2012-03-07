@@ -13,22 +13,29 @@ public class AdTypes {
 	
 	private static List<AdType> types = new ArrayList<AdType>();
 	private static Map<String, AdType> nameLookup = new HashMap<String, AdType>();
-	private static Map<Integer, AdType> idLookup = new HashMap<Integer, AdType>();
+	private static Map<String, AdType> typeLookup = new HashMap<String, AdType>();
+	
 	static {
 		Collection<AdType> colTypes = (Collection<AdType>) Lookup.lookupAll(AdType.class);
 		types.addAll(colTypes);
 		
 		for (AdType adt : colTypes) {
 			nameLookup.put(adt.getName(), adt);
-			idLookup.put(adt.getType(), adt);
+			typeLookup.put(adt.getType(), adt);
 		}
 	}
 	
-	public static AdType forType (int type) {
-		return idLookup.get(type);
+	public static AdType forType (String type) {
+		return typeLookup.get(type);
 	}
 	
 	public static AdType forName (String name) {
 		return nameLookup.get(name);
 	}
+	
+	public static List<AdType> getTypes () {
+		return types;
+	}
+	
+	
 }

@@ -6,8 +6,10 @@ import net.mad.ads.db.model.type.AbstractAdType;
 
 public class ExternAdType extends AbstractAdType {
 
-	public ExternAdType(String name, int type) {
-		super("Extern", 1);
+	public static final String TYPE = "exern";
+	
+	public ExternAdType() {
+		super("Extern", TYPE);
 	}
 
 	@Override

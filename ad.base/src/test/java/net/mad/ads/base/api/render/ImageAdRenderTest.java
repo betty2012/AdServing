@@ -19,13 +19,13 @@ package net.mad.ads.base.api.render;
 
 import net.mad.ads.base.api.render.impl.freemarker.FreemarkerAdRenderer;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import net.mad.ads.db.enums.AdFormat;
+import net.mad.ads.db.model.format.impl.HalfBannerAdFormat;
 
 public class ImageAdRenderTest {
 	public static void main (String [] args) throws Exception {
 		
 		ImageAdDefinition banner = new ImageAdDefinition();
-		banner.setFormat(AdFormat.HALF_BANNER);
+		banner.setFormat(new HalfBannerAdFormat());
 		banner.setImageUrl("test.jpg");
 		
 		RenderContext context = new RenderContext();

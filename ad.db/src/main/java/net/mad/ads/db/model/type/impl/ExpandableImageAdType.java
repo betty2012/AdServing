@@ -5,9 +5,11 @@ import net.mad.ads.db.definition.impl.ad.expandable.ExpandableImageAdDefinition;
 import net.mad.ads.db.model.type.AbstractAdType;
 
 public class ExpandableImageAdType extends AbstractAdType {
+	
+	public static final String TYPE = "expandalbeimage";
 
-	public ExpandableImageAdType(String name, int type) {
-		super("ExpandableImage", 5);
+	public ExpandableImageAdType() {
+		super("ExpandableImage", TYPE);
 	}
 
 	@Override

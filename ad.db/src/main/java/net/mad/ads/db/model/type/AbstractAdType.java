@@ -4,19 +4,26 @@ import net.mad.ads.db.definition.AdDefinition;
 
 
 public abstract class AbstractAdType implements AdType {
-	private int type = 0;
+	private String type = "";
 	private String name = "";
-	public AbstractAdType(String name, int type) {
+	public AbstractAdType(String name, String type) {
 		this.type = type;
 		this.name = name;
 	}
-	public int getType() {
+	public String getType() {
 		return type;
 	}
-	public String getTypeAsString() {
-		return String.valueOf(type);
-	}
+	
 	public String getName () {
 		return this.name;
+	}
+	
+	@Override
+	public int compareTo(AdType comp) {
+		return name.compareTo(comp.getName());
+	}
+	@Override
+	public int hashCode() {
+		return name.hashCode();
 	}
 }

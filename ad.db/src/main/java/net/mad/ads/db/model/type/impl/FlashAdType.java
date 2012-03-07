@@ -6,8 +6,10 @@ import net.mad.ads.db.model.type.AbstractAdType;
 
 public class FlashAdType extends AbstractAdType {
 
-	public FlashAdType(String name, int type) {
-		super("Flash", 4);
+	public static final String TYPE = "flash";
+	
+	public FlashAdType() {
+		super("Flash", TYPE);
 	}
 
 	@Override

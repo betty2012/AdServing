@@ -31,9 +31,12 @@ import net.mad.ads.db.definition.condition.ExcludeSiteConditionDefinition;
 import net.mad.ads.db.definition.condition.SiteConditionDefinition;
 import net.mad.ads.db.definition.condition.StateConditionDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import net.mad.ads.db.enums.AdFormat;
-import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.enums.ConditionDefinitions;
+import net.mad.ads.db.model.format.AdFormat;
+import net.mad.ads.db.model.format.impl.FullBannerAdFormat;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.model.type.impl.ImageAdType;
+import net.mad.ads.db.services.AdTypes;
 
 
 import junit.framework.TestCase;
@@ -54,7 +57,7 @@ public class SiteConditionTest extends TestCase {
 		SiteConditionDefinition sdef = new SiteConditionDefinition();
 		sdef.addSite("10");
 		b.addConditionDefinition(ConditionDefinitions.SITE, sdef);
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 		db.addBanner(b);
 		
 		b = new ImageAdDefinition();
@@ -66,17 +69,17 @@ public class SiteConditionTest extends TestCase {
 		edef.addSite("10");
 		b.addConditionDefinition(ConditionDefinitions.EXCLUDE_SITE, edef);
 		
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 		db.addBanner(b);
 		
 		db.reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
-		formats.add(AdFormat.FULL_BANNER);
+		formats.add(new FullBannerAdFormat());
 		request.setFormats(formats);
 		List<AdType> types = new ArrayList<AdType>();
-		types.add(AdType.IMAGE);
+		types.add(AdTypes.forType(ImageAdType.TYPE));
 		request.setTypes(types);
 		request.setSite("1");
 		
@@ -100,7 +103,7 @@ public class SiteConditionTest extends TestCase {
 		
 		AdDefinition b1 = new ImageAdDefinition();
 		b1.setId("3");
-		b1.setFormat(AdFormat.FULL_BANNER);
+		b1.setFormat(new FullBannerAdFormat());
 		db.addBanner(b1);
 		db.reopen();
 		

@@ -6,8 +6,10 @@ import net.mad.ads.db.model.type.AbstractAdType;
 
 public class ImageAdType extends AbstractAdType {
 
-	public ImageAdType(String name, int type) {
-		super("Image", 2);
+	public static final String TYPE = "image";
+	
+	public ImageAdType() {
+		super("Image", TYPE);
 	}
 
 	@Override

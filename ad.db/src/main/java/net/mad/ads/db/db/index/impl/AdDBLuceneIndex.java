@@ -46,7 +46,7 @@ import net.mad.ads.db.db.index.AdDBIndex;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.db.search.AdCollector;
 import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.enums.AdFormat;
+import net.mad.ads.db.model.format.AdFormat;
 import net.mad.ads.db.model.type.AdType;
 import net.mad.ads.db.utils.DocumentHelper;
 import net.mad.ads.db.utils.QueryHelper;

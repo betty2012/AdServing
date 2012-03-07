@@ -21,7 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.mad.ads.base.api.render.RenderContext;
 import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
-import net.mad.ads.db.enums.AdType;
+import net.mad.ads.db.model.type.impl.ExternAdType;
+import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.AdServerConstants;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.renderer.AdDefinitionRenderer;
@@ -69,7 +70,7 @@ public class ExternAdDefinitionRenderer implements AdDefinitionRenderer<ExternAd
 		context.put("clickUrl", clickurl);
 		
 		try {
-			return RuntimeContext.getBannerRenderer().render(AdType.EXTERN.getName().toLowerCase(), context);
+			return RuntimeContext.getBannerRenderer().render(AdTypes.forType(ExternAdType.TYPE).getName().toLowerCase(), context);
 		} catch (Exception e) {
 			logger.error("", e);
 		}

@@ -23,11 +23,15 @@ public class AdFormats {
 		}
 	}
 	
-	public static AdFormat fromCompoundName (String compound) {
+	public static AdFormat forCompoundName (String compound) {
 		return compoundNameLookup.get(compound);
 	}
 	
 	public static AdFormat forName (String name) {
 		return nameLookup.get(name);
+	}
+	
+	public static List<AdFormat> getFormats () {
+		return formats;
 	}
 }

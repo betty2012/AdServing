@@ -19,7 +19,7 @@ package net.mad.ads.db.definition.impl.ad.flash;
 
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.impl.ad.AbstractAdDefinition;
-import net.mad.ads.db.enums.AdFormat;
+import net.mad.ads.db.model.type.impl.FlashAdType;
 import net.mad.ads.db.services.AdTypes;
 
 /**
@@ -35,7 +35,7 @@ public class FlashAdDefinition extends AbstractAdDefinition {
 	private String fallbackImageUrl = null;
 	
 	public FlashAdDefinition () {
-		super(AdTypes.forType(4));
+		super(AdTypes.forType(FlashAdType.TYPE));
 	}
 	
 	public final String getMovieUrl() {
