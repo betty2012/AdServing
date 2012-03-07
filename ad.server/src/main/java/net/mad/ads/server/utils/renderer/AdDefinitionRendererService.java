@@ -44,4 +44,8 @@ public class AdDefinitionRendererService {
 	public static AdDefinitionRenderer<AdDefinition> forType (AdType type) {
 		return typeLookup.get(type);
 	}
+	
+	public static List<AdDefinitionRenderer<AdDefinition>> getRenderer () {
+		return renderer;
+	}
 }
