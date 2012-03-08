@@ -79,7 +79,7 @@ public final class AdProvider {
 			String type = (String)request.getParameter(RequestHelper.type);
 		
 			if (type == null || type.equals("")) {
-				type = "1";
+				type = ImageAdType.TYPE;
 			}
 			
 			AdType btype = AdTypes.forType(type);
