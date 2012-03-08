@@ -52,27 +52,15 @@ public class SiteConditionTest extends TestCase {
 		
 		db.open();
 		
-		AdDefinition b = new ImageAdDefinition();
-		b.setId("1");
-		SiteConditionDefinition sdef = new SiteConditionDefinition();
-		sdef.addSite("10");
-		b.addConditionDefinition(ConditionDefinitions.SITE, sdef);
-		b.setFormat(new FullBannerAdFormat());
+		AdDefinition b = getAd("10", "1");
 		db.addBanner(b);
 		
-		b = new ImageAdDefinition();
-		b.setId("2");
-		sdef = new SiteConditionDefinition();
-		sdef.addSite("11");
-		b.addConditionDefinition(ConditionDefinitions.SITE, sdef);
-		ExcludeSiteConditionDefinition edef = new ExcludeSiteConditionDefinition();
-		edef.addSite("10");
-		b.addConditionDefinition(ConditionDefinitions.EXCLUDE_SITE, edef);
-		
-		b.setFormat(new FullBannerAdFormat());
+		b = getAd("11", "2");
 		db.addBanner(b);
 		
 		db.reopen();
+		
+		System.out.println(db.size());
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
@@ -101,19 +89,41 @@ public class SiteConditionTest extends TestCase {
 		result = db.search(request);
 		assertEquals(0, result.size());
 		
-		AdDefinition b1 = new ImageAdDefinition();
-		b1.setId("3");
-		b1.setFormat(new FullBannerAdFormat());
-		db.addBanner(b1);
-		db.reopen();
+		b = getAd("12", "3");
+		db.addBanner(b);
+		
 		
 		System.out.println(db.size());
+		db.reopen();
+		System.out.println(db.size());
 		
+		request = new AdRequest();
+		request.setFormats(formats);
+		request.setTypes(types);
 		request.setSite("12");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		assertTrue(result.get(0).getId().equals("3"));
 		
 		db.close();
+	}
+	
+	private static AdDefinition getAd (String site, String id, String...exclude) {
+		AdDefinition b = new ImageAdDefinition();
+		b.setId(id);
+		SiteConditionDefinition sdef = new SiteConditionDefinition();
+		sdef.addSite(site);
+		b.addConditionDefinition(ConditionDefinitions.SITE, sdef);
+		b.setFormat(new FullBannerAdFormat());
+		
+		if (exclude != null) {
+			for (String ex : exclude) {
+				ExcludeSiteConditionDefinition edef = new ExcludeSiteConditionDefinition();
+				edef.addSite(ex);
+				b.addConditionDefinition(ConditionDefinitions.EXCLUDE_SITE, edef);
+			}
+		}
+		
+		return b;
 	}
 }

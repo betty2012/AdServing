@@ -17,10 +17,13 @@
  */
 package net.mad.ads.db.db.index.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
@@ -29,18 +32,26 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
+import org.apache.lucene.index.TieredMergePolicy;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.NRTManager;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.SearcherManager;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.NRTCachingDirectory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Strings;
+
 import net.mad.ads.db.AdDBConstants;
+import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.index.AdDBIndex;
 import net.mad.ads.db.db.request.AdRequest;
@@ -58,8 +69,9 @@ public class AdDBLuceneIndex implements AdDBIndex {
 
 	private Directory index = null;
 	private IndexWriter writer = null;
-	private IndexReader reader = null;
-	private IndexSearcher searcher = null;
+	
+	private NRTManager nrt_manager = null;
+	private SearcherManager manager = null;
 
 	private AdDB addb = null;
 
@@ -69,39 +81,40 @@ public class AdDBLuceneIndex implements AdDBIndex {
 
 	@Override
 	public void open() throws IOException {
-		index = new RAMDirectory();
+		if (AdDBManager.getInstance().getContext().useRamOnly) {
+			index = new RAMDirectory();
+		} else {
+			if (Strings.isNullOrEmpty(AdDBManager.getInstance().getContext().tempDir)) {
+				throw new IOException("temp directory can not be empty");
+			}
+			index = FSDirectory.open(new File(AdDBManager.getInstance().getContext().tempDir));
+		}
+		
 		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_35,
 				new KeywordAnalyzer());
 		config.setOpenMode(OpenMode.CREATE);
 		writer = new IndexWriter(index, config);
 
-		this.reader = IndexReader.open(this.writer, true);
-		this.searcher = new IndexSearcher(this.reader);
+		nrt_manager = new NRTManager(writer, null);
+		manager = nrt_manager.getSearcherManager(true);
 	}
 
 	@Override
 	public void close() throws IOException {
 		this.writer.commit();
 		this.writer.close();
-		this.searcher.close();
-		this.reader.close();
+		manager.close();
+		nrt_manager.close();
 		this.index.close();
 	}
 
 	@Override
 	public void reopen() throws IOException {
+		this.writer.forceMerge(1); //optimize();
 		this.writer.commit();
-		IndexReader newReader = IndexReader.open(this.writer, true);
-		if (this.reader != newReader) {
-			synchronized (this.reader) {
-				this.reader.close();
-				this.reader = newReader;
-			}
-			synchronized (searcher) {
-				this.searcher.close();
-				this.searcher = new IndexSearcher(this.reader);
-			}
-		}
+		
+		nrt_manager.maybeReopen(true);
+		manager = nrt_manager.getSearcherManager(true);
 	}
 
 	@Override
@@ -117,56 +130,61 @@ public class AdDBLuceneIndex implements AdDBIndex {
 
 	@Override
 	public List<AdDefinition> search(AdRequest request) throws IOException {
-		// Collector für die Banner
-		AdCollector collector = new AdCollector(this.reader.numDocs());
-
-		// MainQuery
-		BooleanQuery mainQuery = new BooleanQuery();
-		// Query für den/die BannerTypen
-		BooleanQuery typeQuery = new BooleanQuery();
-		for (AdType type : request.getTypes()) {
-			TermQuery tq = new TermQuery(new Term(
-					AdDBConstants.ADDB_AD_TYPE, type.getName()));
-			typeQuery.add(tq, Occur.SHOULD);
-		}
-		mainQuery.add(typeQuery, Occur.MUST);
-
-		// Query für den/die BannerFormate
-		BooleanQuery formatQuery = new BooleanQuery();
-		for (AdFormat format : request.getFormats()) {
-			TermQuery tq = new TermQuery(new Term(
-					AdDBConstants.ADDB_AD_FORMAT, format.getCompoundName()));
-			formatQuery.add(tq, Occur.SHOULD);
-		}
-		mainQuery.add(formatQuery, Occur.MUST);
-
-		// Query für die Bedingungen unter denen ein Banner angezeigt werden soll
-		Query cq = QueryHelper.getInstance().getConditionalQuery(request);
-		if (cq != null) {
-			mainQuery.add(cq, Occur.MUST);
-		}
-		
-		/*
-		 * Es sollen nur Produkte geliefert werden
-		 */
-		if (request.isProducts()) {
-			mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_TRUE)), Occur.MUST);
-		} else {
-			mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_FALSE)), Occur.MUST);
-			
-		}
- 
-		logger.debug(mainQuery.toString());
-//		System.out.println(mainQuery.toString());
-
-		this.searcher.search(mainQuery, collector);
-
-		BitSet hits = collector.getHits();
-		// Ergebnis
+		IndexSearcher searcher = manager.acquire();
 		List<AdDefinition> result = new ArrayList<AdDefinition>();
-		for (int i = hits.nextSetBit(0); i != -1; i = hits.nextSetBit(i + 1)) {
-			Document doc = this.reader.document(i);
-			result.add(addb.getBanner(doc.get(AdDBConstants.ADDB_AD_ID)));
+		try {
+			// Collector für die Banner
+			AdCollector collector = new AdCollector(searcher.getIndexReader().numDocs());
+
+			// MainQuery
+			BooleanQuery mainQuery = new BooleanQuery();
+			// Query für den/die BannerTypen
+			BooleanQuery typeQuery = new BooleanQuery();
+			for (AdType type : request.getTypes()) {
+				TermQuery tq = new TermQuery(new Term(
+						AdDBConstants.ADDB_AD_TYPE, type.getType()));
+				typeQuery.add(tq, Occur.SHOULD);
+			}
+			mainQuery.add(typeQuery, Occur.MUST);
+
+			// Query für den/die BannerFormate
+			BooleanQuery formatQuery = new BooleanQuery();
+			for (AdFormat format : request.getFormats()) {
+				TermQuery tq = new TermQuery(new Term(
+						AdDBConstants.ADDB_AD_FORMAT, format.getCompoundName()));
+				formatQuery.add(tq, Occur.SHOULD);
+			}
+			mainQuery.add(formatQuery, Occur.MUST);
+
+			// Query für die Bedingungen unter denen ein Banner angezeigt werden soll
+			Query cq = QueryHelper.getInstance().getConditionalQuery(request);
+			if (cq != null) {
+				mainQuery.add(cq, Occur.MUST);
+			}
+			
+			/*
+			 * Es sollen nur Produkte geliefert werden
+			 */
+			if (request.isProducts()) {
+				mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_TRUE)), Occur.MUST);
+			} else {
+				mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_FALSE)), Occur.MUST);
+				
+			}
+	 
+			logger.debug(mainQuery.toString());
+			System.out.println(mainQuery.toString());
+
+			searcher.search(mainQuery, collector);
+
+			BitSet hits = collector.getHits();
+			// Ergebnis
+			for (int i = hits.nextSetBit(0); i != -1; i = hits.nextSetBit(i + 1)) {
+				Document doc = searcher.doc(i);
+				result.add(addb.getBanner(doc.get(AdDBConstants.ADDB_AD_ID)));
+			}
+		} finally {
+			manager.release(searcher);
 		}
 
 		return result;
@@ -174,10 +192,17 @@ public class AdDBLuceneIndex implements AdDBIndex {
 
 	@Override
 	public int size() {
-		if (this.reader != null) {
-			return this.reader.numDocs();
+		IndexSearcher searcher = manager.acquire();
+		try {
+			return searcher.getIndexReader().numDocs();
+		} finally {
+			try {
+				manager.release(searcher);
+			} catch (IOException e) {
+				logger.error("", e);
+			}
 		}
-		return 0;
+//		return 0;
 	}
 
 }
