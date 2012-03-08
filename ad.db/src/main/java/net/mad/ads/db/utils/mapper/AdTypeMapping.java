@@ -51,6 +51,10 @@ public class AdTypeMapping {
 	public AdDefinition getDefinition (String type) {
 		AdType btype = AdTypes.forName(type);
 		
+		if (btype == null) {
+			btype = AdTypes.forType(type);
+		}
+		
 		
 		return btype.getAdDefinition();
 	}

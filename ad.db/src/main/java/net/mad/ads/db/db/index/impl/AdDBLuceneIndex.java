@@ -70,7 +70,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 	@Override
 	public void open() throws IOException {
 		index = new RAMDirectory();
-		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_33,
+		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_35,
 				new KeywordAnalyzer());
 		config.setOpenMode(OpenMode.CREATE);
 		writer = new IndexWriter(index, config);
@@ -82,7 +82,6 @@ public class AdDBLuceneIndex implements AdDBIndex {
 	@Override
 	public void close() throws IOException {
 		this.writer.commit();
-		this.writer.optimize();
 		this.writer.close();
 		this.searcher.close();
 		this.reader.close();
@@ -91,9 +90,8 @@ public class AdDBLuceneIndex implements AdDBIndex {
 
 	@Override
 	public void reopen() throws IOException {
-		this.writer.optimize();
 		this.writer.commit();
-		IndexReader newReader = this.reader.reopen();
+		IndexReader newReader = IndexReader.open(this.writer, true);
 		if (this.reader != newReader) {
 			synchronized (this.reader) {
 				this.reader.close();
