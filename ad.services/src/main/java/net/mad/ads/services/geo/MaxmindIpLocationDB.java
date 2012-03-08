@@ -74,8 +74,8 @@ public class MaxmindIpLocationDB implements IPLocationDB {
 
 		JDBCPooledDataSource datasource = new JDBCPooledDataSource();
 //		datasource.setUrl(jdbc_url_hsql + db);
-		datasource.setUser("sa");
-		datasource.setPassword("");
+		datasource.setUser("SA");
+		datasource.setPassword("SA");
 		datasource.setDatabase(jdbc_url_hsql + db);
 
 		poolMgr = new MiniConnectionPoolManager(datasource, 50);

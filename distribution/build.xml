@@ -30,12 +30,12 @@
 	<target name="ipdb">
 		<delete dir="services" />
 		<mkdir dir="services" />
-		<mkdir dir="services/db" />
+		<mkdir dir="services/ipdb" />
 		
 		<get src="http://geolite.maxmind.com/download/geoip/database/GeoLiteCity_CSV/${maxmind.version}.zip" dest="services/maxmind_${maxmind.version}.zip" verbose="true" />
 		<unzip src="services/maxmind_${maxmind.version}.zip" dest="./services/" />
 		
-		<geoipimport importdir="services/${maxmind.version}/" exportdir="services/db/ipinfo"/>
+		<geoipimport importdir="services/${maxmind.version}/" exportdir="services/ipdb"/>
 	</target>
 
 
