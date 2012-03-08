@@ -18,8 +18,8 @@
     this program. If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<banner type="EXPANDABLEIMAGE" id="15">
-	<format name="WIDE_BUTTON_3"/>
+<banner type="expandableimage" id="15">
+	<format name="160x40"/>
 	<targetUrl>http://www.lagerverkauf-finden.de</targetUrl>
 	<imageUrl>expand_1_small.png</imageUrl>
 	<expandedImageUrl>expand_1_big.png</expandedImageUrl>

@@ -18,8 +18,8 @@
     this program. If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<banner type="FLASH" id="13">
-	<format name="FULL_BANNER"/>
+<banner type="flash" id="13">
+	<format name="468x60"/>
 	<targetUrl>http://spartopia.de</targetUrl>
 	<movieUrl>flash_486x60.swf</movieUrl>
 	<minFlashVersion>10</minFlashVersion>

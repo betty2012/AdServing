@@ -18,8 +18,8 @@
     this program. If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<banner type="IMAGE" id="4">
-	<format name="LEADERBOARD"/>
+<banner type="image" id="4">
+	<format name="728x90"/>
 	<targetUrl>http://www.lagerverkauf-finden.de</targetUrl>
 	<imageUrl>leaderboard_2.jpg</imageUrl>
 	<condition>
