@@ -81,18 +81,28 @@ public class AdDBLuceneIndex implements AdDBIndex {
 
 	@Override
 	public void open() throws IOException {
+		
 		if (AdDBManager.getInstance().getContext().useRamOnly) {
 			index = new RAMDirectory();
 		} else {
-			if (Strings.isNullOrEmpty(AdDBManager.getInstance().getContext().tempDir)) {
+			if (Strings.isNullOrEmpty(AdDBManager.getInstance().getContext().datadir)) {
 				throw new IOException("temp directory can not be empty");
 			}
-			index = FSDirectory.open(new File(AdDBManager.getInstance().getContext().tempDir));
+			String dir = AdDBManager.getInstance().getContext().datadir;
+			if (!dir.endsWith("/") || !dir.endsWith("\\")) {
+				dir += "/";
+			}
+			File temp = new File(dir + "index");
+			if (!temp.exists()) {
+				temp.mkdirs();
+			}
+			index = FSDirectory.open(temp);
 		}
 		
 		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_35,
 				new KeywordAnalyzer());
-		config.setOpenMode(OpenMode.CREATE);
+		// CREATE_OR_APPEND
+		config.setOpenMode(OpenMode.CREATE_OR_APPEND);
 		writer = new IndexWriter(index, config);
 
 		nrt_manager = new NRTManager(writer, null);

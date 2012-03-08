@@ -55,18 +55,31 @@ public class AdDBBDBStore implements AdDBStore {
 	
 	@Override
 	public void open() throws IOException {
-		if (Strings.isNullOrEmpty(AdDBManager.getInstance().getContext().tempDir)) {
+		if (Strings.isNullOrEmpty(AdDBManager.getInstance().getContext().datadir)) {
 			throw new IOException("temp directory can not be empty");
 		}
+		
+		String dir = AdDBManager.getInstance().getContext().datadir;
+		if (!dir.endsWith("/") || !dir.endsWith("\\")) {
+			dir += "/";
+		}
+		File temp = new File(dir + "store");
+		if (!temp.exists()) {
+			temp.mkdirs();
+		}
+		
 		EnvironmentConfig envConfig = new EnvironmentConfig();
 		envConfig.setTransactional(false);
 		envConfig.setAllowCreate(true);
-		env = new Environment(new File(AdDBManager.getInstance().getContext().tempDir), envConfig);
-		try {
-			env.removeDatabase(null, "banner.db");
-		} catch (DatabaseNotFoundException e) {
-			logger.debug("no database exists");
-		}
+		env = new Environment(temp, envConfig);
+		/*
+		 * the database should be persistence also after a readstart
+		 */
+//		try {
+//			env.removeDatabase(null, "banner.db");
+//		} catch (DatabaseNotFoundException e) {
+//			logger.debug("no database exists");
+//		}
 		
 		DatabaseConfig dbConfig = new DatabaseConfig();
         dbConfig.setAllowCreate(true);

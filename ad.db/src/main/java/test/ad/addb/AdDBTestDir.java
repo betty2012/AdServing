@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.db.test;
+package test.ad.addb;
 
 
 import java.io.IOException;
@@ -28,34 +28,37 @@ import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import net.mad.ads.db.model.format.impl.MediumRectangleAdFormat;
 import net.mad.ads.db.model.type.impl.ImageAdType;
+import net.mad.ads.db.services.AdFormats;
 import net.mad.ads.db.services.AdTypes;
 
-
-public class StoredAdDBTest {
+public class AdDBTestDir {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) throws IOException {
+		AdDB db = new AdDB();
+		
 		AdDBManager.getInstance().getContext().useRamOnly = false;
-		AdDBManager.getInstance().getContext().datadir = "D:/www/applicationData/adserver/temp/";
+		AdDBManager.getInstance().getContext().datadir = "/tmp/addb";
+		
 		AdDBManager.getInstance().getAdDB().open();
 		
 		ImageAdDefinition ib = new ImageAdDefinition();
-		ib.setFormat(new MediumRectangleAdFormat());
+		ib.setFormat(AdFormats.forCompoundName(new MediumRectangleAdFormat().getCompoundName()));
 		ib.setId("1");
 		AdDBManager.getInstance().getAdDB().addBanner(ib);
 		
 		ib = new ImageAdDefinition();
-		ib.setFormat(new MediumRectangleAdFormat());
+		ib.setFormat(AdFormats.forCompoundName(new MediumRectangleAdFormat().getCompoundName()));
 		ib.setId("2");
 		AdDBManager.getInstance().getAdDB().addBanner(ib);
 		
 		AdDBManager.getInstance().getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
-		request.getFormats().add(new MediumRectangleAdFormat());
-		request.getTypes().add(AdTypes.forName(ImageAdType.TYPE));
+		request.getFormats().add(AdFormats.forCompoundName(new MediumRectangleAdFormat().getCompoundName()));
+		request.getTypes().add(AdTypes.forType(ImageAdType.TYPE));
 		
 		List<AdDefinition> result = AdDBManager.getInstance().getAdDB().search(request);
 		
