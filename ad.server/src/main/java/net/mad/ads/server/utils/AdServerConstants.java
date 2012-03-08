@@ -30,6 +30,7 @@ public abstract class AdServerConstants {
 		public final class PROPERTIES {
 			public static final String BANNER_IMPORT_DIRECOTRY = "banner.import.dir";
 			public static final String BANNER_DATA_DIRECOTRY = "banner.data.dir";
+			public static final String BANNER_DB_DIRECOTRY = "banner.db.dir";
 			public static final String CLICK_URL = "click.url";
 			public static final String STATIC_URL = "static.url";
 			public static final String IPDB_DIR = "ipdb.dir";

@@ -36,6 +36,7 @@ import net.mad.ads.common.template.TemplateManager;
 import net.mad.ads.common.template.impl.freemarker.FMTemplateManager;
 import net.mad.ads.common.util.Properties2;
 import net.mad.ads.common.util.Strings;
+import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.model.type.AdType;
@@ -206,6 +207,8 @@ public class StartupPlugIn implements ServletContextListener {
 		
 		long before = System.currentTimeMillis();
 		
+		AdDBManager.getInstance().getContext().useRamOnly = false;
+		AdDBManager.getInstance().getContext().datadir = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_DB_DIRECOTRY);
 		RuntimeContext.setAdDB(new AdDB());
 		RuntimeContext.getAdDB().open();
 		String bannerPath = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_DATA_DIRECOTRY);
