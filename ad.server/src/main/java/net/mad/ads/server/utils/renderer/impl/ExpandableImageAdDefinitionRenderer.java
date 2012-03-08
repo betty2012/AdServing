@@ -21,7 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.mad.ads.base.api.render.RenderContext;
 import net.mad.ads.db.definition.impl.ad.expandable.ExpandableImageAdDefinition;
-import net.mad.ads.db.enums.AdType;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.model.type.impl.ExpandableImageAdType;
+import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.AdServerConstants;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.renderer.AdDefinitionRenderer;
@@ -33,42 +35,52 @@ import org.slf4j.LoggerFactory;
  * Renderer für die Bannerdefinitionen des Types Image
  * 
  * @author tmarx
- *
+ * 
  */
-public class ExpandableImageAdDefinitionRenderer implements AdDefinitionRenderer<ExpandableImageAdDefinition> {
-	
-	public static final Logger logger = LoggerFactory.getLogger(ExpandableImageAdDefinitionRenderer.class);
-	
-	public static AdDefinitionRenderer<ExpandableImageAdDefinition> INSTANCE = null;
-	
-	private ExpandableImageAdDefinitionRenderer () {
+public class ExpandableImageAdDefinitionRenderer implements
+		AdDefinitionRenderer<ExpandableImageAdDefinition> {
+
+	public static final Logger logger = LoggerFactory
+			.getLogger(ExpandableImageAdDefinitionRenderer.class);
+
+	// public static AdDefinitionRenderer<ExpandableImageAdDefinition> INSTANCE
+	// = null;
+
+	public ExpandableImageAdDefinitionRenderer() {
 	}
-	
-	public static synchronized AdDefinitionRenderer getInstance () {
-		if (INSTANCE == null) {
-			INSTANCE = new ExpandableImageAdDefinitionRenderer();
-		}
-		
-		return INSTANCE;
-	}
-	
-	/* (non-Javadoc)
-	 * @see net.mad.ads.server.utils.renderer.BannerDefinitionRenderer#render(net.mad.ads.api.definition.impl.image.ImageBannerDefinition)
+
+	// public static synchronized AdDefinitionRenderer getInstance () {
+	// if (INSTANCE == null) {
+	// INSTANCE = new ExpandableImageAdDefinitionRenderer();
+	// }
+	//
+	// return INSTANCE;
+	// }
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.mad.ads.server.utils.renderer.BannerDefinitionRenderer#render(net
+	 * .mad.ads.api.definition.impl.image.ImageBannerDefinition)
 	 */
 	@Override
-	public String render (ExpandableImageAdDefinition banner, HttpServletRequest request) {
-		
-		String clickurl = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.CLICK_URL);
-		String staticurl = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.STATIC_URL);
+	public String render(ExpandableImageAdDefinition banner,
+			HttpServletRequest request) {
+
+		String clickurl = RuntimeContext.getProperties().getProperty(
+				AdServerConstants.CONFIG.PROPERTIES.CLICK_URL);
+		String staticurl = RuntimeContext.getProperties().getProperty(
+				AdServerConstants.CONFIG.PROPERTIES.STATIC_URL);
 		if (!staticurl.endsWith("/")) {
 			staticurl += "/";
 		}
-		
+
 		RenderContext context = new RenderContext();
 		context.put("banner", banner);
 		context.put("staticUrl", staticurl);
 		context.put("clickUrl", clickurl + "?id=" + banner.getId());
-		
+
 		if (request.getParameterMap().containsKey("tcolor")) {
 			context.put("tcolor", request.getParameter("tcolor"));
 		} else {
@@ -79,13 +91,20 @@ public class ExpandableImageAdDefinitionRenderer implements AdDefinitionRenderer
 		} else {
 			context.put("bcolor", "#cccccc");
 		}
-		
+
 		try {
-			return RuntimeContext.getBannerRenderer().render(AdType.EXPANDABLEIMAGE.getName().toLowerCase(), context);
+			return RuntimeContext.getBannerRenderer().render(
+					AdTypes.forType(ExpandableImageAdType.TYPE).getName()
+							.toLowerCase(), context);
 		} catch (Exception e) {
 			logger.error("", e);
 		}
-		
+
 		return "";
+	}
+
+	@Override
+	public AdType getType() {
+		return AdTypes.forType(ExpandableImageAdType.TYPE);
 	}
 }

@@ -17,15 +17,17 @@
  */
 package net.mad.ads.base.api.render;
 
-import net.mad.ads.db.enums.AdFormat;
-import net.mad.ads.db.enums.AdType;
+import net.mad.ads.db.model.format.AdFormat;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.services.AdFormats;
+import net.mad.ads.db.services.AdTypes;
+
 
 public class DisplayTemplatesNames {
 	public static void main (String [] args) {
-		AdFormat[] formats = AdFormat.values();
-		for (AdFormat format : formats) {
-			AdType[] types = AdType.values();
-			for (AdType type : types) {
+		
+		for (AdFormat format : AdFormats.getFormats()) {
+			for (AdType type : AdTypes.getTypes()) {
 				System.out.println(getTemplateName(format, type));
 			}
 		}

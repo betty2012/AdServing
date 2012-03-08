@@ -28,12 +28,15 @@ import net.mad.ads.db.definition.condition.CountryConditionDefinition;
 import net.mad.ads.db.definition.condition.DistanceConditionDefinition;
 import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import net.mad.ads.db.enums.AdFormat;
-import net.mad.ads.db.enums.AdType;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
 import net.mad.ads.db.model.State;
+import net.mad.ads.db.model.format.AdFormat;
+import net.mad.ads.db.model.format.impl.FullBannerAdFormat;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.model.type.impl.ExternAdType;
+import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.db.utils.geo.GeoLocation;
 
 public class ConditionFilterTest {
@@ -54,7 +57,7 @@ public class ConditionFilterTest {
 		cdef.addCountry(new Country("DE"));
 		b.addConditionDefinition(ConditionDefinitions.COUNTRY, cdef);
 		
-		b.setFormat(AdFormat.FULL_BANNER);
+		b.setFormat(new FullBannerAdFormat());
 		GeoLocation gl = new GeoLocation(51.4844, 7.2188);
 		DistanceConditionDefinition dcdef = new DistanceConditionDefinition();
 		dcdef.setGeoLocation(gl);
@@ -67,10 +70,10 @@ public class ConditionFilterTest {
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
-		formats.add(AdFormat.FULL_BANNER);
+		formats.add(new FullBannerAdFormat());
 		request.setFormats(formats);
 		List<AdType> types = new ArrayList<AdType>();
-		types.add(AdType.EXTERN);
+		types.add(AdTypes.forType(ExternAdType.TYPE));
 		request.setTypes(types);
 		
 		gl = new GeoLocation(51.4863, 7.180);

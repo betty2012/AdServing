@@ -21,7 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.mad.ads.base.api.render.RenderContext;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import net.mad.ads.db.enums.AdType;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.model.type.impl.ExpandableImageAdType;
+import net.mad.ads.db.model.type.impl.ImageAdType;
+import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.AdServerConstants;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.renderer.AdDefinitionRenderer;
@@ -39,18 +42,18 @@ public class ImageAdDefinitionRenderer implements AdDefinitionRenderer<ImageAdDe
 	
 	public static final Logger logger = LoggerFactory.getLogger(ImageAdDefinitionRenderer.class);
 	
-	public static AdDefinitionRenderer<ImageAdDefinition> INSTANCE = null;
+//	public static AdDefinitionRenderer<ImageAdDefinition> INSTANCE = null;
 	
-	private ImageAdDefinitionRenderer () {
+	public ImageAdDefinitionRenderer () {
 	}
 	
-	public static synchronized AdDefinitionRenderer getInstance () {
-		if (INSTANCE == null) {
-			INSTANCE = new ImageAdDefinitionRenderer();
-		}
-		
-		return INSTANCE;
-	}
+//	public static synchronized AdDefinitionRenderer getInstance () {
+//		if (INSTANCE == null) {
+//			INSTANCE = new ImageAdDefinitionRenderer();
+//		}
+//		
+//		return INSTANCE;
+//	}
 	
 	/* (non-Javadoc)
 	 * @see net.mad.ads.server.utils.renderer.BannerDefinitionRenderer#render(net.mad.ads.api.definition.impl.image.ImageBannerDefinition)
@@ -70,11 +73,16 @@ public class ImageAdDefinitionRenderer implements AdDefinitionRenderer<ImageAdDe
 		context.put("clickUrl", clickurl + "?id=" + banner.getId());
 		
 		try {
-			return RuntimeContext.getBannerRenderer().render(AdType.IMAGE.getName().toLowerCase(), context);
+			return RuntimeContext.getBannerRenderer().render(AdTypes.forType(ImageAdType.TYPE).getName().toLowerCase(), context);
 		} catch (Exception e) {
 			logger.error("", e);
 		}
 		
 		return "";
+	}
+	
+	@Override
+	public AdType getType() {
+		return AdTypes.forType(ImageAdType.TYPE);
 	}
 }

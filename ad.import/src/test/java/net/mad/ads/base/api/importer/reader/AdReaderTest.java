@@ -17,6 +17,8 @@
  */
 package net.mad.ads.base.api.importer.reader;
 
+import org.junit.Assert;
+
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.ClickExpirationConditionDefinition;
 import net.mad.ads.db.definition.condition.DateConditionDefinition;
@@ -32,7 +34,11 @@ import net.mad.ads.db.enums.ExpirationResolution;
 
 public class AdReaderTest {
 	public static void main (String [] args) throws Exception {
-		AdDefinition banner = AdXmlReader.readBannerDefinition("banner/banner1.xml");
+		AdDefinition banner = AdXmlReader.readBannerDefinition("testdata/data/importer/demo/banner01.xml");
+
+		
+		Assert.assertNotNull(banner.getType());
+		Assert.assertNotNull(banner.getFormat());
 		
 //		System.out.println(((ExternBannerDefinition)banner).getExternContent());
 		

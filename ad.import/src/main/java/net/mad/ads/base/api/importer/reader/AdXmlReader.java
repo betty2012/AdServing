@@ -33,10 +33,13 @@ import net.mad.ads.db.definition.impl.ad.expandable.ExpandableImageAdDefinition;
 import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
 import net.mad.ads.db.definition.impl.ad.flash.FlashAdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import net.mad.ads.db.enums.AdFormat;
 import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
 import net.mad.ads.db.model.State;
+import net.mad.ads.db.model.type.impl.ExternAdType;
+import net.mad.ads.db.model.type.impl.FlashAdType;
+import net.mad.ads.db.model.type.impl.ImageAdType;
+import net.mad.ads.db.services.AdFormats;
 import net.mad.ads.db.utils.mapper.AdTypeMapping;
 
 public class AdXmlReader {
@@ -55,7 +58,8 @@ public class AdXmlReader {
 		    
 		    banner.setId(root.getAttributeValue("id"));
 		    Element fe = root.getChild("format");
-		    banner.setFormat(AdFormat.valueOf(fe.getAttributeValue("name")));
+//		    banner.setFormat(AdFormat.valueOf(fe.getAttributeValue("name")));
+		    banner.setFormat(AdFormats.forCompoundName(fe.getAttributeValue("name")));
 		    
 		    fe = root.getChild("targetUrl");
 		    banner.setTargetUrl(fe.getTextTrim());
@@ -93,17 +97,16 @@ public class AdXmlReader {
 	
 	private static AdDefinition processBannerType (AdDefinition definition, Element banner) {
 		
-		switch (definition.getType()) {
-			case IMAGE:
-				return processImageBannerDefinition(definition, banner);
-			case FLASH:
-				return processFlashBannerDefinition(definition, banner);
-			case EXTERN:
-				return processExternBannerDefinition(definition, banner);
-			case EXPANDABLEIMAGE:
-				processImageBannerDefinition(definition, banner);
-				return processExpandableImageBannerDefinition(definition, banner);
-		}
+		if (definition.getType().equals(new ImageAdType())) {
+			return processImageBannerDefinition(definition, banner);
+		} else if (definition.getType().equals(new FlashAdType())) {
+			return processFlashBannerDefinition(definition, banner);
+		} else if (definition.getType().equals(new ExternAdType())) {
+			return processExternBannerDefinition(definition, banner);
+		} else if (definition.getType().equals(new ExpandableImageAdDefinition())) {
+			processImageBannerDefinition(definition, banner);
+			return processExpandableImageBannerDefinition(definition, banner);
+		}  
 		
 		return definition;
 	}

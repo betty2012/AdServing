@@ -18,8 +18,8 @@
     this program. If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<banner type="IMAGE" id="6">
-	<format name="MEDIUM_RECTANGLE"/>
+<banner type="image" id="6">
+	<format name="300x250"/>
 	<targetUrl>http://www.lagerverkauf-finden.de</targetUrl>
 	<imageUrl>medium_rectangle_2.jpg</imageUrl>
 	<condition>

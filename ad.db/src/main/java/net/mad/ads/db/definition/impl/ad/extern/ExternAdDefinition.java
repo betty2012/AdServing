@@ -18,14 +18,15 @@
 package net.mad.ads.db.definition.impl.ad.extern;
 
 import net.mad.ads.db.definition.impl.ad.AbstractAdDefinition;
-import net.mad.ads.db.enums.AdType;
+import net.mad.ads.db.model.type.impl.ExternAdType;
+import net.mad.ads.db.services.AdTypes;
 
 public class ExternAdDefinition extends AbstractAdDefinition {
 
 	private String externContent = null;
 	
 	public ExternAdDefinition() {
-		super(AdType.EXTERN);
+		super(AdTypes.forType(ExternAdType.TYPE));
 	}
 
 	public final String getExternContent() {

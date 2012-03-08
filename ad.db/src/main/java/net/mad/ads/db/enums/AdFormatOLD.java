@@ -25,7 +25,7 @@ import java.io.Serializable;
  * @author tmarx
  *
  */
-public enum AdFormat implements Serializable {
+public enum AdFormatOLD implements Serializable {
 	MEDIUM_RECTANGLE("Medium Rectangle", 300, 250),
 	SQUARE("Square", 250, 250),
 	VERTICAL_RECTANGLE ("Vertical Rectangle", 240, 400),
@@ -36,14 +36,14 @@ public enum AdFormat implements Serializable {
 	FULL_BANNER("Full Banner", 468, 60),
 	HALF_BANNER("Half Banner", 234, 60),
 	VERTICAL_BANNER ("Vertical Banner", 120, 400),
-	SQUARE_BUTTON ("Vertical Banner", 125, 125),
+	SQUARE_BUTTON ("Square Button", 125, 125),
 	MICROBUTTON("Microbutton", 80, 15),
 	BUTTON_1("Button 1", 120, 90),
-	BUTTON_2("Microbutton", 120, 60),
-	BUTTON_3("Microbutton", 120, 40),
-	WIDE_BUTTON_1("Button 1", 160, 90),
-	WIDE_BUTTON_2("Microbutton", 160, 60),
-	WIDE_BUTTON_3("Microbutton", 160, 40),
+	BUTTON_2("Button 2", 120, 60),
+	BUTTON_3("Button 3", 120, 40),
+	WIDE_BUTTON_1("WideButton 1", 160, 90),
+	WIDE_BUTTON_2("Widebutton 2", 160, 60),
+	WIDE_BUTTON_3("WideButton 3", 160, 40),
 	MICRO_BAR ("Micro Bar", 88, 31),
 	
 	HALF_PAGE_AD("Half Page Ad", 300, 600),
@@ -53,7 +53,7 @@ public enum AdFormat implements Serializable {
 	private String name = null;
 	private int width = -1;
 	private int height = -1;
-	private AdFormat (String name, int width, int height) {
+	private AdFormatOLD (String name, int width, int height) {
 		this.name = name;
 		this.width = width;
 		this.height = height;
@@ -81,8 +81,8 @@ public enum AdFormat implements Serializable {
 		return width + "x" + height;
 	}
 	
-	public static AdFormat fromCompoundName (String compound) {
-		for (AdFormat format : AdFormat.values()) {
+	public static AdFormatOLD fromCompoundName (String compound) {
+		for (AdFormatOLD format : AdFormatOLD.values()) {
 			if (format.getCompoundName().equalsIgnoreCase(compound)) {
 				return format;
 			}
@@ -90,8 +90,8 @@ public enum AdFormat implements Serializable {
 		return null;
 	}
 	
-	public static AdFormat forName (String name) {
-		for (AdFormat format : AdFormat.values()) {
+	public static AdFormatOLD forName (String name) {
+		for (AdFormatOLD format : AdFormatOLD.values()) {
 			if (format.getName().equalsIgnoreCase(name)) {
 				return format;
 			}

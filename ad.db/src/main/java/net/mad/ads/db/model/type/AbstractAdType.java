@@ -15,49 +15,32 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.db.enums;
+package net.mad.ads.db.model.type;
 
-import java.io.Serializable;
+import net.mad.ads.db.definition.AdDefinition;
 
-/**
- * Bannertypen
- * 
- * Text, Image
- * 
- * @author tmarx
- *
- */
-public enum AdType implements Serializable {
-	// Einfaches Banner, das nur den Bannercode eines externen Anbieters wie Zanox oder AdSense Banners enthält
-	EXTERN("Extern", 1),
-	// Ein ImageBanner
-	IMAGE("Image", 2),
-	TEXTLINK("Textlink", 3),
-	FLASH("Flash", 4),
-	EXPANDABLEIMAGE ("ExpandableImage", 5);
-	
-	private int type = 0;
+
+public abstract class AbstractAdType implements AdType {
+	private String type = "";
 	private String name = "";
-	private AdType(String name, int type) {
+	public AbstractAdType(String name, String type) {
 		this.type = type;
 		this.name = name;
 	}
-	public final int getType() {
+	public String getType() {
 		return type;
 	}
-	public final String getTypeAsString() {
-		return String.valueOf(type);
-	}
-	public final String getName () {
+	
+	public String getName () {
 		return this.name;
 	}
 	
-	public static AdType forType (int type) {
-		for (AdType t : AdType.values()) {
-			if (t.getType() == type) {
-				return t;
-			}
-		}
-		return null;
+	@Override
+	public int compareTo(AdType comp) {
+		return name.compareTo(comp.getName());
+	}
+	@Override
+	public int hashCode() {
+		return name.hashCode();
 	}
 }

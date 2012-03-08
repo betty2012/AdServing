@@ -30,7 +30,10 @@ import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.impl.ad.flash.FlashAdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import net.mad.ads.db.enums.AdType;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.model.type.impl.FlashAdType;
+import net.mad.ads.db.model.type.impl.ImageAdType;
+import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;
 import net.mad.ads.server.utils.filter.ClickExpirationFilter;
@@ -76,10 +79,10 @@ public final class AdProvider {
 			String type = (String)request.getParameter(RequestHelper.type);
 		
 			if (type == null || type.equals("")) {
-				type = "1";
+				type = ImageAdType.TYPE;
 			}
 			
-			AdType btype = AdType.forType(Integer.parseInt(type));
+			AdType btype = AdTypes.forType(type);
 			
 			AdRequest adr = RequestHelper.getAdRequest(context, request);
 			// Laden der Banner 
@@ -90,7 +93,7 @@ public final class AdProvider {
 				result = commonFilter(context, result);
 			}
 			
-			if (btype.equals(AdType.FLASH)) {
+			if (btype.getType().equals(FlashAdType.TYPE)) {
 				result = handleFlash(context, result, adr, request);
 			}
 			
@@ -169,8 +172,10 @@ public final class AdProvider {
 		 */
 		if (result.isEmpty()) {
 			// Fallback auf ImageBanner
-			adr.getTypes().remove(AdType.FLASH);
-			adr.getTypes().add(AdType.IMAGE);
+//			adr.getTypes().remove(AdType.FLASH);
+			adr.getTypes().remove(new FlashAdType());
+//			adr.getTypes().add(AdType.IMAGE);
+			adr.getTypes().add(new ImageAdType());
 			result = RuntimeContext.getAdDB().search(adr);
 			result = commonFilter(context, result);
 		} else {
@@ -203,16 +208,20 @@ public final class AdProvider {
 						result = imageBanners;
 					} else {
 						// Fallback auf ImageBanner
-						adr.getTypes().remove(AdType.FLASH);
-						adr.getTypes().add(AdType.IMAGE);
+//						adr.getTypes().remove(AdType.FLASH);
+						adr.getTypes().remove(new FlashAdType());
+//						adr.getTypes().add(AdType.IMAGE);
+						adr.getTypes().add(new ImageAdType());
 						result = RuntimeContext.getAdDB().search(adr);
 						result = commonFilter(context, result);
 					}
 				}
 			} else {
 				// Fallback auf ImageBanner um sicher zu gehen
-				adr.getTypes().remove(AdType.FLASH);
-				adr.getTypes().add(AdType.IMAGE);
+//				adr.getTypes().remove(AdType.FLASH);
+				adr.getTypes().remove(new FlashAdType());
+//				adr.getTypes().add(AdType.IMAGE);
+				adr.getTypes().add(new ImageAdType());
 				result = RuntimeContext.getAdDB().search(adr);
 				
 				result = commonFilter(context, result);
