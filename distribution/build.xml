@@ -35,7 +35,7 @@
 		<get src="http://geolite.maxmind.com/download/geoip/database/GeoLiteCity_CSV/${maxmind.version}.zip" dest="services/maxmind_${maxmind.version}.zip" verbose="true" />
 		<unzip src="services/maxmind_${maxmind.version}.zip" dest="./services/" />
 		
-		<geoipimport importdir="services/${maxmind.version}/" exportdir="services/ipdb"/>
+		<geoipimport importdir="services/${maxmind.version}/" exportdir="services/ipdb/db"/>
 	</target>
 
 
@@ -92,8 +92,8 @@
 		</copy>
 		<move file="dist-${version}/content/ad.manager-${version}.war" tofile="dist-${version}/content/ad.manager.war" />
 		<move file="dist-${version}/content/ad.server-${version}.war" tofile="dist-${version}/content/ad.server.war" />
-		<move  toDir="dist-${version}/data/services/ipinfo" >
-			<fileset dir="services/db"/>
+		<move  toDir="dist-${version}/data/services/ipdb" >
+			<fileset dir="services/ipdb"/>
 		</move>
 
 
