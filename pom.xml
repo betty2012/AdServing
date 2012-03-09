@@ -11,8 +11,7 @@
 	<inceptionYear>2011</inceptionYear>
 
 	<properties>
-		<!-- <jetty.version>7.5.1.v20110908</jetty.version> -->
-		<jetty.version>8.1.1.v20120215</jetty.version>
+		<jetty.version>8.1.2.v20120308</jetty.version>
 		<infinispan.version>5.1.1.FINAL</infinispan.version>
 		<wicket.version>1.5.4</wicket.version>
 		<wiquery.version>1.5.4</wiquery.version>

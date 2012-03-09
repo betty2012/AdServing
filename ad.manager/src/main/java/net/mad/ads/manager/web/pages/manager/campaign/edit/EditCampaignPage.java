@@ -105,41 +105,11 @@ public class EditCampaignPage extends BasePage {
 				setResponsePage(new CampaignManagerPage());
 			}
 		}.add(new ButtonBehavior()));
-
-		
-
-		/*
-		 * tcs = new WebMarkupContainer("timeConditions"); tcs.add(tcListView =
-		 * new ListView<TimeCondition>("timeConditions", new
-		 * PropertyModel<List<TimeCondition>>(this, "timeConditionsList")) {
-		 * 
-		 * @Override public void populateItem(final ListItem<TimeCondition>
-		 * listItem) { final TimeCondition condition =
-		 * listItem.getModelObject();
-		 * 
-		 * listItem.add(new TextField<Time>("from", new Model<Time>(condition
-		 * .getFrom()))); listItem.add(new TextField<Time>("to", new
-		 * Model<Time>(condition .getFrom())));
-		 * 
-		 * listItem.add(new DeleteAjaxLink("deleteTimeLink",
-		 * listItem.getIndex(), tcs)); } });
-		 * tabs.add(tcs.setOutputMarkupId(true));
-		 * 
-		 * tabs.add(new AjaxLink<Void>("addButton") {
-		 * 
-		 * @Override public void onClick(AjaxRequestTarget target) {
-		 * campaign.getTimeConditions().add(new TimeCondition());
-		 * 
-		 * target.add(tcs); }
-		 * 
-		 * }.add(new ButtonBehavior()));
-		 */
-
 	}
 
 	private class InputForm extends Form<Campaign> {
 		
-		private ListEditor<TimeCondition> timeEditor;
+		//private ListEditor<TimeCondition> timeEditor;
 		
 		private DatePicker<Date> datePickerFrom;
 		private DatePicker<Date> datePickerTo;
@@ -164,13 +134,14 @@ public class EditCampaignPage extends BasePage {
 			Tabs tabs = new Tabs("tabs");
 			add(tabs);
 			
-			datePickerFrom = new DatePicker<Date>("datePickerFrom", new PropertyModel(this, "dateFrom"));
+//			datePickerFrom = new DatePicker<Date>("datePickerFrom", new PropertyModel(campaign, "dateFrom"));
+			datePickerFrom = new DatePicker<Date>("dateCondition.from");
 			tabs.add(datePickerFrom);
 			
-			datePickerTo = new DatePicker<Date>("datePickerTo", new PropertyModel(this, "dateTo"));
+			datePickerTo = new DatePicker<Date>("dateCondition.to");
 			tabs.add(datePickerTo);
 			
-			
+			/*
 			timeEditor = new ListEditor<TimeCondition>("timeConditions", new PropertyModel(
 					this, "timeConditionsList")) {
 				@Override
@@ -208,7 +179,7 @@ public class EditCampaignPage extends BasePage {
 	            }
 	        }.setDefaultFormProcessing(false));
 	        tabs.add(timeEditor);
-	        
+	        */
 		}
 
 		/**
@@ -234,10 +205,7 @@ public class EditCampaignPage extends BasePage {
 		public List<TimeCondition> getTimeConditionsList() {
 			return campaign.getTimeConditions();
 		}
-
-//		public List<DateCondition> getDateConditionsList() {
-//			return campaign.getDateConditions();
-//		}
+/*
 		public DateCondition getDateCondition () {
 			return campaign.getDateCondition();
 		}
@@ -247,25 +215,24 @@ public class EditCampaignPage extends BasePage {
 			}
 			return null;
 		}
+		public void setDateFrom (Date from) {
+			if (campaign.getDateCondition() == null) {
+				campaign.setDateCondition(new DateCondition());
+			}
+			campaign.getDateCondition().setFrom(from);
+		}
 		public Date getDateTo () {
 			if (campaign.getDateCondition() != null) {
 				return campaign.getDateCondition().getTo();
 			}
 			return null;
 		}
+		public void setDateTo (Date to) {
+			if (campaign.getDateCondition() == null) {
+				campaign.setDateCondition(new DateCondition());
+			}
+			campaign.getDateCondition().setTo(to);
+		}
+*/
 	}
-
-	/*
-	 * private class DeleteAjaxLink extends AjaxLink<Void> {
-	 * 
-	 * private int index = 0; private Component component;
-	 * 
-	 * public DeleteAjaxLink(String id, int index, Component component) {
-	 * super(id); this.index = index; this.component = component; }
-	 * 
-	 * @Override public void onClick(AjaxRequestTarget target) {
-	 * campaign.getTimeConditions().remove(index);
-	 * target.add(tcListView.get(index));
-	 * tcListView.remove(tcListView.get(index)); } }
-	 */
 }

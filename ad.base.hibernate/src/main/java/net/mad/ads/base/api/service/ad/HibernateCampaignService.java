@@ -74,6 +74,9 @@ public class HibernateCampaignService extends HibernateService implements
 			if (obj.getDateCondition() == null && temp.getDateCondition() != null) {
 				session.delete(temp.getDateCondition());
 				temp.setDateCondition(null);
+			} else {
+				temp.setDateCondition(null);
+				temp.setDateCondition(obj.getDateCondition());
 			}
 			temp.getTimeConditions().clear();
 			temp.getTimeConditions().addAll(obj.getTimeConditions());

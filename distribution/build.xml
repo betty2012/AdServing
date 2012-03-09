@@ -20,7 +20,7 @@
 <project default="distribute">
 
 	<property name="version" value="0.1" />
-	<property name="jetty.version" value="8.1.1.v20120215" />
+	<property name="jetty.version" value="8.1.2.v20120308" />
 	<property name="maxmind.version" value="GeoLiteCity_20120207"/>
 
 	<taskdef name="geoipimport" classname="net.mad.ads.services.geo.ant.GeoIpImportTask">
