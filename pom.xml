@@ -13,7 +13,7 @@
 	<properties>
 		<jetty.version>8.1.2.v20120308</jetty.version>
 		<infinispan.version>5.1.1.FINAL</infinispan.version>
-		<wicket.version>1.5.4</wicket.version>
+		<wicket.version>1.5.5</wicket.version>
 		<wiquery.version>1.5.4</wiquery.version>
 		<hibernate-core-version>4.1.0.Final</hibernate-core-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
