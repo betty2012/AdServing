@@ -20,6 +20,7 @@ package net.mad.ads.manager.web.pages;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.mad.ads.manager.web.component.javascript.TestJS;
 import net.mad.ads.manager.web.pages.dashboard.Widget;
 import net.mad.ads.manager.web.pages.dashboard.panels.SimplePanel;
 
@@ -44,6 +45,8 @@ public class HomePage extends BasePage {
 
 	public HomePage() {
 		super();
+		
+		add(new TestJS());
 
 		add(new AjaxLink<Void>("firstButton") {
 

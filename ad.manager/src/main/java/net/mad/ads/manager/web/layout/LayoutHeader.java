@@ -21,6 +21,7 @@ import net.mad.ads.manager.web.pages.HomePage;
 import net.mad.ads.manager.web.pages.SignOutPage;
 import net.mad.ads.manager.web.pages.help.HelpPage;
 import net.mad.ads.manager.web.pages.manager.ManagerPage;
+import net.mad.ads.manager.web.pages.manager.ads.AdManagerPage;
 import net.mad.ads.manager.web.pages.manager.campaign.CampaignManagerPage;
 import net.mad.ads.manager.web.pages.manager.site.SiteManagerPage;
 
@@ -48,6 +49,6 @@ public final class LayoutHeader extends Panel {
 		add(new BookmarkablePageLink<Void>("dashboardLink", HomePage.class));
 		add(new BookmarkablePageLink<Void>("siteManagerLink", SiteManagerPage.class));
 		add(new BookmarkablePageLink<Void>("campaignManagerLink", CampaignManagerPage.class));
-		 
+		add(new BookmarkablePageLink<Void>("adManagerLink", AdManagerPage.class)); 
 	}
 }
