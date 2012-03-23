@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.manager.web.pages.manager.campaign.edit;
+package net.mad.ads.manager.web.pages.manager.ads;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -131,11 +131,55 @@ public class EditCampaignPage extends BasePage {
 			
 			add(new FeedbackPanel("feedback"));
 			
+			Tabs tabs = new Tabs("tabs");
+			add(tabs);
+			
+//			datePickerFrom = new DatePicker<Date>("datePickerFrom", new PropertyModel(campaign, "dateFrom"));
 			datePickerFrom = new DatePicker<Date>("dateCondition.from");
-			add(datePickerFrom);
+			tabs.add(datePickerFrom);
 			
 			datePickerTo = new DatePicker<Date>("dateCondition.to");
-			add(datePickerTo);
+			tabs.add(datePickerTo);
+			
+			/*
+			timeEditor = new ListEditor<TimeCondition>("timeConditions", new PropertyModel(
+					this, "timeConditionsList")) {
+				@Override
+				protected void onPopulateItem(ListItem<TimeCondition> item) {
+					final TimeCondition condition = item.getModelObject();
+					item.setModel(new CompoundPropertyModel(item.getModel()));
+
+					item.add(new TextField<Time>("from", new Model<Time>(condition
+							.getFrom())));
+					item.add(new TextField<Time>("to", new Model<Time>(condition.getFrom())));
+					item.add(new HiddenField<Long>("id", new Model<Long>(condition.getId())));
+					
+					AjaxSlider slider = new AjaxSlider("timeSlide", 0, 24);
+					
+					slider.setRange(new SliderRange(true));
+//					ArrayItemOptions<IntegerItemOptions> options = 
+//                            new ArrayItemOptions<IntegerItemOptions>(); 
+//                    options.add(new IntegerItemOptions(0)); 
+//                    options.add(new IntegerItemOptions(24));
+                    
+                    slider.setValues(0, 24);
+					
+					item.add(slider);
+
+					item.add(new RemoveButton("remove"));
+				}
+			};
+			
+			tabs.add(new Button("addTimeButton")
+	        {
+	            @Override
+	            public void onSubmit()
+	            {
+	                timeEditor.addItem(new TimeCondition());
+	            }
+	        }.setDefaultFormProcessing(false));
+	        tabs.add(timeEditor);
+	        */
 		}
 
 		/**
@@ -161,5 +205,34 @@ public class EditCampaignPage extends BasePage {
 		public List<TimeCondition> getTimeConditionsList() {
 			return campaign.getTimeConditions();
 		}
+/*
+		public DateCondition getDateCondition () {
+			return campaign.getDateCondition();
+		}
+		public Date getDateFrom () {
+			if (campaign.getDateCondition() != null) {
+				return campaign.getDateCondition().getFrom();
+			}
+			return null;
+		}
+		public void setDateFrom (Date from) {
+			if (campaign.getDateCondition() == null) {
+				campaign.setDateCondition(new DateCondition());
+			}
+			campaign.getDateCondition().setFrom(from);
+		}
+		public Date getDateTo () {
+			if (campaign.getDateCondition() != null) {
+				return campaign.getDateCondition().getTo();
+			}
+			return null;
+		}
+		public void setDateTo (Date to) {
+			if (campaign.getDateCondition() == null) {
+				campaign.setDateCondition(new DateCondition());
+			}
+			campaign.getDateCondition().setTo(to);
+		}
+*/
 	}
 }

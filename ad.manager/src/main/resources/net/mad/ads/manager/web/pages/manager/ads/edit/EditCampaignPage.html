@@ -31,7 +31,7 @@
 	<br />
 	<form wicket:id="inputForm" class="inputForm">
 		<div class="column">
-			<div class="overview ">
+			<div class="overview left">
 				<h3 class="title">
 					<wicket:message key="overview.campaign" />
 				</h3>
@@ -46,40 +46,47 @@
 						<td><textarea wicket:id="description" id="description"
 								cols="40" rows="10"></textarea></td>
 					</tr>
+					<tr>
+						<td></td>
+						<td><input type="submit" wicket:id="saveButton" value="save" /></td>
+					</tr>
 				</table>
-				
+				<div wicket:id="feedback"></div>
 			</div>
 
-			<div class="overview ">
+			<div class="overview right">
 				<h3 class="title">
 					<wicket:message key="overview.condition" />
 				</h3>
-				<fieldset>
-					<legend><wicket:message key="date.title" /></legend>
-					<table class="inputTable">
-						<tr>
-							<td class="first">
-								<label for="dateFrom"><wicket:message key="date.from.label" /></label>
-							</td>
-							<td>
-								<input id="dateFrom" type="text" wicket:id="dateCondition.from" />
-							</td>
-						</tr>
-						<tr>
-							 <td class="first">
-								<label for="dateTo"><wicket:message key="date.to.label" /></label>
-							</td>
-							<td>
-								<input id="dateTo" type="text" wicket:id="dateCondition.to" />
-							</td>
-						</tr>
-					</table>
-				</fieldset>
+				<div wicket:id="tabs">
+					<ul>
+						<li><a href="#tab1"><wicket:message key="tab.date.title" /></a></li>
+						<li><a href="#tab2"><wicket:message key="tab.time.title" /></a></li>
+					</ul>
+					<div id="tab1">
+						<input type="text" wicket:id="dateCondition.from" /> <input
+							type="text" wicket:id="dateCondition.to" />
+					</div>
+					<div id="tab2">
+						<h4>Time</h4>
+						<!-- 
+						<button wicket:id="addTimeButton">Add</button>
+						<div wicket:id="timeConditions">
+
+							<p>
+								<input wicket:id="from" type="text" size="2" /> <input
+									wicket:id="to" type="text" size="2" /> <input wicket:id="id"
+									type="hidden" size="2" /> <br />
+							<div wicket:id="timeSlide"></div>
+							<br />
+							<button wicket:id="remove">Delete</button>
+							</p>
+						</div>
+						 -->
+					</div>
+				</div>
 			</div>
-			<div class="buttonpanel">
-				<input type="submit" wicket:id="saveButton" value="save" />
-				<div wicket:id="feedback"></div>
-			</div>
+
 		</div>
 	</form>
 

@@ -121,3 +121,13 @@ div#footer-in {
 	background:#f7f6f0;
 	border-bottom:1px solid #e8e7e1;
 }
+
+.inputForm fieldSet {
+	padding: 10px;
+}
+.inputForm .inputTable td.first {
+	width: 80px;
+}
+.inputForm .buttonpanel {
+	margin-top: 15px;
+}
