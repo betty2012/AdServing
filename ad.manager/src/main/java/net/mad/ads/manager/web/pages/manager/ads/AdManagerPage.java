@@ -22,8 +22,12 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.event.Broadcast;
+import org.apache.wicket.event.IEvent;
+import org.apache.wicket.event.IEventSource;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
@@ -35,6 +39,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 import org.slf4j.Logger;
@@ -46,6 +51,7 @@ import net.mad.ads.base.api.model.site.Site;
 import net.mad.ads.manager.RuntimeContext;
 import net.mad.ads.manager.utils.DateUtil;
 import net.mad.ads.manager.web.pages.BasePage;
+import net.mad.ads.manager.web.pages.manager.ads.edit.NewAdPage;
 import net.mad.ads.manager.web.pages.manager.campaign.data.CampaignDataProvider;
 import net.mad.ads.manager.web.pages.manager.campaign.edit.EditCampaignPage;
 import net.mad.ads.manager.web.pages.manager.campaign.edit.NewCampaignPage;
@@ -61,30 +67,64 @@ public class AdManagerPage extends BasePage {
 
 	private static final long serialVersionUID = 701015869883210133L;
 
+	private Campaign selectedCampaign = null;
+
 	public AdManagerPage() {
 		super();
 
-		add(new BookmarkablePageLink<Void>("newAd", NewCampaignPage.class)
+		add(new BookmarkablePageLink<Void>("newAd", NewAdPage.class)
 				.add(new ButtonBehavior()));
-		
+
 		final List<Campaign> campaigns = new ArrayList<Campaign>();
 		try {
 			campaigns.addAll(RuntimeContext.getCampaignService().findAll());
 		} catch (ServiceException e) {
 			LOGGER.error("", e);
 		}
-		
-		add(new DropDownChoice<Campaign>("campaigns", campaigns, new IChoiceRenderer<Campaign>() {
-	        public String getDisplayValue(Campaign camp) {
-	            return camp.getName();
-	        }
 
-	        public String getIdValue(Campaign camp, int index) {
-	        	return String.valueOf(camp.getId());
-	        }
-	    }));
+		IModel<List<? extends Campaign>> makeChoices = new AbstractReadOnlyModel<List<? extends Campaign>>() {
+			@Override
+			public List<Campaign> getObject() {
+				return campaigns;
+			}
 
-		
+		};
+
+		// final DropDownChoice<Campaign> campaignSelect2 = new
+		// DropDownChoice<Campaign>(
+		// "campaigns", campaigns, new IChoiceRenderer<Campaign>() {
+		// public String getDisplayValue(Campaign camp) {
+		// return camp.getName();
+		// }
+		//
+		// public String getIdValue(Campaign camp, int index) {
+		// return String.valueOf(camp.getId());
+		// }
+		// });
+		final DropDownChoice<Campaign> campaignSelect = new DropDownChoice<Campaign>(
+				"campaigns", new PropertyModel<Campaign>(this,
+						"selectedCampaign"), campaigns,
+				new IChoiceRenderer<Campaign>() {
+					public String getDisplayValue(Campaign camp) {
+						return camp.getName();
+					}
+
+					public String getIdValue(Campaign camp, int index) {
+						return String.valueOf(camp.getId());
+					}
+				});
+
+		add(campaignSelect);
+
+		campaignSelect.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+			@Override
+			protected void onUpdate(AjaxRequestTarget target) {
+				if (selectedCampaign != null) {
+					System.out.println(selectedCampaign.getName());
+				}
+			}
+		});
+
 		DataView<Campaign> dataView = new DataView<Campaign>("pageable",
 				new CampaignDataProvider()) {
 			private static final long serialVersionUID = 1L;
@@ -94,7 +134,8 @@ public class AdManagerPage extends BasePage {
 				final Campaign campaign = item.getModelObject();
 				item.add(new Label("id", String.valueOf(campaign.getId())));
 				item.add(new Label("name", campaign.getName()));
-				item.add(new Label("created", DateUtil.format(campaign.getCreated())));
+				item.add(new Label("created", DateUtil.format(campaign
+						.getCreated())));
 				item.add(new EditPanel("editAd", item.getModel()));
 
 				item.add(AttributeModifier.replace("class",
@@ -114,7 +155,22 @@ public class AdManagerPage extends BasePage {
 		add(dataView);
 
 		add(new PagingNavigator("navigator", dataView));
-		
+
+	}
+
+	/**
+	 * @return the selectedCampaign
+	 */
+	public Campaign getSelectedCampaign() {
+		return selectedCampaign;
+	}
+
+	/**
+	 * @param selectedCampaign
+	 *            the selectedCampaign to set
+	 */
+	public void setSelectedCampaign(Campaign selectedCampaign) {
+		this.selectedCampaign = selectedCampaign;
 	}
 
 	class EditPanel extends Panel {
