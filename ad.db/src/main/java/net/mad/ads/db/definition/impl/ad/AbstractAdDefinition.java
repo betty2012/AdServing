@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.mad.ads.db.definition.AdDefinition;
+import net.mad.ads.db.definition.Campaign;
 import net.mad.ads.db.definition.ConditionDefinition;
 import net.mad.ads.db.definition.Keyword;
 import net.mad.ads.db.enums.ConditionDefinitions;
@@ -53,8 +54,14 @@ public class AbstractAdDefinition implements AdDefinition {
 	 * Bedingungen für die Anzeige des Banners
 	 */
 	private EnumMap<ConditionDefinitions, ConditionDefinition> conditionDefinitions = new EnumMap<ConditionDefinitions, ConditionDefinition>(ConditionDefinitions.class);
-	
+	/*
+	 * Name of the product or null
+	 */
 	private String product = null;
+	/*
+	 * the campaign
+	 */
+	private Campaign campaign;
 	
 	protected AbstractAdDefinition (AdType type) {
 		this.type = type;
@@ -147,6 +154,14 @@ public class AbstractAdDefinition implements AdDefinition {
 	@Override
 	public void setProduct(String product) {
 		this.product = product;
+	}
+
+	@Override
+	public Campaign getCampaign() {
+		return campaign;
+	}
+	public void setCampaign (Campaign campaign) {
+		this.campaign = campaign;
 	}
 	
 	

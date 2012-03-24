@@ -36,6 +36,8 @@ public interface AdDefinition extends Serializable {
 	 */
 	public String getId ();
 	public void setId (String id);
+
+	public Campaign getCampaign ();
 	
 	/**
 	 * liefert das BannerFormat
