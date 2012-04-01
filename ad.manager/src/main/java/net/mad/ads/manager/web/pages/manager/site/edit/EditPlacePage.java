@@ -65,7 +65,11 @@ public class EditPlacePage extends BasePage {
 		add(new Link<Void>("backLink") {
 			@Override
 			public void onClick() {
-				setResponsePage(new EditSitePage(place.getSite()));
+				try {
+					setResponsePage(new EditSitePage(RuntimeContext.getSiteService().findByPrimaryKey(place.getSite())));
+				} catch (ServiceException e) {
+					logger.error("", e);
+				}
 			}
 		}.add(new ButtonBehavior()));
 	}

@@ -33,7 +33,7 @@ public class DetachableCampaignModel extends LoadableDetachableModel<Campaign> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DetachableCampaignModel.class);
 	
-	private final long id;
+	private final String id;
 
 	protected CampaignService getCampaignService() {
 		return RuntimeContext.getCampaignService();
@@ -49,8 +49,8 @@ public class DetachableCampaignModel extends LoadableDetachableModel<Campaign> {
 	/**
 	 * @param id
 	 */
-	public DetachableCampaignModel(long id) {
-		if (id == 0) {
+	public DetachableCampaignModel(String id) {
+		if (id == null) {
 			throw new IllegalArgumentException();
 		}
 		this.id = id;
@@ -61,7 +61,7 @@ public class DetachableCampaignModel extends LoadableDetachableModel<Campaign> {
 	 */
 	@Override
 	public int hashCode() {
-		return Long.valueOf(id).hashCode();
+		return id.hashCode();
 	}
 
 	/**

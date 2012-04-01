@@ -36,7 +36,7 @@ public class Place extends ExtendedBaseModel {
 	/*
 	 * the parent site this place is in
 	 */
-	private Site site;
+	private String site;
 	
 	public Place () {
 		
@@ -45,14 +45,14 @@ public class Place extends ExtendedBaseModel {
 	/**
 	 * @return the site
 	 */
-	public Site getSite() {
+	public String getSite() {
 		return site;
 	}
 
 	/**
 	 * @param site the site to set
 	 */
-	public void setSite(Site site) {
+	public void setSite(String site) {
 		this.site = site;
 	}
 	

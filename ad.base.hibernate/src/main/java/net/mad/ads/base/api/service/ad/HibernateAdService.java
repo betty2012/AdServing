@@ -33,7 +33,7 @@ import net.mad.ads.base.api.model.ads.Campaign;
 import net.mad.ads.base.api.service.HibernateService;
 import net.mad.ads.base.api.service.ad.CampaignService;
 
-public class HibernateCampaignService extends HibernateService implements
+public class HibernateAdService extends HibernateService implements
 		CampaignService {
 
 	@Override
@@ -146,9 +146,6 @@ public class HibernateCampaignService extends HibernateService implements
 		return findAll(0, 0);
 	}
 
-	/*
-	 * TODO: the first parameter is not page. its the first row of date that should be returned
-	 */
 	@Override
 	public List<Campaign> findAll(int page, int perPage)
 			throws ServiceException {

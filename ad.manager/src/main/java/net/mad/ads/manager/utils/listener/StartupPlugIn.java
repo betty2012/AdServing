@@ -20,6 +20,7 @@ package net.mad.ads.manager.utils.listener;
 
 import java.io.File;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -31,16 +32,15 @@ import javax.sql.DataSource;
 import net.mad.ads.base.api.BaseContext;
 import net.mad.ads.base.api.EmbeddedBaseContext;
 import net.mad.ads.base.api.exception.ServiceException;
-import net.mad.ads.base.api.model.user.User;
+import net.mad.ads.base.api.model.user.impl.User;
 import net.mad.ads.base.api.model.user.impl.AdminUser;
-import net.mad.ads.base.api.service.HibernateService;
 import net.mad.ads.base.api.service.ad.CampaignService;
-import net.mad.ads.base.api.service.ad.HibernateCampaignService;
-import net.mad.ads.base.api.service.site.HibernatePlaceService;
-import net.mad.ads.base.api.service.site.HibernateSiteService;
+import net.mad.ads.base.api.service.orientdb.OrientCampaignService;
+import net.mad.ads.base.api.service.orientdb.OrientPlaceService;
+import net.mad.ads.base.api.service.orientdb.OrientSiteService;
+import net.mad.ads.base.api.service.orientdb.OrientUserService;
 import net.mad.ads.base.api.service.site.PlaceService;
 import net.mad.ads.base.api.service.site.SiteService;
-import net.mad.ads.base.api.service.user.HibernateUserService;
 import net.mad.ads.base.api.service.user.UserService;
 import net.mad.ads.base.api.track.TrackingService;
 import net.mad.ads.base.api.track.impl.local.h2.H2TrackingService;
@@ -49,8 +49,6 @@ import net.mad.ads.manager.RuntimeContext;
 import net.mad.ads.manager.utils.Constants;
 
 import org.apache.log4j.PropertyConfigurator;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,8 +61,6 @@ public class StartupPlugIn implements ServletContextListener {
 
 	public void contextDestroyed(ServletContextEvent event) {
 		logger.debug("stop application");
-		
-		RuntimeContext.getSessionFactory().close();
 
 		try {
 			RuntimeContext.getTrackingService().close();
@@ -109,30 +105,31 @@ public class StartupPlugIn implements ServletContextListener {
 			String path = event.getServletContext().getRealPath("/");
 
 			
-			File hibernateConfig = new File(configDirectory + "hibernate.cfg.xml");
-			SessionFactory sessionFactory = new Configuration().configure(hibernateConfig).buildSessionFactory();
-			RuntimeContext.setSessionFactory(sessionFactory);
+//			File hibernateConfig = new File(configDirectory + "hibernate.cfg.xml");
+//			SessionFactory sessionFactory = new Configuration().configure(hibernateConfig).buildSessionFactory();
+//			RuntimeContext.setSessionFactory(sessionFactory);
 			
 			BaseContext context = new BaseContext();
-			context.put(HibernateService.SESSION_FACTORY, sessionFactory);
+//			context.put(HibernateService.SESSION_FACTORY, sessionFactory);
+			context.put(EmbeddedBaseContext.EMBEDDED_DB_DIR, RuntimeContext.getProperties().getProperty(EmbeddedBaseContext.EMBEDDED_DB_DIR));
 			
-			UserService users = new HibernateUserService();
+			UserService users = new OrientUserService();
 			users.open(context);
 			RuntimeContext.setUserService(users);
 			
-			SiteService sites = new HibernateSiteService();
+			SiteService sites = new OrientSiteService();
 			sites.open(context);
 			RuntimeContext.setSiteService(sites);
 			
-			PlaceService places = new HibernatePlaceService();
+			PlaceService places = new OrientPlaceService();
 			places.open(context);
 			RuntimeContext.setPlaceService(places);
 			
-			CampaignService campaigns = new HibernateCampaignService();
+			CampaignService campaigns = new OrientCampaignService();
 			campaigns.open(context);
 			RuntimeContext.setCampaignService(campaigns);
 			
-			User admin = users.get(1L);
+			User admin = users.get("1");
 			if (admin == null) {
 				admin = new AdminUser();
 				admin.setActive(true);

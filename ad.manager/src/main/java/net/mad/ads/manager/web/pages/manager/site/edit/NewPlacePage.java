@@ -96,7 +96,7 @@ public class NewPlacePage extends BasePage {
 			// Form validation successful. Display message showing edited model.
 			
 			Place place = (Place) getDefaultModelObject();
-			place.setSite(site);
+			place.setSite(site.getId());
 			try {
 				RuntimeContext.getPlaceService().add(place);
 				

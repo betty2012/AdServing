@@ -34,10 +34,10 @@ public interface PlaceService {
     public void update(Place obj) throws ServiceException;
     public void delete(Place obj) throws ServiceException;
     public long count() throws ServiceException;
-    public Place findByPrimaryKey(long id) throws ServiceException;
+    public Place findByPrimaryKey(String id) throws ServiceException;
     public List<Place> findAll() throws ServiceException;
-    public List<Place> findAll(int page, int perPage) throws ServiceException;
+    public List<Place> findAll(int first, int perPage) throws ServiceException;
     
     public List<Place> findBySite(Site site) throws ServiceException;
-    public List<Place> findBySite(Site site, int page, int perPage) throws ServiceException; 
+    public List<Place> findBySite(Site site, int first, int perPage) throws ServiceException; 
 }

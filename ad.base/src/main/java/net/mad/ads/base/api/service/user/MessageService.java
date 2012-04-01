@@ -21,7 +21,7 @@ import net.mad.ads.base.api.BaseContext;
 import net.mad.ads.base.api.exception.ServiceException;
 import net.mad.ads.base.api.model.ResultList;
 import net.mad.ads.base.api.model.user.Message;
-import net.mad.ads.base.api.model.user.User;
+import net.mad.ads.base.api.model.user.impl.User;
 
 public interface MessageService {
 

@@ -67,17 +67,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate-core-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-c3p0</artifactId>
-			<version>${hibernate-core-version}</version>
-		</dependency>
-
 
 		<dependency>
 			<groupId>net.mad.ads</groupId>
@@ -86,10 +75,6 @@
 		<dependency>
 			<groupId>net.mad.ads</groupId>
 			<artifactId>ad.base.embedded</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>net.mad.ads</groupId>
-			<artifactId>ad.base.hibernate</artifactId>
 		</dependency>
 
 		<dependency>

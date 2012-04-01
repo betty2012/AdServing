@@ -23,7 +23,7 @@ import java.util.Date;
 import net.mad.ads.base.api.model.BaseModel;
 
 /**
- * Describes the dates the banner should be delivered
+ * Describes the dates the ads should be delivered
  * 
  * @author thmarx
  *

@@ -17,7 +17,7 @@
  */
 package net.mad.ads.manager.web.application;
 
-import net.mad.ads.base.api.model.user.User;
+import net.mad.ads.base.api.model.user.impl.User;
 import net.mad.ads.manager.RuntimeContext;
 
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;

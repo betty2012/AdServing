@@ -17,7 +17,15 @@
  */
 package net.mad.ads.base.api.model.ads;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sleepycat.je.log.entry.BaseEntry;
+
 import net.mad.ads.base.api.model.BaseModel;
+import net.mad.ads.base.api.model.ExtendedBaseModel;
+import net.mad.ads.base.api.model.ads.condition.DateCondition;
+import net.mad.ads.base.api.model.ads.condition.TimeCondition;
 
 
 
@@ -31,6 +39,65 @@ import net.mad.ads.base.api.model.BaseModel;
  * @author thorsten
  *
  */
-public class Advertisement extends BaseModel {
-	private String campaignId;
+public class Advertisement extends ExtendedBaseModel {
+	private String campaign;
+	
+	/*
+	 * The times this campaign is valid
+	 */
+	private List<TimeCondition> timeConditions = new ArrayList<TimeCondition>();
+	/*
+	 * The dates (from and to) this campaign is valid
+	 */
+	private List<DateCondition> dateConditions = new ArrayList<DateCondition>();
+
+	
+	public Advertisement () {
+		
+	}
+
+	
+
+	public String getCampaign() {
+		return campaign;
+	}
+
+
+
+	public void setCampaign(String campaign) {
+		this.campaign = campaign;
+	}
+
+
+
+	/**
+	 * @return the timeConditions
+	 */
+	public List<TimeCondition> getTimeConditions() {
+		return timeConditions;
+	}
+
+
+	/**
+	 * @param timeConditions the timeConditions to set
+	 */
+	public void setTimeConditions(List<TimeCondition> timeConditions) {
+		this.timeConditions = timeConditions;
+	}
+
+
+	/**
+	 * @return the dateConditions
+	 */
+	public List<DateCondition> getDateCondition() {
+		return dateConditions;
+	}
+
+
+	/**
+	 * @param dateConditions the dateConditions to set
+	 */
+	public void setDateCondition(List<DateCondition> dateConditions) {
+		this.dateConditions = dateConditions;
+	}
 }

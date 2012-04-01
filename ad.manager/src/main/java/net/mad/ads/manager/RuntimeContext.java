@@ -25,7 +25,6 @@ import net.mad.ads.base.api.service.site.SiteService;
 import net.mad.ads.base.api.service.user.UserService;
 import net.mad.ads.base.api.track.TrackingService;
 
-import org.hibernate.SessionFactory;
 
 public final class RuntimeContext {
 	
@@ -38,8 +37,6 @@ public final class RuntimeContext {
 	 * Properties, die beim starten der Anwendungen geladen werden
 	 */
 	private static Properties properties = new Properties();
-	
-	private static SessionFactory sessionFactory;
 	
 	private static UserService userService;
 	private static SiteService siteService;
@@ -105,14 +102,6 @@ public final class RuntimeContext {
 
 	public static void setUserService(UserService userService) {
 		RuntimeContext.userService = userService;
-	}
-
-	public static SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
-
-	public static void setSessionFactory(SessionFactory sessionFactory) {
-		RuntimeContext.sessionFactory = sessionFactory;
 	}
 
 	public static void setProperties (Properties props) {

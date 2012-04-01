@@ -19,7 +19,7 @@ package net.mad.ads.base.api.model.user.impl;
 
 import net.mad.ads.base.api.model.user.UserType;
 
-public class PublisherUser extends AbstractUser {
+public class PublisherUser extends User {
 
 	public PublisherUser () {
 		super(UserType.Publisher);

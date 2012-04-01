@@ -90,17 +90,6 @@ public class AdManagerPage extends BasePage {
 
 		};
 
-		// final DropDownChoice<Campaign> campaignSelect2 = new
-		// DropDownChoice<Campaign>(
-		// "campaigns", campaigns, new IChoiceRenderer<Campaign>() {
-		// public String getDisplayValue(Campaign camp) {
-		// return camp.getName();
-		// }
-		//
-		// public String getIdValue(Campaign camp, int index) {
-		// return String.valueOf(camp.getId());
-		// }
-		// });
 		final DropDownChoice<Campaign> campaignSelect = new DropDownChoice<Campaign>(
 				"campaigns", new PropertyModel<Campaign>(this,
 						"selectedCampaign"), campaigns,

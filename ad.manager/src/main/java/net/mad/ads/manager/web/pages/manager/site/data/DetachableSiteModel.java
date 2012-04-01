@@ -29,7 +29,7 @@ public class DetachableSiteModel extends LoadableDetachableModel<Site> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DetachableSiteModel.class);
 	
-	private final long id;
+	private final String id;
 
 	protected SiteService getSiteService() {
 		return RuntimeContext.getSiteService();
@@ -45,8 +45,8 @@ public class DetachableSiteModel extends LoadableDetachableModel<Site> {
 	/**
 	 * @param id
 	 */
-	public DetachableSiteModel(long id) {
-		if (id == 0) {
+	public DetachableSiteModel(String id) {
+		if (id == null) {
 			throw new IllegalArgumentException();
 		}
 		this.id = id;

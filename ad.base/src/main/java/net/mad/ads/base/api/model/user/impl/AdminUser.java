@@ -22,70 +22,10 @@ import java.util.Date;
 import org.omg.CORBA.UserException;
 
 import net.mad.ads.base.api.model.BaseModel;
-import net.mad.ads.base.api.model.user.User;
 import net.mad.ads.base.api.model.user.UserType;
 
-public class AdminUser extends BaseModel implements User {
-
-	
-	private String username;
-	private String password;
-	private String email;
-	
-	private boolean active;
-	
-	private UserType type;
-	
+public class AdminUser extends User {
 	public AdminUser () {
-	}
-
-	@Override
-	public String getUsername() {
-		return this.username;
-	}
-
-	@Override
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	@Override
-	public String getPassword() {
-		return this.password;
-	}
-
-	@Override
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	@Override
-	public String getEmail() {
-		return this.email;
-	}
-
-	@Override
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	@Override
-	public UserType getType() {
-		return this.type;
-	}
-
-	@Override
-	public void setType(UserType type) {
-		this.type = type;
-	}
-
-	@Override
-	public boolean isActive() {
-		return this.active;
-	}
-
-	@Override
-	public void setActive(boolean active) {
-		this.active = active;
+		super(UserType.Admin);
 	}
 }

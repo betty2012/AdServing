@@ -22,7 +22,7 @@ import java.util.List;
 import net.mad.ads.base.api.BaseContext;
 import net.mad.ads.base.api.exception.ServiceException;
 import net.mad.ads.base.api.model.ResultList;
-import net.mad.ads.base.api.model.user.User;
+import net.mad.ads.base.api.model.user.impl.User;
 import net.mad.ads.base.api.model.user.UserType;
 
 public interface UserService {
@@ -49,7 +49,7 @@ public interface UserService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public User get (Long id) throws ServiceException;
+	public User get (String id) throws ServiceException;
 	
 	/**
 	 * Aktualisiert einen Benutzer
@@ -71,14 +71,14 @@ public interface UserService {
 	 * @param id
 	 * @throws ServiceException
 	 */
-	public void activate (Long id) throws ServiceException;
+	public void activate (String id) throws ServiceException;
 	
 	/**
 	 * Deaktiviert einen Benutzer
 	 * @param is
 	 * @throws ServiceException
 	 */
-	public void deactivate (Long id) throws ServiceException;
+	public void deactivate (String id) throws ServiceException;
 	
 	/**
 	 * überprüft ob ein Benutzername noch frei ist
@@ -99,7 +99,7 @@ public interface UserService {
 	 * 
 	 * @throws ServiceException
 	 */
-	public void changePassword (Long userid, String password) throws ServiceException;
+	public void changePassword (String userid, String password) throws ServiceException;
 	
 	/**
 	 * Listet die Benutzer

@@ -31,7 +31,7 @@ public class DetachablePlaceModel extends LoadableDetachableModel<Place> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DetachablePlaceModel.class);
 	
-	private final long id;
+	private final String id;
 
 	protected PlaceService getPlaceService() {
 		return RuntimeContext.getPlaceService();
@@ -47,8 +47,8 @@ public class DetachablePlaceModel extends LoadableDetachableModel<Place> {
 	/**
 	 * @param id
 	 */
-	public DetachablePlaceModel(long id) {
-		if (id == 0) {
+	public DetachablePlaceModel(String id) {
+		if (id == null) {
 			throw new IllegalArgumentException();
 		}
 		this.id = id;

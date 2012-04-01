@@ -30,7 +30,6 @@
 		<module>ad.common</module>
 		<module>ad.base</module>
 		<module>ad.base.embedded</module>
-		<module>ad.base.hibernate</module>
 		<module>ad.db</module>
 		<module>ad.server</module>
 		<module>ad.import</module>

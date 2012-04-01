@@ -22,20 +22,24 @@ import java.util.List;
 
 import net.mad.ads.base.api.BaseContext;
 import net.mad.ads.base.api.exception.ServiceException;
+import net.mad.ads.base.api.model.ads.Advertisement;
 import net.mad.ads.base.api.model.ads.Campaign;
 import net.mad.ads.base.api.model.site.Place;
 import net.mad.ads.base.api.model.site.Site;
 
-public interface CampaignService {
+public interface AdService {
 	
 	public void open (BaseContext context) throws ServiceException;
 	public void close () throws ServiceException;
 	
-	public void add(Campaign obj) throws ServiceException;
-    public void update(Campaign obj) throws ServiceException;
-    public void delete(Campaign obj) throws ServiceException;
+	public void add(Advertisement obj) throws ServiceException;
+    public void update(Advertisement obj) throws ServiceException;
+    public void delete(Advertisement obj) throws ServiceException;
     public long count() throws ServiceException;
-    public Campaign findByPrimaryKey(String id) throws ServiceException;
-    public List<Campaign> findAll() throws ServiceException;
-    public List<Campaign> findAll(int first, int perPage) throws ServiceException;
+    public Advertisement findByPrimaryKey(String id) throws ServiceException;
+    public List<Advertisement> findAll() throws ServiceException;
+    public List<Advertisement> findAll(int first, int perPage) throws ServiceException;
+    
+    public List<Advertisement> byCampaign(Campaign campaign) throws ServiceException;
+    public List<Advertisement> byCampaign(Campaign campaign, int first, int perPage) throws ServiceException;
 }

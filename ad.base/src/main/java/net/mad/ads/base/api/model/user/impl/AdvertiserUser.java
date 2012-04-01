@@ -19,7 +19,7 @@ package net.mad.ads.base.api.model.user.impl;
 
 import net.mad.ads.base.api.model.user.UserType;
 
-public class AdvertiserUser extends AbstractUser {
+public class AdvertiserUser extends User {
 
 	public AdvertiserUser () {
 		super(UserType.Advertiser);
