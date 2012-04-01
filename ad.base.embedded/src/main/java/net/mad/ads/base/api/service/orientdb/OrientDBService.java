@@ -45,7 +45,7 @@ public abstract class OrientDBService {
 			db.close();
 		}
 	}
-	
+
 	public void open(BaseContext context) throws ServiceException {
 		String basedir = context.get(EmbeddedBaseContext.EMBEDDED_DB_DIR,
 				String.class, "");
@@ -65,22 +65,24 @@ public abstract class OrientDBService {
 		if (createdb) {
 			ODatabaseDocumentTx db = new ODatabaseDocumentTx("local:" + basedir)
 					.create();
-			
+
 			db.getMetadata().getSchema().createClass(getClassName());
-			
+
 			db.close();
 		} else {
-			ODatabaseDocumentTx db = new ODatabaseDocumentTx("local:" + basedir)
-			.create();
-	
-			if (!db.getMetadata().getSchema().existsClass(getClassName())) {
-				db.getMetadata().getSchema().createClass(getClassName());
+			ODatabaseDocumentTx db = ODatabaseDocumentPool.global().acquire(
+					"local:" + basedir, "admin", "admin");
+			try {
+				if (!db.getMetadata().getSchema().existsClass(getClassName())) {
+					db.getMetadata().getSchema().createClass(getClassName());
+				}
+			} finally {
+				db.close();
 			}
-			db.close();
 		}
 	}
-	
+
 	public void close() throws ServiceException {
 		ODatabaseDocumentPool.global().close();
-	}	
+	}
 }

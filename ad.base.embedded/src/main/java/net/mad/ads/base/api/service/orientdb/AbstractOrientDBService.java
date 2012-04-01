@@ -19,6 +19,7 @@ package net.mad.ads.base.api.service.orientdb;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,6 +50,7 @@ public abstract class AbstractOrientDBService<T extends BaseModel> extends Orien
 	public void add(T obj) throws ServiceException {
 		ODatabaseDocumentTx db = acquire();
 		try {
+			obj.setCreated(new Date());
 			obj.setId(UUID.randomUUID().toString());
 			ODocument doc = toDocument(obj);
 			doc.save();

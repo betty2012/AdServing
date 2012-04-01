@@ -121,10 +121,10 @@ public class OrientPlaceService extends AbstractOrientDBService<Place>
 	}
 
 	public ODocument updateDocument(ODocument doc, Place place) {
-		doc.field(Fields.ID, place.getId());
+//		doc.field(Fields.ID, place.getId());
 		doc.field(Fields.NAME, place.getName());
 		doc.field(Fields.DESCRIPTION, place.getDescription());
-		doc.field(Fields.CREATED, place.getCreated());
+//		doc.field(Fields.CREATED, place.getCreated());
 		doc.field(Fields.SITE, place.getSite());
 
 		return doc;

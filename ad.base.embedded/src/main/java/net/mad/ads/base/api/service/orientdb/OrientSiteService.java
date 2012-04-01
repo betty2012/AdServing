@@ -78,10 +78,10 @@ public class OrientSiteService extends AbstractOrientDBService<Site> implements 
 	}
 
 	public ODocument updateDocument(ODocument doc, Site site) {
-		doc.field(Fields.ID, site.getId());
+//		doc.field(Fields.ID, site.getId());
 		doc.field(Fields.NAME, site.getName());
 		doc.field(Fields.DESCRIPTION, site.getDescription());
-		doc.field(Fields.CREATED, site.getCreated());
+//		doc.field(Fields.CREATED, site.getCreated());
 		doc.field(Fields.URL, site.getUrl());
 
 		return doc;

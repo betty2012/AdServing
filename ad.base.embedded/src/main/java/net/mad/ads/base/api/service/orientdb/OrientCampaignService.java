@@ -98,10 +98,10 @@ public class OrientCampaignService extends AbstractOrientDBService<Campaign> imp
 	}
 
 	public ODocument updateDocument(ODocument doc, Campaign camp) {
-		doc.field(Fields.ID, camp.getId());
+//		doc.field(Fields.ID, camp.getId());
 		doc.field(Fields.NAME, camp.getName());
 		doc.field(Fields.DESCRIPTION, camp.getDescription());
-		doc.field(Fields.CREATED, camp.getCreated());
+//		doc.field(Fields.CREATED, camp.getCreated());
 
 		if (camp.getDateCondition() != null) {
 			ODocument date = new ODocument();
