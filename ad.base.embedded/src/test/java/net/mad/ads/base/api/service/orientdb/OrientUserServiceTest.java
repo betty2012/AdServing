@@ -38,9 +38,10 @@ public class OrientUserServiceTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		File dbdir = Files.createTempDir();
-		System.out.println(dbdir.getAbsolutePath());
+		String filedir = dbdir.getAbsolutePath().replaceAll("\\\\", "/");
+		System.out.println(filedir);
 		BaseContext context = new BaseContext();
-		context.put(EmbeddedBaseContext.EMBEDDED_DB_DIR, dbdir.getAbsolutePath());
+		context.put(EmbeddedBaseContext.EMBEDDED_DB_DIR, filedir);
 		userService = new OrientUserService();
 		userService.open(context);
 	}
