@@ -36,8 +36,7 @@ public abstract class OrientDBService {
 	abstract public String getClassName();
 
 	protected ODatabaseDocumentTx acquire() {
-		return ODatabaseDocumentPool.global().acquire("local:" + getDbDir(),
-				"admin", "admin");
+		return ODatabaseDocumentPool.global().acquire("local:" + getDbDir(), "admin", "admin");
 	}
 
 	protected void release(ODatabaseDocumentTx db) {
