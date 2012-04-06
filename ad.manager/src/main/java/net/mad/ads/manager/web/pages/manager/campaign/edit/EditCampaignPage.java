@@ -132,11 +132,11 @@ public class EditCampaignPage extends BasePage {
 			add(new FeedbackPanel("feedback"));
 			
 			datePickerFrom = new DatePicker<Date>("dateCondition.from");
-			datePickerFrom.setDateFormat("dd.MM.yyyy");
+//			datePickerFrom.setDateFormat("dd.MM.yyyy");
 			add(datePickerFrom);
 			
 			datePickerTo = new DatePicker<Date>("dateCondition.to");
-			datePickerTo.setDateFormat("dd.MM.yyyy");
+//			datePickerTo.setDateFormat("dd.MM.yyyy");
 			add(datePickerTo);
 		}
 
@@ -161,7 +161,7 @@ public class EditCampaignPage extends BasePage {
 		}
 		
 		public List<TimeCondition> getTimeConditionsList() {
-			return campaign.getTimeConditions();
+ 			return campaign.getTimeConditions();
 		}
 	}
 }
