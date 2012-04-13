@@ -71,7 +71,6 @@ public class AdDBLuceneIndex implements AdDBIndex {
 	private IndexWriter writer = null;
 	
 	private NRTManager nrt_manager = null;
-	private SearcherManager manager = null;
 
 	private AdDB addb = null;
 
@@ -105,15 +104,14 @@ public class AdDBLuceneIndex implements AdDBIndex {
 		config.setOpenMode(OpenMode.CREATE_OR_APPEND);
 		writer = new IndexWriter(index, config);
 
-		nrt_manager = new NRTManager(writer, null);
-		manager = nrt_manager.getSearcherManager(true);
+		
+		nrt_manager = new NRTManager(new NRTManager.TrackingIndexWriter(writer), null);
 	}
 
 	@Override
 	public void close() throws IOException {
 		this.writer.commit();
 		this.writer.close();
-		manager.close();
 		nrt_manager.close();
 		this.index.close();
 	}
@@ -123,8 +121,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 		this.writer.forceMerge(1); //optimize();
 		this.writer.commit();
 		
-		nrt_manager.maybeReopen(true);
-		manager = nrt_manager.getSearcherManager(true);
+		nrt_manager.maybeRefresh();
 	}
 
 	@Override
@@ -140,7 +137,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 
 	@Override
 	public List<AdDefinition> search(AdRequest request) throws IOException {
-		IndexSearcher searcher = manager.acquire();
+		IndexSearcher searcher = nrt_manager.acquire();
 		List<AdDefinition> result = new ArrayList<AdDefinition>();
 		try {
 			// Collector für die Banner
@@ -194,7 +191,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 				result.add(addb.getBanner(doc.get(AdDBConstants.ADDB_AD_ID)));
 			}
 		} finally {
-			manager.release(searcher);
+			nrt_manager.release(searcher);
 		}
 
 		return result;
@@ -202,12 +199,12 @@ public class AdDBLuceneIndex implements AdDBIndex {
 
 	@Override
 	public int size() {
-		IndexSearcher searcher = manager.acquire();
+		IndexSearcher searcher = nrt_manager.acquire();
 		try {
 			return searcher.getIndexReader().numDocs();
 		} finally {
 			try {
-				manager.release(searcher);
+				nrt_manager.release(searcher);
 			} catch (IOException e) {
 				logger.error("", e);
 			}
