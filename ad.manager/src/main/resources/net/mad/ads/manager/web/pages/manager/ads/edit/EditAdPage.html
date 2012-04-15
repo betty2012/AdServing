@@ -54,21 +54,6 @@
 					<wicket:message key="overview.condition" />
 				</h3>
 				<fieldset>
-					<legend><wicket:message key="time.title" /></legend>
-				
-					<button wicket:id="addTimeButton">Add</button>
-					<div wicket:id="timeConditions">
-						<p>
-							<input wicket:id="from" type="text" size="2" /> 
-							<input wicket:id="to" type="text" size="2" /> 
-							<input wicket:id="id" type="hidden" size="2" /> <br />
-						
-							<br />
-							<button wicket:id="remove">Delete</button>
-						</p>
-					</div>
-				</fieldset>
-				<fieldset>
 					<legend><wicket:message key="date.title" /></legend>
 				
 					<button wicket:id="addDateButton">Add</button>
@@ -89,6 +74,28 @@
 						</tbody>
 					</table>
 				</fieldset>
+				<fieldset>
+					<legend><wicket:message key="time.title" /></legend>
+				
+					<button wicket:id="addTimeButton">Add</button>
+					<table class="inputTable">
+						<thead>
+							<tr>
+								<th>From</th>
+								<th>To</th>
+								<th>Delete</th>
+							</tr>
+						</thead>
+						<tbody wicket:id="timeConditions">
+							<tr>
+								<td><input wicket:id="from" type="text" size="20" /></td>
+								<td><input wicket:id="to" type="text" size="20" /></td>
+								<td><button wicket:id="remove">Delete</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</fieldset>
+				
 			</div>
 			<div class="buttonpanel">
 				<input type="submit" wicket:id="saveButton" value="save" />

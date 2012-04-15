@@ -142,7 +142,7 @@ public class EditAdPage extends BasePage {
 					item.add(new TextField<Time>("from", new Model<Time>(condition
 							.getFrom())));
 					item.add(new TextField<Time>("to", new Model<Time>(condition.getFrom())));
-					item.add(new HiddenField<String>("id", new Model<String>(condition.getId())));
+					 
 
 					item.add(new RemoveButton("remove"));
 				}
