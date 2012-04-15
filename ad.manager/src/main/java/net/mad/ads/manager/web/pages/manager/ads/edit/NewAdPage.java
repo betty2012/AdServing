@@ -33,10 +33,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.mad.ads.base.api.exception.ServiceException;
+import net.mad.ads.base.api.model.ads.Advertisement;
 import net.mad.ads.base.api.model.ads.Campaign;
 import net.mad.ads.base.api.model.site.Site;
 import net.mad.ads.manager.RuntimeContext;
 import net.mad.ads.manager.web.pages.BasePage;
+import net.mad.ads.manager.web.pages.manager.ads.AdManagerPage;
 import net.mad.ads.manager.web.pages.manager.site.SiteManagerPage;
 
 public class NewAdPage extends BasePage {
@@ -54,12 +56,12 @@ public class NewAdPage extends BasePage {
 		add(new Link<Void>("backLink") {
 			@Override
 			public void onClick() {
-				setResponsePage(new SiteManagerPage());
+				setResponsePage(new AdManagerPage());
 			}
 		}.add(new ButtonBehavior()));
 	}
 
-	private class InputForm extends Form<Campaign> {
+	private class InputForm extends Form<Advertisement> {
 		/**
 		 * Construct.
 		 * 
@@ -68,8 +70,8 @@ public class NewAdPage extends BasePage {
 		 */
 		@SuppressWarnings("serial")
 		public InputForm(String name) {
-			super(name, new CompoundPropertyModel<Campaign>(
-					new Campaign()));
+			super(name, new CompoundPropertyModel<Advertisement>(
+					new Advertisement()));
 
 			
 			add(new RequiredTextField<String>("name").setRequired(true));
@@ -93,15 +95,15 @@ public class NewAdPage extends BasePage {
 		public void onSubmit() {
 			// Form validation successful. Display message showing edited model.
 			
-			Campaign campaign = (Campaign) getDefaultModelObject();
+			Advertisement ad = (Advertisement) getDefaultModelObject();
 			try {
-				RuntimeContext.getCampaignService().add(campaign);
+				RuntimeContext.getAdService().add(ad);
 				
-				// Weiterleitung auf EditCampaignPage
-				setResponsePage(new EditCampaignPage(campaign));
+				// Weiterleitung auf EditAdPage
+				setResponsePage(new EditAdPage(ad));
 			} catch (ServiceException e) {
 				logger.error("", e);
-				error(getPage().getString("error.saving.campaign"));
+				error(getPage().getString("error.saving.ad"));
 			}
 
 		}

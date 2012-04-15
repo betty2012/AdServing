@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.manager.web.pages.manager.campaign.edit;
+package net.mad.ads.manager.web.pages.manager.ads.edit;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -61,6 +61,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.mad.ads.base.api.exception.ServiceException;
+import net.mad.ads.base.api.model.ads.Advertisement;
 import net.mad.ads.base.api.model.ads.Campaign;
 import net.mad.ads.base.api.model.ads.condition.DateCondition;
 import net.mad.ads.base.api.model.ads.condition.TimeCondition;
@@ -73,12 +74,13 @@ import net.mad.ads.manager.web.component.listeditor.ListEditor;
 import net.mad.ads.manager.web.component.listeditor.ListItem;
 import net.mad.ads.manager.web.component.listeditor.RemoveButton;
 import net.mad.ads.manager.web.pages.BasePage;
+import net.mad.ads.manager.web.pages.manager.ads.AdManagerPage;
 import net.mad.ads.manager.web.pages.manager.campaign.CampaignManagerPage;
 
-public class EditCampaignPage extends BasePage {
+public class EditAdPage extends BasePage {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(EditCampaignPage.class);
+			.getLogger(EditAdPage.class);
 
 	private static final long serialVersionUID = -3079163120006125732L;
 
@@ -87,32 +89,30 @@ public class EditCampaignPage extends BasePage {
 
 	private final InputForm inputForm;
 	
-	private final Campaign campaign;
+	private final Advertisement ad;
 
-	public EditCampaignPage(final Campaign campaign) {
+	public EditAdPage(final Advertisement ad) {
 		super();
 
-		this.campaign = campaign;
-		this.inputForm = new InputForm("inputForm", campaign);
+		this.ad = ad;
+		this.inputForm = new InputForm("inputForm", ad);
 
-		add(new Label("campaignname", campaign.getName()));
+		add(new Label("adname", ad.getName()));
 
 		add(inputForm);
 
 		add(new Link<Void>("backLink") {
 			@Override
 			public void onClick() {
-				setResponsePage(new CampaignManagerPage());
+				setResponsePage(new AdManagerPage());
 			}
 		}.add(new ButtonBehavior()));
 	}
 
-	private class InputForm extends Form<Campaign> {
+	private class InputForm extends Form<Advertisement> {
 		
-		//private ListEditor<TimeCondition> timeEditor;
-		
-		private DatePicker<Date> datePickerFrom;
-		private DatePicker<Date> datePickerTo;
+		private ListEditor<TimeCondition> timeEditor;
+		private ListEditor<DateCondition> dateEditor;
 		/**
 		 * Construct.
 		 * 
@@ -120,8 +120,8 @@ public class EditCampaignPage extends BasePage {
 		 *            Component name
 		 */
 		@SuppressWarnings("serial")
-		public InputForm(String name, Campaign campaign) {
-			super(name, new CompoundPropertyModel<Campaign>(campaign));
+		public InputForm(String name, Advertisement ad) {
+			super(name, new CompoundPropertyModel<Advertisement>(ad));
 
 			add(new RequiredTextField<String>("name").setRequired(true));
 
@@ -131,13 +131,62 @@ public class EditCampaignPage extends BasePage {
 			
 			add(new FeedbackPanel("feedback"));
 			
-			datePickerFrom = new DatePicker<Date>("dateCondition.from");
-//			datePickerFrom.setDateFormat("dd.MM.yyyy");
-			add(datePickerFrom);
 			
-			datePickerTo = new DatePicker<Date>("dateCondition.to");
-//			datePickerTo.setDateFormat("dd.MM.yyyy");
-			add(datePickerTo);
+			timeEditor = new ListEditor<TimeCondition>("timeConditions", new PropertyModel(
+					this, "ad.timeConditions")) {
+				@Override
+				protected void onPopulateItem(ListItem<TimeCondition> item) {
+					final TimeCondition condition = item.getModelObject();
+					item.setModel(new CompoundPropertyModel(item.getModel()));
+
+					item.add(new TextField<Time>("from", new Model<Time>(condition
+							.getFrom())));
+					item.add(new TextField<Time>("to", new Model<Time>(condition.getFrom())));
+					item.add(new HiddenField<String>("id", new Model<String>(condition.getId())));
+
+					item.add(new RemoveButton("remove"));
+				}
+			};
+			
+			add(new Button("addTimeButton")
+	        {
+	            @Override
+	            public void onSubmit()
+	            {
+	                timeEditor.addItem(new TimeCondition());
+	            }
+	        }.setDefaultFormProcessing(false));
+	        add(timeEditor);
+
+			dateEditor = new ListEditor<DateCondition>("dateConditions", new PropertyModel<List<DateCondition>>(
+					this, "ad.dateConditions")) {
+				@Override
+				protected void onPopulateItem(ListItem<DateCondition> item) {
+					final DateCondition condition = item.getModelObject();
+					item.setModel(new CompoundPropertyModel<DateCondition>(item.getModel()));
+					
+//					item.add(new DatePicker<Date>("from", new Model<Date>(condition.getFrom())));
+//					item.add(new DatePicker<Date>("to", new Model<Date>(condition.getTo())));
+					item.add(new DatePicker<Date>("from", new PropertyModel<Date>(condition, "from")));
+					item.add(new DatePicker<Date>("to", new PropertyModel<Date>(condition, "to")));
+					
+					
+//					item.add(new HiddenField<String>("id", new Model<String>(condition.getId())));
+
+					item.add(new RemoveButton("remove"));
+				}
+			};
+			
+			add(new Button("addDateButton")
+	        {
+	            @Override
+	            public void onSubmit()
+	            {
+	                dateEditor.addItem(new DateCondition());
+	            }
+	        }.setDefaultFormProcessing(false));
+	        add(dateEditor);
+	        
 		}
 
 		/**
@@ -147,21 +196,25 @@ public class EditCampaignPage extends BasePage {
 		public void onSubmit() {
 			// Form validation successful. Display message showing edited model.
 
-			Campaign campaign = (Campaign) getDefaultModelObject();
+			Advertisement ad = (Advertisement) getDefaultModelObject();
 			try {
-				RuntimeContext.getCampaignService().update(campaign);
+				RuntimeContext.getAdService().update(ad);
 
 				// Weiterleitung auf EditCampaignPage
-				setResponsePage(new EditCampaignPage(campaign));
+				setResponsePage(new EditAdPage(ad));
 			} catch (ServiceException e) {
 				logger.error("", e);
-				error(getPage().getString("error.saving.campaign"));
+				error(getPage().getString("error.saving.ad"));
 			}
 
 		}
 		
 		public List<TimeCondition> getTimeConditionsList() {
-			return campaign.getTimeConditions();
+			return ad.getTimeConditions();
+		}
+		
+		public Advertisement getAd () {
+			return ad;
 		}
 	}
 }

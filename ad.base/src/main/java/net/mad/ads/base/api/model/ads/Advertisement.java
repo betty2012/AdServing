@@ -89,7 +89,7 @@ public class Advertisement extends ExtendedBaseModel {
 	/**
 	 * @return the dateConditions
 	 */
-	public List<DateCondition> getDateCondition() {
+	public List<DateCondition> getDateConditions() {
 		return dateConditions;
 	}
 
@@ -97,7 +97,7 @@ public class Advertisement extends ExtendedBaseModel {
 	/**
 	 * @param dateConditions the dateConditions to set
 	 */
-	public void setDateCondition(List<DateCondition> dateConditions) {
+	public void setDateConditions(List<DateCondition> dateConditions) {
 		this.dateConditions = dateConditions;
 	}
 }

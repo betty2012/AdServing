@@ -34,7 +34,9 @@ import net.mad.ads.base.api.EmbeddedBaseContext;
 import net.mad.ads.base.api.exception.ServiceException;
 import net.mad.ads.base.api.model.user.impl.User;
 import net.mad.ads.base.api.model.user.impl.AdminUser;
+import net.mad.ads.base.api.service.ad.AdService;
 import net.mad.ads.base.api.service.ad.CampaignService;
+import net.mad.ads.base.api.service.orientdb.OrientAdService;
 import net.mad.ads.base.api.service.orientdb.OrientCampaignService;
 import net.mad.ads.base.api.service.orientdb.OrientPlaceService;
 import net.mad.ads.base.api.service.orientdb.OrientSiteService;
@@ -62,11 +64,16 @@ public class StartupPlugIn implements ServletContextListener {
 	public void contextDestroyed(ServletContextEvent event) {
 		logger.debug("stop application");
 
-		try {
-			RuntimeContext.getTrackingService().close();
-		} catch (ServiceException e) {
-			logger.error("", e);
-		}
+//		try {
+//			RuntimeContext.getTrackingService().close();
+//			RuntimeContext.getCampaignService().close();
+//			RuntimeContext.getAdService().close();
+//			RuntimeContext.getPlaceService().close();
+//			RuntimeContext.getSiteService().close();
+//			RuntimeContext.getUserService().close();
+//		} catch (ServiceException e) {
+//			logger.error("", e);
+//		}
 	}
 
 	public void contextInitialized(ServletContextEvent event) {
@@ -128,6 +135,11 @@ public class StartupPlugIn implements ServletContextListener {
 			CampaignService campaigns = new OrientCampaignService();
 			campaigns.open(context);
 			RuntimeContext.setCampaignService(campaigns);
+			
+			AdService ads = new OrientAdService();
+			ads.open(context);
+			RuntimeContext.setAdService(ads);
+			
 			
 			User admin = users.get("1");
 			if (admin == null) {

@@ -31,8 +31,9 @@ import net.mad.ads.base.api.EmbeddedBaseContext;
 import net.mad.ads.base.api.exception.ServiceException;
 import net.mad.ads.base.api.model.ads.Advertisement;
 import net.mad.ads.base.api.model.ads.Campaign;
+import net.mad.ads.base.api.model.ads.condition.DateCondition;
 import net.mad.ads.base.api.model.site.Place;
-import net.mad.ads.base.api.service.ad.AdService;
+import net.mad.ads.base.api.service.ad.AdService;;
 
 public class OrientAdService extends AbstractOrientDBService<Advertisement> implements AdService {
 
@@ -42,6 +43,10 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		public static final String DESCRIPTION = "description";
 		public static final String CREATED = "created";
 		public static final String CAMPAIGN = "campaign";
+		
+		public static final String DATECONDITION = "datecondition";
+		public static final String DATE_FROM = "date_from";
+		public static final String DATE_TO = "date_to";
 	}
 
 	private static final String CLASS_NAME = "Ad";
@@ -108,6 +113,20 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		ad.setCreated((Date) doc.field(Fields.CREATED));
 		ad.setCampaign((String) doc.field(Fields.CAMPAIGN));
 
+		if (doc.containsField(Fields.DATECONDITION)) {
+			if (ad.getDateConditions() == null) {
+				ad.setDateConditions(new ArrayList<DateCondition>());
+			}
+			List<ODocument> dcs = doc.field(Fields.DATECONDITION);
+			for (ODocument doc2 : dcs) {
+				DateCondition date = new DateCondition(
+						(Date) doc2.field(Fields.DATE_FROM),
+						(Date) doc2.field(Fields.DATE_TO));
+				ad.getDateConditions().add(date);
+			}
+			
+		}
+
 		return ad;
 	}
 
@@ -120,6 +139,18 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		doc.field(Fields.CREATED, ad.getCreated());
 		doc.field(Fields.CAMPAIGN, ad.getCampaign());
 
+		if (ad.getDateConditions() != null) {
+			List<ODocument> dateContditions = new ArrayList<ODocument>();
+			for (DateCondition dc : ad.getDateConditions()) {
+				ODocument date = new ODocument();
+				date.field(Fields.DATE_FROM, dc.getFrom());
+				date.field(Fields.DATE_TO, dc.getTo());
+				
+				dateContditions.add(date);
+			}
+			doc.field(Fields.DATECONDITION, dateContditions);
+		}
+		
 		return doc;
 	}
 
@@ -129,6 +160,20 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		doc.field(Fields.DESCRIPTION, ad.getDescription());
 		doc.field(Fields.CREATED, ad.getCreated());
 		doc.field(Fields.CAMPAIGN, ad.getCampaign());
+		
+		if (ad.getDateConditions() != null) {
+			List<ODocument> dateContditions = new ArrayList<ODocument>();
+			for (DateCondition dc : ad.getDateConditions()) {
+				ODocument date = new ODocument();
+				date.field(Fields.DATE_FROM, dc.getFrom());
+				date.field(Fields.DATE_TO, dc.getTo());
+				
+				dateContditions.add(date);
+			}
+			doc.field(Fields.DATECONDITION, dateContditions);
+		} else {
+			doc.removeField(Fields.DATECONDITION);
+		}
 
 		return doc;
 	}

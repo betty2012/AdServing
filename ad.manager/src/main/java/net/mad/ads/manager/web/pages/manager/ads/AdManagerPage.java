@@ -46,11 +46,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.mad.ads.base.api.exception.ServiceException;
+import net.mad.ads.base.api.model.ads.Advertisement;
 import net.mad.ads.base.api.model.ads.Campaign;
 import net.mad.ads.base.api.model.site.Site;
 import net.mad.ads.manager.RuntimeContext;
 import net.mad.ads.manager.utils.DateUtil;
 import net.mad.ads.manager.web.pages.BasePage;
+import net.mad.ads.manager.web.pages.manager.ads.data.AdDataProvider;
+import net.mad.ads.manager.web.pages.manager.ads.edit.EditAdPage;
 import net.mad.ads.manager.web.pages.manager.ads.edit.NewAdPage;
 import net.mad.ads.manager.web.pages.manager.campaign.data.CampaignDataProvider;
 import net.mad.ads.manager.web.pages.manager.campaign.edit.EditCampaignPage;
@@ -114,16 +117,16 @@ public class AdManagerPage extends BasePage {
 			}
 		});
 
-		DataView<Campaign> dataView = new DataView<Campaign>("pageable",
-				new CampaignDataProvider()) {
+		DataView<Advertisement> dataView = new DataView<Advertisement>("pageable",
+				new AdDataProvider()) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void populateItem(final Item<Campaign> item) {
-				final Campaign campaign = item.getModelObject();
-				item.add(new Label("id", String.valueOf(campaign.getId())));
-				item.add(new Label("name", campaign.getName()));
-				item.add(new Label("created", DateUtil.format(campaign
+			protected void populateItem(final Item<Advertisement> item) {
+				final Advertisement ad = item.getModelObject();
+				item.add(new Label("id", String.valueOf(ad.getId())));
+				item.add(new Label("name", ad.getName()));
+				item.add(new Label("created", DateUtil.format(ad
 						.getCreated())));
 				item.add(new EditPanel("editAd", item.getModel()));
 
@@ -174,12 +177,12 @@ public class AdManagerPage extends BasePage {
 		 * @param model
 		 *            model for contact
 		 */
-		public EditPanel(String id, IModel<Campaign> model) {
+		public EditPanel(String id, IModel<Advertisement> model) {
 			super(id, model);
 			add(new Link<Void>("edit") {
 				@Override
 				public void onClick() {
-					setResponsePage(new EditCampaignPage((Campaign) getParent()
+					setResponsePage(new EditAdPage((Advertisement) getParent()
 							.getDefaultModelObject()));
 				}
 			});
