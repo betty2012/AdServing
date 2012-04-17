@@ -48,6 +48,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.util.convert.IConverter;
 import org.odlabs.wiquery.core.options.ArrayItemOptions;
 import org.odlabs.wiquery.core.options.IntegerItemOptions;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
@@ -70,6 +71,7 @@ import net.mad.ads.base.api.model.site.Site;
 import net.mad.ads.manager.RuntimeContext;
 import net.mad.ads.manager.utils.DateUtil;
 import net.mad.ads.manager.web.component.confirm.ConfirmLink;
+import net.mad.ads.manager.web.component.converter.SqlTimeConverter;
 import net.mad.ads.manager.web.component.listeditor.ListEditor;
 import net.mad.ads.manager.web.component.listeditor.ListItem;
 import net.mad.ads.manager.web.component.listeditor.RemoveButton;
@@ -85,10 +87,10 @@ public class EditAdPage extends BasePage {
 	private static final long serialVersionUID = -3079163120006125732L;
 
 	// private final ListView<TimeCondition> tcListView;
-//	private final WebMarkupContainer tcs;
+	// private final WebMarkupContainer tcs;
 
 	private final InputForm inputForm;
-	
+
 	private final Advertisement ad;
 
 	public EditAdPage(final Advertisement ad) {
@@ -110,9 +112,10 @@ public class EditAdPage extends BasePage {
 	}
 
 	private class InputForm extends Form<Advertisement> {
-		
+
 		private ListEditor<TimeCondition> timeEditor;
 		private ListEditor<DateCondition> dateEditor;
+
 		/**
 		 * Construct.
 		 * 
@@ -128,65 +131,79 @@ public class EditAdPage extends BasePage {
 			add(new TextArea<String>("description").setRequired(true));
 
 			add(new Button("saveButton").add(new ButtonBehavior()));
-			
+
 			add(new FeedbackPanel("feedback"));
-			
-			
-			timeEditor = new ListEditor<TimeCondition>("timeConditions", new PropertyModel(
-					this, "ad.timeConditions")) {
+
+			timeEditor = new ListEditor<TimeCondition>("timeConditions",
+					new PropertyModel<List<TimeCondition>>(this, "ad.timeConditions")) {
 				@Override
 				protected void onPopulateItem(ListItem<TimeCondition> item) {
 					final TimeCondition condition = item.getModelObject();
-					item.setModel(new CompoundPropertyModel(item.getModel()));
+					item.setModel(new CompoundPropertyModel<TimeCondition>(item.getModel()));
 
-					item.add(new TextField<Time>("from", new Model<Time>(condition
-							.getFrom())));
-					item.add(new TextField<Time>("to", new Model<Time>(condition.getFrom())));
-					 
+					item.add(new TextField<Time>("from", new PropertyModel<Time>(
+							condition, "from")) {
+						@Override
+						public <C> IConverter<C> getConverter(Class<C> type) {
+							return (IConverter<C>) new SqlTimeConverter();
+						}
+					});
+
+					item.add(new TextField<Time>("to", new PropertyModel<Time>(
+							condition, "to")) {
+
+						@Override
+						public <C> IConverter<C> getConverter(Class<C> type) {
+							return (IConverter<C>) new SqlTimeConverter();
+						}
+
+					});
 
 					item.add(new RemoveButton("remove"));
 				}
 			};
-			
-			add(new Button("addTimeButton")
-	        {
-	            @Override
-	            public void onSubmit()
-	            {
-	                timeEditor.addItem(new TimeCondition());
-	            }
-	        }.setDefaultFormProcessing(false));
-	        add(timeEditor);
 
-			dateEditor = new ListEditor<DateCondition>("dateConditions", new PropertyModel<List<DateCondition>>(
-					this, "ad.dateConditions")) {
+			add(new Button("addTimeButton") {
+				@Override
+				public void onSubmit() {
+					timeEditor.addItem(new TimeCondition());
+				}
+			}.setDefaultFormProcessing(false));
+			add(timeEditor);
+
+			dateEditor = new ListEditor<DateCondition>("dateConditions",
+					new PropertyModel<List<DateCondition>>(this,
+							"ad.dateConditions")) {
 				@Override
 				protected void onPopulateItem(ListItem<DateCondition> item) {
 					final DateCondition condition = item.getModelObject();
-					item.setModel(new CompoundPropertyModel<DateCondition>(item.getModel()));
-					
-//					item.add(new DatePicker<Date>("from", new Model<Date>(condition.getFrom())));
-//					item.add(new DatePicker<Date>("to", new Model<Date>(condition.getTo())));
-					item.add(new DatePicker<Date>("from", new PropertyModel<Date>(condition, "from")));
-					item.add(new DatePicker<Date>("to", new PropertyModel<Date>(condition, "to")));
-					
-					
-//					item.add(new HiddenField<String>("id", new Model<String>(condition.getId())));
+					item.setModel(new CompoundPropertyModel<DateCondition>(item
+							.getModel()));
+
+					// item.add(new DatePicker<Date>("from", new
+					// Model<Date>(condition.getFrom())));
+					// item.add(new DatePicker<Date>("to", new
+					// Model<Date>(condition.getTo())));
+					item.add(new DatePicker<Date>("from",
+							new PropertyModel<Date>(condition, "from")));
+					item.add(new DatePicker<Date>("to",
+							new PropertyModel<Date>(condition, "to")));
+
+					// item.add(new HiddenField<String>("id", new
+					// Model<String>(condition.getId())));
 
 					item.add(new RemoveButton("remove"));
 				}
 			};
-			
-			add(new Button("addDateButton")
-	        {
-	            @Override
-	            public void onSubmit()
-	            {
-	                dateEditor.addItem(new DateCondition());
-	            }
-	        }.setDefaultFormProcessing(false));
-	        add(dateEditor);
-	        
+
+			add(new Button("addDateButton") {
+				@Override
+				public void onSubmit() {
+					dateEditor.addItem(new DateCondition());
+				}
+			}.setDefaultFormProcessing(false));
+			add(dateEditor);
+
 		}
 
 		/**
@@ -208,12 +225,12 @@ public class EditAdPage extends BasePage {
 			}
 
 		}
-		
+
 		public List<TimeCondition> getTimeConditionsList() {
 			return ad.getTimeConditions();
 		}
-		
-		public Advertisement getAd () {
+
+		public Advertisement getAd() {
 			return ad;
 		}
 	}

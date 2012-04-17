@@ -18,6 +18,7 @@
 package net.mad.ads.base.api.service.orientdb;
 
 import java.io.File;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,7 @@ import net.mad.ads.base.api.exception.ServiceException;
 import net.mad.ads.base.api.model.ads.Advertisement;
 import net.mad.ads.base.api.model.ads.Campaign;
 import net.mad.ads.base.api.model.ads.condition.DateCondition;
+import net.mad.ads.base.api.model.ads.condition.TimeCondition;
 import net.mad.ads.base.api.model.site.Place;
 import net.mad.ads.base.api.service.ad.AdService;;
 
@@ -44,9 +46,13 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		public static final String CREATED = "created";
 		public static final String CAMPAIGN = "campaign";
 		
-		public static final String DATECONDITION = "datecondition";
+		public static final String DATE_CONDITION = "datecondition";
 		public static final String DATE_FROM = "date_from";
 		public static final String DATE_TO = "date_to";
+		
+		public static final String TIME_CONDITION = "timecondition";
+		public static final String TIME_FROM = "time_from";
+		public static final String TIME_TO = "time_to";
 	}
 
 	private static final String CLASS_NAME = "Ad";
@@ -113,16 +119,40 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		ad.setCreated((Date) doc.field(Fields.CREATED));
 		ad.setCampaign((String) doc.field(Fields.CAMPAIGN));
 
-		if (doc.containsField(Fields.DATECONDITION)) {
+		if (doc.containsField(Fields.DATE_CONDITION)) {
 			if (ad.getDateConditions() == null) {
 				ad.setDateConditions(new ArrayList<DateCondition>());
 			}
-			List<ODocument> dcs = doc.field(Fields.DATECONDITION);
+			List<ODocument> dcs = doc.field(Fields.DATE_CONDITION);
 			for (ODocument doc2 : dcs) {
 				DateCondition date = new DateCondition(
 						(Date) doc2.field(Fields.DATE_FROM),
 						(Date) doc2.field(Fields.DATE_TO));
 				ad.getDateConditions().add(date);
+			}
+			
+		}
+		if (doc.containsField(Fields.TIME_CONDITION)) {
+			if (ad.getTimeConditions() == null) {
+				ad.setTimeConditions(new ArrayList<TimeCondition>());
+			}
+			List<ODocument> dcs = doc.field(Fields.TIME_CONDITION);
+			for (ODocument doc2 : dcs) {
+				Date from = ((Date) doc2.field(Fields.TIME_FROM));
+				Date to = ((Date) doc2.field(Fields.TIME_TO));
+				
+				Time tfrom = null;
+				if (from != null) {
+					tfrom = new Time(from.getTime());
+				}
+				Time tto = null;
+				if (to != null) {
+					tto = new Time(to.getTime());
+				}
+				TimeCondition time = new TimeCondition(
+						tfrom,
+						tto);;
+				ad.getTimeConditions().add(time);
 			}
 			
 		}
@@ -148,7 +178,18 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 				
 				dateContditions.add(date);
 			}
-			doc.field(Fields.DATECONDITION, dateContditions);
+			doc.field(Fields.DATE_CONDITION, dateContditions);
+		}
+		if (ad.getTimeConditions() != null) {
+			List<ODocument> timeContditions = new ArrayList<ODocument>();
+			for (TimeCondition dc : ad.getTimeConditions()) {
+				ODocument date = new ODocument();
+				date.field(Fields.TIME_FROM, dc.getFrom());
+				date.field(Fields.TIME_TO, dc.getTo());
+				
+				timeContditions.add(date);
+			}
+			doc.field(Fields.TIME_CONDITION, timeContditions);
 		}
 		
 		return doc;
@@ -160,7 +201,7 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		doc.field(Fields.DESCRIPTION, ad.getDescription());
 		doc.field(Fields.CREATED, ad.getCreated());
 		doc.field(Fields.CAMPAIGN, ad.getCampaign());
-		
+		// DateConditions
 		if (ad.getDateConditions() != null) {
 			List<ODocument> dateContditions = new ArrayList<ODocument>();
 			for (DateCondition dc : ad.getDateConditions()) {
@@ -170,9 +211,23 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 				
 				dateContditions.add(date);
 			}
-			doc.field(Fields.DATECONDITION, dateContditions);
+			doc.field(Fields.DATE_CONDITION, dateContditions);
 		} else {
-			doc.removeField(Fields.DATECONDITION);
+			doc.removeField(Fields.DATE_CONDITION);
+		}
+		// TimeConditions
+		if (ad.getTimeConditions() != null) {
+			List<ODocument> timeContditions = new ArrayList<ODocument>();
+			for (TimeCondition dc : ad.getTimeConditions()) {
+				ODocument date = new ODocument();
+				date.field(Fields.TIME_FROM, dc.getFrom());
+				date.field(Fields.TIME_TO, dc.getTo());
+				
+				timeContditions.add(date);
+			}
+			doc.field(Fields.TIME_CONDITION, timeContditions);
+		} else {
+			doc.removeField(Fields.TIME_CONDITION);
 		}
 
 		return doc;
