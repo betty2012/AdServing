@@ -16,17 +16,17 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 body{
-	background:#f7f6f0 url(../img/bg.jpg) repeat-x top;
+	background:#f0f7e8 url(../img/bg_light_green.jpg) repeat-x top;
 	color: #202020;
 }
 a, a:visited{
-	color:#a43708;
+	color:#93ad7e;
 }
 input{
-	border:1px solid #e8e7e1;
+	border:1px solid #e7eedf;
 }
 select{
-	border:1px solid #e8e7e1;
+	border:1px solid #e7eedf;
 }
 #header h2{
 	color:#FFF;
@@ -38,19 +38,19 @@ select{
 	background:#FFF;
 }
 #sidebar h3{
-	background:#f7f6f0;
-	border-bottom:1px solid #e8e7e1;
+	background:#f0f7e8;
+	border-bottom:1px solid #e7eedf;
 }
 #topmenu a,#topmenu a:visited{
-	color:#f7f6f0;
-	background:#bd3f09;
+	color:#93ad7e;
+	background:#e7eedc;
 }
 #topmenu a:hover{
-	color: #FFF;
+	color: #93ad7e;
 }
 #topmenu .current a, #topmenu .current a:hover, #topmenu .current a:visited{
-	color:#993400;
-	background: #FFF url(../img/bg_menu_red.jpg) repeat-x top;
+	color:#93ad7e;
+	background: #FFF url(../img/bg_menu_green.jpg) repeat-x top;
 	border-left: #FFF 1px solid;
 	border-right: #FFF 1px solid;
 }
@@ -61,10 +61,10 @@ table{
 	background:none;
 }
 td, th{
-	border:1px solid #e8e7e1;
+	border:1px solid #e7eedf;
 } 
 thead{
-	background:#f7f6f0;
+	background:#f0f7e8;
 }
 #styleswitcher{
 	background:#FFFFFF;
@@ -73,43 +73,43 @@ thead{
 	background:#FFF;
 }
 #box{
-	border:1px solid #e8e7e1;
+	border:1px solid #e7eedf;
 }
 #box h3{
-	background:#f7f6f0;
-	border-bottom:1px solid #e8e7e1;
-	color:#a43708;
+	background:#f0f7e8;
+	border-bottom:1px solid #e7eedf;
+	color:#93ad7e;
 }
 /***************
 	  Forms
 ***************/
 form#form fieldset {
-	border:1px solid #e8e7e1;
+	border:1px solid #e7eedf;
 }
 form#form legend {
-	border:1px solid #e8e7e1;
-	background:#fff url(../img/form_red.gif) repeat-x center left;
-	color:#a43708;
+	border:1px solid #e7eedf;
+	background:#fff url(../img/form_green.gif) repeat-x center left;
+	color:#93ad7e;
 }
 form#form input {
-	border:1px solid #e8e7e1;
-	background:#fff url(../img/form_red.gif) repeat-x top left;
+	border:1px solid #e7eedf;
+	background:#fff url(../img/form_green.gif) repeat-x top left;
 }
 form#form textarea {
-	border:1px solid #e8e7e1;
-	background:#fff url(../img/form_red.gif) repeat-x bottom left;
+	border:1px solid #e7eedf;
+	background:#fff url(../img/form_green.gif) repeat-x bottom left;
 }
 form#form option {
 	background:#FFF;
 }
 form#form optgroup {
-	background:#e8e7e1;
+	background:#e7eedf;
 }
 form#form optgroup option {
 
 }
 form#form #button1, form#form #button2 {
-	color:#c00;
+	color:#93ad7e;
 }
 form#form #button1:hover, form#form #button2:hover {
 	color:#000;
@@ -118,21 +118,21 @@ form#form #button1:hover, form#form #button2:hover {
 	Home
 ***************/
 #infobox{
-	border:1px solid #e8e7e1;
+	border:1px solid #e7eedf;
 }
 #infobox h3{
-	background:#f7f6f0;
-	border-bottom:1px solid #e8e7e1;
-	color:#a43708;
+	background:#f0f7e8;
+	border-bottom:1px solid #e7eedf;
+	color:#93ad7e;
 }
 #rightnow {
-	border:1px solid #e8e7e1;
+	border:1px solid #e7eedf;
 }
 #rightnow .reallynow {
-	background:#f7f6f0;
-	color:#a43708;
+	background:#f0f7e8;
+	color:#93ad7e;
 }
 #rightnow h3{
-	background:#f7f6f0;
-	border-bottom:1px solid #e8e7e1;
+	background:#f0f7e8;
+	border-bottom:1px solid #e7eedf;
 }
