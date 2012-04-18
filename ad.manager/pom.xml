@@ -88,6 +88,11 @@
 			<version>${wiquery.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.odlabs.wiquery</groupId>
+			<artifactId>wiquery-jquery-ui-timepicker</artifactId>
+			<version>${wiquery.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>nl.topicus</groupId>
 			<artifactId>whighcharts</artifactId>
 			<version>1.5.3.1</version>

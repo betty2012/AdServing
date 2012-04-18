@@ -58,6 +58,7 @@ import org.odlabs.wiquery.ui.slider.Slider;
 import org.odlabs.wiquery.ui.slider.SliderRange;
 import org.odlabs.wiquery.ui.slider.SliderRange.RangeEnum;
 import org.odlabs.wiquery.ui.tabs.Tabs;
+import org.odlabs.wiquery.ui.timepicker.TimePicker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -141,7 +142,25 @@ public class EditAdPage extends BasePage {
 					final TimeCondition condition = item.getModelObject();
 					item.setModel(new CompoundPropertyModel<TimeCondition>(item.getModel()));
 
-					item.add(new TextField<Time>("from", new PropertyModel<Time>(
+//					item.add(new TextField<Time>("from", new PropertyModel<Time>(
+//							condition, "from")) {
+//						@Override
+//						public <C> IConverter<C> getConverter(Class<C> type) {
+//							return (IConverter<C>) new SqlTimeConverter();
+//						}
+//					});
+//
+//					item.add(new TextField<Time>("to", new PropertyModel<Time>(
+//							condition, "to")) {
+//
+//						@Override
+//						public <C> IConverter<C> getConverter(Class<C> type) {
+//							return (IConverter<C>) new SqlTimeConverter();
+//						}
+//
+//					});
+					
+					item.add(new TimePicker<Time>("from", new PropertyModel<Time>(
 							condition, "from")) {
 						@Override
 						public <C> IConverter<C> getConverter(Class<C> type) {
@@ -149,7 +168,7 @@ public class EditAdPage extends BasePage {
 						}
 					});
 
-					item.add(new TextField<Time>("to", new PropertyModel<Time>(
+					item.add(new TimePicker<Time>("to", new PropertyModel<Time>(
 							condition, "to")) {
 
 						@Override
@@ -180,17 +199,11 @@ public class EditAdPage extends BasePage {
 					item.setModel(new CompoundPropertyModel<DateCondition>(item
 							.getModel()));
 
-					// item.add(new DatePicker<Date>("from", new
-					// Model<Date>(condition.getFrom())));
-					// item.add(new DatePicker<Date>("to", new
-					// Model<Date>(condition.getTo())));
 					item.add(new DatePicker<Date>("from",
 							new PropertyModel<Date>(condition, "from")));
 					item.add(new DatePicker<Date>("to",
 							new PropertyModel<Date>(condition, "to")));
 
-					// item.add(new HiddenField<String>("id", new
-					// Model<String>(condition.getId())));
 
 					item.add(new RemoveButton("remove"));
 				}
