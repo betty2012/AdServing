@@ -42,7 +42,7 @@ public class SqlTimeConverter extends AbstractConverter<java.sql.Time> {
 		if (locale == null) {
 			locale = Locale.getDefault();
 		}
-		SimpleDateFormat format = new SimpleDateFormat("HHmm", locale);
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm", locale);
 		
 		try {
 			Date date = format.parse(value);
@@ -64,7 +64,7 @@ public class SqlTimeConverter extends AbstractConverter<java.sql.Time> {
 			locale = Locale.getDefault();
 		}
 		Time time = (Time) value;
-		SimpleDateFormat format = new SimpleDateFormat("HHmm", locale);
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm", locale);
 		return format.format(time);
 	}
 
