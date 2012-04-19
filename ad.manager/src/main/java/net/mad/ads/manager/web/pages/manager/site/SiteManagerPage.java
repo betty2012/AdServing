@@ -46,7 +46,7 @@ public class SiteManagerPage extends BasePage {
 	private static final long serialVersionUID = 701015869883210133L;
 
 	public SiteManagerPage() {
-		super();
+		super("siteManagerLink");
 
 		add(new BookmarkablePageLink<Void>("newSite", NewSitePage.class)
 				.add(new ButtonBehavior()));

@@ -51,7 +51,7 @@ public class CampaignManagerPage extends BasePage {
 	private static final long serialVersionUID = 701015869883210133L;
 
 	public CampaignManagerPage() {
-		super();
+		super("campaignManagerLink");
 
 		add(new BookmarkablePageLink<Void>("newCampaign", NewCampaignPage.class)
 				.add(new ButtonBehavior()));

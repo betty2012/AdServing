@@ -95,7 +95,7 @@ public class EditAdPage extends BasePage {
 	private final Advertisement ad;
 
 	public EditAdPage(final Advertisement ad) {
-		super();
+		super("adManagerLink");
 
 		this.ad = ad;
 		this.inputForm = new InputForm("inputForm", ad);

@@ -22,14 +22,17 @@
 <body>
 	<wicket:panel>
 		<ul class="left">
-			<li class="current"><a wicket:id="dashboardLink"><wicket:message key="link.dashboard" /></a></li>
-			<li><a wicket:id="siteManagerLink"><wicket:message key="link.siteManager" /></a></li>
-			<li><a wicket:id="campaignManagerLink"><wicket:message key="link.campaignManager" /></a></li>
-			<li><a wicket:id="adManagerLink"><wicket:message key="link.adManager" /></a></li>
+			<li wicket:id="leftMenu"><a wicket:id="link"><span wicket:id="text"></span></a></li>
+<!-- 			<li class="current"><a wicket:id="dashboardLink"><wicket:message key="link.dashboard" /></a></li> -->
+<!-- 			<li><a wicket:id="siteManagerLink"><wicket:message key="link.siteManager" /></a></li> -->
+<!-- 			<li><a wicket:id="campaignManagerLink"><wicket:message key="link.campaignManager" /></a></li> -->
+<!-- 			<li><a wicket:id="adManagerLink"><wicket:message key="link.adManager" /></a></li> -->
+
 		</ul>
 		<ul class="right">
-			<li ><a wicket:id="helpLink"><wicket:message key="link.help" /></a></li>
-			<li><a wicket:id="logoutLink"><wicket:message key="link.logout" /></a></li>
+			<li wicket:id="rightMenu"><a wicket:id="link"><span wicket:id="text"></span></a></li>
+<!-- 			<li ><a wicket:id="helpLink"><wicket:message key="link.help" /></a></li> -->
+<!-- 			<li><a wicket:id="logoutLink"><wicket:message key="link.logout" /></a></li> -->
 		</ul>
 	</wicket:panel>
 </body>

@@ -29,7 +29,8 @@ import net.mad.ads.manager.web.layout.LayoutPage;
  */
 public class BasePage extends LayoutPage {
 
-	public BasePage() {
+	public BasePage(String activeMenu) {
+		super(activeMenu);
 		add(new Label("pageTitle", new StringResourceModel("page.title", this,
 				null)));
 	}

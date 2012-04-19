@@ -30,7 +30,7 @@ public class HelpPage extends BasePage {
 	private static final long serialVersionUID = 1L;
 
 	public HelpPage() {
-		super();
+		super("helpLink");
 		setPageTitle(new StringResourceModel("page.title", this, null));
 	}
 }

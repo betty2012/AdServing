@@ -48,7 +48,7 @@ public class NewAdPage extends BasePage {
 	private static final long serialVersionUID = -3079163120006125732L;
 
 	public NewAdPage() {
-		super();
+		super("adManagerLink");
 		
 		add(new FeedbackPanel("feedback"));
 		add(new InputForm("inputForm"));

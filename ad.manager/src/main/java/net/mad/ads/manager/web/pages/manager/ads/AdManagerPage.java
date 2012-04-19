@@ -73,7 +73,7 @@ public class AdManagerPage extends BasePage {
 	private Campaign selectedCampaign = null;
 
 	public AdManagerPage() {
-		super();
+		super("adManagerLink");
 
 		add(new BookmarkablePageLink<Void>("newAd", NewAdPage.class)
 				.add(new ButtonBehavior()));

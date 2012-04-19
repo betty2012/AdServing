@@ -31,23 +31,22 @@ public class LayoutPage extends WebPage {
 	private static final long serialVersionUID = 1L;
 
 	
-	public LayoutPage() {
-		this(new PageParameters());
+	public LayoutPage(String activeMenu) {
+		this(new PageParameters(), activeMenu);
 	}
 
 	
-	public LayoutPage(final PageParameters pageParameters) {
+	public LayoutPage(final PageParameters pageParameters, String activeMenu) {
 		super(pageParameters);
 
 		final String packageName = getClass().getPackage().getName();
-		add(new LayoutHeader("mainNavigation", Strings.afterLast(
-				packageName, '.'), this));
+		add(new LayoutHeader("mainNavigation", activeMenu, this));
 		explain();
 	}
 
-	public LayoutPage(IModel<?> model) {
-		super(model);
-	}
+//	public LayoutPage(IModel<?> model) {
+//		super(model);
+//	}
 
 	protected void explain() {
 	}

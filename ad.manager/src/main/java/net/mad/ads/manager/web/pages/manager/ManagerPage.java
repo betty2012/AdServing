@@ -26,7 +26,8 @@ public class ManagerPage extends BasePage {
 	
 	private static final long serialVersionUID = 2100424429391595502L;
 
-	public ManagerPage () {
+	public ManagerPage (String activeMenu) {
+		super(activeMenu);
 	}
 
 }

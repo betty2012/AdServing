@@ -90,7 +90,7 @@ public class EditCampaignPage extends BasePage {
 	private final Campaign campaign;
 
 	public EditCampaignPage(final Campaign campaign) {
-		super();
+		super("campaignManagerLink");
 
 		this.campaign = campaign;
 		this.inputForm = new InputForm("inputForm", campaign);

@@ -58,7 +58,7 @@ public class EditSitePage extends BasePage {
 	private static final long serialVersionUID = -3079163120006125732L;
 
 	public EditSitePage(final Site site) {
-		super();
+		super("siteManagerLink");
 
 		add(new Label("sitename", site.getName()));
 
