@@ -26,6 +26,8 @@ import net.mad.ads.base.api.model.BaseModel;
 import net.mad.ads.base.api.model.ExtendedBaseModel;
 import net.mad.ads.base.api.model.ads.condition.DateCondition;
 import net.mad.ads.base.api.model.ads.condition.TimeCondition;
+import net.mad.ads.db.model.format.AdFormat;
+import net.mad.ads.db.model.type.AdType;
 
 
 
@@ -51,6 +53,8 @@ public class Advertisement extends ExtendedBaseModel {
 	 */
 	private List<DateCondition> dateConditions = new ArrayList<DateCondition>();
 
+	private AdType type;
+	private AdFormat format;
 	
 	public Advertisement () {
 		
@@ -66,6 +70,31 @@ public class Advertisement extends ExtendedBaseModel {
 
 	public void setCampaign(String campaign) {
 		this.campaign = campaign;
+	}
+
+	
+
+
+	public AdType getType() {
+		return type;
+	}
+
+
+
+	public void setType(AdType type) {
+		this.type = type;
+	}
+
+
+
+	public AdFormat getFormat() {
+		return format;
+	}
+
+
+
+	public void setFormat(AdFormat format) {
+		this.format = format;
 	}
 
 

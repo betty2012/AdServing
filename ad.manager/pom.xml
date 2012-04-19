@@ -67,7 +67,10 @@
 			<scope>provided</scope>
 		</dependency>
 
-
+		<dependency>
+			<groupId>net.mad.ads</groupId>
+			<artifactId>ad.db</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>net.mad.ads</groupId>
 			<artifactId>ad.base</artifactId>

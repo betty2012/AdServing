@@ -26,13 +26,16 @@ import java.util.Set;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
@@ -69,6 +72,10 @@ import net.mad.ads.base.api.model.ads.condition.DateCondition;
 import net.mad.ads.base.api.model.ads.condition.TimeCondition;
 import net.mad.ads.base.api.model.site.Place;
 import net.mad.ads.base.api.model.site.Site;
+import net.mad.ads.db.model.format.AdFormat;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.services.AdFormats;
+import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.manager.RuntimeContext;
 import net.mad.ads.manager.utils.DateUtil;
 import net.mad.ads.manager.web.component.confirm.ConfirmLink;
@@ -141,24 +148,6 @@ public class EditAdPage extends BasePage {
 				protected void onPopulateItem(ListItem<TimeCondition> item) {
 					final TimeCondition condition = item.getModelObject();
 					item.setModel(new CompoundPropertyModel<TimeCondition>(item.getModel()));
-
-//					item.add(new TextField<Time>("from", new PropertyModel<Time>(
-//							condition, "from")) {
-//						@Override
-//						public <C> IConverter<C> getConverter(Class<C> type) {
-//							return (IConverter<C>) new SqlTimeConverter();
-//						}
-//					});
-//
-//					item.add(new TextField<Time>("to", new PropertyModel<Time>(
-//							condition, "to")) {
-//
-//						@Override
-//						public <C> IConverter<C> getConverter(Class<C> type) {
-//							return (IConverter<C>) new SqlTimeConverter();
-//						}
-//
-//					});
 					
 					item.add(new TimePicker<Time>("from", new PropertyModel<Time>(
 							condition, "from")) {
@@ -216,7 +205,36 @@ public class EditAdPage extends BasePage {
 				}
 			}.setDefaultFormProcessing(false));
 			add(dateEditor);
+			
+			final DropDownChoice<AdType> typeSelect = new DropDownChoice<AdType>(
+					"type", new PropertyModel<AdType>(this,
+							"ad.type"), AdTypes.getTypes(),
+					new IChoiceRenderer<AdType>() {
+						public String getDisplayValue(AdType type) {
+							return type.getName();
+						}
 
+						public String getIdValue(AdType type, int index) {
+							return type.getType();
+						}
+					});
+
+			add(typeSelect);
+			
+			final DropDownChoice<AdFormat> formatSelect = new DropDownChoice<AdFormat>(
+					"format", new PropertyModel<AdFormat>(this,
+							"ad.format"), AdFormats.getFormats(),
+					new IChoiceRenderer<AdFormat>() {
+						public String getDisplayValue(AdFormat format) {
+							return format.getName();
+						}
+
+						public String getIdValue(AdFormat format, int index) {
+							return format.getCompoundName();
+						}
+					});
+
+			add(formatSelect);
 		}
 
 		/**

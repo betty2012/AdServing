@@ -35,7 +35,9 @@ import net.mad.ads.base.api.model.ads.Campaign;
 import net.mad.ads.base.api.model.ads.condition.DateCondition;
 import net.mad.ads.base.api.model.ads.condition.TimeCondition;
 import net.mad.ads.base.api.model.site.Place;
-import net.mad.ads.base.api.service.ad.AdService;;
+import net.mad.ads.base.api.service.ad.AdService;
+import net.mad.ads.db.services.AdFormats;
+import net.mad.ads.db.services.AdTypes;
 
 public class OrientAdService extends AbstractOrientDBService<Advertisement> implements AdService {
 
@@ -53,6 +55,9 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		public static final String TIME_CONDITION = "timecondition";
 		public static final String TIME_FROM = "time_from";
 		public static final String TIME_TO = "time_to";
+		
+		public static final String TYPE = "type";
+		public static final String FORMAT = "format";
 	}
 
 	private static final String CLASS_NAME = "Ad";
@@ -156,6 +161,15 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 			}
 			
 		}
+		
+		if (doc.containsField(Fields.TYPE)) {
+			String type = doc.field(Fields.TYPE);
+			ad.setType(AdTypes.forType(type));
+		}
+		if (doc.containsField(Fields.FORMAT)) {
+			String format = doc.field(Fields.FORMAT);
+			ad.setFormat(AdFormats.forCompoundName(format));
+		}
 
 		return ad;
 	}
@@ -190,6 +204,13 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 				timeContditions.add(date);
 			}
 			doc.field(Fields.TIME_CONDITION, timeContditions);
+		}
+		
+		if (ad.getType() != null) {
+			doc.field(Fields.TYPE, ad.getType().getType());
+		}
+		if (ad.getFormat() != null) {
+			doc.field(Fields.FORMAT, ad.getFormat().getCompoundName());
 		}
 		
 		return doc;
@@ -228,6 +249,17 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 			doc.field(Fields.TIME_CONDITION, timeContditions);
 		} else {
 			doc.removeField(Fields.TIME_CONDITION);
+		}
+		
+		if (ad.getType() != null) {
+			doc.field(Fields.TYPE, ad.getType().getType());
+		} else {
+			doc.removeField(Fields.TYPE);
+		}
+		if (ad.getFormat() != null) {
+			doc.field(Fields.FORMAT, ad.getFormat().getCompoundName());
+		} else {
+			doc.removeField(Fields.FORMAT);
 		}
 
 		return doc;

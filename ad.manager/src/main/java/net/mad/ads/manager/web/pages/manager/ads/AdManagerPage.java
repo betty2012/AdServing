@@ -85,14 +85,6 @@ public class AdManagerPage extends BasePage {
 			LOGGER.error("", e);
 		}
 
-		IModel<List<? extends Campaign>> makeChoices = new AbstractReadOnlyModel<List<? extends Campaign>>() {
-			@Override
-			public List<Campaign> getObject() {
-				return campaigns;
-			}
-
-		};
-
 		final DropDownChoice<Campaign> campaignSelect = new DropDownChoice<Campaign>(
 				"campaigns", new PropertyModel<Campaign>(this,
 						"selectedCampaign"), campaigns,
