@@ -205,36 +205,14 @@ public class EditAdPage extends BasePage {
 				}
 			}.setDefaultFormProcessing(false));
 			add(dateEditor);
+
 			
-			final DropDownChoice<AdType> typeSelect = new DropDownChoice<AdType>(
-					"type", new PropertyModel<AdType>(this,
-							"ad.type"), AdTypes.getTypes(),
-					new IChoiceRenderer<AdType>() {
-						public String getDisplayValue(AdType type) {
-							return type.getName();
-						}
-
-						public String getIdValue(AdType type, int index) {
-							return type.getType();
-						}
-					});
-
-			add(typeSelect);
-			
-			final DropDownChoice<AdFormat> formatSelect = new DropDownChoice<AdFormat>(
-					"format", new PropertyModel<AdFormat>(this,
-							"ad.format"), AdFormats.getFormats(),
-					new IChoiceRenderer<AdFormat>() {
-						public String getDisplayValue(AdFormat format) {
-							return format.getName();
-						}
-
-						public String getIdValue(AdFormat format, int index) {
-							return format.getCompoundName();
-						}
-					});
-
-			add(formatSelect);
+			add(new Label("type", new PropertyModel<String>(this,
+					"ad.type.name")));
+			add(new Label("format", new PropertyModel<String>(this,
+					"ad.format.name")));
+			add(new Label("campaign", new PropertyModel<String>(this,
+					"ad.campaign.name")));
 		}
 
 		/**

@@ -136,7 +136,7 @@ public class StartupPlugIn implements ServletContextListener {
 			campaigns.open(context);
 			RuntimeContext.setCampaignService(campaigns);
 			
-			AdService ads = new OrientAdService();
+			AdService ads = new OrientAdService(campaigns);
 			ads.open(context);
 			RuntimeContext.setAdService(ads);
 			

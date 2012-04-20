@@ -28,6 +28,7 @@ import org.apache.wicket.authroles.authorization.strategies.role.annotations.Aut
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.event.IEventSource;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
@@ -71,6 +72,8 @@ public class AdManagerPage extends BasePage {
 	private static final long serialVersionUID = 701015869883210133L;
 
 	private Campaign selectedCampaign = null;
+	private DataView<Advertisement> dataView ;
+	private WebMarkupContainer dataContainer;
 
 	public AdManagerPage() {
 		super("adManagerLink");
@@ -97,19 +100,21 @@ public class AdManagerPage extends BasePage {
 						return String.valueOf(camp.getId());
 					}
 				});
-
 		add(campaignSelect);
 
 		campaignSelect.add(new AjaxFormComponentUpdatingBehavior("onchange") {
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
-				if (selectedCampaign != null) {
-					System.out.println(selectedCampaign.getName());
-				}
+				((AdDataProvider)dataView.getDataProvider()).setCampaign(selectedCampaign);
+				target.add(dataContainer);
 			}
 		});
+		
+		dataContainer = new WebMarkupContainer("dataContainer");
+		dataContainer.setOutputMarkupId(true);
+		add(dataContainer);
 
-		DataView<Advertisement> dataView = new DataView<Advertisement>("pageable",
+		dataView = new DataView<Advertisement>("pageable",
 				new AdDataProvider()) {
 			private static final long serialVersionUID = 1L;
 
@@ -134,11 +139,10 @@ public class AdManagerPage extends BasePage {
 						}));
 			}
 		};
-
 		dataView.setItemsPerPage(5);
-		add(dataView);
+		dataContainer.add(dataView);
 
-		add(new PagingNavigator("navigator", dataView));
+		dataContainer.add(new PagingNavigator("navigator", dataView));
 
 	}
 

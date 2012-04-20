@@ -23,6 +23,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Strings;
 import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx;
 import com.orientechnologies.orient.core.record.impl.ODocument;
 import com.orientechnologies.orient.core.sql.query.OSQLSynchQuery;
@@ -36,11 +40,14 @@ import net.mad.ads.base.api.model.ads.condition.DateCondition;
 import net.mad.ads.base.api.model.ads.condition.TimeCondition;
 import net.mad.ads.base.api.model.site.Place;
 import net.mad.ads.base.api.service.ad.AdService;
+import net.mad.ads.base.api.service.ad.CampaignService;
 import net.mad.ads.db.services.AdFormats;
 import net.mad.ads.db.services.AdTypes;
 
 public class OrientAdService extends AbstractOrientDBService<Advertisement> implements AdService {
 
+	private static final Logger logger = LoggerFactory.getLogger(OrientAdService.class);
+	
 	private static class Fields {
 		public static final String ID = "id";
 		public static final String NAME = "name";
@@ -62,6 +69,13 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 
 	private static final String CLASS_NAME = "Ad";
 
+	private CampaignService campaignService;
+	
+	public OrientAdService (CampaignService campaignService) {
+		super();
+		this.campaignService = campaignService;
+	}
+	
 	public String getClassName() {
 		return this.CLASS_NAME;
 	}
@@ -115,14 +129,19 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		return ads;
 	}
 
-	public Advertisement toObject(ODocument doc) {
+	public Advertisement toObject(ODocument doc) throws ServiceException {
 		Advertisement ad = new Advertisement();
 
 		ad.setId((String) doc.field(Fields.ID));
 		ad.setName((String) doc.field(Fields.NAME));
 		ad.setDescription((String) doc.field(Fields.DESCRIPTION));
 		ad.setCreated((Date) doc.field(Fields.CREATED));
-		ad.setCampaign((String) doc.field(Fields.CAMPAIGN));
+		
+		String campid = (String) doc.field(Fields.CAMPAIGN);
+		if (!Strings.isNullOrEmpty(campid)) {
+			ad.setCampaign(campaignService.findByPrimaryKey(campid));
+		}
+		
 
 		if (doc.containsField(Fields.DATE_CONDITION)) {
 			if (ad.getDateConditions() == null) {
@@ -181,7 +200,9 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		doc.field(Fields.NAME, ad.getName());
 		doc.field(Fields.DESCRIPTION, ad.getDescription());
 		doc.field(Fields.CREATED, ad.getCreated());
-		doc.field(Fields.CAMPAIGN, ad.getCampaign());
+		if (ad.getCampaign() != null) {
+			doc.field(Fields.CAMPAIGN, ad.getCampaign().getId());
+		}
 
 		if (ad.getDateConditions() != null) {
 			List<ODocument> dateContditions = new ArrayList<ODocument>();
@@ -221,7 +242,9 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		doc.field(Fields.NAME, ad.getName());
 		doc.field(Fields.DESCRIPTION, ad.getDescription());
 		doc.field(Fields.CREATED, ad.getCreated());
-		doc.field(Fields.CAMPAIGN, ad.getCampaign());
+		if (ad.getCampaign() != null) {
+			doc.field(Fields.CAMPAIGN, ad.getCampaign().getId());
+		}
 		// DateConditions
 		if (ad.getDateConditions() != null) {
 			List<ODocument> dateContditions = new ArrayList<ODocument>();

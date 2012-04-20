@@ -41,7 +41,7 @@ public abstract class AbstractOrientDBService<T extends BaseModel> extends Orien
 	
 	
 	
-	abstract public T toObject(ODocument doc);
+	abstract public T toObject(ODocument doc) throws ServiceException;
 	abstract public ODocument toDocument(T object);
 	abstract public ODocument updateDocument(ODocument doc, T object);
 	abstract public ODocument getDocumentByID(String id);

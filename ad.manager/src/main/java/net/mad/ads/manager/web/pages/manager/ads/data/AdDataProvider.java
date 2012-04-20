@@ -36,9 +36,14 @@ public class AdDataProvider  implements IDataProvider<Advertisement> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdDataProvider.class);
 
+	private Campaign campaign;
 	
 	public AdDataProvider () {
 		
+	}
+	
+	public void setCampaign (Campaign campaign) {
+		this.campaign = campaign;
 	}
 	
 	@Override
@@ -48,6 +53,9 @@ public class AdDataProvider  implements IDataProvider<Advertisement> {
 	public Iterator<? extends Advertisement> iterator(int first, int count) {
 		// TODO Auto-generated method stub
 		try {
+			if (campaign != null) {
+				return RuntimeContext.getAdService().byCampaign(campaign, first, count).iterator();
+			}
 			return RuntimeContext.getAdService().findAll(first, count).iterator();
 		} catch (ServiceException e) {
 			logger.error("", e);
@@ -58,6 +66,9 @@ public class AdDataProvider  implements IDataProvider<Advertisement> {
 	@Override
 	public int size() {
 		try {
+			if (campaign != null) {
+				return RuntimeContext.getAdService().byCampaign(campaign).size();
+			}
 			return (int)RuntimeContext.getAdService().count();
 		} catch (ServiceException e) {
 			logger.error("", e);

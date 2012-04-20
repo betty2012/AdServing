@@ -42,14 +42,14 @@ import net.mad.ads.db.model.type.AdType;
  *
  */
 public class Advertisement extends ExtendedBaseModel {
-	private String campaign;
+	private Campaign campaign;
 	
 	/*
-	 * The times this campaign is valid
+	 * The times this ad is valid
 	 */
 	private List<TimeCondition> timeConditions = new ArrayList<TimeCondition>();
 	/*
-	 * The dates (from and to) this campaign is valid
+	 * The dates (from and to) this ad is valid
 	 */
 	private List<DateCondition> dateConditions = new ArrayList<DateCondition>();
 
@@ -62,13 +62,13 @@ public class Advertisement extends ExtendedBaseModel {
 
 	
 
-	public String getCampaign() {
+	public Campaign getCampaign() {
 		return campaign;
 	}
 
 
 
-	public void setCampaign(String campaign) {
+	public void setCampaign(Campaign campaign) {
 		this.campaign = campaign;
 	}
 

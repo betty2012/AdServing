@@ -51,16 +51,22 @@
 			
 			<div class="overview">
 				<h3 class="title">
-					<wicket:message key="overview.typeandformat" />
+					<wicket:message key="overview.data" />
 				</h3>
-				<fieldset>
-					<legend><wicket:message key="type.title" /></legend>
-					<select wicket:id="type"></select>
-				</fieldset>
-				<fieldset>
-					<legend><wicket:message key="format.title" /></legend>
-					<select wicket:id="format"></select>
-				</fieldset>
+				<table>
+					<tr>
+						<td><wicket:message key="campaign.title" /></td>
+						<td><span wicket:id="campaign"></span></td>
+					</tr>
+					<tr>
+						<td><wicket:message key="type.title" /></td>
+						<td><span wicket:id="type"></span></td>
+					</tr>
+					<tr>
+						<td><wicket:message key="format.title" /></td>
+						<td><span wicket:id="format"></span></td>
+					</tr>
+				</table>
 			</div>
 
 			<div class="overview">
