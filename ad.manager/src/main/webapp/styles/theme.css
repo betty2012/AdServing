@@ -15,145 +15,124 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-/* Default CSS Document */
-
-/** BODY ELEMENTS **/
-* {
-	
+body{
+	background:#f7f6f0 url(../img/bg.jpg) repeat-x top;
+	color: #202020;
 }
-
-body {
-	
+a, a:visited{
+	color:#a43708;
 }
-
-/** MAIN CONTAINERS **/
-div#container {
-	/*margin: 20px inherit;*/
+input{
+	border:1px solid #e8e7e1;
 }
-
-div#header {
-	padding: 20px;
-	background-color: #f5f5f5;
+select{
+	border:1px solid #e8e7e1;
 }
-
-div#header-in {
-	
+#header h2{
+	color:#FFF;
 }
-
-div#content {
-	margin: 10px 0;
+#content{
+	background:#FFF;
 }
-
-div#center {
-	padding: 20px;
-	padding-top: 5px;
+#sidebar{
+	background:#FFF;
 }
-
-div#center-in {
-	
+#sidebar h3{
+	background:#f7f6f0;
+	border-bottom:1px solid #e8e7e1;
 }
-
-/* div.column { */
-/* 	padding: 20px 0; */
-/* 	text-indent: 20px; */
-/* 	background-color: #f5f5f5; */
-/* } */
-
-div#left {
-	
+#topmenu a,#topmenu a:visited{
+	color:#f7f6f0;
+	background:#bd3f09;
 }
-
-div#right {
-	
+#topmenu a:hover{
+	color: #FFF;
 }
-
-div.column-in {
-	
+#topmenu .current a, #topmenu .current a:hover, #topmenu .current a:visited{
+	color:#993400;
+	background: #FFF url(../img/bg_menu_red.jpg) repeat-x top;
+	border-left: #FFF 1px solid;
+	border-right: #FFF 1px solid;
 }
-
-div#footer {
-	margin: 10px 0;
-	padding: 20px;
-	background-color: #f5f5f5;
+#top-panel{
+	background:#FFF;
 }
-
-div#footer-in {
-	
+table{
+	background:none;
 }
-
-/** SUB CONTAINERS **/
-* {
-	
+td, th{
+	border:1px solid #e8e7e1;
+} 
+thead{
+	background:#f7f6f0;
 }
-
-/** LISTS **/
-* {
-	
+#styleswitcher{
+	background:#FFFFFF;
 }
-
-/** TYPOGRAPHY **/
-* {
-	
+#footer{
+	background:#FFF;
 }
-
-/** FORMS **/
-* {
-	
+#box{
+	border:1px solid #e8e7e1;
 }
-
-/** END **/
-#infowrap li{
-	display:inline:
+#box h3{
+	background:#f7f6f0;
+	border-bottom:1px solid #e8e7e1;
+	color:#a43708;
 }
+/***************
+	  Forms
+***************/
+form#form fieldset {
+	border:1px solid #e8e7e1;
+}
+form#form legend {
+	border:1px solid #e8e7e1;
+	background:#fff url(../img/form_red.gif) repeat-x center left;
+	color:#a43708;
+}
+form#form input {
+	border:1px solid #e8e7e1;
+	background:#fff url(../img/form_red.gif) repeat-x top left;
+}
+form#form textarea {
+	border:1px solid #e8e7e1;
+	background:#fff url(../img/form_red.gif) repeat-x bottom left;
+}
+form#form option {
+	background:#FFF;
+}
+form#form optgroup {
+	background:#e8e7e1;
+}
+form#form optgroup option {
+
+}
+form#form #button1, form#form #button2 {
+	color:#c00;
+}
+form#form #button1:hover, form#form #button2:hover {
+	color:#000;
+}
+/***************
+	Home
+***************/
 #infobox{
-	width:365px;
-	float:left;
-	margin-top:10px;
+	border:1px solid #e8e7e1;
 }
 #infobox h3{
-	padding:5px;
-	font-size:14px;
+	background:#f7f6f0;
+	border-bottom:1px solid #e8e7e1;
+	color:#a43708;
 }
-.margin-left{
-	margin-left:5px;
+#rightnow {
+	border:1px solid #e8e7e1;
 }
 #rightnow .reallynow {
-	padding: 5px;
-	font-size:14px;
+	background:#f7f6f0;
+	color:#a43708;
 }
 #rightnow h3{
-	padding:2px;
-	padding: 0 10px;
-	font-size:14px;
-}
-#rightnow .reallynow span {
-	display: block;
-	text-align: left;
-	float: left;
-	padding:0 2px;
-	font-size:14px
-}
-#rightnow .reallynow a {
-	text-decoration:none;
-	display: block;
-	text-align: right;
-	float: right;
-	padding:0 0 0 18px;
-	margin-left:4px;
-	font-weight:normal;
-	font-size:12px;
-}
-#rightnow .reallynow a:hover{
-	text-decoration:underline;
-}
-#rightnow .youhave {
-	font-size:  12px;
-	padding: 10px;
-}
-#rightnow a {
-	font-weight: bold;
-}
-
-a, a:visited {
-color: #A43708;
+	background:#f7f6f0;
+	border-bottom:1px solid #e8e7e1;
 }

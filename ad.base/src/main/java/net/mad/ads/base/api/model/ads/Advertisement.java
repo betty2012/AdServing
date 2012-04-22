@@ -26,6 +26,8 @@ import net.mad.ads.base.api.model.BaseModel;
 import net.mad.ads.base.api.model.ExtendedBaseModel;
 import net.mad.ads.base.api.model.ads.condition.DateCondition;
 import net.mad.ads.base.api.model.ads.condition.TimeCondition;
+import net.mad.ads.db.model.format.AdFormat;
+import net.mad.ads.db.model.type.AdType;
 
 
 
@@ -40,17 +42,19 @@ import net.mad.ads.base.api.model.ads.condition.TimeCondition;
  *
  */
 public class Advertisement extends ExtendedBaseModel {
-	private String campaign;
+	private Campaign campaign;
 	
 	/*
-	 * The times this campaign is valid
+	 * The times this ad is valid
 	 */
 	private List<TimeCondition> timeConditions = new ArrayList<TimeCondition>();
 	/*
-	 * The dates (from and to) this campaign is valid
+	 * The dates (from and to) this ad is valid
 	 */
 	private List<DateCondition> dateConditions = new ArrayList<DateCondition>();
 
+	private AdType type;
+	private AdFormat format;
 	
 	public Advertisement () {
 		
@@ -58,14 +62,39 @@ public class Advertisement extends ExtendedBaseModel {
 
 	
 
-	public String getCampaign() {
+	public Campaign getCampaign() {
 		return campaign;
 	}
 
 
 
-	public void setCampaign(String campaign) {
+	public void setCampaign(Campaign campaign) {
 		this.campaign = campaign;
+	}
+
+	
+
+
+	public AdType getType() {
+		return type;
+	}
+
+
+
+	public void setType(AdType type) {
+		this.type = type;
+	}
+
+
+
+	public AdFormat getFormat() {
+		return format;
+	}
+
+
+
+	public void setFormat(AdFormat format) {
+		this.format = format;
 	}
 
 
@@ -89,7 +118,7 @@ public class Advertisement extends ExtendedBaseModel {
 	/**
 	 * @return the dateConditions
 	 */
-	public List<DateCondition> getDateCondition() {
+	public List<DateCondition> getDateConditions() {
 		return dateConditions;
 	}
 
@@ -97,7 +126,7 @@ public class Advertisement extends ExtendedBaseModel {
 	/**
 	 * @param dateConditions the dateConditions to set
 	 */
-	public void setDateCondition(List<DateCondition> dateConditions) {
+	public void setDateConditions(List<DateCondition> dateConditions) {
 		this.dateConditions = dateConditions;
 	}
 }

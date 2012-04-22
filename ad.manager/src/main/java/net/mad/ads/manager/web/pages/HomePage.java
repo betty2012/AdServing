@@ -44,7 +44,7 @@ public class HomePage extends BasePage {
 	private static final long serialVersionUID = 7275625409857017786L;
 
 	public HomePage() {
-		super();
+		super("dashboardLink");
 		
 		add(new TestJS());
 

@@ -47,7 +47,7 @@ public class NewPlacePage extends BasePage {
 
 	private Site site;
 	public NewPlacePage(final Site site) {
-		super();
+		super("siteManagerLink");
 		this.site = site;
 		
 		add(new FeedbackPanel("feedback"));

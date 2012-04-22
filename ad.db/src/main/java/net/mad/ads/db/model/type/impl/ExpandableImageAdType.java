@@ -23,7 +23,7 @@ import net.mad.ads.db.model.type.AbstractAdType;
 
 public class ExpandableImageAdType extends AbstractAdType {
 	
-	public static final String TYPE = "expandalbeimage";
+	public static final String TYPE = "expandabbeimage";
 
 	public ExpandableImageAdType() {
 		super("ExpandableImage", TYPE);

@@ -18,10 +18,15 @@
 package net.mad.ads.base.api.service.orientdb;
 
 import java.io.File;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Strings;
 import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx;
 import com.orientechnologies.orient.core.record.impl.ODocument;
 import com.orientechnologies.orient.core.sql.query.OSQLSynchQuery;
@@ -31,21 +36,46 @@ import net.mad.ads.base.api.EmbeddedBaseContext;
 import net.mad.ads.base.api.exception.ServiceException;
 import net.mad.ads.base.api.model.ads.Advertisement;
 import net.mad.ads.base.api.model.ads.Campaign;
+import net.mad.ads.base.api.model.ads.condition.DateCondition;
+import net.mad.ads.base.api.model.ads.condition.TimeCondition;
 import net.mad.ads.base.api.model.site.Place;
 import net.mad.ads.base.api.service.ad.AdService;
+import net.mad.ads.base.api.service.ad.CampaignService;
+import net.mad.ads.db.services.AdFormats;
+import net.mad.ads.db.services.AdTypes;
 
 public class OrientAdService extends AbstractOrientDBService<Advertisement> implements AdService {
 
+	private static final Logger logger = LoggerFactory.getLogger(OrientAdService.class);
+	
 	private static class Fields {
 		public static final String ID = "id";
 		public static final String NAME = "name";
 		public static final String DESCRIPTION = "description";
 		public static final String CREATED = "created";
 		public static final String CAMPAIGN = "campaign";
+		
+		public static final String DATE_CONDITION = "datecondition";
+		public static final String DATE_FROM = "date_from";
+		public static final String DATE_TO = "date_to";
+		
+		public static final String TIME_CONDITION = "timecondition";
+		public static final String TIME_FROM = "time_from";
+		public static final String TIME_TO = "time_to";
+		
+		public static final String TYPE = "type";
+		public static final String FORMAT = "format";
 	}
 
 	private static final String CLASS_NAME = "Ad";
 
+	private CampaignService campaignService;
+	
+	public OrientAdService (CampaignService campaignService) {
+		super();
+		this.campaignService = campaignService;
+	}
+	
 	public String getClassName() {
 		return this.CLASS_NAME;
 	}
@@ -99,14 +129,66 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		return ads;
 	}
 
-	public Advertisement toObject(ODocument doc) {
+	public Advertisement toObject(ODocument doc) throws ServiceException {
 		Advertisement ad = new Advertisement();
 
 		ad.setId((String) doc.field(Fields.ID));
 		ad.setName((String) doc.field(Fields.NAME));
 		ad.setDescription((String) doc.field(Fields.DESCRIPTION));
 		ad.setCreated((Date) doc.field(Fields.CREATED));
-		ad.setCampaign((String) doc.field(Fields.CAMPAIGN));
+		
+		String campid = (String) doc.field(Fields.CAMPAIGN);
+		if (!Strings.isNullOrEmpty(campid)) {
+			ad.setCampaign(campaignService.findByPrimaryKey(campid));
+		}
+		
+
+		if (doc.containsField(Fields.DATE_CONDITION)) {
+			if (ad.getDateConditions() == null) {
+				ad.setDateConditions(new ArrayList<DateCondition>());
+			}
+			List<ODocument> dcs = doc.field(Fields.DATE_CONDITION);
+			for (ODocument doc2 : dcs) {
+				DateCondition date = new DateCondition(
+						(Date) doc2.field(Fields.DATE_FROM),
+						(Date) doc2.field(Fields.DATE_TO));
+				ad.getDateConditions().add(date);
+			}
+			
+		}
+		if (doc.containsField(Fields.TIME_CONDITION)) {
+			if (ad.getTimeConditions() == null) {
+				ad.setTimeConditions(new ArrayList<TimeCondition>());
+			}
+			List<ODocument> dcs = doc.field(Fields.TIME_CONDITION);
+			for (ODocument doc2 : dcs) {
+				Date from = ((Date) doc2.field(Fields.TIME_FROM));
+				Date to = ((Date) doc2.field(Fields.TIME_TO));
+				
+				Time tfrom = null;
+				if (from != null) {
+					tfrom = new Time(from.getTime());
+				}
+				Time tto = null;
+				if (to != null) {
+					tto = new Time(to.getTime());
+				}
+				TimeCondition time = new TimeCondition(
+						tfrom,
+						tto);;
+				ad.getTimeConditions().add(time);
+			}
+			
+		}
+		
+		if (doc.containsField(Fields.TYPE)) {
+			String type = doc.field(Fields.TYPE);
+			ad.setType(AdTypes.forType(type));
+		}
+		if (doc.containsField(Fields.FORMAT)) {
+			String format = doc.field(Fields.FORMAT);
+			ad.setFormat(AdFormats.forCompoundName(format));
+		}
 
 		return ad;
 	}
@@ -118,8 +200,40 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		doc.field(Fields.NAME, ad.getName());
 		doc.field(Fields.DESCRIPTION, ad.getDescription());
 		doc.field(Fields.CREATED, ad.getCreated());
-		doc.field(Fields.CAMPAIGN, ad.getCampaign());
+		if (ad.getCampaign() != null) {
+			doc.field(Fields.CAMPAIGN, ad.getCampaign().getId());
+		}
 
+		if (ad.getDateConditions() != null) {
+			List<ODocument> dateContditions = new ArrayList<ODocument>();
+			for (DateCondition dc : ad.getDateConditions()) {
+				ODocument date = new ODocument();
+				date.field(Fields.DATE_FROM, dc.getFrom());
+				date.field(Fields.DATE_TO, dc.getTo());
+				
+				dateContditions.add(date);
+			}
+			doc.field(Fields.DATE_CONDITION, dateContditions);
+		}
+		if (ad.getTimeConditions() != null) {
+			List<ODocument> timeContditions = new ArrayList<ODocument>();
+			for (TimeCondition dc : ad.getTimeConditions()) {
+				ODocument date = new ODocument();
+				date.field(Fields.TIME_FROM, dc.getFrom());
+				date.field(Fields.TIME_TO, dc.getTo());
+				
+				timeContditions.add(date);
+			}
+			doc.field(Fields.TIME_CONDITION, timeContditions);
+		}
+		
+		if (ad.getType() != null) {
+			doc.field(Fields.TYPE, ad.getType().getType());
+		}
+		if (ad.getFormat() != null) {
+			doc.field(Fields.FORMAT, ad.getFormat().getCompoundName());
+		}
+		
 		return doc;
 	}
 
@@ -128,7 +242,48 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		doc.field(Fields.NAME, ad.getName());
 		doc.field(Fields.DESCRIPTION, ad.getDescription());
 		doc.field(Fields.CREATED, ad.getCreated());
-		doc.field(Fields.CAMPAIGN, ad.getCampaign());
+		if (ad.getCampaign() != null) {
+			doc.field(Fields.CAMPAIGN, ad.getCampaign().getId());
+		}
+		// DateConditions
+		if (ad.getDateConditions() != null) {
+			List<ODocument> dateContditions = new ArrayList<ODocument>();
+			for (DateCondition dc : ad.getDateConditions()) {
+				ODocument date = new ODocument();
+				date.field(Fields.DATE_FROM, dc.getFrom());
+				date.field(Fields.DATE_TO, dc.getTo());
+				
+				dateContditions.add(date);
+			}
+			doc.field(Fields.DATE_CONDITION, dateContditions);
+		} else {
+			doc.removeField(Fields.DATE_CONDITION);
+		}
+		// TimeConditions
+		if (ad.getTimeConditions() != null) {
+			List<ODocument> timeContditions = new ArrayList<ODocument>();
+			for (TimeCondition dc : ad.getTimeConditions()) {
+				ODocument date = new ODocument();
+				date.field(Fields.TIME_FROM, dc.getFrom());
+				date.field(Fields.TIME_TO, dc.getTo());
+				
+				timeContditions.add(date);
+			}
+			doc.field(Fields.TIME_CONDITION, timeContditions);
+		} else {
+			doc.removeField(Fields.TIME_CONDITION);
+		}
+		
+		if (ad.getType() != null) {
+			doc.field(Fields.TYPE, ad.getType().getType());
+		} else {
+			doc.removeField(Fields.TYPE);
+		}
+		if (ad.getFormat() != null) {
+			doc.field(Fields.FORMAT, ad.getFormat().getCompoundName());
+		} else {
+			doc.removeField(Fields.FORMAT);
+		}
 
 		return doc;
 	}

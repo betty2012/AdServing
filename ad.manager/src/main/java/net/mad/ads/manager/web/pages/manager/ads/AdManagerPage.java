@@ -28,6 +28,7 @@ import org.apache.wicket.authroles.authorization.strategies.role.annotations.Aut
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.event.IEventSource;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
@@ -46,11 +47,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.mad.ads.base.api.exception.ServiceException;
+import net.mad.ads.base.api.model.ads.Advertisement;
 import net.mad.ads.base.api.model.ads.Campaign;
 import net.mad.ads.base.api.model.site.Site;
 import net.mad.ads.manager.RuntimeContext;
 import net.mad.ads.manager.utils.DateUtil;
 import net.mad.ads.manager.web.pages.BasePage;
+import net.mad.ads.manager.web.pages.manager.ads.data.AdDataProvider;
+import net.mad.ads.manager.web.pages.manager.ads.edit.EditAdPage;
 import net.mad.ads.manager.web.pages.manager.ads.edit.NewAdPage;
 import net.mad.ads.manager.web.pages.manager.campaign.data.CampaignDataProvider;
 import net.mad.ads.manager.web.pages.manager.campaign.edit.EditCampaignPage;
@@ -68,9 +72,11 @@ public class AdManagerPage extends BasePage {
 	private static final long serialVersionUID = 701015869883210133L;
 
 	private Campaign selectedCampaign = null;
+	private DataView<Advertisement> dataView ;
+	private WebMarkupContainer dataContainer;
 
 	public AdManagerPage() {
-		super();
+		super("adManagerLink");
 
 		add(new BookmarkablePageLink<Void>("newAd", NewAdPage.class)
 				.add(new ButtonBehavior()));
@@ -81,14 +87,6 @@ public class AdManagerPage extends BasePage {
 		} catch (ServiceException e) {
 			LOGGER.error("", e);
 		}
-
-		IModel<List<? extends Campaign>> makeChoices = new AbstractReadOnlyModel<List<? extends Campaign>>() {
-			@Override
-			public List<Campaign> getObject() {
-				return campaigns;
-			}
-
-		};
 
 		final DropDownChoice<Campaign> campaignSelect = new DropDownChoice<Campaign>(
 				"campaigns", new PropertyModel<Campaign>(this,
@@ -102,28 +100,30 @@ public class AdManagerPage extends BasePage {
 						return String.valueOf(camp.getId());
 					}
 				});
-
 		add(campaignSelect);
 
 		campaignSelect.add(new AjaxFormComponentUpdatingBehavior("onchange") {
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
-				if (selectedCampaign != null) {
-					System.out.println(selectedCampaign.getName());
-				}
+				((AdDataProvider)dataView.getDataProvider()).setCampaign(selectedCampaign);
+				target.add(dataContainer);
 			}
 		});
+		
+		dataContainer = new WebMarkupContainer("dataContainer");
+		dataContainer.setOutputMarkupId(true);
+		add(dataContainer);
 
-		DataView<Campaign> dataView = new DataView<Campaign>("pageable",
-				new CampaignDataProvider()) {
+		dataView = new DataView<Advertisement>("pageable",
+				new AdDataProvider()) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void populateItem(final Item<Campaign> item) {
-				final Campaign campaign = item.getModelObject();
-				item.add(new Label("id", String.valueOf(campaign.getId())));
-				item.add(new Label("name", campaign.getName()));
-				item.add(new Label("created", DateUtil.format(campaign
+			protected void populateItem(final Item<Advertisement> item) {
+				final Advertisement ad = item.getModelObject();
+				item.add(new Label("id", String.valueOf(ad.getId())));
+				item.add(new Label("name", ad.getName()));
+				item.add(new Label("created", DateUtil.format(ad
 						.getCreated())));
 				item.add(new EditPanel("editAd", item.getModel()));
 
@@ -139,11 +139,10 @@ public class AdManagerPage extends BasePage {
 						}));
 			}
 		};
-
 		dataView.setItemsPerPage(5);
-		add(dataView);
+		dataContainer.add(dataView);
 
-		add(new PagingNavigator("navigator", dataView));
+		dataContainer.add(new PagingNavigator("navigator", dataView));
 
 	}
 
@@ -174,12 +173,12 @@ public class AdManagerPage extends BasePage {
 		 * @param model
 		 *            model for contact
 		 */
-		public EditPanel(String id, IModel<Campaign> model) {
+		public EditPanel(String id, IModel<Advertisement> model) {
 			super(id, model);
 			add(new Link<Void>("edit") {
 				@Override
 				public void onClick() {
-					setResponsePage(new EditCampaignPage((Campaign) getParent()
+					setResponsePage(new EditAdPage((Advertisement) getParent()
 							.getDefaultModelObject()));
 				}
 			});

@@ -21,24 +21,19 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <body>
 	<wicket:panel>
-		<div id="menu">
-			
-			<span id="leftmenu">
-				<a wicket:id="dashboardLink"><wicket:message key="link.dashboard" /></a>
-				|
-				<a wicket:id="siteManagerLink"><wicket:message key="link.siteManager" /></a>
-				|
-				<a wicket:id="campaignManagerLink"><wicket:message key="link.campaignManager" /></a>
-				|
-				<a wicket:id="adManagerLink"><wicket:message key="link.adManager" /></a>
-			</span>
-			
-			<span id="rightmenu">
-				<a wicket:id="helpLink"><wicket:message key="link.help" /></a> |
-				<a wicket:id="logoutLink"><wicket:message key="link.logout" /></a>
-			</span>
-			
-		</div>
+		<ul class="left">
+			<li wicket:id="leftMenu"><a wicket:id="link"><span wicket:id="text"></span></a></li>
+<!-- 			<li class="current"><a wicket:id="dashboardLink"><wicket:message key="link.dashboard" /></a></li> -->
+<!-- 			<li><a wicket:id="siteManagerLink"><wicket:message key="link.siteManager" /></a></li> -->
+<!-- 			<li><a wicket:id="campaignManagerLink"><wicket:message key="link.campaignManager" /></a></li> -->
+<!-- 			<li><a wicket:id="adManagerLink"><wicket:message key="link.adManager" /></a></li> -->
+
+		</ul>
+		<ul class="right">
+			<li wicket:id="rightMenu"><a wicket:id="link"><span wicket:id="text"></span></a></li>
+<!-- 			<li ><a wicket:id="helpLink"><wicket:message key="link.help" /></a></li> -->
+<!-- 			<li><a wicket:id="logoutLink"><wicket:message key="link.logout" /></a></li> -->
+		</ul>
 	</wicket:panel>
 </body>
 </html>

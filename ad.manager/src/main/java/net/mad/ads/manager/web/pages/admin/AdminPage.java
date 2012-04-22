@@ -29,6 +29,6 @@ import org.apache.wicket.authroles.authorization.strategies.role.annotations.Aut
 public class AdminPage extends BasePage {
 	
 	public AdminPage () {
-		super();
+		super("adminPage");
 	}
 }
