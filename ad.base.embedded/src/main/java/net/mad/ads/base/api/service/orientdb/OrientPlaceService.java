@@ -30,6 +30,8 @@ import net.mad.ads.base.api.exception.ServiceException;
 import net.mad.ads.base.api.model.site.Place;
 import net.mad.ads.base.api.model.site.Site;
 import net.mad.ads.base.api.service.site.PlaceService;
+import net.mad.ads.db.services.AdFormats;
+import net.mad.ads.db.services.AdTypes;
 
 public class OrientPlaceService extends AbstractOrientDBService<Place>
 		implements PlaceService {
@@ -40,6 +42,9 @@ public class OrientPlaceService extends AbstractOrientDBService<Place>
 		public static final String DESCRIPTION = "description";
 		public static final String CREATED = "created";
 		public static final String SITE = "site";
+		
+		public static final String TYPE = "type";
+		public static final String FORMAT = "format";
 	}
 
 	private static final String CLASS_NAME = "Place";
@@ -104,6 +109,15 @@ public class OrientPlaceService extends AbstractOrientDBService<Place>
 		place.setDescription((String) doc.field(Fields.DESCRIPTION));
 		place.setCreated((Date) doc.field(Fields.CREATED));
 		place.setSite((String) doc.field(Fields.SITE));
+		
+		if (doc.containsField(Fields.TYPE)) {
+			String type = doc.field(Fields.TYPE);
+			place.setType(AdTypes.forType(type));
+		}
+		if (doc.containsField(Fields.FORMAT)) {
+			String format = doc.field(Fields.FORMAT);
+			place.setFormat(AdFormats.forCompoundName(format));
+		}
 
 		return place;
 	}
@@ -116,6 +130,13 @@ public class OrientPlaceService extends AbstractOrientDBService<Place>
 		doc.field(Fields.DESCRIPTION, place.getDescription());
 		doc.field(Fields.CREATED, place.getCreated());
 		doc.field(Fields.SITE, place.getSite());
+		
+		if (place.getType() != null) {
+			doc.field(Fields.TYPE, place.getType().getType());
+		}
+		if (place.getFormat() != null) {
+			doc.field(Fields.FORMAT, place.getFormat().getCompoundName());
+		}
 
 		return doc;
 	}
@@ -127,6 +148,17 @@ public class OrientPlaceService extends AbstractOrientDBService<Place>
 //		doc.field(Fields.CREATED, place.getCreated());
 		doc.field(Fields.SITE, place.getSite());
 
+		if (place.getType() != null) {
+			doc.field(Fields.TYPE, place.getType().getType());
+		} else {
+			doc.removeField(Fields.TYPE);
+		}
+		if (place.getFormat() != null) {
+			doc.field(Fields.FORMAT, place.getFormat().getCompoundName());
+		} else {
+			doc.removeField(Fields.FORMAT);
+		}
+		
 		return doc;
 	}
 
