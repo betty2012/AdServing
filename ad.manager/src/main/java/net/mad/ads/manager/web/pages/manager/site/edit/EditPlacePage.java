@@ -36,6 +36,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,8 +55,11 @@ public class EditPlacePage extends BasePage {
 
 	private static final long serialVersionUID = -3079163120006125732L;
 	
+	private Place place;
+	
 	public EditPlacePage(final Place place) {
 		super("siteManagerLink");
+		this.place = place;
 		
 		add(new Label("placename", place.getName()));
 
@@ -90,6 +94,11 @@ public class EditPlacePage extends BasePage {
 
 			add(new TextArea<String>("description").setRequired(true));
 			
+			add(new Label("type", new PropertyModel<String>(this,
+					"place.type.name")));
+			add(new Label("format", new PropertyModel<String>(this,
+					"place.format.name")));
+			
 			add(new Button("saveButton").add(new ButtonBehavior()));
 		}
 
@@ -111,6 +120,10 @@ public class EditPlacePage extends BasePage {
 				error(getPage().getString("error.saving.place"));
 			}
 
+		}
+		
+		public Place getPlace () {
+			return place;
 		}
 	}
 }
