@@ -15,32 +15,31 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.db.model.type;
+package net.mad.ads.common.util;
 
-import net.mad.ads.db.definition.AdDefinition;
+public class Filename {
+	private String fullPath;
+	private char pathSeparator, extensionSeparator;
 
+	public Filename(String str, char sep, char ext) {
+		fullPath = str;
+		pathSeparator = sep;
+		extensionSeparator = ext;
+	}
 
-public abstract class AbstractAdType implements AdType {
-	private String type = "";
-	private String name = "";
-	public AbstractAdType(String name, String type) {
-		this.type = type;
-		this.name = name;
+	public String extension() {
+		int dot = fullPath.lastIndexOf(extensionSeparator);
+		return fullPath.substring(dot + 1);
 	}
-	public String getType() {
-		return type;
+
+	public String filename() { // gets filename without extension
+		int dot = fullPath.lastIndexOf(extensionSeparator);
+		int sep = fullPath.lastIndexOf(pathSeparator);
+		return fullPath.substring(sep + 1, dot);
 	}
-	
-	public String getName () {
-		return this.name;
-	}
-	
-	@Override
-	public int compareTo(AdType comp) {
-		return type.compareTo(comp.getType());
-	}
-	@Override
-	public int hashCode() {
-		return type.hashCode();
+
+	public String path() {
+		int sep = fullPath.lastIndexOf(pathSeparator);
+		return fullPath.substring(0, sep);
 	}
 }

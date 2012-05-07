@@ -41,9 +41,13 @@ import org.slf4j.LoggerFactory;
 import net.mad.ads.base.api.exception.ServiceException;
 import net.mad.ads.base.api.model.ads.Advertisement;
 import net.mad.ads.base.api.model.ads.Campaign;
+import net.mad.ads.base.api.model.ads.FlashAdvertisement;
+import net.mad.ads.base.api.model.ads.ImageAdvertisement;
 import net.mad.ads.base.api.model.site.Site;
 import net.mad.ads.db.model.format.AdFormat;
 import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.model.type.impl.FlashAdType;
+import net.mad.ads.db.model.type.impl.ImageAdType;
 import net.mad.ads.db.services.AdFormats;
 import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.manager.RuntimeContext;
@@ -164,6 +168,25 @@ public class NewAdPage extends BasePage {
 			
 			Advertisement ad = (Advertisement) getDefaultModelObject();
 			try {
+				
+				if (ad.getType().getType().equals(ImageAdType.TYPE)) {
+					ImageAdvertisement imgad = new ImageAdvertisement();
+					imgad.setCampaign(ad.getCampaign());
+					imgad.setDescription(ad.getDescription());
+					imgad.setFormat(ad.getFormat());
+					imgad.setName(ad.getName());
+					
+					ad = imgad;
+				} else if (ad.getType().getType().equals(FlashAdType.TYPE)) {
+					FlashAdvertisement flashad = new FlashAdvertisement();
+					flashad.setCampaign(ad.getCampaign());
+					flashad.setDescription(ad.getDescription());
+					flashad.setFormat(ad.getFormat());
+					flashad.setName(ad.getName());
+					
+					ad = flashad;
+				}
+				
 				RuntimeContext.getAdService().add(ad);
 				
 				// Weiterleitung auf EditAdPage
