@@ -24,7 +24,7 @@ import java.io.File;
 import net.mad.ads.base.api.BaseContext;
 import net.mad.ads.base.api.EmbeddedBaseContext;
 import net.mad.ads.base.api.exception.ServiceException;
-import net.mad.ads.base.api.model.ads.ImageAdvertisement;
+import net.mad.ads.base.api.model.ads.impl.ImageAdvertisement;
 import net.mad.ads.base.api.service.ad.AdService;
 import net.mad.ads.base.api.service.ad.CampaignService;
 import net.mad.ads.db.model.format.impl.FullBannerAdFormat;

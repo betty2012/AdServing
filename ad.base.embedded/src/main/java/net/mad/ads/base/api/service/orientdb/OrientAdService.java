@@ -36,10 +36,10 @@ import net.mad.ads.base.api.EmbeddedBaseContext;
 import net.mad.ads.base.api.exception.ServiceException;
 import net.mad.ads.base.api.model.ads.Advertisement;
 import net.mad.ads.base.api.model.ads.Campaign;
-import net.mad.ads.base.api.model.ads.FlashAdvertisement;
-import net.mad.ads.base.api.model.ads.ImageAdvertisement;
 import net.mad.ads.base.api.model.ads.condition.DateCondition;
 import net.mad.ads.base.api.model.ads.condition.TimeCondition;
+import net.mad.ads.base.api.model.ads.impl.FlashAdvertisement;
+import net.mad.ads.base.api.model.ads.impl.ImageAdvertisement;
 import net.mad.ads.base.api.model.site.Place;
 import net.mad.ads.base.api.service.ad.AdService;
 import net.mad.ads.base.api.service.ad.CampaignService;
@@ -74,6 +74,7 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement>
 		public static final String FORMAT = "format";
 
 		public static final String FILENAME = "filename";
+		public static final String TARGET = "target";
 	}
 
 	private static final String CLASS_NAME = "Ad";
@@ -167,6 +168,8 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement>
 		ad.setDescription((String) doc.field(Fields.DESCRIPTION));
 		ad.setCreated((Date) doc.field(Fields.CREATED));
 
+		ad.setTarget((String) doc.field(Fields.TARGET));
+		
 		String campid = (String) doc.field(Fields.CAMPAIGN);
 		if (!Strings.isNullOrEmpty(campid)) {
 			ad.setCampaign(campaignService.findByPrimaryKey(campid));
@@ -267,6 +270,10 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement>
 		if (ad.getFormat() != null) {
 			doc.field(Fields.FORMAT, ad.getFormat().getCompoundName());
 		}
+		if (ad.getTarget() != null) {
+			doc.field(Fields.TARGET, ad.getTarget());
+		}
+		
 		
 		if (ad.getType().getType().equals(ImageAdType.TYPE)) {
 			if (((ImageAdvertisement)ad).getFilename() != null) {
@@ -327,6 +334,12 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement>
 			doc.field(Fields.FORMAT, ad.getFormat().getCompoundName());
 		} else {
 			doc.removeField(Fields.FORMAT);
+		}
+		
+		if (ad.getTarget() != null) {
+			doc.field(Fields.TARGET, ad.getTarget());
+		} else {
+			doc.removeField(Fields.TARGET);
 		}
 		
 		if (ad.getType().getType().equals(ImageAdType.TYPE)) {

@@ -76,9 +76,9 @@ import org.slf4j.LoggerFactory;
 import net.mad.ads.base.api.exception.ServiceException;
 import net.mad.ads.base.api.model.ads.Advertisement;
 import net.mad.ads.base.api.model.ads.Campaign;
-import net.mad.ads.base.api.model.ads.ImageAdvertisement;
 import net.mad.ads.base.api.model.ads.condition.DateCondition;
 import net.mad.ads.base.api.model.ads.condition.TimeCondition;
+import net.mad.ads.base.api.model.ads.impl.ImageAdvertisement;
 import net.mad.ads.base.api.model.site.Place;
 import net.mad.ads.base.api.model.site.Site;
 import net.mad.ads.common.util.Filename;
@@ -147,6 +147,8 @@ public class EditAdPage extends BasePage {
 			super(name, new CompoundPropertyModel<Advertisement>(ad));
 
 			add(new RequiredTextField<String>("name").setRequired(true));
+			
+			add(new RequiredTextField<String>("target").setRequired(true));
 
 			add(new TextArea<String>("description").setRequired(true));
 
@@ -228,7 +230,7 @@ public class EditAdPage extends BasePage {
 
 
 			if (ad.getType().getType().equals(ImageAdType.TYPE)) {
-				typePanel = new ImageTypePanel("typePanel", getModel());
+				typePanel = new ImageTypePanel("typePanel", getModel(), (ImageAdvertisement) ad);
 			}
 			add(typePanel);
 		}

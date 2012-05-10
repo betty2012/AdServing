@@ -27,6 +27,7 @@ import net.mad.ads.base.api.model.user.impl.AdminUser;
 import net.mad.ads.base.api.model.user.impl.User;
 import net.mad.ads.base.api.service.user.UserService;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -45,6 +46,13 @@ public class OrientUserServiceTest {
 		userService = new OrientUserService();
 		userService.open(context);
 	}
+	
+	@Before
+	public void setUp() throws Exception {
+		
+	}
+	
+	
 
 	@Test
 	public void testCreate() throws Exception {
@@ -58,7 +66,13 @@ public class OrientUserServiceTest {
 	
 	@Test
 	public void testLogin() throws Exception {
-		User user = userService.login("admin", "admin");
+		
+		User user = new AdminUser();
+		user.setUsername("admin");
+		user.setPassword("admin");
+		userService.create(user);
+		
+		user = userService.login("admin", "admin");
 		
 		assertNotNull(user);
 	}
