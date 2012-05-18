@@ -38,48 +38,58 @@ import net.mad.ads.base.api.model.ads.Advertisement;
 import net.mad.ads.base.api.model.ads.Campaign;
 import net.mad.ads.base.api.model.ads.condition.DateCondition;
 import net.mad.ads.base.api.model.ads.condition.TimeCondition;
+import net.mad.ads.base.api.model.ads.impl.FlashAdvertisement;
+import net.mad.ads.base.api.model.ads.impl.ImageAdvertisement;
 import net.mad.ads.base.api.model.site.Place;
 import net.mad.ads.base.api.service.ad.AdService;
 import net.mad.ads.base.api.service.ad.CampaignService;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.model.type.impl.FlashAdType;
+import net.mad.ads.db.model.type.impl.ImageAdType;
 import net.mad.ads.db.services.AdFormats;
 import net.mad.ads.db.services.AdTypes;
 
-public class OrientAdService extends AbstractOrientDBService<Advertisement> implements AdService {
+public class OrientAdService extends AbstractOrientDBService<Advertisement>
+		implements AdService {
 
-	private static final Logger logger = LoggerFactory.getLogger(OrientAdService.class);
-	
+	private static final Logger logger = LoggerFactory
+			.getLogger(OrientAdService.class);
+
 	private static class Fields {
 		public static final String ID = "id";
 		public static final String NAME = "name";
 		public static final String DESCRIPTION = "description";
 		public static final String CREATED = "created";
 		public static final String CAMPAIGN = "campaign";
-		
+
 		public static final String DATE_CONDITION = "datecondition";
 		public static final String DATE_FROM = "date_from";
 		public static final String DATE_TO = "date_to";
-		
+
 		public static final String TIME_CONDITION = "timecondition";
 		public static final String TIME_FROM = "time_from";
 		public static final String TIME_TO = "time_to";
-		
+
 		public static final String TYPE = "type";
 		public static final String FORMAT = "format";
+
+		public static final String FILENAME = "filename";
+		public static final String TARGET = "target";
 	}
 
 	private static final String CLASS_NAME = "Ad";
 
 	private CampaignService campaignService;
-	
-	public OrientAdService (CampaignService campaignService) {
+
+	public OrientAdService(CampaignService campaignService) {
 		super();
 		this.campaignService = campaignService;
 	}
-	
+
 	public String getClassName() {
 		return this.CLASS_NAME;
 	}
-	
+
 	@Override
 	public List<Advertisement> byCampaign(Campaign campaign)
 			throws ServiceException {
@@ -88,7 +98,8 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		try {
 			StringBuilder query = new StringBuilder();
 			query.append("select * from ").append(CLASS_NAME).append(" where ")
-					.append(Fields.CAMPAIGN).append(" = '").append(campaign.getId()).append("'");
+					.append(Fields.CAMPAIGN).append(" = '")
+					.append(campaign.getId()).append("'");
 			List<ODocument> result = db.query(new OSQLSynchQuery<ODocument>(
 					query.toString()));
 
@@ -109,13 +120,14 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 		try {
 			StringBuilder query = new StringBuilder();
 			query.append("select * from ").append(CLASS_NAME).append(" where ")
-					.append(Fields.CAMPAIGN).append(" = '").append(campaign.getId()).append("'");
+					.append(Fields.CAMPAIGN).append(" = '")
+					.append(campaign.getId()).append("'");
 			List<ODocument> result = db.query(new OSQLSynchQuery<ODocument>(
 					query.toString()));
-			
+
 			int index = 1;
 			for (ODocument doc : result) {
-				if (index >= first){
+				if (index >= first) {
 					ads.add(toObject(doc));
 				}
 				if (ads.size() == perPage) {
@@ -130,18 +142,38 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 	}
 
 	public Advertisement toObject(ODocument doc) throws ServiceException {
-		Advertisement ad = new Advertisement();
+
+		AdType adType = null;
+		if (doc.containsField(Fields.TYPE)) {
+			String type = doc.field(Fields.TYPE);
+			adType = AdTypes.forType(type);
+		}
+
+		Advertisement ad = null;
+
+		switch (adType.getType()) {
+		case ImageAdType.TYPE:
+			ad = new ImageAdvertisement();
+			break;
+		case FlashAdType.TYPE:
+			ad = new FlashAdvertisement();
+			break;
+		default:
+			ad = new Advertisement();
+			break;
+		}
 
 		ad.setId((String) doc.field(Fields.ID));
 		ad.setName((String) doc.field(Fields.NAME));
 		ad.setDescription((String) doc.field(Fields.DESCRIPTION));
 		ad.setCreated((Date) doc.field(Fields.CREATED));
+
+		ad.setTarget((String) doc.field(Fields.TARGET));
 		
 		String campid = (String) doc.field(Fields.CAMPAIGN);
 		if (!Strings.isNullOrEmpty(campid)) {
 			ad.setCampaign(campaignService.findByPrimaryKey(campid));
 		}
-		
 
 		if (doc.containsField(Fields.DATE_CONDITION)) {
 			if (ad.getDateConditions() == null) {
@@ -154,7 +186,7 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 						(Date) doc2.field(Fields.DATE_TO));
 				ad.getDateConditions().add(date);
 			}
-			
+
 		}
 		if (doc.containsField(Fields.TIME_CONDITION)) {
 			if (ad.getTimeConditions() == null) {
@@ -164,7 +196,7 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 			for (ODocument doc2 : dcs) {
 				Date from = ((Date) doc2.field(Fields.TIME_FROM));
 				Date to = ((Date) doc2.field(Fields.TIME_TO));
-				
+
 				Time tfrom = null;
 				if (from != null) {
 					tfrom = new Time(from.getTime());
@@ -173,21 +205,26 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 				if (to != null) {
 					tto = new Time(to.getTime());
 				}
-				TimeCondition time = new TimeCondition(
-						tfrom,
-						tto);;
+				TimeCondition time = new TimeCondition(tfrom, tto);
+				;
 				ad.getTimeConditions().add(time);
 			}
-			
+
 		}
-		
-		if (doc.containsField(Fields.TYPE)) {
-			String type = doc.field(Fields.TYPE);
-			ad.setType(AdTypes.forType(type));
-		}
+
 		if (doc.containsField(Fields.FORMAT)) {
 			String format = doc.field(Fields.FORMAT);
 			ad.setFormat(AdFormats.forCompoundName(format));
+		}
+		
+		if (adType.getType().equals(ImageAdType.TYPE)) {
+			if (doc.containsField(Fields.FILENAME)) {
+				((ImageAdvertisement)ad).setFilename((String) doc.field(Fields.FILENAME));
+			}
+		} else if (adType.getType().equals(FlashAdType.TYPE)) {
+			if (doc.containsField(Fields.FILENAME)) {
+				((FlashAdvertisement)ad).setFilename((String) doc.field(Fields.FILENAME));
+			}
 		}
 
 		return ad;
@@ -210,7 +247,7 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 				ODocument date = new ODocument();
 				date.field(Fields.DATE_FROM, dc.getFrom());
 				date.field(Fields.DATE_TO, dc.getTo());
-				
+
 				dateContditions.add(date);
 			}
 			doc.field(Fields.DATE_CONDITION, dateContditions);
@@ -221,19 +258,33 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 				ODocument date = new ODocument();
 				date.field(Fields.TIME_FROM, dc.getFrom());
 				date.field(Fields.TIME_TO, dc.getTo());
-				
+
 				timeContditions.add(date);
 			}
 			doc.field(Fields.TIME_CONDITION, timeContditions);
 		}
-		
+
 		if (ad.getType() != null) {
 			doc.field(Fields.TYPE, ad.getType().getType());
 		}
 		if (ad.getFormat() != null) {
 			doc.field(Fields.FORMAT, ad.getFormat().getCompoundName());
 		}
+		if (ad.getTarget() != null) {
+			doc.field(Fields.TARGET, ad.getTarget());
+		}
 		
+		
+		if (ad.getType().getType().equals(ImageAdType.TYPE)) {
+			if (((ImageAdvertisement)ad).getFilename() != null) {
+				doc.field(Fields.FILENAME, ((ImageAdvertisement)ad).getFilename());
+			}
+		} else if (ad.getType().getType().equals(FlashAdType.TYPE)) {
+			if (((FlashAdvertisement)ad).getFilename() != null) {
+				doc.field(Fields.FILENAME, ((FlashAdvertisement)ad).getFilename());
+			}
+		}
+
 		return doc;
 	}
 
@@ -252,7 +303,7 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 				ODocument date = new ODocument();
 				date.field(Fields.DATE_FROM, dc.getFrom());
 				date.field(Fields.DATE_TO, dc.getTo());
-				
+
 				dateContditions.add(date);
 			}
 			doc.field(Fields.DATE_CONDITION, dateContditions);
@@ -266,14 +317,14 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 				ODocument date = new ODocument();
 				date.field(Fields.TIME_FROM, dc.getFrom());
 				date.field(Fields.TIME_TO, dc.getTo());
-				
+
 				timeContditions.add(date);
 			}
 			doc.field(Fields.TIME_CONDITION, timeContditions);
 		} else {
 			doc.removeField(Fields.TIME_CONDITION);
 		}
-		
+
 		if (ad.getType() != null) {
 			doc.field(Fields.TYPE, ad.getType().getType());
 		} else {
@@ -283,6 +334,26 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement> impl
 			doc.field(Fields.FORMAT, ad.getFormat().getCompoundName());
 		} else {
 			doc.removeField(Fields.FORMAT);
+		}
+		
+		if (ad.getTarget() != null) {
+			doc.field(Fields.TARGET, ad.getTarget());
+		} else {
+			doc.removeField(Fields.TARGET);
+		}
+		
+		if (ad.getType().getType().equals(ImageAdType.TYPE)) {
+			if (((ImageAdvertisement)ad).getFilename() != null) {
+				doc.field(Fields.FILENAME, ((ImageAdvertisement)ad).getFilename());
+			} else {
+				doc.removeField(Fields.FILENAME);
+			}
+		} else if (ad.getType().getType().equals(FlashAdType.TYPE)) {
+			if (((FlashAdvertisement)ad).getFilename() != null) {
+				doc.field(Fields.FILENAME, ((FlashAdvertisement)ad).getFilename());
+			} else {
+				doc.removeField(Fields.FILENAME);
+			}
 		}
 
 		return doc;

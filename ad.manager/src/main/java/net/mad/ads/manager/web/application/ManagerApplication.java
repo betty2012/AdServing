@@ -17,6 +17,9 @@
  */
 package net.mad.ads.manager.web.application;
 
+import java.io.File;
+
+import net.mad.ads.manager.RuntimeContext;
 import net.mad.ads.manager.web.pages.HomePage;
 import net.mad.ads.manager.web.pages.SignInPage;
 import net.mad.ads.manager.web.theme.SmoothnessTheme;
@@ -26,7 +29,12 @@ import org.apache.wicket.Session;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.request.resource.ResourceStreamResource;
+import org.apache.wicket.request.resource.SharedResourceReference;
+import org.apache.wicket.util.resource.FileResourceStream;
 import org.odlabs.wiquery.ui.themes.IThemableApplication;
 
 /**
@@ -54,11 +62,29 @@ public class ManagerApplication extends AuthenticatedWebApplication implements I
 	@Override
 	protected void init() {
 		super.init();
+		
+		getSharedResources().add("uploads", new FolderContentResource(new File(RuntimeContext.getProperties().getProperty("upload.dir"))));
+//        mountResource("uploads", new SharedResourceReference("uploads"));
 	}
 
 	@Override
 	public ResourceReference getTheme(Session session) {
 		return SmoothnessTheme.THEME;
 	}
+	
+	public static class FolderContentResource implements IResource {
+        private final File rootFolder;
+        public FolderContentResource(File rootFolder) {
+            this.rootFolder = rootFolder;
+        }
+        public void respond(Attributes attributes) {
+            PageParameters parameters = attributes.getParameters();
+            String fileName = parameters.get("name").toString();
+            File file = new File(rootFolder, fileName);
+            FileResourceStream fileResourceStream = new FileResourceStream(file);
+            ResourceStreamResource resource = new ResourceStreamResource(fileResourceStream);
+            resource.respond(attributes);
+        }
+    }
 	
 }
