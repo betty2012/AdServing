@@ -23,74 +23,55 @@ import java.io.File;
 
 import net.mad.ads.base.api.BaseContext;
 import net.mad.ads.base.api.EmbeddedBaseContext;
-import net.mad.ads.base.api.model.user.impl.AdminUser;
-import net.mad.ads.base.api.model.user.impl.User;
-import net.mad.ads.base.api.service.user.UserService;
+import net.mad.ads.base.api.exception.ServiceException;
+import net.mad.ads.base.api.model.ads.impl.ImageAdvertisement;
+import net.mad.ads.base.api.service.ad.AdService;
+import net.mad.ads.base.api.service.ad.CampaignService;
+import net.mad.ads.db.model.format.impl.FullBannerAdFormat;
+import net.mad.ads.db.services.AdFormats;
 
+import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.google.common.io.Files;
 
-public class OrientUserServiceTest {
+public class OrientAdServiceTest {
 
-	private static UserService userService;
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	private AdService ads;
+	
+	@Before
+	public void  before () throws Exception {
 		File dbdir = Files.createTempDir();
 		String filedir = dbdir.getAbsolutePath().replaceAll("\\\\", "/");
 		System.out.println(filedir);
 		BaseContext context = new BaseContext();
 		context.put(EmbeddedBaseContext.EMBEDDED_DB_DIR, filedir);
-		userService = new OrientUserService();
-		userService.open(context);
+		CampaignService camps = new OrientCampaignService();
+		camps.open(context);
+		ads = new OrientAdService(camps);
+		ads.open(context);
 	}
-	
-	@Before
-	public void setUp() throws Exception {
-		
-	}
-	
-	
-
-	@Test
-	public void testCreate() throws Exception {
-		User user = new AdminUser();
-		user.setUsername("admin");
-		user.setPassword("admin");
-		userService.create(user);
-		
-		assertNotNull(user.getId());
+	@After
+	public void after () {
 	}
 	
 	@Test
-	public void testLogin() throws Exception {
+	public void testAdd_ImageAd() throws ServiceException {
+		System.out.println("add ImageAd");
 		
-		User user = new AdminUser();
-		user.setUsername("admin");
-		user.setPassword("admin");
-		userService.create(user);
+		ImageAdvertisement imgad = new ImageAdvertisement();
 		
-		user = userService.login("admin", "admin");
+		imgad.setFormat(new FullBannerAdFormat());
+		imgad.setFilename("test.jpg");
 		
-		assertNotNull(user);
+		ads.add(imgad);
+		
+		imgad = (ImageAdvertisement) ads.findByPrimaryKey(imgad.getId());
+		
+		assertEquals("test.jpg", imgad.getFilename());
+		
+		
 	}
-	
-	@Test
-	public void testCount () throws Exception {
-		long uc = userService.count();
-		
-		User user = new AdminUser();
-		user.setUsername("admin");
-		user.setPassword("admin");
-		userService.create(user);
-		
-		long uc2 = userService.count();
-		
-		assertTrue(uc2 == (uc + 1));
-	}
-
-	
 
 }

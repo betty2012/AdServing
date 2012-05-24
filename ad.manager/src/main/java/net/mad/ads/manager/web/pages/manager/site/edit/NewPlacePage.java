@@ -20,7 +20,9 @@ package net.mad.ads.manager.web.pages.manager.site.edit;
 
 
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
@@ -28,6 +30,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +38,10 @@ import org.slf4j.LoggerFactory;
 import net.mad.ads.base.api.exception.ServiceException;
 import net.mad.ads.base.api.model.site.Place;
 import net.mad.ads.base.api.model.site.Site;
+import net.mad.ads.db.model.format.AdFormat;
+import net.mad.ads.db.model.type.AdType;
+import net.mad.ads.db.services.AdFormats;
+import net.mad.ads.db.services.AdTypes;
 
 import net.mad.ads.manager.RuntimeContext;
 import net.mad.ads.manager.web.pages.BasePage;
@@ -46,9 +53,14 @@ public class NewPlacePage extends BasePage {
 	private static final long serialVersionUID = -3079163120006125732L;
 
 	private Site site;
+	
+	private Place place;
+	
 	public NewPlacePage(final Site site) {
 		super("siteManagerLink");
 		this.site = site;
+		
+		this.place = new Place();
 		
 		add(new FeedbackPanel("feedback"));
 		add(new InputForm("inputForm"));
@@ -71,11 +83,43 @@ public class NewPlacePage extends BasePage {
 		@SuppressWarnings("serial")
 		public InputForm(String name) {
 			super(name, new CompoundPropertyModel<Place>(
-					new Place()));
+					place));
 
 			add(new RequiredTextField<String>("name").setRequired(true));
 
 			add(new TextArea<String>("description").setRequired(true));
+			
+			final DropDownChoice<AdType> typeSelect = new DropDownChoice<AdType>(
+					"type", new PropertyModel<AdType>(this,
+							"place.type"), AdTypes.getTypes(),
+					new IChoiceRenderer<AdType>() {
+						public String getDisplayValue(AdType type) {
+							return type.getName();
+						}
+
+						public String getIdValue(AdType type, int index) {
+							return type.getType();
+						}
+					});
+
+			typeSelect.setRequired(true);
+			add(typeSelect);
+			
+			final DropDownChoice<AdFormat> formatSelect = new DropDownChoice<AdFormat>(
+					"format", new PropertyModel<AdFormat>(this,
+							"place.format"), AdFormats.getFormats(),
+					new IChoiceRenderer<AdFormat>() {
+						public String getDisplayValue(AdFormat format) {
+							return format.getName();
+						}
+
+						public String getIdValue(AdFormat format, int index) {
+							return format.getCompoundName();
+						}
+					});
+
+			formatSelect.setRequired(true);
+			add(formatSelect);
 
 			
 			add(new Button("saveButton").add(new ButtonBehavior()));
@@ -106,6 +150,10 @@ public class NewPlacePage extends BasePage {
 				error(getPage().getString("error.saving.place"));
 			}
 
+		}
+		
+		public Place getPlace () {
+			return place;
 		}
 	}
 }

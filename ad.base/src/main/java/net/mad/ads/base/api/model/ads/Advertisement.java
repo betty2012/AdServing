@@ -56,6 +56,11 @@ public class Advertisement extends ExtendedBaseModel {
 	private AdType type;
 	private AdFormat format;
 	
+	/**
+	 * the target where to go after a click on the advertisement
+	 */
+	private String target;
+	
 	public Advertisement () {
 		
 	}
@@ -129,4 +134,24 @@ public class Advertisement extends ExtendedBaseModel {
 	public void setDateConditions(List<DateCondition> dateConditions) {
 		this.dateConditions = dateConditions;
 	}
+
+
+
+	/**
+	 * @return the target
+	 */
+	public String getTarget() {
+		return target;
+	}
+
+
+
+	/**
+	 * @param target the target to set
+	 */
+	public void setTarget(String target) {
+		this.target = target;
+	}
+	
+	
 }

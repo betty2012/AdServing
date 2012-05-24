@@ -15,32 +15,37 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.db.model.type;
+package net.mad.ads.base.api.model.ads;
 
-import net.mad.ads.db.definition.AdDefinition;
+import net.mad.ads.db.model.type.impl.FlashAdType;
+import net.mad.ads.db.model.type.impl.ImageAdType;
+import net.mad.ads.db.services.AdTypes;
 
+public class FlashAdvertisement extends Advertisement {
 
-public abstract class AbstractAdType implements AdType {
-	private String type = "";
-	private String name = "";
-	public AbstractAdType(String name, String type) {
-		this.type = type;
-		this.name = name;
+	/**
+	 * The filename of the image 
+	 */
+	private String filename;
+	
+	public FlashAdvertisement () {
+		super();
+		setType(AdTypes.forType(FlashAdType.TYPE));
 	}
-	public String getType() {
-		return type;
+
+	/**
+	 * @return the filename
+	 */
+	public String getFilename() {
+		return filename;
+	}
+
+	/**
+	 * @param filename the filename to set
+	 */
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 	
-	public String getName () {
-		return this.name;
-	}
 	
-	@Override
-	public int compareTo(AdType comp) {
-		return type.compareTo(comp.getType());
-	}
-	@Override
-	public int hashCode() {
-		return type.hashCode();
-	}
 }

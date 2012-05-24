@@ -18,6 +18,8 @@
 package net.mad.ads.base.api.model.site;
 
 import net.mad.ads.base.api.model.ExtendedBaseModel;
+import net.mad.ads.db.model.format.AdFormat;
+import net.mad.ads.db.model.type.AdType;
 
 /**
  * Ein Place ist die kleinste Einheit um eine Zone weiter 
@@ -38,6 +40,9 @@ public class Place extends ExtendedBaseModel {
 	 */
 	private String site;
 	
+	private AdType type;
+	private AdFormat format;
+	
 	public Place () {
 		
 	}
@@ -56,6 +61,26 @@ public class Place extends ExtendedBaseModel {
 		this.site = site;
 	}
 	
-	
+	public AdType getType() {
+		return type;
+	}
+
+
+
+	public void setType(AdType type) {
+		this.type = type;
+	}
+
+
+
+	public AdFormat getFormat() {
+		return format;
+	}
+
+
+
+	public void setFormat(AdFormat format) {
+		this.format = format;
+	}
 
 }

@@ -18,9 +18,10 @@
 
 -->
 <wicket:extend xmlns:wicket="http://wicket.apache.org">
-	<a href="#" wicket:id="backLink"><wicket:message key="backlink.label"/></a>
-	<br/>
-	
+	<a href="#" wicket:id="backLink"><wicket:message
+			key="backlink.label" /></a>
+	<br />
+
 	<h2>
 		<wicket:message key="editplace.title" />
 		: <u><span wicket:id="placename"></span></u>
@@ -28,13 +29,13 @@
 
 	<br />
 	<br />
+	<form wicket:id="inputForm" class="inputForm">
+		<div class="column">
+			<div class="overview">
+				<h3 class="title">
+					<wicket:message key="overview.place" />
+				</h3>
 
-	<div class="column">
-		<div class="overview left">
-			<h3 class="title">
-				<wicket:message key="overview.place" />
-			</h3>
-			<form wicket:id="inputForm" class="inputForm">
 				<table>
 					<tr>
 						<td><wicket:message key="inputForm.name" /></td>
@@ -50,13 +51,26 @@
 						<td><input type="submit" wicket:id="saveButton" value="save" /></td>
 					</tr>
 				</table>
-			</form>
-			<div wicket:id="feedback"></div>
-		</div>
+			</div>
 
-		<div class="overview right">
-		</div>
+			<div class="overview">
+				<h3 class="title">
+					<wicket:message key="overview.data" />
+				</h3>
+				<table>
+					<tr>
+						<td><wicket:message key="type.title" /></td>
+						<td><span wicket:id="type"></span></td>
+					</tr>
+					<tr>
+						<td><wicket:message key="format.title" /></td>
+						<td><span wicket:id="format"></span></td>
+					</tr>
+				</table>
+			</div>
 
-	</div>
+		</div>
+	</form>
+	<div wicket:id="feedback"></div>
 
 </wicket:extend>
