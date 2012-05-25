@@ -99,4 +99,66 @@ public class KeyValueConditionTest extends TestCase {
 		
 		db.close();
 	}
+	
+	@Test
+	public void test2_KeyValueCondition () throws Exception {
+		System.out.println("test2_KeyValueCondition");
+		
+		AdDB db = new AdDB();
+		
+		db.open();
+		
+		AdDefinition b = new ImageAdDefinition();
+		b.setId("1");
+		KeyValueConditionDefinition sdef = new KeyValueConditionDefinition();
+		sdef.getKeyValues().add(new KeyValue("browser", "firefox"));
+		sdef.getKeyValues().add(new KeyValue("browser", "chrome"));
+		b.addConditionDefinition(ConditionDefinitions.KEYVALUE, sdef);
+		b.setFormat(new FullBannerAdFormat());
+		db.addBanner(b);
+		
+		b = new ImageAdDefinition();
+		b.setId("2");
+		sdef = new KeyValueConditionDefinition();
+		sdef.getKeyValues().add(new KeyValue("browser", "firefox"));
+		sdef.getKeyValues().add(new KeyValue("browser", "ie"));
+		b.addConditionDefinition(ConditionDefinitions.KEYVALUE, sdef);
+		b.setFormat(new FullBannerAdFormat());
+		db.addBanner(b);
+		
+		db.reopen();
+		
+		AdRequest request = new AdRequest();
+		List<AdFormat> formats = new ArrayList<AdFormat>();
+		formats.add(new FullBannerAdFormat());
+		request.setFormats(formats);
+		List<AdType> types = new ArrayList<AdType>();
+		types.add(AdTypes.forType(ImageAdType.TYPE));
+		request.setTypes(types);
+		request.getKeyValues().put("browser", "opera");
+		
+		List<AdDefinition> result = db.search(request);
+		assertTrue(result.isEmpty());
+		
+		request.getKeyValues().clear();
+		request.getKeyValues().put("browser", "firefox");
+		result = db.search(request);
+		assertEquals(2, result.size());
+		
+		request.getKeyValues().clear();
+		request.getKeyValues().put("browser", "chrome");
+		
+		result = db.search(request);
+		assertEquals(1, result.size());
+		assertTrue(result.get(0).getId().equals("1"));
+		
+		request.getKeyValues().clear();
+		request.getKeyValues().put("browser", "ie");
+		
+		result = db.search(request);
+		assertEquals(1, result.size());
+		assertTrue(result.get(0).getId().equals("2"));
+		
+		db.close();
+	}
 }
