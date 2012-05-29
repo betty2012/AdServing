@@ -10,12 +10,12 @@ The ad.db works in two modes:
 Select an advertisment
 ----------------------
 ad.db offers many possibilities for selection advertisments
-1. Country
-2. Date
-3. Day
-4. Distance
-5. KeyValue
-6. Keyword
-7. Site
-8. State
-9. Time
+* Country
+* Date
+* Day
+* Distance
+* KeyValue
+* Keyword
+* Site
+* State
+* Time
