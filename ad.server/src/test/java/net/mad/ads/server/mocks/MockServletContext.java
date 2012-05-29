@@ -42,13 +42,11 @@ public class MockServletContext implements ServletContext {
 	
 	
 	public String getContextPath() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ServletContext getContext(String uripath) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

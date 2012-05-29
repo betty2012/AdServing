@@ -112,7 +112,7 @@ public class AdSelect extends HttpServlet {
 				
 				TrackEvent trackEvent = new ImpressionTrackEvent();
 				trackEvent.setBannerId(banner.getId());
-				trackEvent.setCampaign("");
+				trackEvent.setCampaign(banner.getCampaign() != null ? banner.getCampaign().getId() : "");
 				trackEvent.setUser(context.getUserid());
 				trackEvent.setId(UUID.randomUUID().toString());
 				trackEvent.setTime(System.currentTimeMillis());
@@ -129,6 +129,11 @@ public class AdSelect extends HttpServlet {
 				TrackingHelper.trackImpression(context, trackEvent);
 				
 				/*
+				 * 
+				 * Add request id and the ad id to the requested ad cache to rembemer which ad
+				 * was displayed at the current pageview.
+				 * This is used in the DuplicateBannerFilter to filter duplicate ads
+				 * 
 				 * Hier merken wir uns das Banner für diesen Request um später
 				 * im DuplicateBannerFilter die Information verwenden zu können
 				 * 

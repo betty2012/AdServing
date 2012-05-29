@@ -240,15 +240,15 @@ public final class AdProvider {
 	 */
 	private Collection<AdDefinition> commonFilter (AdContext context, Collection<AdDefinition> result) {
 		/*
-		 * Filtern der Banner deren maximale Anzahl an Clicks schon erreicht wurden
+		 * Filter for ads which has reached the max click count
 		 */
 		result = (Collection<AdDefinition>) Collections2.filter(result, new ClickExpirationFilter());
 		/*
-		 * Filtern der Banner deren maximale Anzahl an Impressions schon erreicht wurden
+		 * filter for ads which has reached the max view count
 		 */
 		result = (Collection<AdDefinition>) Collections2.filter(result, new ViewExpirationFilter());
 		/*
-		 * Filter für das Filtern doppelter Banner
+		 * filter out duplicate ads
 		 */
 		result = (Collection<AdDefinition>) Collections2.filter(result, new DuplicatAdFilter(context.getRequestid()));
 		

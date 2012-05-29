@@ -66,7 +66,7 @@ if (typeof madApi == "undefined") {
 	};
 
 	/**
-	 * Liefert Höhe und Breite eines Elements
+	 * Liefert Hï¿½he und Breite eines Elements
 	 * 
 	 * @param obj
 	 * @returns {height, width}
@@ -109,7 +109,7 @@ if (typeof madApi == "undefined") {
 	};
 
 	/**
-	 * Liefert die größe des Browserfensters
+	 * Liefert die grï¿½ï¿½e des Browserfensters
 	 * 
 	 * @returns {height, width}
 	 */
@@ -167,13 +167,13 @@ if (typeof madApi == "undefined") {
 	};
 
 	/**
-	 * Verknüpft ein Event mit einem Element
+	 * VerknÃ¼pft ein Event mit einem Element
 	 * 
 	 * var h1 = document.getElementById('header'); madApi.addEvent(h1, 'click',
 	 * doSomething, false);
 	 * 
 	 * @param elem
-	 *            Das Element für das Event
+	 *            Das Element fÃ¼r das Event
 	 * @param evt
 	 *            Das Event (z.B. click)
 	 * @param func
@@ -203,17 +203,17 @@ if (typeof madApi == "undefined") {
 	 * 
 	 * 
 	 * @param integer
-	 *            benötigte Flash Plugin Version
+	 *            benï¿½tigte Flash Plugin Version
 	 * @param integer
-	 *            maximal zu prüfende Versionen
+	 *            maximal zu prï¿½fende Versionen
 	 * @return array vorhandene Version (0 = kein Flash Plugin installiert) und
-	 *         benötigte Version (integer)
+	 *         benï¿½tigte Version (integer)
 	 * 
 	 * 
 	 * Hinweise:
 	 * 
-	 * Wie wir ja alle wissen gibt es keine 100% zuverlässige Flash Detection,
-	 * und genauso verhält es sich mit dieser. Sie wird nicht mit allen Systemen
+	 * Wie wir ja alle wissen gibt es keine 100% zuverlï¿½ssige Flash Detection,
+	 * und genauso verhï¿½lt es sich mit dieser. Sie wird nicht mit allen Systemen
 	 * funktionieren. Wie dem auch sei, sie wurde erfolgreich getestet unter
 	 * WindowsXP (SP1) mit MSIE 6, NS 7.1, Opera 7.11, Mozilla 1.4 und Firefox
 	 * 1.0
@@ -223,10 +223,10 @@ if (typeof madApi == "undefined") {
 		var max_version = max;
 		var available_version = 0;
 
-		/* dieser Abschnitt ist für NS, Mozilla, Firefox und ähnliche Browser */
+		/* dieser Abschnitt ist fï¿½r NS, Mozilla, Firefox und ï¿½hnliche Browser */
 		if (typeof (navigator.plugins["Shockwave Flash"]) == "object") {
 			/*
-			 * Wenn wir hier landen, dann ist Flash installiert, und wir können
+			 * Wenn wir hier landen, dann ist Flash installiert, und wir kï¿½nnen
 			 * die Version aus der Beschreibung auslesen.
 			 */
 			var description = navigator.plugins["Shockwave Flash"].description;
@@ -234,23 +234,23 @@ if (typeof madApi == "undefined") {
 					".", 16) - 16));
 		}
 		/*
-		 * dieser Abschnitt ist für den IE und ähnliche Browser die ActiveX
+		 * dieser Abschnitt ist fï¿½r den IE und ï¿½hnliche Browser die ActiveX
 		 * benutzen um Flash anzuzeigen.
 		 */
 		else if (typeof (ActiveXObject) == "function") {
 			/*
 			 * durchlaufen der Flash Versionen von 2 bis zur maximal zu
-			 * prüfenden Version
+			 * prï¿½fenden Version
 			 */
 			for ( var i = 2; i < (max_version + 1); i++) {
 				/*
 				 * wir beugen mittels try und catch (JS 1.5+ / IE5+) einem
 				 * Fehler vor (welcher einen Abbruch des Scripts zur Folge
-				 * hätte), so können wir auch auf ein extra VBScript verzichten.
+				 * hï¿½tte), so kï¿½nnen wir auch auf ein extra VBScript verzichten.
 				 */
 				try {
 					/*
-					 * läßt sich das ActiveX Flash Objekt Version i erstellen,
+					 * lï¿½ï¿½t sich das ActiveX Flash Objekt Version i erstellen,
 					 * so ist diese Version auch installiert
 					 */
 					if (typeof (new ActiveXObject(
@@ -262,7 +262,7 @@ if (typeof madApi == "undefined") {
 			}
 		}
 
-		/* die Werte werden in Form eines Arrays zurückgegeben */
+		/* die Werte werden in Form eines Arrays zurï¿½ckgegeben */
 		return {
 			available : available_version,
 			required : required_version
