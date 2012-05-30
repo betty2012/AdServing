@@ -81,13 +81,13 @@ public class AdDBLuceneIndex implements AdDBIndex {
 	@Override
 	public void open() throws IOException {
 		
-		if (AdDBManager.getInstance().getContext().useRamOnly) {
+		if (addb.manager.getContext().useRamOnly) {
 			index = new RAMDirectory();
 		} else {
-			if (Strings.isNullOrEmpty(AdDBManager.getInstance().getContext().datadir)) {
+			if (Strings.isNullOrEmpty(addb.manager.getContext().datadir)) {
 				throw new IOException("temp directory can not be empty");
 			}
-			String dir = AdDBManager.getInstance().getContext().datadir;
+			String dir = addb.manager.getContext().datadir;
 			if (!dir.endsWith("/") || !dir.endsWith("\\")) {
 				dir += "/";
 			}
@@ -126,7 +126,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 
 	@Override
 	public void addBanner(AdDefinition banner) throws IOException {
-		Document doc = DocumentHelper.getInstance().getBannerDocument(banner);
+		Document doc = DocumentHelper.getInstance().getBannerDocument(banner, this.addb);
 		this.writer.addDocument(doc, new KeywordAnalyzer());
 	}
 
@@ -164,7 +164,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 			mainQuery.add(formatQuery, Occur.MUST);
 
 			// Query für die Bedingungen unter denen ein Banner angezeigt werden soll
-			Query cq = QueryHelper.getInstance().getConditionalQuery(request);
+			Query cq = QueryHelper.getInstance().getConditionalQuery(request, this.addb);
 			if (cq != null) {
 				mainQuery.add(cq, Occur.MUST);
 			}

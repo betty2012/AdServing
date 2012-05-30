@@ -15,37 +15,31 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.base.api.importer;
+package net.mad.ads.db.test;
 
-import static org.junit.Assert.*;
+import java.io.IOException;
+
 import junit.framework.TestCase;
 
-import org.junit.Test;
-
-import net.mad.ads.base.api.model.user.impl.AdminUser;
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.AdDB;
 
-public class ImporterTest extends TestCase {
+import org.junit.After;
+import org.junit.Before;
 
-	AdDB db;
-	@Override
-	protected void setUp() throws Exception {
-		AdDBManager m = AdDBManager.newInstance();
-		db = m.getAdDB();
+public abstract class AdDBTestCase extends TestCase {
+
+	protected static AdDB db = null;
+	protected static AdDBManager manager = null;
+	
+	@Before
+	public void setUp () throws IOException {
+		manager = AdDBManager.newInstance();
+		db = manager.getAdDB();
 		db.open();
 	}
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown () throws IOException {
 		db.close();
 	}
-	
-	
-	@Test
-	public void test() {
-		Importer imp = new Importer("testdata/data/importer", db);
-		
-		imp.runImport();
-	}
-
 }

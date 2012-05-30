@@ -15,37 +15,13 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.base.api.importer;
+package net.mad.ads.db.condition;
 
-import static org.junit.Assert.*;
-import junit.framework.TestCase;
-
-import org.junit.Test;
-
-import net.mad.ads.base.api.model.user.impl.AdminUser;
-import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.AdDB;
 
-public class ImporterTest extends TestCase {
-
-	AdDB db;
-	@Override
-	protected void setUp() throws Exception {
-		AdDBManager m = AdDBManager.newInstance();
-		db = m.getAdDB();
-		db.open();
+public abstract class AbstractCondition {
+	protected AdDB addb;
+	public AbstractCondition (AdDB addb) {
+		this.addb = addb;
 	}
-	@Override
-	protected void tearDown() throws Exception {
-		db.close();
-	}
-	
-	
-	@Test
-	public void test() {
-		Importer imp = new Importer("testdata/data/importer", db);
-		
-		imp.runImport();
-	}
-
 }

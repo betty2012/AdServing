@@ -41,13 +41,13 @@ import net.mad.ads.db.services.AdTypes;
 import junit.framework.TestCase;
 
 
-public class DayConditionTest extends TestCase {
+public class DayConditionTest extends AdDBTestCase {
 	
 	@Test
 	public void testDayCondition () throws Exception {
 		System.out.println("DayCondition");
 		
-		AdDB db = new AdDB();
+		
 		
 		db.open();
 		
@@ -98,7 +98,5 @@ public class DayConditionTest extends TestCase {
 		System.out.println("id= " + result.get(0).getId());
 		assertEquals(1, result.size());
 		
-//		db.writeDirectory("/temp");
-		db.close();
 	}
 }

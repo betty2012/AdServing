@@ -45,15 +45,15 @@ import net.mad.ads.db.services.AdTypes;
 import junit.framework.TestCase;
 
 
-public class KeyValueConditionTest extends TestCase {
+public class KeyValueConditionTest extends AdDBTestCase {
 	
 	@Test
 	public void test1_KeyValueCondition () throws Exception {
 		System.out.println("test1_KeyValueCondition");
 		
-		AdDB db = new AdDB();
-		AdDBManager.getInstance().getContext().validKeys.clear();
-		AdDBManager.getInstance().getContext().validKeys.add("browser");
+		
+		manager.getContext().validKeys.clear();
+		manager.getContext().validKeys.add("browser");
 		
 		db.open();
 		
@@ -108,7 +108,6 @@ public class KeyValueConditionTest extends TestCase {
 		assertEquals(1, result.size());
 		assertTrue(result.get(0).getId().equals("2"));
 		
-		db.close();
 	}
 	
 
@@ -116,10 +115,9 @@ public class KeyValueConditionTest extends TestCase {
 	public void test2_KeyValueCondition () throws Exception {
 		System.out.println("test2_KeyValueCondition");
 		
-		AdDB db = new AdDB();
-		AdDBManager.getInstance().getContext().validKeys.clear();
-		AdDBManager.getInstance().getContext().validKeys.add("browser");
-		AdDBManager.getInstance().getContext().validKeys.add("os");
+		manager.getContext().validKeys.clear();
+		manager.getContext().validKeys.add("browser");
+		manager.getContext().validKeys.add("os");
 		
 		db.open();
 		
@@ -186,6 +184,5 @@ public class KeyValueConditionTest extends TestCase {
 		result = db.search(request);
 		assertEquals(2, result.size());
 		
-		db.close();
 	}
 }

@@ -31,7 +31,9 @@ import org.omg.PortableInterceptor.AdapterManagerIdHelper;
 
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.AdDBManager;
+import net.mad.ads.db.condition.AbstractCondition;
 import net.mad.ads.db.condition.Condition;
+import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.KeyValue;
@@ -49,8 +51,13 @@ import net.mad.ads.db.enums.ConditionDefinitions;
  * @author tmarx
  *
  */
-public class KeyValueCondition implements Condition {
+public class KeyValueCondition extends AbstractCondition implements Condition {
 
+	
+	public KeyValueCondition (AdDB addb) {
+		super(addb);
+	}
+	
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {
 		if (request.getKeyValues() == null || request.getKeyValues().isEmpty()) {
@@ -62,7 +69,7 @@ public class KeyValueCondition implements Condition {
 		// keyvalues einfügen
 		for (String k : request.getKeyValues().keySet()) {
 			BooleanQuery temp = new BooleanQuery();
-			if (AdDBManager.getInstance().getContext().validKeys.contains(k)) {
+			if (addb.manager.getContext().validKeys.contains(k)) {
 				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k , request.getKeyValues().get(k))), Occur.SHOULD);
 				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k, AdDBConstants.ADDB_AD_KEYVALUE_ALL)), Occur.SHOULD);
 				
@@ -83,12 +90,12 @@ public class KeyValueCondition implements Condition {
 		}
 		
 		List<String> keys = new ArrayList<String>();
-		keys.addAll(AdDBManager.getInstance().getContext().validKeys);
+		keys.addAll(addb.manager.getContext().validKeys);
 		if (kdef != null && !kdef.getKeyValues().isEmpty()) {
 			// keyvalues im Dokument speichern
 			List<KeyValue> kws = kdef.getKeyValues();
 			for (KeyValue k : kws) {
-				if (AdDBManager.getInstance().getContext().validKeys.contains(k.key)) {
+				if (addb.manager.getContext().validKeys.contains(k.key)) {
 					bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k.key, k.value, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 				}
 				

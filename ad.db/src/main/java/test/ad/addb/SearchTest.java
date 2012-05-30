@@ -20,7 +20,7 @@ package test.ad.addb;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.mad.ads.db.db.AdDB;
+import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.Keyword;
@@ -34,8 +34,8 @@ import net.mad.ads.db.definition.condition.TimeConditionDefinition;
 import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
+import net.mad.ads.db.model.Country;
 import net.mad.ads.db.model.State;
 import net.mad.ads.db.model.format.AdFormat;
 import net.mad.ads.db.model.format.impl.FullBannerAdFormat;
@@ -51,9 +51,9 @@ public class SearchTest {
 	
 	public void doDaySearchTest () throws Exception {
 		System.out.println("Day");
-		AdDB db = new AdDB();
+		AdDBManager manager = AdDBManager.newInstance();
 		
-		db.open();
+		manager.getAdDB().open();
 		
 		AdDefinition b = new ImageAdDefinition();
 		b.setId("1");
@@ -64,10 +64,10 @@ public class SearchTest {
 		
 		
 		b.setFormat(new FullBannerAdFormat());
-		db.addBanner(b);
+		manager.getAdDB().addBanner(b);
 		
 		
-		db.reopen();
+		manager.getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
@@ -78,22 +78,22 @@ public class SearchTest {
 		request.setTypes(types);
 		request.setDay(Day.Monday);
 		
-		List<AdDefinition> result = db.search(request);
+		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
 		request.setDay(Day.Saturday);
 		
-		result = db.search(request);
+		result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
-		db.close();
+		manager.getAdDB().close();
 	}
 	
 	public void doStateSearchTest () throws Exception {
 		System.out.println("State");
-		AdDB db = new AdDB();
+		AdDBManager manager = AdDBManager.newInstance();
 		
-		db.open();
+		manager.getAdDB().open();
 		
 		AdDefinition b = new ImageAdDefinition();
 		b.setId("1");
@@ -103,9 +103,9 @@ public class SearchTest {
 		b.addConditionDefinition(ConditionDefinitions.STATE, sdef);
 		
 		b.setFormat(new FullBannerAdFormat());
-		db.addBanner(b);
+		manager.getAdDB().addBanner(b);
 		
-		db.reopen();
+		manager.getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
@@ -116,22 +116,22 @@ public class SearchTest {
 		request.setTypes(types);
 		request.setState(new State("BE"));
 		
-		List<AdDefinition> result = db.search(request);
+		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
 		request.setState(new State("BB"));
 		
-		result = db.search(request);
+		result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
-		db.close();
+		manager.getAdDB().close();
 	}
 	
 	public void doTimeSearchTest () throws Exception {
 		System.out.println("Time");
-		AdDB db = new AdDB();
+		AdDBManager manager = AdDBManager.newInstance();
 		
-		db.open();
+		manager.getAdDB().open();
 		
 		AdDefinition b = new ImageAdDefinition();
 		b.setId("1");
@@ -143,9 +143,9 @@ public class SearchTest {
 		b.addConditionDefinition(ConditionDefinitions.TIME, tdef);
 
 		b.setFormat(new FullBannerAdFormat());
-		db.addBanner(b);
+		manager.getAdDB().addBanner(b);
 		
-		db.reopen();
+		manager.getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
@@ -156,21 +156,21 @@ public class SearchTest {
 		request.setTypes(types);
 		request.setTime("0800");
 		
-		List<AdDefinition> result = db.search(request);
+		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
 		request.setTime("1100");
-		result = db.search(request);
+		result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
-		db.close();
+		manager.getAdDB().close();
 	}
 	
 	public void doDateSearchTest () throws Exception {
 		System.out.println("Date");
-		AdDB db = new AdDB();
+		AdDBManager manager = AdDBManager.newInstance();
 		
-		db.open();
+		manager.getAdDB().open();
 		
 		AdDefinition b = new ImageAdDefinition();
 		b.setId("1");
@@ -180,7 +180,7 @@ public class SearchTest {
 		b.addConditionDefinition(ConditionDefinitions.DATE, dateDef);
 		
 		b.setFormat(new FullBannerAdFormat());
-		db.addBanner(b);
+		manager.getAdDB().addBanner(b);
 		
 		b = new ImageAdDefinition();
 		b.setId("1");
@@ -190,9 +190,9 @@ public class SearchTest {
 		b.addConditionDefinition(ConditionDefinitions.DATE, dateDef);
 		
 		b.setFormat(new FullBannerAdFormat());
-		db.addBanner(b);
+		manager.getAdDB().addBanner(b);
 		
-		db.reopen();
+		manager.getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
@@ -203,21 +203,21 @@ public class SearchTest {
 		request.setTypes(types);
 		request.setDate("20100623");
 		
-		List<AdDefinition> result = db.search(request);
+		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
 		request.setDate("20100724");
-		result = db.search(request);
+		result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
-		db.reopen();
+		manager.getAdDB().reopen();
 	}
 	
 	public void doCountrySearchTest () throws Exception {
 		System.out.println("Country");
-		AdDB db = new AdDB();
+		AdDBManager manager = AdDBManager.newInstance();
 		
-		db.open();
+		manager.getAdDB().open();
 		
 		AdDefinition b = new ImageAdDefinition();
 		b.setId("1");
@@ -227,9 +227,9 @@ public class SearchTest {
 		b.addConditionDefinition(ConditionDefinitions.COUNTRY, cdef);
 		
 		b.setFormat(new FullBannerAdFormat());
-		db.addBanner(b);
+		manager.getAdDB().addBanner(b);
 		
-		db.reopen();
+		manager.getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
@@ -240,22 +240,22 @@ public class SearchTest {
 		request.setTypes(types);
 		request.setCountry(new Country("DE"));
 		
-		List<AdDefinition> result = db.search(request);
+		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
 		request.setCountry(new Country("UK"));
 		
-		result = db.search(request);
+		result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
-		db.close();
+		manager.getAdDB().close();
 	}
 	
 	public void doKeywordSearchTest () throws Exception {
 		System.out.println("Keyword");
-		AdDB db = new AdDB();
+		AdDBManager manager = AdDBManager.newInstance();
 		
-		db.open();
+		manager.getAdDB().open();
 		
 		AdDefinition b = new ExternAdDefinition();
 		b.setId("1");
@@ -269,9 +269,9 @@ public class SearchTest {
 		KeywordConditionDefinition kdef = new KeywordConditionDefinition();
 		kdef.addKeyword(kw);
 		b.addConditionDefinition(ConditionDefinitions.KEYWORD, cdef);
-		db.addBanner(b);
+		manager.getAdDB().addBanner(b);
 		
-		db.reopen();
+		manager.getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
@@ -284,17 +284,17 @@ public class SearchTest {
 		request.getKeywords().add("Puma");
 //		request.getKeywords().add("Esprit");
 		
-		List<AdDefinition> result = db.search(request);
+		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result.size());
 		
-		db.close();
+		manager.getAdDB().close();
 	}
 	
 	public void doSiteSearchTest () throws Exception {
 		System.out.println("Site test");
-		AdDB db = new AdDB();
+		AdDBManager manager = AdDBManager.newInstance();
 		
-		db.open();
+		manager.getAdDB().open();
 		
 		AdDefinition b = new ExternAdDefinition();
 		b.setId("1");
@@ -308,9 +308,9 @@ public class SearchTest {
 		sdef.addSite("test_site");
 		b.addConditionDefinition(ConditionDefinitions.SITE, sdef);
 		
-		db.addBanner(b);
+		manager.getAdDB().addBanner(b);
 		
-		db.reopen();
+		manager.getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
@@ -321,18 +321,18 @@ public class SearchTest {
 		request.setTypes(types);
 		
 		
-		List<AdDefinition> result = db.search(request);
+		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result.size());
 		
 		request.setSite("demo_site");
-		result = db.search(request);
+		result = manager.getAdDB().search(request);
 		System.out.println(result.size());
 		
 		request.setSite("test_site");
-		result = db.search(request);
+		result = manager.getAdDB().search(request);
 		System.out.println(result.size());
 		
-		db.close();
+		manager.getAdDB().close();
 	}
 	
 	public static void main (String [] args) throws Exception {

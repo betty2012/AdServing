@@ -21,6 +21,8 @@ package net.mad.ads.db.test;
 import java.io.IOException;
 import java.util.List;
 
+import org.omg.PortableInterceptor.AdapterManagerIdHelper;
+
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
@@ -37,32 +39,33 @@ public class StoredAdDBTest {
 	 * @param args
 	 */
 	public static void main(String[] args) throws IOException {
-		AdDBManager.getInstance().getContext().useRamOnly = false;
-		AdDBManager.getInstance().getContext().datadir = "D:/www/applicationData/adserver/temp/";
-		AdDBManager.getInstance().getAdDB().open();
+		AdDBManager manager = AdDBManager.newInstance();
+		manager.getContext().useRamOnly = false;
+		manager.getContext().datadir = "D:/www/applicationData/adserver/temp/";
+		manager.getAdDB().open();
 		
 		ImageAdDefinition ib = new ImageAdDefinition();
 		ib.setFormat(new MediumRectangleAdFormat());
 		ib.setId("1");
-		AdDBManager.getInstance().getAdDB().addBanner(ib);
+		manager.getAdDB().addBanner(ib);
 		
 		ib = new ImageAdDefinition();
 		ib.setFormat(new MediumRectangleAdFormat());
 		ib.setId("2");
-		AdDBManager.getInstance().getAdDB().addBanner(ib);
+		manager.getAdDB().addBanner(ib);
 		
-		AdDBManager.getInstance().getAdDB().reopen();
+		manager.getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
 		request.getFormats().add(new MediumRectangleAdFormat());
 		request.getTypes().add(AdTypes.forName(ImageAdType.TYPE));
 		
-		List<AdDefinition> result = AdDBManager.getInstance().getAdDB().search(request);
+		List<AdDefinition> result = manager.getAdDB().search(request);
 		
 		System.out.println(result.size());
 		
 		
-		AdDBManager.getInstance().getAdDB().close();
+		manager.getAdDB().close();
 	}
 
 }

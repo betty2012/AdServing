@@ -47,17 +47,20 @@ public class AdDB {
     private AdDBStore adStore;
     private AdDBIndex adIndex = null;
     
-	public AdDB() {
+    public final AdDBManager manager;
+    
+	public AdDB(AdDBManager manager) {
+		this.manager = manager;
 	}
 
 	public void open() throws IOException {
 		adIndex = new AdDBLuceneIndex(this);
 		adIndex.open();
 		
-		if (AdDBManager.getInstance().getContext().useRamOnly) {
+		if (manager.getContext().useRamOnly) {
 			adStore = new AdDBMapStore();
 		} else {
-			adStore = new AdDBBDBStore();
+			adStore = new AdDBBDBStore(this);
 		}
 		this.adStore.open();
 	}
@@ -110,7 +113,7 @@ public class AdDB {
 		 * Query gemacht werden kann. Für dieses Dinge können Filter verwendet
 		 * werden
 		 */
-		result = ConditionHelper.getInstance().processFilter(request, result);
+		result = ConditionHelper.getInstance().processFilter(request, result, this);
 
 		return result;
 	}

@@ -41,13 +41,11 @@ import net.mad.ads.db.services.AdTypes;
 import junit.framework.TestCase;
 
 
-public class TimeConditionTest extends TestCase {
+public class TimeConditionTest extends AdDBTestCase {
 	
 	@Test
 	public void testTimeCondition () throws Exception {
 		System.out.println("TimeCondition");
-		
-		AdDB db = new AdDB();
 		
 		db.open();
 		
@@ -111,6 +109,5 @@ public class TimeConditionTest extends TestCase {
 		result = db.search(request);
 		assertEquals(0, result.size());
 		
-		db.close();
 	}
 }

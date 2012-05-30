@@ -37,35 +37,36 @@ public class AdDBTestDir {
 	 * @param args
 	 */
 	public static void main(String[] args) throws IOException {
-		AdDB db = new AdDB();
+		AdDBManager manager = AdDBManager.newInstance();
 		
-		AdDBManager.getInstance().getContext().useRamOnly = false;
-		AdDBManager.getInstance().getContext().datadir = "/tmp/addb";
 		
-		AdDBManager.getInstance().getAdDB().open();
+		manager.getContext().useRamOnly = false;
+		manager.getContext().datadir = "/tmp/addb";
+		
+		manager.getAdDB().open();
 		
 		ImageAdDefinition ib = new ImageAdDefinition();
 		ib.setFormat(AdFormats.forCompoundName(new MediumRectangleAdFormat().getCompoundName()));
 		ib.setId("1");
-		AdDBManager.getInstance().getAdDB().addBanner(ib);
+		manager.getAdDB().addBanner(ib);
 		
 		ib = new ImageAdDefinition();
 		ib.setFormat(AdFormats.forCompoundName(new MediumRectangleAdFormat().getCompoundName()));
 		ib.setId("2");
-		AdDBManager.getInstance().getAdDB().addBanner(ib);
+		manager.getAdDB().addBanner(ib);
 		
-		AdDBManager.getInstance().getAdDB().reopen();
+		manager.getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
 		request.getFormats().add(AdFormats.forCompoundName(new MediumRectangleAdFormat().getCompoundName()));
 		request.getTypes().add(AdTypes.forType(ImageAdType.TYPE));
 		
-		List<AdDefinition> result = AdDBManager.getInstance().getAdDB().search(request);
+		List<AdDefinition> result = manager.getAdDB().search(request);
 		
 		System.out.println(result.size());
 		
 		
-		AdDBManager.getInstance().getAdDB().close();
+		manager.getAdDB().close();
 	}
 
 }

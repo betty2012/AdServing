@@ -20,6 +20,7 @@ package test.ad.addb;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
@@ -46,9 +47,9 @@ public class ConditionFilterTest {
 	
 	public void doGeoLocationTest () throws Exception {
 		System.out.println("geo test");
-		AdDB db = new AdDB();
+		AdDBManager manager = AdDBManager.newInstance();
 		
-		db.open();
+		manager.getAdDB().open();
 		
 		AdDefinition b = new ExternAdDefinition();
 		b.setId("1");
@@ -64,9 +65,9 @@ public class ConditionFilterTest {
 		dcdef.setGeoRadius(5);
 		b.addConditionDefinition(ConditionDefinitions.DISTANCE, dcdef);
 		
-		db.addBanner(b);
+		manager.getAdDB().addBanner(b);
 		
-		db.reopen();
+		manager.getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
@@ -79,17 +80,17 @@ public class ConditionFilterTest {
 		gl = new GeoLocation(51.4863, 7.180);
 		request.setGeoLocation(gl);
 		
-		List<AdDefinition> result = db.search(request);
+		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result.size());
 		
 		
 		gl = new GeoLocation(51.4857, 7.0958);
 		request.setGeoLocation(gl);
-		result = db.search(request);
+		result = manager.getAdDB().search(request);
 		System.out.println(result.size());
 		
 		
-		db.close();
+		manager.getAdDB().close();
 	}
 	
 	public static void main (String [] args) throws Exception {

@@ -23,6 +23,7 @@ import org.apache.lucene.search.Query;
 
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.condition.Condition;
+import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
 
 
@@ -39,13 +40,13 @@ public class QueryHelper {
 		return INSTANCE;
 	}
 	
-	public Query getConditionalQuery (AdRequest request) {
+	public Query getConditionalQuery (AdRequest request, AdDB addb) {
 		if (!request.hasConditions()) {
 			return null;
 		}
 		BooleanQuery query = new BooleanQuery();
 		
-		for (Condition condition : AdDBManager.getInstance().getConditions()) {
+		for (Condition condition : addb.manager.getConditions()) {
 			condition.addQuery(request, query);
 		}
 		

@@ -42,13 +42,13 @@ import net.mad.ads.db.services.AdTypes;
 import junit.framework.TestCase;
 
 
-public class SiteConditionTest extends TestCase {
+public class SiteConditionTest extends AdDBTestCase {
 	
 	@Test
 	public void testSiteCondition () throws Exception {
 		System.out.println("SiteCondition");
 		
-		AdDB db = new AdDB();
+		
 		
 		db.open();
 		
@@ -105,7 +105,7 @@ public class SiteConditionTest extends TestCase {
 		assertEquals(1, result.size());
 		assertTrue(result.get(0).getId().equals("3"));
 		
-		db.close();
+		
 	}
 	
 	private static AdDefinition getAd (String []sites, String id, String...exclude) {

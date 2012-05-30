@@ -36,17 +36,19 @@ import net.mad.ads.db.db.AdDB;
 
 public class AdDBManager {
 
-	private static AdDBManager INSTANCE = new AdDBManager();
-	private static final AdDB adDB = new AdDB();
+	private final AdDB adDB;
 	
-	private static final AdDBContext context = new AdDBContext();
+	private final AdDBContext context = new AdDBContext();
 	
-	public static AdDBManager getInstance () {
-		return INSTANCE;
+	private final List<Condition> conditions = new ArrayList<Condition>();
+	
+	public static AdDBManager newInstance () {
+		return new AdDBManager();
 	}
-
-	private static final List<Condition> conditions = new ArrayList<Condition>();
-	static {
+	
+	private AdDBManager () {
+		this.adDB = new AdDB(this);
+		
 		// Default Conditions 
 		conditions.add(new CountryCondition());
 		conditions.add(new StateCondition());
@@ -54,21 +56,11 @@ public class AdDBManager {
 		conditions.add(new DayCondition());
 		conditions.add(new TimeCondition());
 		conditions.add(new KeywordCondition());
-		conditions.add(new KeyValueCondition());
+		conditions.add(new KeyValueCondition(this.adDB));
 		conditions.add(new SiteCondition());
 		conditions.add(new AdSlotCondition());
-		/*
-		 * wieso ist diese ExcludeCondition auskommentiert
-		 * wahrscheinlich muss die Klasse ExcludeCondition noch angepasst werden, da dort die selben Element wir in Site verwendet werden
-		 * 
-		 * ACHTUNG: gerade wieder einkommentiert, aber auf filter umgestellt
-		 */
 		conditions.add(new ExcludeSiteCondition());
 		conditions.add(new DistanceCondition());
-	}
-//	
-	private AdDBManager () {
-		
 	}
 	
 	public AdDB getAdDB () {

@@ -17,11 +17,15 @@
  */
 package net.mad.ads.db.test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
+import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
@@ -40,15 +44,11 @@ import net.mad.ads.db.services.AdTypes;
 import junit.framework.TestCase;
 
 
-public class CountryConditionTest extends TestCase {
+public class CountryConditionTest extends AdDBTestCase {
 	
 	@Test
 	public void testStateCondition () throws Exception {
 		System.out.println("CountryCondition");
-		
-		AdDB db = new AdDB();
-		
-		db.open();
 		
 		AdDefinition b = new ImageAdDefinition();
 		b.setId("1");
@@ -80,7 +80,5 @@ public class CountryConditionTest extends TestCase {
 		request.setCountry(Country.ALL);
 		result = db.search(request);
 		assertEquals(result.size(), 1);
-		
-		db.close();
 	}
 }

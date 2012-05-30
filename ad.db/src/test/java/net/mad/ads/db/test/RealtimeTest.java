@@ -39,13 +39,11 @@ import net.mad.ads.db.model.format.impl.FullBannerAdFormat;
 import junit.framework.TestCase;
 
 
-public class RealtimeTest extends TestCase {
+public class RealtimeTest extends AdDBTestCase {
 	
 	@Test
 	public void testRealtime () throws Exception {
 		System.out.println("Realtime");
-		
-		AdDB db = new AdDB();
 		
 		db.open();
 		StopWatch sw = new StopWatch();
@@ -85,6 +83,6 @@ public class RealtimeTest extends TestCase {
 		
 		assertEquals(db.size(), 499);
 		
-		db.close();
+		
 	}
 }

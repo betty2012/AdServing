@@ -18,11 +18,9 @@
 package net.mad.ads.db.condition;
 
 
-import java.io.Serializable;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.Query;
 
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;

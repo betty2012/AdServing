@@ -42,13 +42,11 @@ import net.mad.ads.db.services.AdTypes;
 import junit.framework.TestCase;
 
 
-public class DateConditionTest extends TestCase {
+public class DateConditionTest extends AdDBTestCase {
 	
 	@Test
 	public void testDateCondition () throws Exception {
 		System.out.println("CountryCondition");
-		
-		AdDB db = new AdDB();
 		
 		db.open();
 		
@@ -102,7 +100,5 @@ public class DateConditionTest extends TestCase {
 		request.setDate("20110321");
 		result = db.search(request);
 		assertEquals(0, result.size());
-		
-		db.close();
 	}
 }

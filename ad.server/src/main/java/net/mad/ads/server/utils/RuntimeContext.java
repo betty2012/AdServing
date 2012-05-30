@@ -27,6 +27,7 @@ import net.mad.ads.base.api.render.impl.freemarker.FreemarkerAdRenderer;
 import net.mad.ads.base.api.track.TrackingService;
 import net.mad.ads.base.api.utils.logging.LogWrapper;
 import net.mad.ads.common.template.TemplateManager;
+import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.services.geo.IPLocationDB;
 
@@ -53,6 +54,7 @@ public class RuntimeContext {
 	
 	// Banner-Datenbank
 	private static AdDB adDB = null;
+	private static AdDBManager manager = null;
 	
 	private static IPLocationDB ipDB = null;
 	
@@ -125,6 +127,19 @@ public class RuntimeContext {
 	public static final void setAdDB(AdDB adDB) {
 		RuntimeContext.adDB = adDB;
 	}
+	
+	
+	
+	public static AdDBManager getManager() {
+		return manager;
+	}
+
+
+	public static void setManager(AdDBManager manager) {
+		RuntimeContext.manager = manager;
+	}
+
+
 	public static String getEnviroment() {
 		return enviroment;
 	}

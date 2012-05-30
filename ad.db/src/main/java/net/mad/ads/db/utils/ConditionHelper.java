@@ -27,6 +27,7 @@ import com.google.common.collect.Collections2;
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.condition.Filter;
+import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
 
@@ -45,14 +46,14 @@ public class ConditionHelper {
 	 * @param banners
 	 * @return
 	 */
-	public List<AdDefinition> processFilter (AdRequest request, List<AdDefinition> banners) {
+	public List<AdDefinition> processFilter (AdRequest request, List<AdDefinition> banners, AdDB db) {
 		if (!request.hasConditions()) {
 			return banners;
 		}
 		
 		Collection<AdDefinition> bcol = new ArrayList<AdDefinition>();
 		bcol.addAll(banners);
-		for (Condition condition : AdDBManager.getInstance().getConditions()) {
+		for (Condition condition : db.manager.getConditions()) {
 			if (Filter.class.isInstance(condition) && !banners.isEmpty()) {
 				bcol = (Collection<AdDefinition>) Collections2.filter(bcol, ((Filter)condition).getFilterPredicate(request));
 			}

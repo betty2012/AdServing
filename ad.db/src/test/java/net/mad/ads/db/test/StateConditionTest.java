@@ -38,13 +38,13 @@ import net.mad.ads.db.services.AdTypes;
 import junit.framework.TestCase;
 
 
-public class StateConditionTest extends TestCase {
+public class StateConditionTest extends AdDBTestCase {
 	
 	@Test
 	public void testStateCondition () throws Exception {
 		System.out.println("StateCondition");
 		
-		AdDB db = new AdDB();
+		
 		
 		db.open();
 		
@@ -76,6 +76,6 @@ public class StateConditionTest extends TestCase {
 		result = db.search(request);
 		assertEquals(result.size(), 1);
 		
-		db.close();
+		
 	}
 }

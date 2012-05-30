@@ -39,6 +39,7 @@ import com.sleepycat.je.Environment;
 import com.sleepycat.je.EnvironmentConfig;
 
 import net.mad.ads.db.AdDBManager;
+import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.store.AdDBStore;
 import net.mad.ads.db.definition.AdDefinition;
 
@@ -53,13 +54,19 @@ public class AdDBBDBStore implements AdDBStore {
 	
 	private Map<String, AdDefinition> banners = null;
 	
+	private AdDB addb = null;
+
+	public AdDBBDBStore(AdDB db) {
+		this.addb = db;
+	}
+	
 	@Override
 	public void open() throws IOException {
-		if (Strings.isNullOrEmpty(AdDBManager.getInstance().getContext().datadir)) {
+		if (Strings.isNullOrEmpty(addb.manager.getContext().datadir)) {
 			throw new IOException("temp directory can not be empty");
 		}
 		
-		String dir = AdDBManager.getInstance().getContext().datadir;
+		String dir = addb.manager.getContext().datadir;
 		if (!dir.endsWith("/") || !dir.endsWith("\\")) {
 			dir += "/";
 		}
