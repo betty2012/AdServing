@@ -17,9 +17,14 @@
  */
 package net.mad.ads.db;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class AdDBContext {
 	public boolean useRamOnly = true;
 	public String tempDir = null;
 	
 	public String datadir = null;
+	
+	public Set<String> validKeys = new HashSet<String>();
 }

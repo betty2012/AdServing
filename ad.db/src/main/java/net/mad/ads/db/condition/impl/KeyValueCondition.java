@@ -17,7 +17,9 @@
  */
 package net.mad.ads.db.condition.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -25,8 +27,10 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.BooleanClause.Occur;
+import org.omg.PortableInterceptor.AdapterManagerIdHelper;
 
 import net.mad.ads.db.AdDBConstants;
+import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
@@ -55,16 +59,18 @@ public class KeyValueCondition implements Condition {
 		
 		BooleanQuery query = new BooleanQuery();
 		
-		BooleanQuery temp = new BooleanQuery();
-		
 		// keyvalues einfügen
 		for (String k : request.getKeyValues().keySet()) {
-			temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k , request.getKeyValues().get(k))), Occur.SHOULD);
+			BooleanQuery temp = new BooleanQuery();
+			if (AdDBManager.getInstance().getContext().validKeys.contains(k)) {
+				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k , request.getKeyValues().get(k))), Occur.SHOULD);
+				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k, AdDBConstants.ADDB_AD_KEYVALUE_ALL)), Occur.SHOULD);
+				
+				query.add(temp, Occur.MUST);
+			}
 		}
-		// all keyvalues einfügen
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_KEYVALUE, AdDBConstants.ADDB_AD_KEYVALUE_ALL)), Occur.SHOULD);
 		
-		query.add(temp, Occur.MUST);
+		
 		mainQuery.add(query, Occur.MUST);
 	}
 
@@ -76,17 +82,35 @@ public class KeyValueCondition implements Condition {
 			kdef = (KeyValueConditionDefinition) bannerDefinition.getConditionDefinition(ConditionDefinitions.KEYVALUE);
 		}
 		
+		List<String> keys = new ArrayList<String>();
+		keys.addAll(AdDBManager.getInstance().getContext().validKeys);
 		if (kdef != null && !kdef.getKeyValues().isEmpty()) {
 			// keyvalues im Dokument speichern
 			List<KeyValue> kws = kdef.getKeyValues();
 			for (KeyValue k : kws) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k.key, k.value, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				if (AdDBManager.getInstance().getContext().validKeys.contains(k.key)) {
+					bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k.key, k.value, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				}
+				
+				keys.remove(k.key);
 			}
 		} else {
 			/*
 			 * für alle Banner ohne angegebenem KeyValue wird das default ALL-KeyValue gesetzt
+			 * 
+			 * TODO:
+			 * it should be something like
+			 * bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k.key, AdDBConstants.ADDB_AD_KEYVALUE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			 * 
+			 *  but how to do this if we don't know the keys
 			 */
-			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYVALUE, AdDBConstants.ADDB_AD_KEYVALUE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+//			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYVALUE, AdDBConstants.ADDB_AD_KEYVALUE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+		}
+		/*
+		 * add all keys without value to the document with the default value
+		 */
+		for (String key : keys) {
+			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYVALUE + "_" + key, AdDBConstants.ADDB_AD_KEYVALUE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 		}
 	}
 

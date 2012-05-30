@@ -22,7 +22,6 @@ import java.util.List;
 
 import net.mad.ads.db.definition.ConditionDefinition;
 import net.mad.ads.db.definition.KeyValue;
-import net.mad.ads.db.definition.Keyword;
 /**
  * Eine einfache Key-Value Bedingung
  * 

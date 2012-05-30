@@ -80,6 +80,6 @@ public class AdDBManager {
 	}
 	
 	public AdDBContext getContext () {
-		return this.context;
+		return context;
 	}
 }

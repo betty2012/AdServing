@@ -18,51 +18,21 @@
 package net.mad.ads.db.db;
 
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
 
-import org.apache.lucene.analysis.KeywordAnalyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.index.IndexWriterConfig.OpenMode;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.BooleanClause.Occur;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.store.RAMDirectory;
-import org.apache.lucene.util.NumericUtils;
-import org.apache.lucene.util.Version;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.index.AdDBIndex;
 import net.mad.ads.db.db.index.impl.AdDBLuceneIndex;
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.db.search.AdCollector;
 import net.mad.ads.db.db.store.AdDBStore;
 import net.mad.ads.db.db.store.impl.AdDBBDBStore;
 import net.mad.ads.db.db.store.impl.AdDBMapStore;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.utils.ConditionHelper;
-import net.mad.ads.db.utils.DocumentHelper;
-import net.mad.ads.db.utils.QueryHelper;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * BDB - BannerDatenbank
