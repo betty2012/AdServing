@@ -57,11 +57,13 @@ public class AdDBManager {
 		conditions.add(new KeyValueCondition());
 		conditions.add(new SiteCondition());
 		conditions.add(new AdSlotCondition());
-		// wieso ist diese ExcludeCondition auskommentiert
 		/*
+		 * wieso ist diese ExcludeCondition auskommentiert
 		 * wahrscheinlich muss die Klasse ExcludeCondition noch angepasst werden, da dort die selben Element wir in Site verwendet werden
+		 * 
+		 * ACHTUNG: gerade wieder einkommentiert, aber auf filter umgestellt
 		 */
-//		conditions.add(new ExcludeSiteCondition());
+		conditions.add(new ExcludeSiteCondition());
 		conditions.add(new DistanceCondition());
 	}
 //	

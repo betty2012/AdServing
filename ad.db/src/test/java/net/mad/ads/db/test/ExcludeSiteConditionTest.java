@@ -22,14 +22,11 @@ import java.util.List;
 
 import org.junit.Test;
 
-import net.mad.ads.db.condition.impl.ExcludeSiteCondition;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.definition.condition.CountryConditionDefinition;
 import net.mad.ads.db.definition.condition.ExcludeSiteConditionDefinition;
 import net.mad.ads.db.definition.condition.SiteConditionDefinition;
-import net.mad.ads.db.definition.condition.StateConditionDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.model.format.AdFormat;
@@ -42,25 +39,28 @@ import net.mad.ads.db.services.AdTypes;
 import junit.framework.TestCase;
 
 
-public class SiteConditionTest extends TestCase {
+public class ExcludeSiteConditionTest extends TestCase {
 	
 	@Test
 	public void testSiteCondition () throws Exception {
-		System.out.println("SiteCondition");
+		System.out.println("ExcludeSiteCondition");
 		
 		AdDB db = new AdDB();
 		
 		db.open();
 		
-		AdDefinition b = getAd(new String [] {"10"}, "1");
+		AdDefinition b = getAd(new String [] {"10"}, "1", new String [] {"11"});
 		db.addBanner(b);
 		
 		b = getAd(new String [] {"11"}, "2");
 		db.addBanner(b);
 		
+		b = getAd(new String [] {}, "3", new String [] {"10", "11"});
+		db.addBanner(b);
+		
 		db.reopen();
 		
-		System.out.println(db.size());
+		assertEquals(3, db.size());
 		
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
@@ -72,7 +72,8 @@ public class SiteConditionTest extends TestCase {
 		request.setSite("1");
 		
 		List<AdDefinition> result = db.search(request);
-		assertTrue(result.isEmpty());
+		assertEquals(1, result.size());
+		assertTrue(result.get(0).getId().equals("3"));
 		
 		request.setSite("10");
 		result = db.search(request);
@@ -85,21 +86,6 @@ public class SiteConditionTest extends TestCase {
 		assertEquals(1, result.size());
 		assertTrue(result.get(0).getId().equals("2"));
 
-		request.setSite("12");
-		result = db.search(request);
-		assertEquals(0, result.size());
-		
-		b = getAd(new String [] {"12"}, "3");
-		db.addBanner(b);
-		
-		
-		System.out.println(db.size());
-		db.reopen();
-		System.out.println(db.size());
-		
-		request = new AdRequest();
-		request.setFormats(formats);
-		request.setTypes(types);
 		request.setSite("12");
 		result = db.search(request);
 		assertEquals(1, result.size());

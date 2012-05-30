@@ -51,46 +51,44 @@ import net.mad.ads.db.enums.ConditionDefinitions;
  * @author tmarx
  *
  */
-public class ExcludeSiteCondition implements Condition/*, Filter */{
+public class ExcludeSiteCondition implements Condition, Filter {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {
-		if (request.getSite() == null) {
-			return;
-		}
-		
-		
-		BooleanQuery query = new BooleanQuery();
-		
-		BooleanQuery temp = new BooleanQuery();
-		
-		// Seite einfügen
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_SITE_EXCLUDE, request.getSite())), Occur.SHOULD);
-		
-		query.add(temp, Occur.MUST);
-		mainQuery.add(query, Occur.MUST_NOT);
+//		if (request.getSite() == null) {
+//			return;
+//		}
 //		
-//		System.out.println(mainQuery.toString());
+//		
+//		BooleanQuery query = new BooleanQuery();
+//		
+//		BooleanQuery temp = new BooleanQuery();
+//		
+//		// Seite einfügen
+//		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_SITE_EXCLUDE, request.getSite())), Occur.SHOULD);
+//		
+//		query.add(temp, Occur.MUST);
+//		mainQuery.add(query, Occur.MUST_NOT);
 	}
 
 	@Override
 	public void addFields(Document bannerDoc, AdDefinition bannerDefinition) {
 		
-		ExcludeSiteConditionDefinition sdef = null;
-		if (bannerDefinition.hasConditionDefinition(ConditionDefinitions.EXCLUDE_SITE)) {
-			sdef = (ExcludeSiteConditionDefinition) bannerDefinition.getConditionDefinition(ConditionDefinitions.EXCLUDE_SITE);
-		}
-		
-		if (sdef != null && !sdef.getSites().isEmpty()) {
-			// Sites im Dokument speichern
-			List<String> sites = sdef.getSites();
-			for (String site : sites) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_SITE_EXCLUDE, site, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
-			}
-		}
+//		ExcludeSiteConditionDefinition sdef = null;
+//		if (bannerDefinition.hasConditionDefinition(ConditionDefinitions.EXCLUDE_SITE)) {
+//			sdef = (ExcludeSiteConditionDefinition) bannerDefinition.getConditionDefinition(ConditionDefinitions.EXCLUDE_SITE);
+//		}
+//		
+//		if (sdef != null && !sdef.getSites().isEmpty()) {
+//			// Sites im Dokument speichern
+//			List<String> sites = sdef.getSites();
+//			for (String site : sites) {
+//				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_SITE_EXCLUDE, site, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+//			}
+//		}
 	}
 
-	// @Override
+	@Override
 	public Predicate<AdDefinition> getFilterPredicate(final AdRequest request) {
 		Predicate<AdDefinition> predicate = new Predicate<AdDefinition>() {
 			@Override
