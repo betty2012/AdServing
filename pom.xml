@@ -269,6 +269,11 @@
 			<name>marx-labs components</name>
 			<url>http://marx-labs.googlecode.com/svn/repo/</url>
 		</repository>
+		<repository>
+			<id>java.net2</id>
+			<name>Repository hosting the jee6 artifacts</name>
+			<url>http://download.java.net/maven/2</url>
+		</repository>
 	</repositories>
 
 

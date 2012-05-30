@@ -26,6 +26,12 @@
 		<dependency>
 			<groupId>net.mad.ads</groupId>
 			<artifactId>ad.base</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>servlet-api</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -110,7 +116,14 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
+			<scope>provided</scope>
 		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.glassfish</groupId> -->
+<!-- 			<artifactId>javax.servlet</artifactId> -->
+<!-- 			<version>3.0</version> -->
+<!-- 			<scope>provided</scope> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
@@ -159,7 +172,7 @@
 					<!-- </systemProperty> -->
 					<!-- </systemProperties> -->
 				</configuration>
-				
+
 				<dependencies>
 					<dependency>
 						<groupId>com.h2database</groupId>
