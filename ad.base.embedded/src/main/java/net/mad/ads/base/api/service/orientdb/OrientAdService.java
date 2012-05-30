@@ -151,17 +151,14 @@ public class OrientAdService extends AbstractOrientDBService<Advertisement>
 
 		Advertisement ad = null;
 
-		switch (adType.getType()) {
-		case ImageAdType.TYPE:
+		if (adType.getType().equals(ImageAdType.TYPE)) {
 			ad = new ImageAdvertisement();
-			break;
-		case FlashAdType.TYPE:
+		} else if (adType.getType().equals(FlashAdType.TYPE)) {
 			ad = new FlashAdvertisement();
-			break;
-		default:
+		} else {
 			ad = new Advertisement();
-			break;
 		}
+		
 
 		ad.setId((String) doc.field(Fields.ID));
 		ad.setName((String) doc.field(Fields.NAME));

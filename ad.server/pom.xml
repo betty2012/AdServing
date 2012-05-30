@@ -13,7 +13,7 @@
 	<artifactId>ad.server</artifactId>
 	<packaging>war</packaging>
 
-    <properties>
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -101,9 +101,9 @@
 			<artifactId>je</artifactId>
 		</dependency>
 		<dependency>
-    		<groupId>com.h2database</groupId>
-    		<artifactId>h2</artifactId>
-    		<scope>compile</scope>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
@@ -127,8 +127,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.6</source>
+					<target>1.6</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
@@ -159,11 +159,12 @@
 					<!-- </systemProperty> -->
 					<!-- </systemProperties> -->
 				</configuration>
+				
 				<dependencies>
 					<dependency>
-    					<groupId>com.h2database</groupId>
-    					<artifactId>h2</artifactId>
-    					<version>1.3.160</version>
+						<groupId>com.h2database</groupId>
+						<artifactId>h2</artifactId>
+						<version>1.3.160</version>
 					</dependency>
 				</dependencies>
 			</plugin>

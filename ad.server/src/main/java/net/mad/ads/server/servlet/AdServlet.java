@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +36,7 @@ import net.mad.ads.server.utils.http.listener.AdContextListener;
  *
  * @author tmarx
  */
+@WebServlet(asyncSupported=true)
 public class AdServlet extends HttpServlet {
    
     /** 
