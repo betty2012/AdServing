@@ -118,12 +118,12 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.glassfish</groupId> -->
-<!-- 			<artifactId>javax.servlet</artifactId> -->
-<!-- 			<version>3.0</version> -->
-<!-- 			<scope>provided</scope> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.glassfish</groupId> -->
+		<!-- <artifactId>javax.servlet</artifactId> -->
+		<!-- <version>3.0</version> -->
+		<!-- <scope>provided</scope> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
@@ -165,12 +165,22 @@
 						<contextPath>/AdServer</contextPath>
 						<overrideDescriptor>${basedir}/server_root/config/override-web.xml</overrideDescriptor>
 					</webAppConfig>
-					<!-- <systemProperties> -->
-					<!-- <systemProperty> -->
-					<!-- <name>mad.home</name> -->
-					<!-- <value>/workspace1/advertisement/ad.server/server_root</value> -->
-					<!-- </systemProperty> -->
-					<!-- </systemProperties> -->
+
+					<systemProperties>
+						<systemProperty>
+							<name>mad.home</name>
+							<value>${basedir}/server_root</value>
+						</systemProperty>
+					</systemProperties>
+					
+					<contextHandlers>
+						<contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
+							<handler implementation="org.eclipse.jetty.server.handler.ResourceHandler">
+							</handler>
+							<contextPath>/static</contextPath>
+							<resourceBase>${basedir}/../documentation/Example/Banner/static</resourceBase>
+						</contextHandler>
+					</contextHandlers>
 				</configuration>
 
 				<dependencies>

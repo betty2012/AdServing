@@ -20,8 +20,8 @@
 <project default="distribute">
 
 	<property name="version" value="0.1" />
-	<property name="jetty.version" value="8.1.2.v20120308" />
-	<property name="maxmind.version" value="GeoLiteCity_20120207"/>
+	<property name="jetty.version" value="8.1.4.v20120524" />
+	<property name="maxmind.version" value="GeoLiteCity_20120504"/>
 
 	<taskdef name="geoipimport" classname="net.mad.ads.services.geo.ant.GeoIpImportTask">
 		<classpath location="../ad.services/target/ad.services-${version}-jar-with-dependencies.jar" />

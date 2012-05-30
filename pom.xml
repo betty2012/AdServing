@@ -14,7 +14,7 @@
 		<jetty.version>8.1.4.v20120524</jetty.version>
 		<infinispan.version>5.1.5.CR1</infinispan.version>
 		<wicket.version>1.5.6</wicket.version>
-		<wiquery.version>1.5.5</wiquery.version>
+		<wiquery.version>1.5.6</wiquery.version>
 		<hibernate-core-version>4.1.0.Final</hibernate-core-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

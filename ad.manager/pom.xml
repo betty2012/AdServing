@@ -121,7 +121,8 @@
 		<dependency>
 			<groupId>org.odlabs.wiquery</groupId>
 			<artifactId>wiquery-jquery-ui-timepicker</artifactId>
-			<version>${wiquery.version}</version>
+<!-- 			<version>${wiquery.version}</version> -->
+			<version>1.5.5</version>
 		</dependency>
 		<dependency>
 			<groupId>nl.topicus</groupId>
@@ -229,11 +230,13 @@
 	</build>
 
 	<repositories>
+	<!-- 
 		<repository>
 			<id>wiquery-maven-repo</id>
 			<name>WiQuery repository</name>
 			<url>https://wiquery.googlecode.com/svn/repo/</url>
 		</repository>
+	 -->
 		<repository>
 			<id>sonatype-maven-repo</id>
 			<name>Sonatype repository</name>
