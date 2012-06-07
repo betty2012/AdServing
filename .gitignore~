@@ -45,10 +45,5 @@
 /ad.base.hibernate/.project
 /ad.base.hibernate/.settings
 
-/ad.mobileserver/.classpath
-/ad.mobileserver/.project
-/ad.mobileserver/.settings
-/ad.mobileserver/target
-
 /distribution/dist-0.1
 /distribution/services
