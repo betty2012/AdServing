@@ -47,7 +47,7 @@ public class ConditionFilterTest {
 	
 	public void doGeoLocationTest () throws Exception {
 		System.out.println("geo test");
-		AdDBManager manager = AdDBManager.newInstance();
+		AdDBManager manager = AdDBManager.builder().build();
 		
 		manager.getAdDB().open();
 		

@@ -205,7 +205,7 @@ public class StartupPlugIn implements ServletContextListener {
 	private void initBannerDB () throws Exception {
 		
 		long before = System.currentTimeMillis();
-		AdDBManager manager = AdDBManager.newInstance();
+		AdDBManager manager = AdDBManager.builder().build();
 		manager.getContext().useRamOnly = false;
 		manager.getContext().datadir = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_DB_DIRECOTRY);
 		RuntimeContext.setManager(manager);

@@ -37,7 +37,7 @@ public class AdDBTest {
 	 * @param args
 	 */
 	public static void main(String[] args) throws IOException {
-		AdDBManager manager = AdDBManager.newInstance();
+		AdDBManager manager = AdDBManager.builder().build();
 		manager.getAdDB().open();
 		
 		ImageAdDefinition ib = new ImageAdDefinition();

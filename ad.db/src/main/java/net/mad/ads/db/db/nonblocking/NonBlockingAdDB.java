@@ -15,31 +15,39 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.db.test;
+package net.mad.ads.db.db.nonblocking;
 
 import java.io.IOException;
-
-import junit.framework.TestCase;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.AdDB;
+import net.mad.ads.db.db.request.AdRequest;
+import net.mad.ads.db.definition.AdDefinition;
 
-import org.junit.After;
-import org.junit.Before;
+public class NonBlockingAdDB extends AdDB {
 
-public abstract class AdDBTestCase extends TestCase {
-
-	protected static AdDB db = null;
-	protected static AdDBManager manager = null;
-	
-	@Before
-	public void setUp () throws IOException {
-		manager = AdDBManager.builder().build();
-		db = manager.getAdDB();
-		db.open();
+	public NonBlockingAdDB(AdDBManager manager) {
+		super(manager);
 	}
-	@After
-	public void tearDown () throws IOException {
-		db.close();
+
+	
+	public void search(final AdRequest request, final ReturnFunction<List<AdDefinition>> returnFunction) throws IOException {
+		if (manager.getExecutorService() == null) {
+			manager.getExecutorService().execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						returnFunction.handle(search(request));
+					} catch (IOException e) {
+						returnFunction.handle(new ArrayList<AdDefinition>());
+					}
+				}
+			});
+		} else {
+			returnFunction.handle(super.search(request));
+		}
 	}
 }

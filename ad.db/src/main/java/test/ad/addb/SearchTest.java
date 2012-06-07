@@ -51,7 +51,7 @@ public class SearchTest {
 	
 	public void doDaySearchTest () throws Exception {
 		System.out.println("Day");
-		AdDBManager manager = AdDBManager.newInstance();
+		AdDBManager manager = AdDBManager.builder().build();
 		
 		manager.getAdDB().open();
 		
@@ -91,7 +91,7 @@ public class SearchTest {
 	
 	public void doStateSearchTest () throws Exception {
 		System.out.println("State");
-		AdDBManager manager = AdDBManager.newInstance();
+		AdDBManager manager = AdDBManager.builder().build();
 		
 		manager.getAdDB().open();
 		
@@ -129,7 +129,7 @@ public class SearchTest {
 	
 	public void doTimeSearchTest () throws Exception {
 		System.out.println("Time");
-		AdDBManager manager = AdDBManager.newInstance();
+		AdDBManager manager = AdDBManager.builder().build();
 		
 		manager.getAdDB().open();
 		
@@ -168,7 +168,7 @@ public class SearchTest {
 	
 	public void doDateSearchTest () throws Exception {
 		System.out.println("Date");
-		AdDBManager manager = AdDBManager.newInstance();
+		AdDBManager manager = AdDBManager.builder().build();
 		
 		manager.getAdDB().open();
 		
@@ -215,7 +215,7 @@ public class SearchTest {
 	
 	public void doCountrySearchTest () throws Exception {
 		System.out.println("Country");
-		AdDBManager manager = AdDBManager.newInstance();
+		AdDBManager manager = AdDBManager.builder().build();
 		
 		manager.getAdDB().open();
 		
@@ -253,7 +253,7 @@ public class SearchTest {
 	
 	public void doKeywordSearchTest () throws Exception {
 		System.out.println("Keyword");
-		AdDBManager manager = AdDBManager.newInstance();
+		AdDBManager manager = AdDBManager.builder().build();
 		
 		manager.getAdDB().open();
 		
@@ -292,7 +292,7 @@ public class SearchTest {
 	
 	public void doSiteSearchTest () throws Exception {
 		System.out.println("Site test");
-		AdDBManager manager = AdDBManager.newInstance();
+		AdDBManager manager = AdDBManager.builder().build();
 		
 		manager.getAdDB().open();
 		

@@ -31,7 +31,7 @@ public class ImporterTest extends TestCase {
 	AdDB db;
 	@Override
 	protected void setUp() throws Exception {
-		AdDBManager m = AdDBManager.newInstance();
+		AdDBManager m = AdDBManager.builder().build();
 		db = m.getAdDB();
 		db.open();
 	}

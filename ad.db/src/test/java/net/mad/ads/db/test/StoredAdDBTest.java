@@ -39,7 +39,7 @@ public class StoredAdDBTest {
 	 * @param args
 	 */
 	public static void main(String[] args) throws IOException {
-		AdDBManager manager = AdDBManager.newInstance();
+		AdDBManager manager = AdDBManager.builder().build();
 		manager.getContext().useRamOnly = false;
 		manager.getContext().datadir = "D:/www/applicationData/adserver/temp/";
 		manager.getAdDB().open();

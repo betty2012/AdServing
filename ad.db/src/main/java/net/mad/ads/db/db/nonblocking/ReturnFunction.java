@@ -15,31 +15,8 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.db.test;
+package net.mad.ads.db.db.nonblocking;
 
-import java.io.IOException;
-
-import junit.framework.TestCase;
-
-import net.mad.ads.db.AdDBManager;
-import net.mad.ads.db.db.AdDB;
-
-import org.junit.After;
-import org.junit.Before;
-
-public abstract class AdDBTestCase extends TestCase {
-
-	protected static AdDB db = null;
-	protected static AdDBManager manager = null;
-	
-	@Before
-	public void setUp () throws IOException {
-		manager = AdDBManager.builder().build();
-		db = manager.getAdDB();
-		db.open();
-	}
-	@After
-	public void tearDown () throws IOException {
-		db.close();
-	}
+public interface ReturnFunction<T> {
+	public void handle (T value);
 }
