@@ -72,15 +72,17 @@ public class AdDBManager {
 		conditions.add(new AdSlotCondition());
 		conditions.add(new ExcludeSiteCondition());
 		conditions.add(new DistanceCondition());
-		
-		if (executorService != null) {
-			Runtime.getRuntime().addShutdownHook(new Thread() {
-				@Override
-				public void run() {
-					executorService.shutdownNow();
-				}
-			});
-		}
+		/*
+		 * 
+		 */
+//		if (executorService != null) {
+//			Runtime.getRuntime().addShutdownHook(new Thread() {
+//				@Override
+//				public void run() {
+//					executorService.shutdownNow();
+//				}
+//			});
+//		}
 	}
 	
 	public ExecutorService getExecutorService () {
