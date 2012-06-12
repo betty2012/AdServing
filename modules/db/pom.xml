@@ -6,9 +6,10 @@
 		<groupId>net.mad.ads</groupId>
 		<artifactId>advertisement</artifactId>
 		<version>0.1</version>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>ad.db</artifactId>
+	<artifactId>db</artifactId>
 
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,7 +29,7 @@
 
 		<dependency>
 			<groupId>net.mad.ads</groupId>
-			<artifactId>ad.common</artifactId>
+			<artifactId>base.common</artifactId>
 		</dependency>
 
 		<dependency>

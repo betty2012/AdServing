@@ -6,9 +6,10 @@
 		<groupId>net.mad.ads</groupId>
 		<artifactId>advertisement</artifactId>
 		<version>0.1</version>
+		<relativePath>../../../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>ad.manager</artifactId>
+	<artifactId>admanager</artifactId>
 	<packaging>war</packaging>
 
 	<properties>
@@ -69,7 +70,7 @@
 
 		<dependency>
 			<groupId>net.mad.ads</groupId>
-			<artifactId>ad.db</artifactId>
+			<artifactId>db</artifactId>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
@@ -79,7 +80,7 @@
 		</dependency>
 		<dependency>
 			<groupId>net.mad.ads</groupId>
-			<artifactId>ad.base</artifactId>
+			<artifactId>base.api</artifactId>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
@@ -89,7 +90,7 @@
 		</dependency>
 		<dependency>
 			<groupId>net.mad.ads</groupId>
-			<artifactId>ad.common</artifactId>
+			<artifactId>base.common</artifactId>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
@@ -99,7 +100,7 @@
 		</dependency>
 		<dependency>
 			<groupId>net.mad.ads</groupId>
-			<artifactId>ad.base.embedded</artifactId>
+			<artifactId>base.embedded</artifactId>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>

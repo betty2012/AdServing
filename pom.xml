@@ -27,14 +27,15 @@
 	</licenses>
 
 	<modules>
-		<module>ad.common</module>
-		<module>ad.base</module>
-		<module>ad.base.embedded</module>
-		<module>ad.db</module>
-		<module>ad.server</module>
-		<module>ad.import</module>
-		<module>ad.services</module>
-		<module>ad.manager</module>
+		<module>modules/base/common</module>
+		<module>modules/base/api</module>
+		<module>modules/base/embedded</module>
+		<module>modules/db</module>
+		<module>modules/server/adserver</module>
+		<module>modules/server/admanager</module>
+		<!-- module>modules/server/mobileadserver</module-->
+		<module>modules/tools/import</module>
+		<module>modules/services/geo</module>
 	</modules>
 
 	<dependencyManagement>
@@ -61,38 +62,33 @@
 			</dependency>
 			<dependency>
 				<groupId>net.mad.ads</groupId>
-				<artifactId>ad.base</artifactId>
+				<artifactId>base.api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.mad.ads</groupId>
-				<artifactId>ad.common</artifactId>
+				<artifactId>base.common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.mad.ads</groupId>
-				<artifactId>ad.base.embedded</artifactId>
+				<artifactId>base.embedded</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.mad.ads</groupId>
-				<artifactId>ad.base.hibernate</artifactId>
+				<artifactId>db</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.mad.ads</groupId>
-				<artifactId>ad.db</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.mad.ads</groupId>
-				<artifactId>ad.import</artifactId>
+				<artifactId>tools.import</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>net.mad.ads</groupId>
-				<artifactId>ad.services</artifactId>
+				<artifactId>services.geo</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

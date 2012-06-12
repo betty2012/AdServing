@@ -8,9 +8,10 @@
 		<groupId>net.mad.ads</groupId>
 		<artifactId>advertisement</artifactId>
 		<version>0.1</version>
+		<relativePath>../../../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>ad.server</artifactId>
+	<artifactId>adserver</artifactId>
 	<packaging>war</packaging>
 
 	<properties>
@@ -21,11 +22,11 @@
 
 		<dependency>
 			<groupId>net.mad.ads</groupId>
-			<artifactId>ad.common</artifactId>
+			<artifactId>base.common</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>net.mad.ads</groupId>
-			<artifactId>ad.base</artifactId>
+			<artifactId>base.api</artifactId>
 			<exclusions>
 				<exclusion>
 					<artifactId>servlet-api</artifactId>
@@ -36,21 +37,21 @@
 
 		<dependency>
 			<groupId>net.mad.ads</groupId>
-			<artifactId>ad.base.embedded</artifactId>
+			<artifactId>base.embedded</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>net.mad.ads</groupId>
-			<artifactId>ad.db</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>net.mad.ads</groupId>
-			<artifactId>ad.import</artifactId>
+			<artifactId>db</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>net.mad.ads</groupId>
-			<artifactId>ad.services</artifactId>
+			<artifactId>tools.import</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>net.mad.ads</groupId>
+			<artifactId>services.geo</artifactId>
 		</dependency>
 
 		<dependency>
@@ -178,7 +179,7 @@
 							<handler implementation="org.eclipse.jetty.server.handler.ResourceHandler">
 							</handler>
 							<contextPath>/static</contextPath>
-							<resourceBase>${basedir}/../documentation/Example/Banner/static</resourceBase>
+							<resourceBase>${basedir}/../../../documentation/Example/Banner/static</resourceBase>
 						</contextHandler>
 					</contextHandlers>
 				</configuration>
