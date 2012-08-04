@@ -31,17 +31,19 @@ import net.mad.ads.db.model.format.impl.FullBannerAdFormat;
 import net.mad.ads.db.services.AdFormats;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.google.common.io.Files;
 
 public class OrientAdServiceTest {
 
-	private AdService ads;
+	static private AdService ads;
 	
-	@Before
-	public void  before () throws Exception {
+	@BeforeClass
+	public static void  before () throws Exception {
 		File dbdir = Files.createTempDir();
 		String filedir = dbdir.getAbsolutePath().replaceAll("\\\\", "/");
 		System.out.println(filedir);
@@ -52,8 +54,9 @@ public class OrientAdServiceTest {
 		ads = new OrientAdService(camps);
 		ads.open(context);
 	}
-	@After
-	public void after () {
+	@AfterClass
+	public static void after () throws Exception {
+		ads.close();
 	}
 	
 	@Test

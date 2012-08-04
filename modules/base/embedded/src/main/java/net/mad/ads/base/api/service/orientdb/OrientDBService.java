@@ -29,14 +29,22 @@ import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx;
 public abstract class OrientDBService {
 	private String dbdir = null;
 
+//	private ODatabaseDocumentPool pool;
+	
 	public String getDbDir() {
 		return dbdir;
+	}
+	
+	protected OrientDBService () {
+//		pool = new ODatabaseDocumentPool();
+//		pool.setup(1,10);
 	}
 
 	abstract public String getClassName();
 
 	protected ODatabaseDocumentTx acquire() {
 		return ODatabaseDocumentPool.global().acquire("local:" + getDbDir(), "admin", "admin");
+//		return pool.acquire("local:" + getDbDir(), "admin", "admin");
 	}
 
 	protected void release(ODatabaseDocumentTx db) {
@@ -64,13 +72,16 @@ public abstract class OrientDBService {
 		if (createdb) {
 			ODatabaseDocumentTx db = new ODatabaseDocumentTx("local:" + basedir)
 					.create();
-
-			db.getMetadata().getSchema().createClass(getClassName());
-
-			db.close();
+			try {
+				db.getMetadata().getSchema().createClass(getClassName());
+			} finally {
+				db.close();
+			}
 		} else {
 			ODatabaseDocumentTx db = ODatabaseDocumentPool.global().acquire(
 					"local:" + basedir, "admin", "admin");
+//			ODatabaseDocumentTx db = new ODatabaseDocumentTx("local:" + basedir)
+//			.open("admin","admin");
 			try {
 				if (!db.getMetadata().getSchema().existsClass(getClassName())) {
 					db.getMetadata().getSchema().createClass(getClassName());
@@ -83,5 +94,6 @@ public abstract class OrientDBService {
 
 	public void close() throws ServiceException {
 		ODatabaseDocumentPool.global().close();
+//		pool.close();
 	}
 }

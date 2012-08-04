@@ -49,10 +49,16 @@ public class OrientCampaignService extends AbstractOrientDBService<Campaign> imp
 		public static final String DATECONDITION = "datecondition";
 		public static final String DATE_FROM = "date_from";
 		public static final String DATE_TO = "date_to";
+		
+		public static final String ACTIVE = "active";
 	}
 
 	public static final String CLASS_NAME = "Campaign";
 
+	public OrientCampaignService () {
+		super();
+	}
+	
 	public String getClassName () {
 		return this.CLASS_NAME;
 	}
@@ -66,6 +72,10 @@ public class OrientCampaignService extends AbstractOrientDBService<Campaign> imp
 		camp.setName((String) doc.field(Fields.NAME));
 		camp.setDescription((String) doc.field(Fields.DESCRIPTION));
 		camp.setCreated((Date) doc.field(Fields.CREATED));
+		if (doc.field(Fields.ACTIVE) != null) {
+			camp.setActive((Boolean) doc.field(Fields.ACTIVE));
+		}
+		
 
 		if (doc.containsField(Fields.DATECONDITION)) {
 			ODocument datecondition = doc.field(Fields.DATECONDITION);
@@ -85,6 +95,7 @@ public class OrientCampaignService extends AbstractOrientDBService<Campaign> imp
 		doc.field(Fields.NAME, camp.getName());
 		doc.field(Fields.DESCRIPTION, camp.getDescription());
 		doc.field(Fields.CREATED, camp.getCreated());
+		doc.field(Fields.ACTIVE, camp.isActive());
 
 		if (camp.getDateCondition() != null) {
 			ODocument date = new ODocument();
@@ -101,7 +112,8 @@ public class OrientCampaignService extends AbstractOrientDBService<Campaign> imp
 //		doc.field(Fields.ID, camp.getId());
 		doc.field(Fields.NAME, camp.getName());
 		doc.field(Fields.DESCRIPTION, camp.getDescription());
-//		doc.field(Fields.CREATED, camp.getCreated());
+		doc.field(Fields.CREATED, camp.getCreated());
+		doc.field(Fields.ACTIVE, camp.isActive());
 
 		if (camp.getDateCondition() != null) {
 			ODocument date = new ODocument();

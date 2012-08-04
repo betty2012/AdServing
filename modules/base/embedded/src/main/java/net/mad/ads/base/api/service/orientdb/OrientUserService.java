@@ -50,6 +50,10 @@ public class OrientUserService extends OrientDBService implements UserService {
 	}
 
 	public static final String CLASS_NAME = "User";
+	
+	public OrientUserService () {
+		super();
+	}
 
 	public String getClassName() {
 		return this.CLASS_NAME;

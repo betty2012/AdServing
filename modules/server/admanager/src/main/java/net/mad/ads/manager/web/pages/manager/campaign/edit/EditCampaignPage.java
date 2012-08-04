@@ -31,6 +31,7 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -126,6 +127,8 @@ public class EditCampaignPage extends BasePage {
 			add(new RequiredTextField<String>("name").setRequired(true));
 
 			add(new TextArea<String>("description").setRequired(true));
+			
+			add(new CheckBox("active"));
 
 			add(new Button("saveButton").add(new ButtonBehavior()));
 			

@@ -25,6 +25,17 @@ public abstract class BaseModel implements Serializable {
 
 	private String id;
 	private Date created;
+	private boolean active = false;
+	
+	
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
 	public String getId() {
 		return id;

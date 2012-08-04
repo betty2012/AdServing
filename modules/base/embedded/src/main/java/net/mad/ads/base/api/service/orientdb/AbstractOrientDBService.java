@@ -36,11 +36,6 @@ import com.orientechnologies.orient.core.sql.query.OSQLSynchQuery;
 
 public abstract class AbstractOrientDBService<T extends BaseModel> extends OrientDBService {
 
-	
-	
-	
-	
-	
 	abstract public T toObject(ODocument doc) throws ServiceException;
 	abstract public ODocument toDocument(T object);
 	abstract public ODocument updateDocument(ODocument doc, T object);

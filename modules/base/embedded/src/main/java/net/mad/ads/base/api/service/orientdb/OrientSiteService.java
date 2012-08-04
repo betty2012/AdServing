@@ -46,6 +46,10 @@ public class OrientSiteService extends AbstractOrientDBService<Site> implements 
 
 	public static final String CLASS_NAME = "Site";
 	
+	public OrientSiteService() {
+		super();
+	}
+	
 	public String getClassName () {
 		return this.CLASS_NAME;
 	}

@@ -36,8 +36,9 @@ import com.google.common.io.Files;
 public class OrientUserServiceTest {
 
 	private static UserService userService;
+	
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public static void before() throws Exception {
 		File dbdir = Files.createTempDir();
 		String filedir = dbdir.getAbsolutePath().replaceAll("\\\\", "/");
 		System.out.println(filedir);
@@ -47,9 +48,9 @@ public class OrientUserServiceTest {
 		userService.open(context);
 	}
 	
-	@Before
-	public void setUp() throws Exception {
-		
+	@BeforeClass
+	public static void after() throws Exception {
+		userService.close();
 	}
 	
 	

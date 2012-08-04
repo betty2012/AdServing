@@ -49,6 +49,10 @@ public class OrientPlaceService extends AbstractOrientDBService<Place>
 
 	private static final String CLASS_NAME = "Place";
 
+	public OrientPlaceService() {
+		super();
+	}
+	
 	public String getClassName() {
 		return this.CLASS_NAME;
 	}
