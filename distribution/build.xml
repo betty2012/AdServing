@@ -86,12 +86,12 @@
 			<include name="javadoc" />
 		</delete>
 
-		<copy todir="dist-${version}/content" file="../ad.manager/target/ad.manager-${version}.war">
+		<copy todir="dist-${version}/content" file="../modules/server/admanager/target/ad.manager-${version}.war">
 		</copy>
-		<copy todir="dist-${version}/content" file="../ad.server/target/ad.server-${version}.war">
+		<copy todir="dist-${version}/content" file="../modules/server/adserver/target/ad.server-${version}.war">
 		</copy>
-		<move file="dist-${version}/content/ad.manager-${version}.war" tofile="dist-${version}/content/ad.manager.war" />
-		<move file="dist-${version}/content/ad.server-${version}.war" tofile="dist-${version}/content/ad.server.war" />
+		<move file="dist-${version}/content/admanager-${version}.war" tofile="dist-${version}/content/admanager.war" />
+		<move file="dist-${version}/content/adserver-${version}.war" tofile="dist-${version}/content/adserver.war" />
 		<move  toDir="dist-${version}/data/services/ipdb" >
 			<fileset dir="services/ipdb"/>
 		</move>
