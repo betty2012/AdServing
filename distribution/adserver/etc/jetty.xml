@@ -25,7 +25,7 @@
 		<Arg>jdbc/trackingds</Arg>
 		<Arg>
 			<New class="org.h2.jdbcx.JdbcDataSource">
-				<Set name="URL">jdbc:h2:mem:testdb</Set>
+				<Set name="URL">jdbc:h2:<SystemProperty name="jetty.home" default="."/>/data/track/trackdb</Set>
 				<Set name="user">sa</Set>
 				<Set name="password">sa</Set>
 			</New>

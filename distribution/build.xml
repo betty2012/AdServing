@@ -20,11 +20,11 @@
 <project default="distribute">
 
 	<property name="version" value="0.1" />
-	<property name="jetty.version" value="8.1.4.v20120524" />
-	<property name="maxmind.version" value="GeoLiteCity_20120504"/>
+	<property name="jetty.version" value="8.1.5.v20120716" />
+	<property name="maxmind.version" value="GeoLiteCity_20120807"/>
 
 	<taskdef name="geoipimport" classname="net.mad.ads.services.geo.ant.GeoIpImportTask">
-		<classpath location="../ad.services/target/ad.services-${version}-jar-with-dependencies.jar" />
+		<classpath location="../modules/services/geo/target/services.geo-${version}-jar-with-dependencies.jar" />
 	</taskdef>
 
 	<target name="ipdb">
@@ -45,11 +45,11 @@
 		<exec dir="../" executable="cmd" os="Windows 7">
 			<arg value="/c" />
 			<arg value="mvn.bat" />
-			<arg line="clean package install" />
+			<arg line="clean package install -DskipTests" />
 		</exec>
 
 		<exec dir="../" executable="mvn" os="Linux">
-			<arg line="clean package install" />
+			<arg line="clean package install -DskipTests" />
 		</exec>
 
 		<echo>unzip jetty-distribution ${jetty.version}</echo>
@@ -85,12 +85,15 @@
 			<include name="webapps" />
 			<include name="javadoc" />
 		</delete>
-
+		<!--
 		<copy todir="dist-${version}/content" file="../modules/server/admanager/target/ad.manager-${version}.war">
 		</copy>
-		<copy todir="dist-${version}/content" file="../modules/server/adserver/target/ad.server-${version}.war">
+		-->
+		<copy todir="dist-${version}/content" file="../modules/server/adserver/target/adserver-${version}.war">
 		</copy>
+		<!--
 		<move file="dist-${version}/content/admanager-${version}.war" tofile="dist-${version}/content/admanager.war" />
+		-->
 		<move file="dist-${version}/content/adserver-${version}.war" tofile="dist-${version}/content/adserver.war" />
 		<move  toDir="dist-${version}/data/services/ipdb" >
 			<fileset dir="services/ipdb"/>
