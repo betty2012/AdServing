@@ -17,6 +17,8 @@
  */
 package net.mad.ads.db.utils.geo;
 
+import java.io.Serializable;
+
 
 /**
  * Ein GeoPosition
@@ -24,7 +26,7 @@ package net.mad.ads.db.utils.geo;
  * @author tmarx
  *
  */
-public class GeoLocation {
+public class GeoLocation implements Serializable {
 
 	private double latitude;
 	private double longitude;

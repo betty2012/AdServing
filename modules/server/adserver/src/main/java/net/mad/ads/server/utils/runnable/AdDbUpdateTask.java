@@ -44,7 +44,7 @@ public class AdDbUpdateTask extends TimerTask {
 		
 		try {
 			running = true;
-			logger.debug("update banner database");
+			logger.info("update banner database");
 			
 			if (RuntimeContext.getImporter() != null) {
 				RuntimeContext.getImporter().runImport();

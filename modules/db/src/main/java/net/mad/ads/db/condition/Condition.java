@@ -19,6 +19,8 @@ package net.mad.ads.db.condition;
 
 
 
+import java.io.Serializable;
+
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.BooleanQuery;
 
@@ -35,7 +37,7 @@ import net.mad.ads.db.definition.AdDefinition;
  * @author thmarx
  *
  */
-public interface Condition {
+public interface Condition extends Serializable {
 	/**
 	 * Aufbereitung des Queries
 	 * 

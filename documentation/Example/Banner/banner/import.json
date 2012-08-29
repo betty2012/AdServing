@@ -1,0 +1,89 @@
+{
+    "jobs":[
+     	{
+     	 	num : 1,
+        	type : "import",
+        	bannerdefinition : "banner01.xml"    
+        },
+        {
+            num : 2,
+            type : "import",
+            bannerdefinition : "banner02.xml"
+        },
+	{
+     	 	num : 3,
+        	type : "import",
+        	bannerdefinition : "banner03.xml"    
+        },
+        {
+            num : 4,
+            type : "import",
+            bannerdefinition : "banner04.xml"
+        },
+	{
+     	 	num : 5,
+        	type : "import",
+        	bannerdefinition : "banner05.xml"    
+        },
+        {
+            num : 6,
+            type : "import",
+            bannerdefinition : "banner06.xml"
+        },
+	{
+     	 	num : 7,
+        	type : "import",
+        	bannerdefinition : "banner07.xml"    
+        },
+        {
+            num : 8,
+            type : "import",
+            bannerdefinition : "banner08.xml"
+        },
+	{
+     	 	num : 9,
+        	type : "import",
+        	bannerdefinition : "banner09.xml"    
+        },
+        {
+            num : 10,
+            type : "import",
+            bannerdefinition : "banner10.xml"
+        },        
+	{
+     	 	num : 11,
+        	type : "import",
+        	bannerdefinition : "banner11.xml"    
+        },
+        {
+            num : 12,
+            type : "import",
+            bannerdefinition : "banner12.xml"
+        },
+	{
+     	 	num : 13,
+        	type : "import",
+        	bannerdefinition : "banner13.xml"    
+        },
+        {
+            num : 14,
+            type : "import",
+            bannerdefinition : "banner14.xml"
+        },
+	{
+     	 	num : 15,
+        	type : "import",
+        	bannerdefinition : "banner15.xml"    
+        },
+        {
+            num : 16,
+            type : "import",
+            bannerdefinition : "product_1_1.xml"
+        },
+	{
+            num : 17,
+            type : "import",
+            bannerdefinition : "product_1_2.xml"
+        }
+    ]
+}

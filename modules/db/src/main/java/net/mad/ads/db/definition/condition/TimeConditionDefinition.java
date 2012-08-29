@@ -17,6 +17,7 @@
  */
 package net.mad.ads.db.definition.condition;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -66,7 +67,7 @@ public class TimeConditionDefinition implements ConditionDefinition {
 		periods.add(p);
 	}
 
-	public static class Period {
+	public static class Period implements Serializable {
 		private String from;
 		private String to;
 		

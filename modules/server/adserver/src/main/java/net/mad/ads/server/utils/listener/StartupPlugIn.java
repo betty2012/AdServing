@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -125,13 +126,15 @@ public class StartupPlugIn implements ServletContextListener {
 			logger.info("init templates");
 			initTemplates(path + "/WEB-INF/content/templates/");
 			
-			timer.scheduleAtFixedRate(new AdDbUpdateTask(), AdDbUpdateTask.delay, AdDbUpdateTask.period);
+			RuntimeContext.setImporter(new Importer(RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_IMPORT_DIRECOTRY), RuntimeContext.getAdDB()));
+			
+			TimerTask updateTask = new AdDbUpdateTask();
+			updateTask.run();
+			timer.scheduleAtFixedRate(updateTask, AdDbUpdateTask.delay, AdDbUpdateTask.period);
 			
 			RuntimeContext.cacheManager = new DefaultCacheManager(configDirectory + "cluster/infinispan_config.xml");
 			RuntimeContext.requestBanners = RuntimeContext.cacheManager.getCache("requestBanners");
 			RuntimeContext.requestBanners.addListener(new CacheListener());
-			
-			RuntimeContext.setImporter(new Importer(RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_IMPORT_DIRECOTRY), RuntimeContext.getAdDB()));
 		} catch (Exception e) {
 			logger.error("", e);
 			throw new RuntimeException(e);

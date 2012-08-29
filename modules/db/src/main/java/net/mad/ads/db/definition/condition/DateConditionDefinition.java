@@ -17,8 +17,11 @@
  */
 package net.mad.ads.db.definition.condition;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.google.common.util.concurrent.Service;
 
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.definition.ConditionDefinition;
@@ -74,7 +77,7 @@ public class DateConditionDefinition implements ConditionDefinition {
 		periods.add(p);
 	}
 	
-	public static class Period {
+	public static class Period implements Serializable {
 		private String from;
 		private String to;
 		
