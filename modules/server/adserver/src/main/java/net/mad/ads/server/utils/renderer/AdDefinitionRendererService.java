@@ -42,6 +42,7 @@ public class AdDefinitionRendererService {
 	}
 	
 	public static AdDefinitionRenderer<AdDefinition> forType (AdType type) {
+		System.out.println(typeLookup.size());
 		return typeLookup.get(type);
 	}
 	

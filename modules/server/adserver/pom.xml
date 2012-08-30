@@ -163,7 +163,7 @@
 					<scanIntervalSeconds>0</scanIntervalSeconds>
 					<useTestClasspath>true</useTestClasspath>
 					<webAppConfig>
-						<contextPath>/AdServer</contextPath>
+						<contextPath>/</contextPath>
 						<overrideDescriptor>${basedir}/server_root/config/override-web.xml</overrideDescriptor>
 					</webAppConfig>
 

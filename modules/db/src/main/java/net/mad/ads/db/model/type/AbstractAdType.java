@@ -43,4 +43,12 @@ public abstract class AbstractAdType implements AdType {
 	public int hashCode() {
 		return type.hashCode();
 	}
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof AdType)) {
+			return false;
+		}
+		
+		return ((AdType)obj).getType().equals(getType());
+	}
 }
