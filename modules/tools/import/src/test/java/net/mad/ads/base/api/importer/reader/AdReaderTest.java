@@ -40,6 +40,9 @@ public class AdReaderTest {
 		Assert.assertNotNull(banner.getType());
 		Assert.assertNotNull(banner.getFormat());
 		
+		System.out.println(banner.getType().getName());
+		System.out.println(banner.getFormat().getName());
+		
 //		System.out.println(((ExternBannerDefinition)banner).getExternContent());
 		
 //		if (banner.hasConditionDefinition(ConditionDefinitions.DATE)) {

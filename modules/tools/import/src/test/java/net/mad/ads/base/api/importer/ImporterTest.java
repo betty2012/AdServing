@@ -22,7 +22,6 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import net.mad.ads.base.api.model.user.impl.AdminUser;
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.AdDB;
 
