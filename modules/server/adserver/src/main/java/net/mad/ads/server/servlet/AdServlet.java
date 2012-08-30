@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.mad.ads.server.utils.AdServerConstants;
 import net.mad.ads.server.utils.RuntimeContext;
+import net.mad.ads.server.utils.context.AdContext;
 import net.mad.ads.server.utils.http.listener.AdContextListener;
 
 /**
@@ -109,12 +110,15 @@ public class AdServlet extends HttpServlet {
 		    /** async context has started, nothing to do */
 		    public void onStartAsync(AsyncEvent event) throws IOException { }
 		  });
+		  
+		  execute(ctx, AdContextListener.ADCONTEXT.get());
 		
 	}
 
-	private void execute(final AsyncContext ctx) {
+	private void execute(final AsyncContext ctx, final AdContext adcontext) {
 
-		exec.execute(new Runnable() {
+//		exec.execute(new Runnable() {
+		ctx.start(new Runnable() {
 			public void run() {
 				ServletResponse response = ctx.getResponse();
 				PrintWriter out = null;
@@ -131,9 +135,9 @@ public class AdServlet extends HttpServlet {
 							AdServerConstants.CONFIG.PROPERTIES.ADSERVER_URL, "");
 					context.put("adselect_url", adselect_url);
 					context.put("adserver_url", adserver_url);
-					context.put("adrequest_id", AdContextListener.ADCONTEXT.get()
-							.getRequestid());
-
+//					context.put("adrequest_id", AdContextListener.ADCONTEXT.get()
+//							.getRequestid());
+					context.put("adrequest_id", adcontext.getRequestid());
 					context.put("enviroment", RuntimeContext.getEnviroment()
 							.toLowerCase());
 
@@ -147,6 +151,7 @@ public class AdServlet extends HttpServlet {
 					if (out != null) {
 						out.close();
 					}
+					ctx.complete();
 				}
 
 			}

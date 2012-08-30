@@ -17,10 +17,12 @@
  */
 package net.mad.ads.db.definition;
 
+import java.io.Serializable;
+
 import net.mad.ads.db.definition.condition.ClickExpirationConditionDefinition;
 import net.mad.ads.db.definition.condition.ViewExpirationConditionDefinition;
 
-public class Campaign {
+public class Campaign implements Serializable {
 	private String id;
 	private ViewExpirationConditionDefinition viewExpiration;
 	private ClickExpirationConditionDefinition clickExpiration;

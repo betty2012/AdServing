@@ -17,6 +17,8 @@
  */
 package net.mad.ads.db.definition;
 
+import java.io.Serializable;
+
 import net.mad.ads.common.code.Base16;
 
 import com.google.common.base.Strings;
@@ -28,7 +30,7 @@ import com.google.common.base.Strings;
  * @author thmarx
  *
  */
-public class AdSlot {
+public class AdSlot implements Serializable {
 	
 	private String site;
 	private String place;

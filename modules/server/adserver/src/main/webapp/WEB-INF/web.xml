@@ -31,6 +31,10 @@
 	<servlet>
 		<servlet-name>AdServlet</servlet-name>
 		<servlet-class>net.mad.ads.server.servlet.AdServlet</servlet-class>
+		<init-param>
+			<param-name>threadpoolsize</param-name>
+			<param-value>2</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdServlet</servlet-name>
