@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.BitSet;
 import java.util.Collection;
 
+import org.apache.lucene.index.AtomicReaderContext;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.Scorer;
@@ -28,7 +29,7 @@ import org.apache.lucene.search.Scorer;
 public class AdCollector extends Collector {
 
 	private Scorer scorer;
-	private int docBase;
+	
 
 	private BitSet hits = null;
 
@@ -47,11 +48,7 @@ public class AdCollector extends Collector {
 		return true;
 	}
 
-	@Override
-	public void setNextReader(IndexReader reader, int docBase)
-			throws IOException {
-		this.docBase = docBase;
-	}
+	
 
 	@Override
 	public void setScorer(Scorer scorer) throws IOException {
@@ -60,5 +57,10 @@ public class AdCollector extends Collector {
 	
 	public BitSet getHits () {
 		return hits;
+	}
+
+	@Override
+	public void setNextReader(AtomicReaderContext arg0) throws IOException {
+		
 	}
 }

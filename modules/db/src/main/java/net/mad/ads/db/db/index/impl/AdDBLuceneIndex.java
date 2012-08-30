@@ -25,7 +25,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.lucene.analysis.KeywordAnalyzer;
+
+import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
@@ -98,7 +99,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 			index = FSDirectory.open(temp);
 		}
 		
-		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_35,
+		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_40,
 				new KeywordAnalyzer());
 		// CREATE_OR_APPEND
 		config.setOpenMode(OpenMode.CREATE_OR_APPEND);

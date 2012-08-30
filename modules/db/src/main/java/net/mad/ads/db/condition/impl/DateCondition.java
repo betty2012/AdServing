@@ -24,6 +24,7 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.util.BytesRef;
 
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.condition.Condition;
@@ -55,14 +56,14 @@ public class DateCondition implements Condition {
 				BooleanQuery query = new BooleanQuery();
 				
 				BooleanQuery temp = new BooleanQuery();
-				TermRangeQuery tQuery = new TermRangeQuery(AdDBConstants.ADDB_AD_DATE_FROM + i, null, request.getDate(), true, true);
+				TermRangeQuery tQuery = new TermRangeQuery(AdDBConstants.ADDB_AD_DATE_FROM + i, null, new BytesRef(request.getDate()), true, true);
 				temp.add(tQuery, Occur.SHOULD);
 				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_DATE_FROM + i, AdDBConstants.ADDB_AD_DATE_ALL)), Occur.SHOULD);
 				
 				query.add(temp, Occur.MUST);
 				
 				temp = new BooleanQuery();
-				tQuery = new TermRangeQuery(AdDBConstants.ADDB_AD_DATE_TO + i, request.getDate(), null, true, true);
+				tQuery = new TermRangeQuery(AdDBConstants.ADDB_AD_DATE_TO + i, new BytesRef(request.getDate()), null, true, true);
 				temp.add(tQuery, Occur.SHOULD);
 				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_DATE_TO + i, AdDBConstants.ADDB_AD_DATE_ALL)), Occur.SHOULD);
 				
