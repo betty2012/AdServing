@@ -60,7 +60,7 @@ public class AdCollector extends Collector {
 	}
 
 	@Override
-	public void setNextReader(AtomicReaderContext arg0) throws IOException {
+	public void setNextReader(AtomicReaderContext reader) throws IOException {
 		
 	}
 }
