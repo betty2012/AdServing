@@ -21,11 +21,11 @@ package net.mad.ads.db.condition;
 
 import java.io.Serializable;
 
-import org.apache.lucene.document.Document;
-import org.apache.lucene.search.BooleanQuery;
-
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.search.BooleanQuery;
 
 /**
  * Bedingung die ein Banner erfüllen kann oder muss

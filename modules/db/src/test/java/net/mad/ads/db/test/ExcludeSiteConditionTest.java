@@ -20,9 +20,6 @@ package net.mad.ads.db.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-
-import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.ExcludeSiteConditionDefinition;
@@ -35,8 +32,7 @@ import net.mad.ads.db.model.type.AdType;
 import net.mad.ads.db.model.type.impl.ImageAdType;
 import net.mad.ads.db.services.AdTypes;
 
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 
 public class ExcludeSiteConditionTest extends AdDBTestCase {

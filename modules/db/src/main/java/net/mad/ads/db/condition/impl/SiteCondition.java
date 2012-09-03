@@ -19,20 +19,20 @@ package net.mad.ads.db.condition.impl;
 
 import java.util.List;
 
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.BooleanClause.Occur;
-
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.definition.Keyword;
 import net.mad.ads.db.definition.condition.SiteConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.TermQuery;
 
 
 public class SiteCondition implements Condition {
@@ -69,13 +69,13 @@ public class SiteCondition implements Condition {
 			// Sites im Dokument speichern
 			List<String> sites = sdef.getSites();
 			for (String site : sites) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_SITE, site, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_SITE, site, Field.Store.NO));
 			}
 		} else {
 			/*
 			 * Banner, die keine Einschräkung auf eine spezielle Seite haben
 			 */
-			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_SITE, AdDBConstants.ADDB_AD_SITE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_SITE, AdDBConstants.ADDB_AD_SITE_ALL, Field.Store.NO));
 		}
 	}
 

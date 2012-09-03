@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.omg.PortableInterceptor.AdapterManagerIdHelper;
-
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.condition.impl.AdSlotCondition;
 import net.mad.ads.db.condition.impl.CountryCondition;

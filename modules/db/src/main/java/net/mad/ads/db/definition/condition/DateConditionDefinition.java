@@ -21,11 +21,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.google.common.util.concurrent.Service;
-
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.definition.ConditionDefinition;
-import net.mad.ads.db.definition.condition.TimeConditionDefinition.Period;
 
 /**
  * Steuerung zu welchen Daten das Banner angezeigt werden soll

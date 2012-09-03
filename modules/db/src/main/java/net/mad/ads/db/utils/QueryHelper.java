@@ -17,14 +17,12 @@
  */
 package net.mad.ads.db.utils;
 
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.Query;
-
-
-import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
+
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Query;
 
 
 public class QueryHelper {

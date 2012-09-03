@@ -20,8 +20,11 @@ package net.mad.ads.db.db.store.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
+
+import net.mad.ads.db.db.AdDB;
+import net.mad.ads.db.db.store.AdDBStore;
+import net.mad.ads.db.definition.AdDefinition;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,14 +37,8 @@ import com.sleepycat.bind.tuple.StringBinding;
 import com.sleepycat.collections.StoredSortedMap;
 import com.sleepycat.je.Database;
 import com.sleepycat.je.DatabaseConfig;
-import com.sleepycat.je.DatabaseNotFoundException;
 import com.sleepycat.je.Environment;
 import com.sleepycat.je.EnvironmentConfig;
-
-import net.mad.ads.db.AdDBManager;
-import net.mad.ads.db.db.AdDB;
-import net.mad.ads.db.db.store.AdDBStore;
-import net.mad.ads.db.definition.AdDefinition;
 
 
 public class AdDBBDBStore implements AdDBStore {

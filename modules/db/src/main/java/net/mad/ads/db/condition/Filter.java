@@ -18,10 +18,10 @@
 package net.mad.ads.db.condition;
 
 
-import com.google.common.base.Predicate;
-
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
+
+import com.google.common.base.Predicate;
 
 /**
  * Filter werden nach der Suche  über das Ergebnis laufen gelassen. Dadurch können 

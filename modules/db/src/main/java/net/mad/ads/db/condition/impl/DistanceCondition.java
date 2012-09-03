@@ -17,6 +17,13 @@
  */
 package net.mad.ads.db.condition.impl;
 
+import net.mad.ads.db.condition.Condition;
+import net.mad.ads.db.condition.Filter;
+import net.mad.ads.db.db.request.AdRequest;
+import net.mad.ads.db.definition.AdDefinition;
+import net.mad.ads.db.definition.condition.DistanceConditionDefinition;
+import net.mad.ads.db.enums.ConditionDefinitions;
+
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.BooleanQuery;
 
@@ -24,13 +31,6 @@ import com.google.common.base.Predicate;
 import com.javadocmd.simplelatlng.LatLng;
 import com.javadocmd.simplelatlng.LatLngTool;
 import com.javadocmd.simplelatlng.util.LengthUnit;
-
-import net.mad.ads.db.condition.Condition;
-import net.mad.ads.db.condition.Filter;
-import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.definition.condition.DistanceConditionDefinition;
-import net.mad.ads.db.enums.ConditionDefinitions;
 
 /**
  * Condition zum Filtern von Bannern, die nur in einem bestimmten Radius um

@@ -17,31 +17,22 @@
  */
 package net.mad.ads.db.test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import net.mad.ads.db.AdDBManager;
-import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.CountryConditionDefinition;
-import net.mad.ads.db.definition.condition.StateConditionDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.model.Country;
-import net.mad.ads.db.model.State;
 import net.mad.ads.db.model.format.AdFormat;
 import net.mad.ads.db.model.format.impl.FullBannerAdFormat;
 import net.mad.ads.db.model.type.AdType;
 import net.mad.ads.db.model.type.impl.ImageAdType;
 import net.mad.ads.db.services.AdTypes;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 
 public class CountryConditionTest extends AdDBTestCase {

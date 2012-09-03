@@ -17,7 +17,6 @@
  */
 package net.mad.ads.db.definition.impl.ad.image;
 
-import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.impl.ad.AbstractAdDefinition;
 import net.mad.ads.db.model.type.AdType;
 import net.mad.ads.db.model.type.impl.ImageAdType;

@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.List;
 
 import net.mad.ads.db.AdDBManager;
-import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;

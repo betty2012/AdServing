@@ -20,7 +20,6 @@ package net.mad.ads.db.test;
 import java.io.IOException;
 
 import junit.framework.TestCase;
-
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.AdDB;
 

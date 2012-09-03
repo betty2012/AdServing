@@ -19,13 +19,6 @@ package net.mad.ads.db.condition.impl;
 
 import java.util.List;
 
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.BooleanClause.Occur;
-
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.request.AdRequest;
@@ -33,6 +26,14 @@ import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.DayConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.enums.Day;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.TermQuery;
 
 /**
  * Bedingung die angiebt, an welchen Tage der Woche ein Banner angezeigt werden soll
@@ -83,10 +84,10 @@ public class DayCondition implements Condition {
 		if (ddef != null && ddef.getDays().size() > 0) {
 			List<Day> list = ddef.getDays();
 			for (Day day : list) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_DAY, String.valueOf(day.getDay()), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_DAY, String.valueOf(day.getDay()), Field.Store.NO));
 			}
 		} else {
-			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_DAY, AdDBConstants.ADDB_AD_DAY_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_DAY, AdDBConstants.ADDB_AD_DAY_ALL, Field.Store.NO));
 		}
 	}
 

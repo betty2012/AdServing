@@ -19,28 +19,24 @@ package net.mad.ads.db.condition.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.BooleanClause.Occur;
-import org.omg.PortableInterceptor.AdapterManagerIdHelper;
 
 import net.mad.ads.db.AdDBConstants;
-import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.condition.AbstractCondition;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.KeyValue;
-import net.mad.ads.db.definition.Keyword;
 import net.mad.ads.db.definition.condition.KeyValueConditionDefinition;
-import net.mad.ads.db.definition.condition.KeywordConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.TermQuery;
 
 
 /**
@@ -96,7 +92,8 @@ public class KeyValueCondition extends AbstractCondition implements Condition {
 			List<KeyValue> kws = kdef.getKeyValues();
 			for (KeyValue k : kws) {
 				if (addb.manager.getContext().validKeys.contains(k.key)) {
-					bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k.key, k.value, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+					bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k.key, k.value, Field.Store.NO));
+//					bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k.key, k.value, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 				}
 				
 				keys.remove(k.key);
@@ -117,7 +114,8 @@ public class KeyValueCondition extends AbstractCondition implements Condition {
 		 * add all keys without value to the document with the default value
 		 */
 		for (String key : keys) {
-			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYVALUE + "_" + key, AdDBConstants.ADDB_AD_KEYVALUE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_KEYVALUE + "_" + key, AdDBConstants.ADDB_AD_KEYVALUE_ALL, Field.Store.NO));
+//			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_KEYVALUE + "_" + key, AdDBConstants.ADDB_AD_KEYVALUE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 		}
 	}
 

@@ -19,13 +19,6 @@ package net.mad.ads.db.condition.impl;
 
 import java.util.List;
 
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.BooleanClause.Occur;
-
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.request.AdRequest;
@@ -33,6 +26,14 @@ import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.StateConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.model.State;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.TermQuery;
 
 public class StateCondition implements Condition {
 
@@ -67,10 +68,10 @@ public class StateCondition implements Condition {
 		if (stDef != null && stDef.getStates().size() > 0) {
 			List<State> list = stDef.getStates();
 			for (State state : list) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_STATE, state.getCode().toLowerCase(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_STATE, state.getCode().toLowerCase(), Field.Store.NO));
 			}
 		} else {
-			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_STATE, AdDBConstants.ADDB_AD_STATE_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_STATE, AdDBConstants.ADDB_AD_STATE_ALL, Field.Store.NO));
 		}
 	}
 

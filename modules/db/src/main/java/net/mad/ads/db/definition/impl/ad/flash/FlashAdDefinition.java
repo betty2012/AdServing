@@ -17,7 +17,6 @@
  */
 package net.mad.ads.db.definition.impl.ad.flash;
 
-import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.impl.ad.AbstractAdDefinition;
 import net.mad.ads.db.model.type.impl.FlashAdType;
 import net.mad.ads.db.services.AdTypes;

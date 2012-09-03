@@ -17,22 +17,14 @@
  */
 package net.mad.ads.db.definition.impl.ad;
 
-import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
 
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.Campaign;
 import net.mad.ads.db.definition.ConditionDefinition;
-import net.mad.ads.db.definition.Keyword;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.model.Country;
-import net.mad.ads.db.enums.Day;
-import net.mad.ads.db.model.State;
 import net.mad.ads.db.model.format.AdFormat;
 import net.mad.ads.db.model.type.AdType;
-import net.mad.ads.db.utils.geo.GeoLocation;
 
 public class AbstractAdDefinition implements AdDefinition {
 

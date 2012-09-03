@@ -18,31 +18,18 @@
 package net.mad.ads.db.condition.impl;
 
 
-import java.util.List;
-
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.BooleanClause.Occur;
-
-import com.google.common.base.Predicate;
-import com.google.common.base.Strings;
-import com.javadocmd.simplelatlng.LatLng;
-import com.javadocmd.simplelatlng.LatLngTool;
-import com.javadocmd.simplelatlng.util.LengthUnit;
-
-import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.condition.Filter;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.definition.Keyword;
-import net.mad.ads.db.definition.condition.DistanceConditionDefinition;
 import net.mad.ads.db.definition.condition.ExcludeSiteConditionDefinition;
-import net.mad.ads.db.definition.condition.SiteConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.search.BooleanQuery;
+
+import com.google.common.base.Predicate;
+import com.google.common.base.Strings;
 
 
 /**

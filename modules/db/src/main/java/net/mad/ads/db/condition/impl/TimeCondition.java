@@ -17,16 +17,6 @@
  */
 package net.mad.ads.db.condition.impl;
 
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.TermRangeQuery;
-import org.apache.lucene.search.BooleanClause.Occur;
-import org.apache.lucene.util.BytesRef;
-
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.request.AdRequest;
@@ -34,6 +24,16 @@ import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.TimeConditionDefinition;
 import net.mad.ads.db.definition.condition.TimeConditionDefinition.Period;
 import net.mad.ads.db.enums.ConditionDefinitions;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.TermRangeQuery;
+import org.apache.lucene.util.BytesRef;
 
 /**
  * Bedingung bzgl. des Zeitraums in dem das Banner angezeigt werden soll
@@ -98,21 +98,21 @@ public class TimeCondition implements Condition {
 			int count = 0;
 			for (Period p : tdef.getPeriods()) {
 				if (p.getFrom() != null) {
-					bannerDoc.add(new Field(AdDBConstants.ADDB_AD_TIME_FROM + count, p.getFrom(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+					bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_TIME_FROM + count, p.getFrom(), Field.Store.NO));
 				} else {
-					bannerDoc.add(new Field(AdDBConstants.ADDB_AD_TIME_FROM + count, AdDBConstants.ADDB_AD_TIME_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+					bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_TIME_FROM + count, AdDBConstants.ADDB_AD_TIME_ALL, Field.Store.NO));
 				}
 				
 				if (p.getFrom() != null) {
-					bannerDoc.add(new Field(AdDBConstants.ADDB_AD_TIME_TO + count, p.getTo(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+					bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_TIME_TO + count, p.getTo(), Field.Store.NO));
 				} else {
-					bannerDoc.add(new Field(AdDBConstants.ADDB_AD_TIME_TO + count, AdDBConstants.ADDB_AD_TIME_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+					bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_TIME_TO + count, AdDBConstants.ADDB_AD_TIME_ALL, Field.Store.NO));
 				}
 				count++;
 			}
 		} else {
-			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_TIME_FROM + 0, AdDBConstants.ADDB_AD_TIME_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
-			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_TIME_TO + 0, AdDBConstants.ADDB_AD_TIME_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_TIME_FROM + 0, AdDBConstants.ADDB_AD_TIME_ALL, Field.Store.NO));
+			bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_TIME_TO + 0, AdDBConstants.ADDB_AD_TIME_ALL, Field.Store.NO));
 		}
 	}
 

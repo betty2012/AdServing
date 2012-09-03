@@ -18,11 +18,6 @@
 package net.mad.ads.db.utils.mapper;
 
 import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.definition.impl.ad.expandable.ExpandableImageAdDefinition;
-import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
-import net.mad.ads.db.definition.impl.ad.flash.FlashAdDefinition;
-import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import net.mad.ads.db.definition.impl.ad.text.TextlinkAdDefinition;
 import net.mad.ads.db.model.type.AdType;
 import net.mad.ads.db.services.AdTypes;
 

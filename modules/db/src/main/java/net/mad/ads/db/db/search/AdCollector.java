@@ -19,10 +19,8 @@ package net.mad.ads.db.db.search;
 
 import java.io.IOException;
 import java.util.BitSet;
-import java.util.Collection;
 
 import org.apache.lucene.index.AtomicReaderContext;
-import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.Scorer;
 

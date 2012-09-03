@@ -19,22 +19,21 @@ package net.mad.ads.db.condition.impl;
 
 import java.util.List;
 
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.BooleanClause.Occur;
-
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.AdSlot;
 import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.definition.Keyword;
+import net.mad.ads.db.definition.AdSlot;
 import net.mad.ads.db.definition.condition.AdSlotConditionDefinition;
-import net.mad.ads.db.definition.condition.SiteConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.TermQuery;
 
 /**
  * Beschränkung der Anzeige eines Banners oder Products auf einen bestimmten Anzeige Platz (AdSlot)
@@ -80,13 +79,13 @@ public class AdSlotCondition implements Condition {
 			// AdSlots im Dokument speichern
 			List<AdSlot> slots = sdef.getSlots();
 			for (AdSlot slot : slots) {
-				bannerDoc.add(new Field(AdDBConstants.ADDB_AD_ADSLOT, slot.toString(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+				bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_ADSLOT, slot.toString(), Field.Store.NO));
 			}
 		} else {
 			/*
 			 * Banner, die keine Einschräkung auf einen spezielle AdSlot haben
 			 */
-			bannerDoc.add(new Field(AdDBConstants.ADDB_AD_ADSLOT, AdDBConstants.ADDB_AD_ADSLOT_ALL, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_ADSLOT, AdDBConstants.ADDB_AD_ADSLOT_ALL, Field.Store.NO));
 		}
 	}
 

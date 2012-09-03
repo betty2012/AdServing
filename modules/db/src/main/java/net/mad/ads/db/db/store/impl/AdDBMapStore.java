@@ -21,12 +21,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.store.AdDBStore;
 import net.mad.ads.db.definition.AdDefinition;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AdDBMapStore implements AdDBStore {
 

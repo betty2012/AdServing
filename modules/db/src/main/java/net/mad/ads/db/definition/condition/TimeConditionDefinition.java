@@ -19,7 +19,6 @@ package net.mad.ads.db.definition.condition;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import net.mad.ads.db.AdDBConstants;

@@ -17,9 +17,6 @@
  */
 package net.mad.ads.db.definition.condition;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.mad.ads.db.definition.ConditionDefinition;
 import net.mad.ads.db.utils.geo.GeoLocation;
 

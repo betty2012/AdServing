@@ -17,19 +17,13 @@
  */
 package net.mad.ads.db.utils;
 
-import java.util.List;
-
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-
 import net.mad.ads.db.AdDBConstants;
-import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.model.Country;
-import net.mad.ads.db.enums.Day;
-import net.mad.ads.db.model.State;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
 
 public class DocumentHelper {
 	private static DocumentHelper INSTANCE = null;
