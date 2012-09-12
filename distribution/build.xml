@@ -85,15 +85,10 @@
 			<include name="webapps" />
 			<include name="javadoc" />
 		</delete>
-		<!--
-		<copy todir="dist-${version}/content" file="../modules/server/admanager/target/ad.manager-${version}.war">
-		</copy>
-		-->
+		
 		<copy todir="dist-${version}/content" file="../modules/server/adserver/target/adserver-${version}.war">
 		</copy>
-		<!--
-		<move file="dist-${version}/content/admanager-${version}.war" tofile="dist-${version}/content/admanager.war" />
-		-->
+		
 		<move file="dist-${version}/content/adserver-${version}.war" tofile="dist-${version}/content/adserver.war" />
 		<move  toDir="dist-${version}/data/services/ipdb" >
 			<fileset dir="services/ipdb"/>
