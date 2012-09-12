@@ -18,7 +18,7 @@
 
 -->
 <#--  
-include der MadApi über die einige nötige Methoden zur Verfügung gestellt werden
+include der MadApi ueber die einige nÃ¶tige Methoden zur VerfÃ¼gung gestellt werden
 -->
 		
 

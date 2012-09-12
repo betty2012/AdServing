@@ -15,17 +15,12 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.server.utils.renderer;
+package net.mad.ads.services.tracking.events;
 
-import javax.servlet.http.HttpServletRequest;
-
-import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.model.type.AdType;
-import net.mad.ads.server.utils.context.AdContext;
-
-public interface AdDefinitionRenderer<T extends AdDefinition> {
-
-	public String render(T banner, HttpServletRequest request, AdContext context);
-	
-	public AdType getType();
+public class ImpressionTrackEvent extends TrackEvent {
+	public ImpressionTrackEvent () {
+		super();
+		
+		put(EventAttribute.TYPE, EventType.IMPRESSION.getName());
+	}
 }

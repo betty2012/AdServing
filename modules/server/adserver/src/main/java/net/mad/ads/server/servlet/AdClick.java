@@ -29,13 +29,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.mad.ads.base.utils.track.events.ClickTrackEvent;
-import net.mad.ads.base.utils.track.events.TrackEvent;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;
 import net.mad.ads.server.utils.helper.TrackingHelper;
 import net.mad.ads.server.utils.http.listener.AdContextListener;
+import net.mad.ads.services.tracking.events.ClickTrackEvent;
+import net.mad.ads.services.tracking.events.TrackEvent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,6 +120,7 @@ public class AdClick extends HttpServlet {
 			}
 		});
 
+		final AdContext context = AdContextListener.ADCONTEXT.get();
 		ctx.start(new Runnable() {
 
 			@Override
@@ -131,13 +132,21 @@ public class AdClick extends HttpServlet {
 							.getBanner(id);
 
 					try {
-						AdContext context = AdContextListener.ADCONTEXT.get();
+						
 						TrackEvent trackEvent = new ClickTrackEvent();
 						trackEvent.setBannerId(banner.getId());
+						trackEvent.setCampaign(banner.getCampaign() != null ? banner
+								.getCampaign().getId() : "");
 						trackEvent.setUser(context.getUserid());
 						trackEvent.setId(UUID.randomUUID().toString());
 						trackEvent.setTime(System.currentTimeMillis());
 						trackEvent.setIp(context.getIp());
+						
+						if (context.getSlot() != null) {
+							trackEvent.setSite(context.getSlot().getSite());
+						} else {
+							trackEvent.setSite("NONE_PAGE");
+						}
 
 						// RuntimeContext.getTrackService().track(trackEvent);
 						// RuntimeContext.clickLogger.click(banner.getId(),

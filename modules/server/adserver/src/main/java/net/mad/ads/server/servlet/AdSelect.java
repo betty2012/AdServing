@@ -29,8 +29,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.mad.ads.base.utils.track.events.ImpressionTrackEvent;
-import net.mad.ads.base.utils.track.events.TrackEvent;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;
@@ -39,6 +37,8 @@ import net.mad.ads.server.utils.http.listener.AdContextListener;
 import net.mad.ads.server.utils.renderer.AdDefinitionRenderer;
 import net.mad.ads.server.utils.renderer.AdDefinitionRendererService;
 import net.mad.ads.server.utils.selection.AdProvider;
+import net.mad.ads.services.tracking.events.ImpressionTrackEvent;
+import net.mad.ads.services.tracking.events.TrackEvent;
 
 /**
  * Servlet implementation class AdSelect
@@ -109,6 +109,7 @@ public class AdSelect extends HttpServlet {
 			}
 		});
 
+		final AdContext context = AdContextListener.ADCONTEXT.get();
 		ctx.start(new Runnable() {
 
 			@Override
@@ -116,8 +117,6 @@ public class AdSelect extends HttpServlet {
 				response.setContentType("text/javascript;charset=UTF-8");
 
 				try {
-
-					AdContext context = AdContextListener.ADCONTEXT.get();
 					// Type
 					// String type =
 					// (String)request.getParameter(RequestHelper.type);
@@ -164,7 +163,7 @@ public class AdSelect extends HttpServlet {
 						// }
 						AdDefinitionRenderer<AdDefinition> renderer = AdDefinitionRendererService
 								.forType(banner.getType());
-						sb.append(renderer.render(banner, request));
+						sb.append(renderer.render(banner, request, context));
 
 						TrackEvent trackEvent = new ImpressionTrackEvent();
 						trackEvent.setBannerId(banner.getId());

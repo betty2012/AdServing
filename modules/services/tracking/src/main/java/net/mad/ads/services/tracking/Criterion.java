@@ -15,17 +15,26 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.server.utils.renderer;
+package net.mad.ads.services.tracking;
 
-import javax.servlet.http.HttpServletRequest;
-
-import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.model.type.AdType;
-import net.mad.ads.server.utils.context.AdContext;
-
-public interface AdDefinitionRenderer<T extends AdDefinition> {
-
-	public String render(T banner, HttpServletRequest request, AdContext context);
+/**
+ * Criterion for loading Trackingdata
+ * 
+ * @author thmarx
+ *
+ */
+public class Criterion {
+	public enum Criteria {
+		Campaign,
+		Site,
+		Banner
+	}
 	
-	public AdType getType();
+	public final String value;
+	public final Criteria criterion;
+	
+	public Criterion (Criteria criterion, String value) {
+		this.value = value;
+		this.criterion = criterion;
+	}
 }

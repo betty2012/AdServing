@@ -31,14 +31,12 @@ import javax.servlet.ServletContextListener;
 
 import net.mad.ads.base.api.importer.Importer;
 import net.mad.ads.base.api.importer.reader.AdXmlReader;
-import net.mad.ads.base.utils.track.TrackingService;
 import net.mad.ads.base.utils.utils.logging.LogWrapper;
 import net.mad.ads.common.template.TemplateManager;
 import net.mad.ads.common.template.impl.freemarker.FMTemplateManager;
 import net.mad.ads.common.util.Properties2;
 import net.mad.ads.common.util.Strings;
 import net.mad.ads.db.AdDBManager;
-import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.model.type.AdType;
 import net.mad.ads.db.services.AdTypes;
@@ -47,6 +45,7 @@ import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.listener.configuration.AdServerModule;
 import net.mad.ads.server.utils.runnable.AdDbUpdateTask;
 import net.mad.ads.services.geo.IPLocationDB;
+import net.mad.ads.services.tracking.TrackingService;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.infinispan.manager.DefaultCacheManager;

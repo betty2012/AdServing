@@ -17,9 +17,9 @@
  */
 package net.mad.ads.server.utils.helper;
 
-import net.mad.ads.base.utils.track.events.TrackEvent;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;
+import net.mad.ads.services.tracking.events.TrackEvent;
 import net.minidev.json.JSONObject;
 
 import org.slf4j.Logger;

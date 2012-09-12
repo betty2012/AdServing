@@ -24,8 +24,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-import net.mad.ads.base.utils.track.Criterion;
-import net.mad.ads.base.utils.track.events.EventType;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.ViewExpirationConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
@@ -33,6 +31,8 @@ import net.mad.ads.db.enums.ExpirationResolution;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;
 import net.mad.ads.server.utils.selection.AdSelector;
+import net.mad.ads.services.tracking.Criterion;
+import net.mad.ads.services.tracking.events.EventType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

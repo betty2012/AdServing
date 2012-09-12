@@ -26,7 +26,9 @@ import net.mad.ads.db.model.type.impl.ImageAdType;
 import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.AdServerConstants;
 import net.mad.ads.server.utils.RuntimeContext;
+import net.mad.ads.server.utils.context.AdContext;
 import net.mad.ads.server.utils.renderer.AdDefinitionRenderer;
+import net.mad.ads.server.utils.request.RequestHelper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +60,7 @@ public class ImageAdDefinitionRenderer implements AdDefinitionRenderer<ImageAdDe
 	 * @see net.mad.ads.server.utils.renderer.BannerDefinitionRenderer#render(net.mad.ads.api.definition.impl.image.ImageBannerDefinition)
 	 */
 	@Override
-	public String render (ImageAdDefinition banner, HttpServletRequest request) {
+	public String render (ImageAdDefinition banner, HttpServletRequest request, AdContext context) {
 		
 		String clickurl = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.CLICK_URL);
 		String staticurl = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.STATIC_URL);
@@ -66,13 +68,13 @@ public class ImageAdDefinitionRenderer implements AdDefinitionRenderer<ImageAdDe
 			staticurl += "/";
 		}
 		
-		RenderContext context = new RenderContext();
-		context.put("banner", banner);
-		context.put("staticUrl", staticurl);
-		context.put("clickUrl", clickurl + "?id=" + banner.getId());
+		RenderContext renderContext = new RenderContext();
+		renderContext.put("banner", banner);
+		renderContext.put("staticUrl", staticurl);
+		renderContext.put("clickUrl", clickurl + "?id=" + banner.getId() + "&" + RequestHelper.slot + "=" + context.getSlot().toString());
 		
 		try {
-			return RuntimeContext.getBannerRenderer().render(AdTypes.forType(ImageAdType.TYPE).getName().toLowerCase(), context);
+			return RuntimeContext.getBannerRenderer().render(AdTypes.forType(ImageAdType.TYPE).getName().toLowerCase(), renderContext);
 		} catch (Exception e) {
 			logger.error("", e);
 		}

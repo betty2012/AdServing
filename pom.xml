@@ -27,12 +27,12 @@
 		<module>modules/utilities/common</module>
 		<module>modules/base/api</module>
 		<module>modules/utilities/utils</module>
-		<module>modules/utilities/embedded</module>
 		<module>modules/db</module>
 		<module>modules/server/adserver</module>
 		<!-- module>modules/server/mobileadserver</module-->
 		<module>modules/tools/import</module>
 		<module>modules/services/geo</module>
+		<module>modules/services/tracking</module>
 	</modules>
 
 	<dependencyManagement>
@@ -91,6 +91,11 @@
 			<dependency>
 				<groupId>net.mad.ads</groupId>
 				<artifactId>services.geo</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.mad.ads</groupId>
+				<artifactId>services.tracking</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

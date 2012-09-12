@@ -26,7 +26,9 @@ import net.mad.ads.db.model.type.impl.ExpandableImageAdType;
 import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.AdServerConstants;
 import net.mad.ads.server.utils.RuntimeContext;
+import net.mad.ads.server.utils.context.AdContext;
 import net.mad.ads.server.utils.renderer.AdDefinitionRenderer;
+import net.mad.ads.server.utils.request.RequestHelper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,7 +68,7 @@ public class ExpandableImageAdDefinitionRenderer implements
 	 */
 	@Override
 	public String render(ExpandableImageAdDefinition banner,
-			HttpServletRequest request) {
+			HttpServletRequest request, AdContext context) {
 
 		String clickurl = RuntimeContext.getProperties().getProperty(
 				AdServerConstants.CONFIG.PROPERTIES.CLICK_URL);
@@ -76,10 +78,10 @@ public class ExpandableImageAdDefinitionRenderer implements
 			staticurl += "/";
 		}
 
-		RenderContext context = new RenderContext();
-		context.put("banner", banner);
-		context.put("staticUrl", staticurl);
-		context.put("clickUrl", clickurl + "?id=" + banner.getId());
+		RenderContext renderContext = new RenderContext();
+		renderContext.put("banner", banner);
+		renderContext.put("staticUrl", staticurl);
+		renderContext.put("clickUrl", clickurl + "?id=" + banner.getId() + "&" + RequestHelper.slot + "=" + context.getSlot().toString());
 
 		if (request.getParameterMap().containsKey("tcolor")) {
 			context.put("tcolor", request.getParameter("tcolor"));
@@ -95,7 +97,7 @@ public class ExpandableImageAdDefinitionRenderer implements
 		try {
 			return RuntimeContext.getBannerRenderer().render(
 					AdTypes.forType(ExpandableImageAdType.TYPE).getName()
-							.toLowerCase(), context);
+							.toLowerCase(), renderContext);
 		} catch (Exception e) {
 			logger.error("", e);
 		}

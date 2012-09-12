@@ -15,17 +15,34 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.server.utils.renderer;
+package net.mad.ads.services.tracking.events;
 
-import javax.servlet.http.HttpServletRequest;
-
-import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.model.type.AdType;
-import net.mad.ads.server.utils.context.AdContext;
-
-public interface AdDefinitionRenderer<T extends AdDefinition> {
-
-	public String render(T banner, HttpServletRequest request, AdContext context);
+public enum EventType {
+	IMPRESSION ("impression"), 
+	CLICK ("click"),
+	UNKNOWN ("unknown");
 	
-	public AdType getType();
+	private String name;
+	
+	private EventType (String name) {
+		this.name = name;
+	}
+	
+	public String getName () {
+		return this.name;
+	}
+	
+	public static EventType forName (String name) {
+		if (name == null || name.equals("")) {
+			return EventType.UNKNOWN;
+		}
+		
+		for (EventType type : values()) {
+			if (type.getName().equals(name)) {
+				return type;
+			}
+		}
+		
+		return EventType.UNKNOWN;
+	}
 }

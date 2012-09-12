@@ -22,13 +22,14 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import net.mad.ads.base.utils.EmbeddedBaseContext;
+import net.mad.ads.base.utils.BaseContext;
 import net.mad.ads.base.utils.exception.ServiceException;
-import net.mad.ads.base.utils.track.TrackingService;
-import net.mad.ads.base.utils.track.impl.local.h2.H2TrackingService;
 import net.mad.ads.server.utils.AdServerConstants;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.services.geo.IPLocationDB;
+import net.mad.ads.services.tracking.TrackingContextKeys;
+import net.mad.ads.services.tracking.TrackingService;
+import net.mad.ads.services.tracking.impl.local.h2.H2TrackingService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,9 +45,9 @@ public class AdServerModule extends AbstractModule {
 	protected void configure() {
 
 		try {
-			EmbeddedBaseContext baseContext = new EmbeddedBaseContext();
+			BaseContext baseContext = new BaseContext();
 			baseContext.put(
-					EmbeddedBaseContext.EMBEDDED_DB_DIR,
+					TrackingContextKeys.EMBEDDED_DB_DIR,
 					RuntimeContext.getProperties().getProperty(
 							AdServerConstants.CONFIG.PROPERTIES.TRACK_DIR));
 
@@ -73,7 +74,7 @@ public class AdServerModule extends AbstractModule {
 		}
 	}
 
-	private void initTracking(EmbeddedBaseContext context) {
+	private void initTracking(BaseContext context) {
 
 		try {
 			String classname = RuntimeContext.getProperties().getProperty(
@@ -87,7 +88,7 @@ public class AdServerModule extends AbstractModule {
 				ctx = (Context) ctx.lookup("java:comp/env");
 				DataSource ds = (DataSource) ctx.lookup("jdbc/trackingds");
 
-				context.put(EmbeddedBaseContext.EMBEDDED_TRACKING_DATASOURCE, ds);
+				context.put(TrackingContextKeys.EMBEDDED_TRACKING_DATASOURCE, ds);
 			}
 			
 			trackService.open(context);
