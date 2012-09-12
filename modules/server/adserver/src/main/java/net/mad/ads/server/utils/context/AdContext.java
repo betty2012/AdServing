@@ -17,7 +17,7 @@
  */
 package net.mad.ads.server.utils.context;
 
-import net.mad.ads.base.api.BaseObject;
+import net.mad.ads.base.utils.BaseObject;
 import net.mad.ads.db.definition.AdSlot;
 
 /**

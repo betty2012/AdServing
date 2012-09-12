@@ -23,12 +23,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.mad.ads.base.api.BaseContext;
-import net.mad.ads.base.api.exception.ServiceException;
-import net.mad.ads.base.api.track.Criterion;
-import net.mad.ads.base.api.track.TrackingService;
-import net.mad.ads.base.api.track.events.EventType;
-import net.mad.ads.base.api.track.events.TrackEvent;
+import net.mad.ads.base.utils.BaseContext;
+import net.mad.ads.base.utils.exception.ServiceException;
+import net.mad.ads.base.utils.track.Criterion;
+import net.mad.ads.base.utils.track.TrackingService;
+import net.mad.ads.base.utils.track.events.EventType;
+import net.mad.ads.base.utils.track.events.TrackEvent;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.ViewExpirationConditionDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;

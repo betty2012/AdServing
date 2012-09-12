@@ -24,9 +24,10 @@
 	</licenses>
 
 	<modules>
-		<module>modules/base/common</module>
+		<module>modules/utilities/common</module>
 		<module>modules/base/api</module>
-		<module>modules/base/embedded</module>
+		<module>modules/utilities/utils</module>
+		<module>modules/utilities/embedded</module>
 		<module>modules/db</module>
 		<module>modules/server/adserver</module>
 		<!-- module>modules/server/mobileadserver</module-->
@@ -63,12 +64,17 @@
 			</dependency>
 			<dependency>
 				<groupId>net.mad.ads</groupId>
-				<artifactId>base.common</artifactId>
+				<artifactId>utilities.common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.mad.ads</groupId>
-				<artifactId>base.embedded</artifactId>
+				<artifactId>utilities.utils</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.mad.ads</groupId>
+				<artifactId>utilities.embedded</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

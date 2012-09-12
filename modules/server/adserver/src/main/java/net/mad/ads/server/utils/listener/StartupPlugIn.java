@@ -31,8 +31,8 @@ import javax.servlet.ServletContextListener;
 
 import net.mad.ads.base.api.importer.Importer;
 import net.mad.ads.base.api.importer.reader.AdXmlReader;
-import net.mad.ads.base.api.track.TrackingService;
-import net.mad.ads.base.api.utils.logging.LogWrapper;
+import net.mad.ads.base.utils.track.TrackingService;
+import net.mad.ads.base.utils.utils.logging.LogWrapper;
 import net.mad.ads.common.template.TemplateManager;
 import net.mad.ads.common.template.impl.freemarker.FMTemplateManager;
 import net.mad.ads.common.util.Properties2;

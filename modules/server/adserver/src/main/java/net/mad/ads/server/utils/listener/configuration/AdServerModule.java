@@ -22,10 +22,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import net.mad.ads.base.api.EmbeddedBaseContext;
-import net.mad.ads.base.api.exception.ServiceException;
-import net.mad.ads.base.api.track.TrackingService;
-import net.mad.ads.base.api.track.impl.local.h2.H2TrackingService;
+import net.mad.ads.base.utils.EmbeddedBaseContext;
+import net.mad.ads.base.utils.exception.ServiceException;
+import net.mad.ads.base.utils.track.TrackingService;
+import net.mad.ads.base.utils.track.impl.local.h2.H2TrackingService;
 import net.mad.ads.server.utils.AdServerConstants;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.services.geo.IPLocationDB;

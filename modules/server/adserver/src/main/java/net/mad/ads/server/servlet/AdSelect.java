@@ -25,24 +25,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.mad.ads.base.api.track.events.ImpressionTrackEvent;
-import net.mad.ads.base.api.track.events.TrackEvent;
+import net.mad.ads.base.utils.track.events.ImpressionTrackEvent;
+import net.mad.ads.base.utils.track.events.TrackEvent;
 import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.model.type.AdType;
-import net.mad.ads.db.model.type.impl.ExpandableImageAdType;
-import net.mad.ads.db.model.type.impl.ExternAdType;
-import net.mad.ads.db.model.type.impl.FlashAdType;
-import net.mad.ads.db.model.type.impl.ImageAdType;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;
 import net.mad.ads.server.utils.helper.TrackingHelper;
 import net.mad.ads.server.utils.http.listener.AdContextListener;
 import net.mad.ads.server.utils.renderer.AdDefinitionRenderer;
 import net.mad.ads.server.utils.renderer.AdDefinitionRendererService;
-import net.mad.ads.server.utils.renderer.impl.ExpandableImageAdDefinitionRenderer;
-import net.mad.ads.server.utils.renderer.impl.ExternAdDefinitionRenderer;
-import net.mad.ads.server.utils.renderer.impl.FlashAdDefinitionRenderer;
-import net.mad.ads.server.utils.renderer.impl.ImageAdDefinitionRenderer;
 import net.mad.ads.server.utils.selection.AdProvider;
 
 /**

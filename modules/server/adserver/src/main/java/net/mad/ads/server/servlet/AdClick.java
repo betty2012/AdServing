@@ -25,8 +25,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.mad.ads.base.api.track.events.ClickTrackEvent;
-import net.mad.ads.base.api.track.events.TrackEvent;
+import net.mad.ads.base.utils.track.events.ClickTrackEvent;
+import net.mad.ads.base.utils.track.events.TrackEvent;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.server.utils.RuntimeContext;
 import net.mad.ads.server.utils.context.AdContext;

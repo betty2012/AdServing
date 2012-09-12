@@ -24,8 +24,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-import net.mad.ads.base.api.track.Criterion;
-import net.mad.ads.base.api.track.events.EventType;
+import net.mad.ads.base.utils.track.Criterion;
+import net.mad.ads.base.utils.track.events.EventType;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.ViewExpirationConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;

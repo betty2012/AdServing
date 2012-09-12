@@ -19,10 +19,9 @@ package net.mad.ads.server.utils.renderer.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.mad.ads.base.api.render.RenderContext;
+import net.mad.ads.base.utils.render.RenderContext;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import net.mad.ads.db.model.type.AdType;
-import net.mad.ads.db.model.type.impl.ExpandableImageAdType;
 import net.mad.ads.db.model.type.impl.ImageAdType;
 import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.AdServerConstants;

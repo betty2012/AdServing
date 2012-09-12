@@ -28,7 +28,7 @@
 		</dependency>
 		<dependency>
 			<groupId>net.mad.ads</groupId>
-			<artifactId>base.common</artifactId>
+			<artifactId>utilities.common</artifactId>
 		</dependency>
 
 		<dependency>
@@ -59,7 +59,7 @@
 		<dependency>
 			<groupId>com.javadocmd</groupId>
 			<artifactId>simplelatlng</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 
 	</dependencies>

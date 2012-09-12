@@ -22,8 +22,19 @@
 
 		<dependency>
 			<groupId>net.mad.ads</groupId>
-			<artifactId>base.common</artifactId>
+			<artifactId>utilities.common</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>net.mad.ads</groupId>
+			<artifactId>utilities.utils</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>servlet-api</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
 		<dependency>
 			<groupId>net.mad.ads</groupId>
 			<artifactId>base.api</artifactId>
@@ -34,11 +45,10 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
 		 
 		<dependency>
 			<groupId>net.mad.ads</groupId>
-			<artifactId>base.embedded</artifactId>
+			<artifactId>utilities.embedded</artifactId>
 		</dependency>
 		 
 		<dependency>

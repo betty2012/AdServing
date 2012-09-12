@@ -24,7 +24,7 @@
 		</dependency>
 		<dependency>
 			<groupId>net.mad.ads</groupId>
-			<artifactId>base.common</artifactId>
+			<artifactId>utilities.common</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.freemarker</groupId>

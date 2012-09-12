@@ -20,9 +20,9 @@ package net.mad.ads.server.utils.filter;
 import java.util.Calendar;
 import java.util.Locale;
 
-import net.mad.ads.base.api.exception.ServiceException;
-import net.mad.ads.base.api.track.Criterion;
-import net.mad.ads.base.api.track.events.EventType;
+import net.mad.ads.base.utils.exception.ServiceException;
+import net.mad.ads.base.utils.track.Criterion;
+import net.mad.ads.base.utils.track.events.EventType;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.ViewExpirationConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
