@@ -74,7 +74,7 @@ public class AdContextHelper {
 		
 		/*
 		 * if we are behind a proxy or loadbalancer
-		 * the the X-Real-ip header should be set
+		 * the the X-Real-IP header should be set
 		 */
 		if (request.getHeader("X-Real-IP") != null) {
 			clientIP = request.getHeader("X-Real-IP");
