@@ -19,6 +19,7 @@ package net.mad.ads.server.service.impl;
 
 
 import net.mad.ads.base.api.service.adserver.AdServerService;
+import net.mad.ads.base.api.service.adserver.model.Advertisement;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.server.utils.RuntimeContext;
 
@@ -26,32 +27,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class AdServerServiceImpl implements AdServerService {
-
-	private static final Logger logger = LoggerFactory.getLogger(AdServerServiceImpl.class);
-	
-	@Override
-	public boolean add(AdDefinition banner) {
-		try {
-			RuntimeContext.getAdDB().addBanner(banner);
-			
-			return true;
-		} catch (Exception e) {
-			logger.error("error add Banner: " + banner.getId(), e);
-		}
-		return false;
-	}
-
-	@Override
-	public boolean delete(String id) {
-		try {
-			RuntimeContext.getAdDB().deleteBanner(id);
-			
-			return true;
-		} catch (Exception e) {
-			logger.error("error delete Banner: " + id, e);
-		}
-		return false;
-	}
-
-}
+//public class AdServerServiceImpl implements AdServerService {
+//
+//	private static final Logger logger = LoggerFactory.getLogger(AdServerServiceImpl.class);
+//	
+//	@Override
+//	public boolean add(Advertisement banner) {
+//		try {
+////			RuntimeContext.getAdDB().addBanner(banner);
+//			
+//			return true;
+//		} catch (Exception e) {
+////			logger.error("error add Banner: " + banner.getId(), e);
+//		}
+//		return false;
+//	}
+//
+//	@Override
+//	public boolean delete(String id) {
+//		try {
+//			RuntimeContext.getAdDB().deleteBanner(id);
+//			
+//			return true;
+//		} catch (Exception e) {
+//			logger.error("error delete Banner: " + id, e);
+//		}
+//		return false;
+//	}
+//
+//}

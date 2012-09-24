@@ -1,28 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
+<!-- Mad-Advertisement Copyright (C) 2011 Thorsten Marx <thmarx@gmx.net> 
+	This program is free software: you can redistribute it and/or modify it under 
+	the terms of the GNU General Public License as published by the Free Software 
+	Foundation, either version 3 of the License, or (at your option) any later 
+	version. This program is distributed in the hope that it will be useful, 
+	but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
+	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for 
+	more details. You should have received a copy of the GNU General Public License 
+	along with this program. If not, see <http://www.gnu.org/licenses/>. -->
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
 
-    Mad-Advertisement
-    Copyright (C) 2011 Thorsten Marx <thmarx@gmx.net>
-
-    This program is free software: you can redistribute it and/or modify it under
-    the terms of the GNU General Public License as published by the Free Software
-    Foundation, either version 3 of the License, or (at your option) any later
-    version.
-
-    This program is distributed in the hope that it will be useful, but WITHOUT
-    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-    FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-    details.
-
-    You should have received a copy of the GNU General Public License along with
-    this program. If not, see <http://www.gnu.org/licenses/>.
-
--->
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-      version="3.0"> 
-	
 	<display-name>AdServer</display-name>
 	<context-param>
 		<param-name>enviroment</param-name>
@@ -110,18 +99,23 @@
 	</error-page>
 
 	<!-- WebService -->
-	<!-- 
+	<!-- <servlet> <servlet-name>XmlRpcServlet</servlet-name> <servlet-class>de.marx.common.web.xmlrpc.servlet.MySimpleXmlRpcServlet</servlet-class> 
+		<init-param> <param-name>enabledForExtensions</param-name> <param-value>true</param-value> 
+		</init-param> </servlet> <servlet-mapping> <servlet-name>XmlRpcServlet</servlet-name> 
+		<url-pattern>/xmlrpc</url-pattern> </servlet-mapping> -->
+
+	<listener>
+		<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+	</listener>
 	<servlet>
-		<servlet-name>XmlRpcServlet</servlet-name>
-		<servlet-class>de.marx.common.web.xmlrpc.servlet.MySimpleXmlRpcServlet</servlet-class>
-		<init-param>
-			<param-name>enabledForExtensions</param-name>
-			<param-value>true</param-value>
-		</init-param>
+		<description>JAX-WS endpoint - fromjava_no_wsgen</description>
+		<display-name>fromjava_no_wsgen</display-name>
+		<servlet-name>fromjava_no_wsgen</servlet-name>
+		<servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>XmlRpcServlet</servlet-name>
-		<url-pattern>/xmlrpc</url-pattern>
+		<servlet-name>fromjava_no_wsgen</servlet-name>
+		<url-pattern>/addnumbers</url-pattern>
 	</servlet-mapping>
-	-->
 </web-app>

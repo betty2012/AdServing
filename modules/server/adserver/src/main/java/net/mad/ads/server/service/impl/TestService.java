@@ -15,20 +15,14 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.base.api.service.adserver;
+package net.mad.ads.server.service.impl;
 
-import net.mad.ads.base.api.service.adserver.model.Advertisement;
+import javax.jws.WebService;
 
-/**
- * 
- * @author marx
- * 
- */
-public interface AdServerService {
-	
-	public String getToken (String username, String password);
-	
-	public boolean add(Advertisement ad);
+@WebService
+public class TestService {
 
-	public boolean delete(String id);
+	public int addNumbers(int number1, int number2) {
+		return number1 + number2;
+	}
 }
