@@ -11,7 +11,7 @@
 	<inceptionYear>2011</inceptionYear>
 
 	<properties>
-		<jetty.version>8.1.5.v20120716</jetty.version>
+		<jetty.version>8.1.7.v20120910</jetty.version>
 		<infinispan.version>5.1.6.FINAL</infinispan.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

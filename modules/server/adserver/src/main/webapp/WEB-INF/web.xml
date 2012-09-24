@@ -108,14 +108,14 @@
 		<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
 	</listener>
 	<servlet>
-		<description>JAX-WS endpoint - fromjava_no_wsgen</description>
-		<display-name>fromjava_no_wsgen</display-name>
-		<servlet-name>fromjava_no_wsgen</servlet-name>
+		<description>AdServerService</description>
+		<display-name>AdServerService</display-name>
+		<servlet-name>AdServerService</servlet-name>
 		<servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>fromjava_no_wsgen</servlet-name>
-		<url-pattern>/addnumbers</url-pattern>
+		<servlet-name>AdServerService</servlet-name>
+		<url-pattern>/adservice</url-pattern>
 	</servlet-mapping>
 </web-app>

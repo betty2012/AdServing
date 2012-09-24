@@ -10,8 +10,14 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>. -->
 
 <endpoints xmlns='http://java.sun.com/xml/ns/jax-ws/ri/runtime' version='2.0'>
+<!-- 
     <endpoint
         name='fromjava'
         implementation='net.mad.ads.server.service.impl.TestService'
         url-pattern='/addnumbers'/>
+ --> 
+    <endpoint
+        name='fromjava'
+        implementation='net.mad.ads.server.service.impl.AdServerServiceImpl'
+        url-pattern='/adservice'/>
 </endpoints>

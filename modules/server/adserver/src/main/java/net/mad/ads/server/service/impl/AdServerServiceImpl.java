@@ -18,41 +18,56 @@
 package net.mad.ads.server.service.impl;
 
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+import javax.xml.ws.BindingType;
+
 import net.mad.ads.base.api.service.adserver.AdServerService;
 import net.mad.ads.base.api.service.adserver.model.Advertisement;
 import net.mad.ads.db.definition.AdDefinition;
+import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import net.mad.ads.server.utils.RuntimeContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@WebService()
+@BindingType(value=javax.xml.ws.soap.SOAPBinding.SOAP12HTTP_BINDING)
+@SOAPBinding(style=javax.jws.soap.SOAPBinding.Style.RPC, use=javax.jws.soap.SOAPBinding.Use.LITERAL)
+public class AdServerServiceImpl implements AdServerService {
 
-//public class AdServerServiceImpl implements AdServerService {
-//
-//	private static final Logger logger = LoggerFactory.getLogger(AdServerServiceImpl.class);
-//	
-//	@Override
-//	public boolean add(Advertisement banner) {
-//		try {
-////			RuntimeContext.getAdDB().addBanner(banner);
-//			
-//			return true;
-//		} catch (Exception e) {
-////			logger.error("error add Banner: " + banner.getId(), e);
-//		}
-//		return false;
-//	}
-//
-//	@Override
-//	public boolean delete(String id) {
-//		try {
-//			RuntimeContext.getAdDB().deleteBanner(id);
-//			
-//			return true;
-//		} catch (Exception e) {
-//			logger.error("error delete Banner: " + id, e);
-//		}
-//		return false;
-//	}
-//
-//}
+	private static final Logger logger = LoggerFactory.getLogger(AdServerServiceImpl.class);
+	
+	@Override
+	public boolean add(@WebParam(name="ad") Advertisement ad) {
+		try {
+//			RuntimeContext.getAdDB().addBanner(banner);
+			
+			return true;
+		} catch (Exception e) {
+			logger.error("error add Banner: " + ad.getId(), e);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean delete(@WebParam(name="id") String id) {
+		try {
+			RuntimeContext.getAdDB().deleteBanner(id);
+			
+			return true;
+		} catch (Exception e) {
+			logger.error("error delete Banner: " + id, e);
+		}
+		return false;
+	}
+
+	@Override
+	@WebMethod(operationName="getToken")
+	public String getToken(@WebParam(name="username") String username, @WebParam(name="password") String password) {
+		return username+"+"+password;
+	}
+
+}
