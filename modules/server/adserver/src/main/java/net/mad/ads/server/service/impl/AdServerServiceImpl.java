@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
 @WebService()
 @BindingType(value=javax.xml.ws.soap.SOAPBinding.SOAP12HTTP_BINDING)
 @SOAPBinding(style=javax.jws.soap.SOAPBinding.Style.RPC, use=javax.jws.soap.SOAPBinding.Use.LITERAL)
+//@SOAPBinding(style=javax.jws.soap.SOAPBinding.Style.RPC)
 public class AdServerServiceImpl implements AdServerService {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdServerServiceImpl.class);
