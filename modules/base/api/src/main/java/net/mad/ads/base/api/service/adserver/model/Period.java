@@ -15,20 +15,39 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.base.api.service.adserver;
-
-import net.mad.ads.base.api.service.adserver.model.ImageAd;
+package net.mad.ads.base.api.service.adserver.model;
 
 /**
+ * Period of time the ad should be displayed
+ * 
+ * Could be used for date and time
+ * 
+ * DatePeriod with pattern yyyyMMdd eg.
+ * 20120921 -> September 9th, 2012
+ * 
+ * TimePeriod with pattern HHmm eg.
+ * 2100 -> 9 o'clock pm
  * 
  * @author marx
- * 
+ *
  */
-public interface AdServerService {
-	
-	public String getToken (String username, String password);
-	
-	public boolean add(ImageAd ad);
+public class Period {
+	private String from;
+	private String to;
 
-	public boolean delete(String id);
+	public final String getFrom() {
+		return from;
+	}
+
+	public final void setFrom(String from) {
+		this.from = from;
+	}
+
+	public final String getTo() {
+		return to;
+	}
+
+	public final void setTo(String to) {
+		this.to = to;
+	}
 }

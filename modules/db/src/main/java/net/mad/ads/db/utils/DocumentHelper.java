@@ -24,6 +24,7 @@ import net.mad.ads.db.definition.AdDefinition;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
 
 public class DocumentHelper {
 	private static DocumentHelper INSTANCE = null;
@@ -40,14 +41,14 @@ public class DocumentHelper {
 	
 	public Document getBannerDocument (AdDefinition banner, AdDB addb) {
 		Document doc = new Document();
-		doc.add(new Field(AdDBConstants.ADDB_AD_ID, String.valueOf(banner.getId()), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
-		doc.add(new Field(AdDBConstants.ADDB_AD_FORMAT, banner.getFormat().getCompoundName(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
-		doc.add(new Field(AdDBConstants.ADDB_AD_TYPE, banner.getType().getType(), Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+		doc.add(new StringField(AdDBConstants.ADDB_AD_ID, String.valueOf(banner.getId()), Field.Store.YES));
+		doc.add(new StringField(AdDBConstants.ADDB_AD_FORMAT, banner.getFormat().getCompoundName(), Field.Store.NO));
+		doc.add(new StringField(AdDBConstants.ADDB_AD_TYPE, banner.getType().getType(), Field.Store.NO));
 		
 		if (banner.isProduct()) {
-			doc.add(new Field(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_TRUE, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			doc.add(new StringField(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_TRUE, Field.Store.NO));
 		} else {
-			doc.add(new Field(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+			doc.add(new StringField(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_FALSE, Field.Store.NO));
 		}
 		
 		doc = addConditions(banner, doc, addb);

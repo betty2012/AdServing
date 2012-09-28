@@ -26,6 +26,7 @@ import javax.xml.ws.BindingType;
 
 import net.mad.ads.base.api.service.adserver.AdServerService;
 import net.mad.ads.base.api.service.adserver.model.Advertisement;
+import net.mad.ads.base.api.service.adserver.model.ImageAd;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import net.mad.ads.server.utils.RuntimeContext;
@@ -42,9 +43,11 @@ public class AdServerServiceImpl implements AdServerService {
 	private static final Logger logger = LoggerFactory.getLogger(AdServerServiceImpl.class);
 	
 	@Override
-	public boolean add(@WebParam(name="ad") Advertisement ad) {
+	public boolean add(@WebParam(name="ad") ImageAd ad) {
 		try {
 //			RuntimeContext.getAdDB().addBanner(banner);
+			System.out.println(ad.getId());
+			System.out.println(ad.getCampaign());
 			
 			return true;
 		} catch (Exception e) {

@@ -15,20 +15,38 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.base.api.service.adserver;
+package net.mad.ads.base.api.service.adserver.model;
 
-import net.mad.ads.base.api.service.adserver.model.ImageAd;
+import com.google.common.base.Strings;
 
-/**
- * 
- * @author marx
- * 
- */
-public interface AdServerService {
+public enum ExpirationResolution {
+	DAY ("DAY"), 
+	WEEK ("WEEK"),
+	MONTH ("MONTH"),
+	NONE ("NONE");
 	
-	public String getToken (String username, String password);
+	private String name = null;
 	
-	public boolean add(ImageAd ad);
-
-	public boolean delete(String id);
+	private ExpirationResolution (String name) {
+		this.name = name;
+	}
+	
+	public String getName () {
+		return this.name;
+	}
+	
+	public static ExpirationResolution forName (String name) {
+		if (Strings.isNullOrEmpty(name)) {
+			return NONE;
+		}
+		
+		for (ExpirationResolution res : values()) {
+			if (res.getName().equalsIgnoreCase(name)) {
+				return res;
+			}
+		}
+		
+		
+		return NONE;
+	}
 }

@@ -15,20 +15,8 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mad.ads.base.api.service.adserver;
+package net.mad.ads.base.api.service.adserver.model;
 
-import net.mad.ads.base.api.service.adserver.model.ImageAd;
+public class ImageAd extends Advertisement {
 
-/**
- * 
- * @author marx
- * 
- */
-public interface AdServerService {
-	
-	public String getToken (String username, String password);
-	
-	public boolean add(ImageAd ad);
-
-	public boolean delete(String id);
 }
