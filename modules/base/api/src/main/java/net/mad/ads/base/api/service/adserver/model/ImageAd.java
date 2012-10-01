@@ -18,5 +18,9 @@
 package net.mad.ads.base.api.service.adserver.model;
 
 public class ImageAd extends Advertisement {
-
+	
+	/*
+	 * ImageData base64 encoded
+	 */
+	private String imageData;
 }

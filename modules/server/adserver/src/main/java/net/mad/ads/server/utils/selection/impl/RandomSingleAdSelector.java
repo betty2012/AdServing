@@ -25,19 +25,27 @@ import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.server.utils.context.AdContext;
 import net.mad.ads.server.utils.selection.AdSelector;
 
+/**
+ * RandomSingleAdSelector
+ * 
+ * Selects a random ad from a list of ads
+ * 
+ * @author marx
+ *
+ */
 public class RandomSingleAdSelector implements AdSelector {
 
 	public static final Random random = new Random(System.currentTimeMillis());
 	
 	@Override
-	public AdDefinition selectBanner(List<AdDefinition> banners, AdContext context) {
+	public AdDefinition selectBanner(List<AdDefinition> ads, AdContext context) {
 		AdDefinition banner = null;
 		
-		if (banners != null && banners.size() >= 2) {
-			int i = random.nextInt(banners.size());
-			banner = banners.get(i);
-		} else if (banners != null && banners.size() == 1) {
-			banner = banners.get(0);
+		if (ads != null && ads.size() >= 2) {
+			int i = random.nextInt(ads.size());
+			banner = ads.get(i);
+		} else if (ads != null && ads.size() == 1) {
+			banner = ads.get(0);
 		}
 		
 		

@@ -47,6 +47,8 @@ import org.slf4j.LoggerFactory;
  * 1. der kleinste ermittelte Prozentwert wird verwendet
  * 
  * @author thmarx
+ * 
+ * TODO: Dieser AdSelector sollte mal überarbeitet und erleichtert werden.
  *
  */
 public class ImpressionPercentageSingleAdSelector implements AdSelector {
@@ -102,16 +104,17 @@ public class ImpressionPercentageSingleAdSelector implements AdSelector {
 		for (BannerDecorator bd : decorators) {
 			// Every banner without expiration has -1 as percentage
 			if (bd.getPercentage() == -1f) {
+				// these banners are added
 				bannerList.add(bd.getBanner());
 			} else if (sma == -2f) {
-				// first banner with view expiration is used as minimum
+				// first banner with view expiration is used as minimum -> add
 				sma = bd.getPercentage();
 				bannerList.add(bd.getBanner());
 			} else if (bd.getPercentage() <= sma) {
-				// take all banners smaller or equals to the minimum
+				// take all banners smaller or equals to the minimum -> add
 				bannerList.add(bd.getBanner());
 			} else if (bd.getPercentage() > sma) {
-				// reached the bigger banners
+				// reached the bigger banners -> finish
 				break;
 			}
 		}
