@@ -5,7 +5,7 @@
 target
 *.log
 nbproject
-
+.buildpath
 /distribution/dist-0.1
 /distribution/services
 /modules/base/clients/php/nbproject/private/
