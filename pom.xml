@@ -27,6 +27,7 @@
 		<module>modules/utilities/common</module>
 		<module>modules/base/api</module>
 		<module>modules/utilities/utils</module>
+		<module>modules/utilities/thirdparty</module>
 		<module>modules/db</module>
 		<module>modules/server/adserver</module>
 		<!-- module>modules/server/mobileadserver</module -->

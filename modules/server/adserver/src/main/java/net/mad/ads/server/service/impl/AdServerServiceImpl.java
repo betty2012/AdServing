@@ -68,10 +68,4 @@ public class AdServerServiceImpl implements AdServerService {
 		return false;
 	}
 
-	@Override
-	@WebMethod(operationName="getToken")
-	public String getToken(@WebParam(name="username") String username, @WebParam(name="password") String password) {
-		return username+"+"+password;
-	}
-
 }

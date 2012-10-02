@@ -32,6 +32,14 @@ public abstract class Advertisement {
 	 */
 	private String campaign;
 	/*
+	 * The sites this ad should be displayed on
+	 */
+	private List<String> sites = new ArrayList<String>();
+	/*
+	 * The countries this add should be displayed on
+	 */
+	private List<String> countries = new ArrayList<String>();
+	/*
 	 * time of the day
 	 */
 	private List<Period> timePeriods = new ArrayList<Period>();

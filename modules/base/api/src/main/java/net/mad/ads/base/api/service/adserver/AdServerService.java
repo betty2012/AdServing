@@ -26,8 +26,6 @@ import net.mad.ads.base.api.service.adserver.model.ImageAd;
  */
 public interface AdServerService {
 	
-	public String getToken (String username, String password);
-	
 	public boolean add(ImageAd ad);
 
 	public boolean delete(String id);
