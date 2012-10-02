@@ -201,6 +201,7 @@
 						<exclude>**/src/test/resources/**</exclude>
 						<exclude>**/src/test/data/**</exclude>
 						<exclude>distribution/**</exclude>
+						<exckude>modules/utilities/thirdparty/**</exckude>
 					</excludes>
 				</configuration>
 				<executions>
