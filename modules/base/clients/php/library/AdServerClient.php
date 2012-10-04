@@ -28,8 +28,6 @@
  * @author thmarx
  */
 
-namespace mad\client;
-
 class AdServerClient  {
 	
 	private $client = null;

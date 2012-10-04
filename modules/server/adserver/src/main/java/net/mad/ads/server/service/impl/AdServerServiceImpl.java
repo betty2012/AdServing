@@ -48,6 +48,13 @@ public class AdServerServiceImpl implements AdServerService {
 //			RuntimeContext.getAdDB().addBanner(banner);
 			System.out.println(ad.getId());
 			System.out.println(ad.getCampaign());
+			System.out.println("ClickExpiration: " + ad.getClickExpiration().size());
+			System.out.println("DatePeriods: " + ad.getDatePeriods().size());
+			System.out.println("Days: " + ad.getDays().size());
+			System.out.println("TimePeriods: " + ad.getTimePeriods().size());
+			System.out.println("ViewExpiration: " + ad.getViewExpiration().size());
+			System.out.println("Sites: " + ad.getSites().size());
+			System.out.println("Countries: " + ad.getCountries().size());
 			
 			return true;
 		} catch (Exception e) {

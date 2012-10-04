@@ -1,0 +1,30 @@
+2012-09-28 16:44:01,483  INFO [main] (?:?) - checkpointClose start
+2012-09-28 16:44:01,691  INFO [main] (?:?) - checkpointClose end
+2012-09-28 16:44:02,371  INFO [main] (Parser.java:1031) - ISPN000184: The stateRetrieval configuration element has been deprecated, we're assuming you meant stateTransfer. Please see XML schema for more information.
+2012-09-28 16:44:02,372  INFO [main] (Parser.java:1031) - ISPN000184: The stateRetrieval configuration element has been deprecated, we're assuming you meant stateTransfer. Please see XML schema for more information.
+2012-09-28 16:44:02,372  INFO [main] (Parser.java:1031) - ISPN000184: The stateRetrieval configuration element has been deprecated, we're assuming you meant stateTransfer. Please see XML schema for more information.
+2012-09-28 16:44:02,372  WARN [main] (Parser.java:1034) - ISPN000178: stateRetrieval's 'alwaysProvideInMemoryState' attribute is no longer in use, instead please make sure all instances of this named cache in the cluster have 'fetchInMemoryState' attribute enabled
+2012-09-28 16:44:02,391  INFO [main] (Parser.java:1153) - ISPN000187: hash's 'rehashWait' attribute has been deprecated. Please use stateTransfer.timeout instead
+2012-09-28 16:44:02,391  INFO [main] (Parser.java:1149) - ISPN000186: hash's 'rehashRpcTimeout' attribute has been deprecated. Please use stateTransfer.timeout instead
+2012-09-28 16:44:02,392  WARN [main] (Parser.java:804) - ISPN000176: The 'wakeUpInterval' attribute of the 'eviction' configuration XML element is deprecated. Setting the 'wakeUpInterval' attribute of the 'expiration' configuration XML element to 1000 instead
+2012-09-28 16:44:02,445  WARN [main] (EvictionConfigurationBuilder.java:63) - FIFO strategy is deprecated, LRU will be used instead
+2012-09-28 16:44:02,752  INFO [main] (JGroupsTransport.java:172) - ISPN000078: Starting JGroups Channel
+2012-09-28 16:44:06,794  INFO [main] (JGroupsTransport.java:607) - ISPN000094: Received new cluster view: [Node-A-26151|0] [Node-A-26151]
+2012-09-28 16:44:06,832  INFO [main] (JGroupsTransport.java:210) - ISPN000079: Cache local address is Node-A-26151, physical addresses are [127.0.0.1:7800]
+2012-09-28 16:44:06,837  INFO [main] (GlobalComponentRegistry.java:204) - ISPN000128: Infinispan version: Infinispan 'Brahma' 5.1.6.FINAL
+2012-09-28 16:44:07,096  INFO [main] (CacheJmxRegistration.java:84) - ISPN000031: MBeans were successfully registered to the platform mbean server.
+2012-09-28 16:52:21,205  INFO [main] (?:?) - checkpointClose start
+2012-09-28 16:52:21,339  INFO [main] (?:?) - checkpointClose end
+2012-09-28 16:52:21,722  INFO [main] (Parser.java:1031) - ISPN000184: The stateRetrieval configuration element has been deprecated, we're assuming you meant stateTransfer. Please see XML schema for more information.
+2012-09-28 16:52:21,722  INFO [main] (Parser.java:1031) - ISPN000184: The stateRetrieval configuration element has been deprecated, we're assuming you meant stateTransfer. Please see XML schema for more information.
+2012-09-28 16:52:21,722  INFO [main] (Parser.java:1031) - ISPN000184: The stateRetrieval configuration element has been deprecated, we're assuming you meant stateTransfer. Please see XML schema for more information.
+2012-09-28 16:52:21,723  WARN [main] (Parser.java:1034) - ISPN000178: stateRetrieval's 'alwaysProvideInMemoryState' attribute is no longer in use, instead please make sure all instances of this named cache in the cluster have 'fetchInMemoryState' attribute enabled
+2012-09-28 16:52:21,735  INFO [main] (Parser.java:1153) - ISPN000187: hash's 'rehashWait' attribute has been deprecated. Please use stateTransfer.timeout instead
+2012-09-28 16:52:21,736  INFO [main] (Parser.java:1149) - ISPN000186: hash's 'rehashRpcTimeout' attribute has been deprecated. Please use stateTransfer.timeout instead
+2012-09-28 16:52:21,736  WARN [main] (Parser.java:804) - ISPN000176: The 'wakeUpInterval' attribute of the 'eviction' configuration XML element is deprecated. Setting the 'wakeUpInterval' attribute of the 'expiration' configuration XML element to 1000 instead
+2012-09-28 16:52:21,770  WARN [main] (EvictionConfigurationBuilder.java:63) - FIFO strategy is deprecated, LRU will be used instead
+2012-09-28 16:52:21,975  INFO [main] (JGroupsTransport.java:172) - ISPN000078: Starting JGroups Channel
+2012-09-28 16:52:25,461  INFO [main] (JGroupsTransport.java:607) - ISPN000094: Received new cluster view: [Node-A-36647|0] [Node-A-36647]
+2012-09-28 16:52:25,493  INFO [main] (JGroupsTransport.java:210) - ISPN000079: Cache local address is Node-A-36647, physical addresses are [127.0.0.1:7800]
+2012-09-28 16:52:25,500  INFO [main] (GlobalComponentRegistry.java:204) - ISPN000128: Infinispan version: Infinispan 'Brahma' 5.1.6.FINAL
+2012-09-28 16:52:25,667  INFO [main] (CacheJmxRegistration.java:84) - ISPN000031: MBeans were successfully registered to the platform mbean server.

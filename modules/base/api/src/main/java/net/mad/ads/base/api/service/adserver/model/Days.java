@@ -17,39 +17,12 @@
  */
 package net.mad.ads.base.api.service.adserver.model;
 
-import com.google.common.base.Strings;
-
-public abstract class ExpirationResolution {
-	public static final String DAY = "DAY";
-	public static final String WEEK = "WEEK";
-	public static final String MONTH = "MONTH";
-//	DAY ("DAY"), 
-//	WEEK ("WEEK"),
-//	MONTH ("MONTH"),
-//	NONE ("NONE");
-//	
-//	private String name = null;
-//	
-//	private ExpirationResolution (String name) {
-//		this.name = name;
-//	}
-//	
-//	public String getName () {
-//		return this.name;
-//	}
-//	
-//	public static ExpirationResolution forName (String name) {
-//		if (Strings.isNullOrEmpty(name)) {
-//			return NONE;
-//		}
-//		
-//		for (ExpirationResolution res : values()) {
-//			if (res.getName().equalsIgnoreCase(name)) {
-//				return res;
-//			}
-//		}
-//		
-//		
-//		return NONE;
-//	}
+public abstract class Days {
+	public static final int MONDAY = 1; 
+	public static final int TUESDAY = 2;
+	public static final int WEDNESDAY = 3;
+	public static final int THURSDAY = 4;
+	public static final int FRIDAY = 5;
+	public static final int SATURDAY = 6;
+	public static final int SUNDAY = 7;
 }

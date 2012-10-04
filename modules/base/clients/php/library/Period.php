@@ -32,8 +32,8 @@
  *
  */
 class Period {
-	private $from;
-	private $to;
+	public $from;
+	public $to;
 
 	public function getFrom() {
 		return $this->from;

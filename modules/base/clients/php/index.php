@@ -37,16 +37,53 @@ var_dump($result);
 */
 
 require_once 'library/AdServerClient.php';
+require_once 'library/ImageAd.php';
+require_once 'library/Days.php';
+require_once 'library/ExpirationResolution.php';
+require_once 'library/Period.php';
+
 
 $client2 = AdServerClient::create("http://localhost:8080/adservice?wsdl");
-$result2 = $client2->getclient()->getToken("Thorsten", "Marx");
-var_dump($result2);
+//$result2 = $client2->getclient()->getToken("Thorsten", "Marx");
+//var_dump($result2);
 
 
-$imgad = new stdClass;
-$imgad->id = "the banner id";
-$imgad->campaign = "the campaign";
+$imgad = new ImageAd();
+$imgad->setId("the banner id");
+$imgad->setCampaign("the campaign");
+$imgad->countries[] = "DE";
+$imgad->sites[] = "mysite";
+$imgad->days[] = Days::MONDAY;
+$imgad->days[] = Days::WEDNESDAY;
+$p1 = new Period();
+$p1->from = "20121004";
+$p1->to = "20121031";
+$p2 = new Period();
+$p2->from = "20121201";
+$p2->to = "20121231";
+$imgad->datePeriods[] = $p1;
+$imgad->datePeriods[] = $p2;
 
-$result2 = $client2->add($imgad);
+$t1 = new Period();
+$t1->from = "0800";
+$t1->to = "1200";
+$t2 = new Period();
+$t2->from = "1400";
+$t2->to = "1800";
+$imgad->timePeriods[] = $t1;
+$imgad->timePeriods[] = $t2;
+
+//$imgad->clickExpiration[ExpirationResolution::DAY] = 200;
+//$imgad->clickExpiration[ExpirationResolution::WEEK] = 1000;
+//$imgad->clickExpiration[0] = array(ExpirationResolution::WEEK => 1000);
+//$imgad->clickExpiration[1] = array(ExpirationResolution::DAY => 200);
+
+//$imgad->viewExpiration[ExpirationResolution::DAY] = 200;
+//$imgad->viewExpiration[ExpirationResolution::WEEK] = 1000;
+
+
+var_dump($imgad);
+
+$result2 = $client2->getClient()->add($imgad);
 var_dump($result2);
 ?>

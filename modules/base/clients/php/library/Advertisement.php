@@ -16,33 +16,35 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
+//require_once 'Days.php';
+//require_once 'ExpirationResolution.php';
+//require_once 'Period.php';
 
 abstract class Advertisement {
 	/*
 	 * Advertisment id
 	 */
-	private $id;
+	public $id;
 	/*
 	 * Campaign 
 	 */
-	private $campaign;
+	public $campaign;
 	/*
 	 * The sites this ad should be displayed on
 	 */
-	private $sites = array();
+	public $sites = array();
 	/*
 	 * The countries this add should be displayed on
 	 */
-	private $countries = array();
+	public $countries = array();
 	/*
 	 * time of the day
 	 */
-	private $timePeriods = array();
+	public $timePeriods = array();
 	/*
 	 * date periods
 	 */
-	private $datePeriods = array();
+	public $datePeriods = array();
 	/*
 	 * weekends for displaying the ad
 	 * 
@@ -54,15 +56,15 @@ abstract class Advertisement {
 	 * 6 = Saturday
 	 * 7 = Sunday
 	 */
-	private $days = array();
+	public $days = array();
 	/*
 	 * max click count per resolution
 	 */
-	private $clickExpiration = array();
+	public $clickExpiration = array();
 	/*
 	 * max view count per resolution
 	 */
-	private $viewExpiration = array();
+	public $viewExpiration = array();
 	
 	public function getId() {
 		return $this->id;
@@ -113,7 +115,7 @@ abstract class Advertisement {
 	}
 
 	public function getViewExpiration() {
-		return $viewExpiration;
+		return $this->viewExpiration;
 	}
 
 	public function setViewExpiration($viewExpiration) {

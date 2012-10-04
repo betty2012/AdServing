@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-class ExpirationResolution {
+class Days {
 	const MONDAY = 1; 
 	const TUESDAY = 2;
 	const WEDNESDAY = 3;

@@ -17,19 +17,45 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once 'Advertisement.php';
+
 class ImageAd extends Advertisement {
 	
 	/*
 	 * ImageData base64 encoded
 	 */
 	private $imageData;
+	private $imageType;
 	
 	public function getImageData () {
 		return $this->imageData;
 	}
+	public function getImageType () {
+		return $this->imageType;
+	}
 	
 	public function setImageData ($imageData) {
 		$this->imageData = $imageData;
+	}
+	public function setImageType ($imageType) {
+		$this->imageType = $imageType;
+	}
+	
+	public function setImageFile ($imagefile) {
+		base64_encode_image($imagefile);
+	}
+	
+	private function base64_encode_image ($imagefile) {
+		$imgtype = array('jpg', 'gif', 'png');
+		$filename = file_exists($imagefile) ? htmlentities($imagefile) : die('Image file name does not exist');
+		$filetype = pathinfo($filename, PATHINFO_EXTENSION);
+		if (in_array($filetype, $imgtype)){
+			$imgbinary = fread(fopen($filename, "r"), filesize($filename));
+		} else {
+			die ('Invalid image type, jpg, gif, and png is only allowed');
+		}
+		$this->imageType = $filetype;
+		$this->imageData = base64_encode($imgbinary);
 	}
 }
 ?>

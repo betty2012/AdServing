@@ -15,13 +15,11 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
+package net.mad.ads.base.api.service.adserver.model;
 
-class ImageAd extends Advertisement {
-	
-	/*
-	 * ImageData base64 encoded
-	 */
-	private $imageData;
-	
-	public func
+import java.util.HashMap;
+import java.util.Map;
+
+public class WrapperMap<K, V> {
+	public Map<K, V> map = new HashMap<K, V>();
 }
