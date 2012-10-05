@@ -62,11 +62,11 @@ public abstract class Advertisement {
 	/*
 	 * max click count per resolution
 	 */
-	private Map<String, Integer> clickExpiration = new HashMap<String, Integer>();
+	private HashMap<String, Integer> clickExpiration = new HashMap<String, Integer>();
 	/*
 	 * max view count per resolution
 	 */
-	private Map<String, Integer> viewExpiration = new HashMap<String, Integer>();
+	private HashMap<String, Integer> viewExpiration = new HashMap<String, Integer>();
 	
 	public String getId() {
 		return id;
@@ -108,20 +108,20 @@ public abstract class Advertisement {
 		this.days = days;
 	}
 
-	public Map<String, Integer> getClickExpiration() {
+	public HashMap<String, Integer> getClickExpiration() {
 		return clickExpiration;
 	}
 
 	public void setClickExpiration(
-			Map<String, Integer> clickExpiration) {
+			HashMap<String, Integer> clickExpiration) {
 		this.clickExpiration = clickExpiration;
 	}
 
-	public Map<String, Integer> getViewExpiration() {
+	public HashMap<String, Integer> getViewExpiration() {
 		return viewExpiration;
 	}
 
-	public void setViewExpiration(Map<String, Integer> viewExpiration) {
+	public void setViewExpiration(HashMap<String, Integer> viewExpiration) {
 		this.viewExpiration = viewExpiration;
 	}
 

@@ -73,13 +73,11 @@ $t2->to = "1800";
 $imgad->timePeriods[] = $t1;
 $imgad->timePeriods[] = $t2;
 
-//$imgad->clickExpiration[ExpirationResolution::DAY] = 200;
-//$imgad->clickExpiration[ExpirationResolution::WEEK] = 1000;
-//$imgad->clickExpiration[0] = array(ExpirationResolution::WEEK => 1000);
-//$imgad->clickExpiration[1] = array(ExpirationResolution::DAY => 200);
+$imgad->clickExpiration[] = array("key" => ExpirationResolution::WEEK, "value" => 1000);
+$imgad->clickExpiration[] = array("key" => ExpirationResolution::DAY, "value" => 200);
 
-//$imgad->viewExpiration[ExpirationResolution::DAY] = 200;
-//$imgad->viewExpiration[ExpirationResolution::WEEK] = 1000;
+$imgad->viewExpiration[] = array("key" => ExpirationResolution::WEEK, "value" => 1000);
+$imgad->viewExpiration[] = array("key" => ExpirationResolution::DAY, "value" => 200);
 
 
 var_dump($imgad);
