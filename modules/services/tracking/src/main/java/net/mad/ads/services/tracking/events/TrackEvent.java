@@ -37,7 +37,7 @@ public class TrackEvent extends EnumMap<EventAttribute, String> implements Seria
 			return EventType.forName(type);
 		}
 		
-		return EventType.UNKNOWN;
+		return EventType.ALL;
 	}
 	
 	public String getSite () {

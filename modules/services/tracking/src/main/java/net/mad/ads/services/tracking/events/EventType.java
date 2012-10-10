@@ -20,7 +20,7 @@ package net.mad.ads.services.tracking.events;
 public enum EventType {
 	IMPRESSION ("impression"), 
 	CLICK ("click"),
-	UNKNOWN ("unknown");
+	ALL ("all");
 	
 	private String name;
 	
@@ -34,7 +34,7 @@ public enum EventType {
 	
 	public static EventType forName (String name) {
 		if (name == null || name.equals("")) {
-			return EventType.UNKNOWN;
+			return EventType.ALL;
 		}
 		
 		for (EventType type : values()) {
@@ -43,6 +43,6 @@ public enum EventType {
 			}
 		}
 		
-		return EventType.UNKNOWN;
+		return EventType.ALL;
 	}
 }
