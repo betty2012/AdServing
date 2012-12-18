@@ -19,8 +19,8 @@
 
 	<licenses>
 		<license>
-			<name>GPLv3</name>
-			<url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
 	</licenses>
 
@@ -198,11 +198,12 @@
 						<email>thmarx@gmx.net</email>
 					</properties>
 					<excludes>
-						<exclude>LICENSE.txt</exclude>
+						<exclude>LICENSE-2.0.txt</exclude>
 						<exclude>**/src/test/resources/**</exclude>
 						<exclude>**/src/test/data/**</exclude>
 						<exclude>distribution/**</exclude>
 						<exckude>modules/utilities/thirdparty/**</exckude>
+						<exckude>**/MiniConnectionPoolManager.java</exckude>
 					</excludes>
 				</configuration>
 				<executions>
@@ -282,6 +283,10 @@
 		<repository>
 			<id>releases.java.net</id>
 			<url>https://maven.java.net/content/repositories/releases/</url>
+		</repository>
+		<repository>
+			<id>mapdb-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</repository>
 	</repositories>
 

@@ -2,18 +2,14 @@
  * Mad-Advertisement
  * Copyright (C) 2011 Thorsten Marx <thmarx@gmx.net>
  *
- * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
+ * 	http://www.apache.org/licenses/LICENSE-2.0
  *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package net.mad.ads.db;
 
@@ -51,7 +47,7 @@ public class AdDBManager {
 		return new Builder();
 	}
 	
-	private AdDBManager (boolean blocking) {
+	private AdDBManager (boolean blocking, boolean closeExecutorService) {
 		if (blocking) {
 			this.adDB = new AdDB(this);
 		} else {
@@ -71,16 +67,18 @@ public class AdDBManager {
 		conditions.add(new ExcludeSiteCondition());
 		conditions.add(new DistanceCondition());
 		/*
+		 * should the executor service be closed after shutdown
 		 * 
+		 * maybe it is managed outside of the AdDBManager so it should not be closed here
 		 */
-//		if (executorService != null) {
-//			Runtime.getRuntime().addShutdownHook(new Thread() {
-//				@Override
-//				public void run() {
-//					executorService.shutdownNow();
-//				}
-//			});
-//		}
+		if (executorService != null && closeExecutorService) {
+			Runtime.getRuntime().addShutdownHook(new Thread() {
+				@Override
+				public void run() {
+					executorService.shutdownNow();
+				}
+			});
+		}
 	}
 	
 	public ExecutorService getExecutorService () {
@@ -102,6 +100,7 @@ public class AdDBManager {
 	static public class Builder {
 		private boolean blocking = true;
 		private ExecutorService executorService = null;
+		private boolean closeExecutorService = false;
 		
 		private Builder () {
 			
@@ -112,13 +111,18 @@ public class AdDBManager {
 			return this;
 		}
 		
+		public Builder closeExecutorService (boolean closeExecutorService) {
+			this.closeExecutorService = closeExecutorService;
+			return this;
+		}
+		
 		public Builder executorService (ExecutorService executorService) {
 			this.executorService = executorService;
 			return this;
 		}
 		
 		public AdDBManager build () {
-			AdDBManager manager = new AdDBManager(blocking);
+			AdDBManager manager = new AdDBManager(blocking, closeExecutorService);
 			if (!blocking && executorService == null) {
 				executorService = Executors.newFixedThreadPool(1);
 			}

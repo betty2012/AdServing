@@ -13,30 +13,65 @@
  */
 package net.mad.ads.db.db.store.impl;
 
+
+import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
+import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.store.AdDBStore;
 import net.mad.ads.db.definition.AdDefinition;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AdDBMapStore implements AdDBStore {
+import com.google.common.base.Strings;
+import org.mapdb.*;
 
-	private static final Logger logger = LoggerFactory.getLogger(AdDBMapStore.class);
+
+
+public class AdDBMapDBStore implements AdDBStore {
+
+	private static final Logger logger = LoggerFactory.getLogger(AdDBMapDBStore.class);
 	
 	private Map<String, AdDefinition> banners = null;
 	
+	private AdDB addb = null;
+
+	private DB db;
+	
+	public AdDBMapDBStore(AdDB db) {
+		this.addb = db;
+	}
+	
 	@Override
 	public void open() throws IOException {
-		this.banners = new HashMap<String, AdDefinition>();
+		if (Strings.isNullOrEmpty(addb.manager.getContext().datadir)) {
+			throw new IOException("temp directory can not be empty");
+		}
+		
+		String dir = addb.manager.getContext().datadir;
+		if (!dir.endsWith("/") || !dir.endsWith("\\")) {
+			dir += "/";
+		}
+		File temp = new File(dir + "store");
+		if (!temp.exists()) {
+			temp.mkdirs();
+		}
+		
+		db = DBMaker.newFileDB(new File(dir + "store/ads"))
+			    .closeOnJvmShutdown()
+			    .make();
+		
+		banners = db.getTreeMap("collectionName");
 	}
 
 	@Override
 	public void close() throws IOException {
-		this.banners = null;
+		if (db != null) {
+            db.close();
+            db = null;
+        }
 	}
 
 	@Override

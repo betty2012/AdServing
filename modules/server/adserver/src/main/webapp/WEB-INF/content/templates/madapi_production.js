@@ -2,18 +2,14 @@
  * Mad-Advertisement
  * Copyright (C) 2011 Thorsten Marx <thmarx@gmx.net>
  *
- * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
+ * 	http://www.apache.org/licenses/LICENSE-2.0
  *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 "undefined"==typeof madApi&&(madApi={onload:function(b){var a=window.onload;window.onload="function"!=typeof window.onload?b:function(){a();b()}},delegate:function(b,a,c){var e=c||arguments,g=function(){return b.apply(arguments.callee.target,e)};g.target=a;g.func=this;return g},position:function(b){var a=0,c=0;if(b.offsetParent){do a+=b.offsetLeft,c+=b.offsetTop;while(b=b.offsetParent)}return{left:a,top:c}},size:function(b){return{height:b.offsetHeight,width:b.offsetWidth}},isIE:function(){return 0<
 window.navigator.userAgent.indexOf("MSIE ")?!0:!1},isBrowser:function(b,a){versionOk=browserOk=!1;browserOk=-1!=navigator.appName.indexOf(b);versionOk=0==a?!0:a<=parseInt(navigator.appVersion);return browserOk&&versionOk},getWindowSize:function(){var b=0,a=0;if("number"==typeof window.innerWidth)b=window.innerWidth,a=window.innerHeight;else if(document.documentElement&&(document.documentElement.clientWidth||document.documentElement.clientHeight))b=document.documentElement.clientWidth,a=document.documentElement.clientHeight;
