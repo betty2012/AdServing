@@ -38,6 +38,7 @@ import net.mad.ads.db.model.type.AdType;
 import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.AdServerConstants;
 import net.mad.ads.server.utils.RuntimeContext;
+import net.mad.ads.server.utils.cluster.ClusterManager;
 import net.mad.ads.server.utils.listener.configuration.AdServerModule;
 import net.mad.ads.server.utils.runnable.AdDbUpdateTask;
 import net.mad.ads.services.geo.IPLocationDB;
@@ -130,6 +131,12 @@ public class StartupPlugIn implements ServletContextListener {
 			RuntimeContext.cacheManager = new DefaultCacheManager(configDirectory + "cluster/infinispan_config.xml");
 			RuntimeContext.requestBanners = RuntimeContext.cacheManager.getCache("requestBanners");
 			RuntimeContext.requestBanners.addListener(new CacheListener());
+			
+			String clustermode = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.CLUSTERMODE, "false");
+			if (clustermode.equalsIgnoreCase("true")) {
+				RuntimeContext.setClusterManager(new ClusterManager());
+				RuntimeContext.getClusterManager().init();
+			}
 		} catch (Exception e) {
 			logger.error("", e);
 			throw new RuntimeException(e);
