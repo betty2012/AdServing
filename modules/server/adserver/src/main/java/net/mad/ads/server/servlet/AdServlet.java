@@ -78,42 +78,59 @@ public class AdServlet extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
+		// if we run in clustermode and the db update is runnging
+		if (RuntimeContext.getClusterManager() != null && RuntimeContext.getClusterManager().isUpdating()) {
+			// return 404 to the loadbalancer (eq haproxy)
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		}
 		
 		// create the async context, otherwise getAsyncContext() will be null
-		  final AsyncContext ctx = request.startAsync();
+		final AsyncContext ctx = request.startAsync();
 
-		  // set the timeout
-		  ctx.setTimeout(CALLBACK_TIMEOUT);
+		// set the timeout
+		ctx.setTimeout(CALLBACK_TIMEOUT);
 
-		  // attach listener to respond to lifecycle events of this AsyncContext
-		  ctx.addListener(new AsyncListener() {
-		    /** complete() has already been called on the async context, nothing to do */
-		    public void onComplete(AsyncEvent event) throws IOException { }
-		    /** timeout has occured in async task... handle it */
-		    public void onTimeout(AsyncEvent event) throws IOException {
-		      log("onTimeout called");
-		      log(event.toString());
-		      ctx.getResponse().getWriter().write("TIMEOUT");
-		      ctx.complete();
-		    }
-		    /** THIS NEVER GETS CALLED - error has occured in async task... handle it */
-		    public void onError(AsyncEvent event) throws IOException {
-		      log("onError called");
-		      log(event.toString());
-		      ctx.getResponse().getWriter().write("ERROR");
-		      ctx.complete();
-		    }
-		    /** async context has started, nothing to do */
-		    public void onStartAsync(AsyncEvent event) throws IOException { }
-		  });
-		  
-		  execute(ctx, AdContextListener.ADCONTEXT.get());
-		
+		// attach listener to respond to lifecycle events of this AsyncContext
+		ctx.addListener(new AsyncListener() {
+			/**
+			 * complete() has already been called on the async context, nothing
+			 * to do
+			 */
+			public void onComplete(AsyncEvent event) throws IOException {
+			}
+
+			/** timeout has occured in async task... handle it */
+			public void onTimeout(AsyncEvent event) throws IOException {
+				log("onTimeout called");
+				log(event.toString());
+				ctx.getResponse().getWriter().write("TIMEOUT");
+				ctx.complete();
+			}
+
+			/**
+			 * THIS NEVER GETS CALLED - error has occured in async task...
+			 * handle it
+			 */
+			public void onError(AsyncEvent event) throws IOException {
+				log("onError called");
+				log(event.toString());
+				ctx.getResponse().getWriter().write("ERROR");
+				ctx.complete();
+			}
+
+			/** async context has started, nothing to do */
+			public void onStartAsync(AsyncEvent event) throws IOException {
+			}
+		});
+
+		execute(ctx, AdContextListener.ADCONTEXT.get());
+
 	}
 
 	private void execute(final AsyncContext ctx, final AdContext adcontext) {
 
-//		exec.execute(new Runnable() {
+		// exec.execute(new Runnable() {
 		ctx.start(new Runnable() {
 			public void run() {
 				ServletResponse response = ctx.getResponse();
@@ -127,12 +144,16 @@ public class AdServlet extends HttpServlet {
 							.getProperty(
 									AdServerConstants.CONFIG.PROPERTIES.ADSERVER_SELECT_URL,
 									"");
-					String adserver_url = RuntimeContext.getProperties().getProperty(
-							AdServerConstants.CONFIG.PROPERTIES.ADSERVER_URL, "");
+					String adserver_url = RuntimeContext
+							.getProperties()
+							.getProperty(
+									AdServerConstants.CONFIG.PROPERTIES.ADSERVER_URL,
+									"");
 					context.put("adselect_url", adselect_url);
 					context.put("adserver_url", adserver_url);
-//					context.put("adrequest_id", AdContextListener.ADCONTEXT.get()
-//							.getRequestid());
+					// context.put("adrequest_id",
+					// AdContextListener.ADCONTEXT.get()
+					// .getRequestid());
 					context.put("adrequest_id", adcontext.getRequestid());
 					context.put("enviroment", RuntimeContext.getEnviroment()
 							.toLowerCase());

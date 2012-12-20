@@ -24,6 +24,7 @@ import net.mad.ads.base.utils.utils.logging.LogWrapper;
 import net.mad.ads.common.template.TemplateManager;
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.AdDB;
+import net.mad.ads.server.utils.cluster.ClusterManager;
 import net.mad.ads.services.geo.IPLocationDB;
 import net.mad.ads.services.tracking.TrackingService;
 
@@ -75,6 +76,19 @@ public class RuntimeContext {
 //		return requestBanners;
 //	}
 	
+	private static ClusterManager clusterManager = null;
+	
+	
+	public static ClusterManager getClusterManager() {
+		return clusterManager;
+	}
+
+
+	public static void setClusterManager(ClusterManager clusterManager) {
+		RuntimeContext.clusterManager = clusterManager;
+	}
+
+
 	public static Importer getImporter() {
 		return importer;
 	}

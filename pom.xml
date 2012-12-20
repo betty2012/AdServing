@@ -15,6 +15,7 @@
 		<infinispan.version>5.1.6.FINAL</infinispan.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<lucene.version>4.0.0</lucene.version>
+		<hazelcast.version>2.4.1</hazelcast.version>
 	</properties>
 
 	<licenses>
@@ -43,6 +44,11 @@
 				<groupId>org.infinispan</groupId>
 				<artifactId>infinispan-core</artifactId>
 				<version>${infinispan.version}</version>
+			</dependency>
+			<dependency>
+    			<groupId>com.hazelcast</groupId>
+    			<artifactId>hazelcast</artifactId>
+    			<version>${hazelcast.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.minidev</groupId>

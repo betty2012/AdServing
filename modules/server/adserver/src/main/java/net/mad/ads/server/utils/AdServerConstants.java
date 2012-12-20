@@ -43,6 +43,8 @@ public abstract class AdServerConstants {
 			
 			public static final String TRACKINGSERVICE_CLASS = "tracking.service.class";
 			public static final String IPLOCATIONSERVICE_CLASS = "iplocation.service.class";
+			
+			public static final String CLUSTERMODE = "clustermode";
 		}
 	}
 	

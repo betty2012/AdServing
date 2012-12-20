@@ -66,6 +66,12 @@ public class AdSelect extends HttpServlet {
 	private void processRequest(final HttpServletRequest request,
 			final HttpServletResponse response) throws ServletException, IOException {
 
+		// if we run in clustermode and the db update is runnging
+		if (RuntimeContext.getClusterManager() != null && RuntimeContext.getClusterManager().isUpdating()) {
+			// return 404 to the loadbalancer (eq haproxy)
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		}
+		
 		// create the async context, otherwise getAsyncContext() will be null
 		final AsyncContext ctx = request.startAsync();
 

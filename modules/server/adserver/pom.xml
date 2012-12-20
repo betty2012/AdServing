@@ -21,6 +21,10 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>net.mad.ads</groupId>
 			<artifactId>utilities.common</artifactId>
 		</dependency>
