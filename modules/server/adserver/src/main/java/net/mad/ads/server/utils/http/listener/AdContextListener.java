@@ -49,9 +49,11 @@ public class AdContextListener implements Filter {
 		AdContext context = AdContextHelper.getAdContext(req, res);
 		ADCONTEXT.set(context);
 		
-		chain.doFilter(request, response);
-		
-		ADCONTEXT.remove();
+		try {
+			chain.doFilter(request, response);
+		} finally {
+			ADCONTEXT.remove();
+		}
 	}
 
 	@Override
