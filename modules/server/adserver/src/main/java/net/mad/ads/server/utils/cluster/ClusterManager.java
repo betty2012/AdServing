@@ -26,7 +26,7 @@ import com.hazelcast.core.IMap;
  */
 public class ClusterManager {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ClusterManager.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ClusterManager.class);
 	
 	private boolean updateRunning = false;
 	
@@ -46,14 +46,16 @@ public class ClusterManager {
 	 * init should be called directly after starting the AdServer
 	 */
 	public void init () {
+		LOGGER.debug("running initial database fillup");
 		updateRunning = true;
 		try {
+			LOGGER.debug("found " + ads.size() + " AdDefinitions");
 			for (AdDefinition ad : ads.values()) {
 				try {
 					RuntimeContext.getAdDB().deleteBanner(ad.getId());
 					RuntimeContext.getAdDB().addBanner(ad);
 				} catch (IOException e) {
-					logger.error("error updating AdDefinition " + ad.getId(), e);
+					LOGGER.error("error updating AdDefinition " + ad.getId(), e);
 				}		
 			}
 		} finally {
@@ -122,20 +124,23 @@ public class ClusterManager {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					logger.error("error while waiting");
+					LOGGER.error("error while waiting");
 				}
 			}
 			try {
 				if (task.remove && task.adid != null) {
+					LOGGER.info("remove AdDefinition " + task.adid);
 					RuntimeContext.getAdDB().deleteBanner(task.adid);
 				} else if (task.ad != null) {
 					RuntimeContext.getAdDB().deleteBanner(task.ad.getId());
 					RuntimeContext.getAdDB().addBanner(task.ad);
+					
+					LOGGER.info("add AdDefinition " + task.ad.getId());
 				}
 				
 				
 			} catch (IOException e) {
-				logger.error("error updating AdDefinition " + (task.toString()), e);
+				LOGGER.error("error updating AdDefinition " + (task.toString()), e);
 			}
 		}
 		
