@@ -13,10 +13,20 @@
  */
 package net.mad.ads.base.api.service.adserver.model;
 
-public class ImageAd extends Advertisement {
+public class ImageAd extends LinkAdvertisement {
 	
 	/*
 	 * ImageData base64 encoded
 	 */
-	private String imageData;
+	private String imageUrl;
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	
+	
 }

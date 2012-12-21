@@ -64,6 +64,27 @@ public abstract class Advertisement {
 	 */
 	private HashMap<String, Integer> viewExpiration = new HashMap<String, Integer>();
 	
+	private String adFormat;
+	private String adType;
+	
+	
+	
+	public String getAdFormat() {
+		return adFormat;
+	}
+
+	public void setAdFormat(String adFormat) {
+		this.adFormat = adFormat;
+	}
+
+	public String getAdType() {
+		return adType;
+	}
+
+	public void setAdType(String adType) {
+		this.adType = adType;
+	}
+
 	public String getId() {
 		return id;
 	}
