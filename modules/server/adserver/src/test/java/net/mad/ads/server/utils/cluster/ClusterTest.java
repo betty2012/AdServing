@@ -20,6 +20,17 @@ public class ClusterTest {
 
 	@Test
 	public void test_1 () throws Exception {
+		Map<String, AdDefinition> ads = Hazelcast.newHazelcastInstance().getMap("ads");
+		
+		for (int i = 0; i < 100; i++) {
+			AdDefinition def = new ImageAdDefinition();
+			def.setFormat(AdFormats.forName("Button 1"));
+			def.setId("1" + i);
+
+			ads.put(def.getId(), def);
+		}
+
+		
 		AdDBManager manager = AdDBManager.builder().build();
 		manager.getContext().useRamOnly = true;
 		manager.getAdDB().open();
@@ -28,21 +39,10 @@ public class ClusterTest {
 		
 		ClusterManager cluster = new ClusterManager();
 		RuntimeContext.setClusterManager(cluster);
+		RuntimeContext.getClusterManager().init();
 		
-		
-		Map<String, AdDefinition> ads = Hazelcast.newHazelcastInstance().getMap("ads");
-		
-		
-		assertEquals(0, RuntimeContext.getAdDB().size());
-		
-		AdDefinition def = new ImageAdDefinition();
-		def.setFormat(AdFormats.forName("Button 1"));
-		def.setId("1");
-
-		ads.put(def.getId(), def);
-		
-		Thread.sleep(2000);
+		Thread.sleep(5000);
 		RuntimeContext.getAdDB().reopen();
-		assertEquals(1, RuntimeContext.getAdDB().size());
+		assertEquals(100, RuntimeContext.getAdDB().size());
 	}
 }

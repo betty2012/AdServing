@@ -198,7 +198,17 @@ public class AdDBLuceneIndex implements AdDBIndex {
 				logger.error("", e);
 			}
 		}
-//		return 0;
+	}
+
+	@Override
+	public void clear() throws IOException {
+		this.writer.deleteAll();
+		try {
+			this.reopen();
+		} catch (IOException ioe) {
+			this.writer.rollback();
+			throw ioe;
+		}
 	}
 
 }

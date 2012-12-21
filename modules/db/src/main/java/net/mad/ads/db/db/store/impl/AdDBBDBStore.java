@@ -136,4 +136,9 @@ public class AdDBBDBStore implements AdDBStore {
 		return this.banners.size();
 	}
 
+	@Override
+	public void clear() {
+		this.banners.clear();
+	}
+
 }

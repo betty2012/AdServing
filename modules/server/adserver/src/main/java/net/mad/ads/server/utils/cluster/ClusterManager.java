@@ -44,6 +44,9 @@ public class ClusterManager {
 	
 	/**
 	 * init should be called directly after starting the AdServer
+	 * in this step all AdDefinitions are loaded and added to the database
+	 * 
+	 * this step should only run once
 	 */
 	public void init () {
 		LOGGER.debug("running initial database fillup");

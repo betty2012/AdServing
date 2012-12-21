@@ -28,4 +28,5 @@ public interface AdDBIndex {
 	public List<AdDefinition> search (AdRequest request) throws IOException;
 	
 	public int size ();
+	public void clear () throws IOException;
 }

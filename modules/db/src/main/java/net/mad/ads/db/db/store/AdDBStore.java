@@ -28,4 +28,6 @@ public interface AdDBStore {
 	public AdDefinition getBanner (String id);
 	
 	public int size ();
+	
+	public void clear ();
 }

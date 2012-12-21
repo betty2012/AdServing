@@ -67,6 +67,15 @@ public class AdDB {
 		adIndex.reopen();
 	}
 	
+	public void clear () throws IOException {
+		try {
+			adIndex.clear();
+			adStore.clear();
+		} catch (IOException ioe) {
+			throw ioe;
+		}
+	}
+	
 	public void close() throws IOException {
 		this.adIndex.close();
 		this.adStore.close();
