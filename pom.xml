@@ -11,7 +11,7 @@
 	<inceptionYear>2011</inceptionYear>
 
 	<properties>
-		<jetty.version>8.1.7.v20120910</jetty.version>
+		<jetty.version>8.1.8.v20121106</jetty.version>
 		<infinispan.version>5.1.6.FINAL</infinispan.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<lucene.version>4.0.0</lucene.version>
@@ -32,6 +32,7 @@
 		<module>modules/utilities/thirdparty</module>
 		<module>modules/db</module>
 		<module>modules/server/adserver</module>
+		<module>modules/server/adcontroller</module>
 		<!-- module>modules/server/mobileadserver</module -->
 		<module>modules/tools/import</module>
 		<module>modules/services/geo</module>
@@ -164,7 +165,7 @@
 			<dependency>
 				<groupId>org.mongodb</groupId>
 				<artifactId>mongo-java-driver</artifactId>
-				<version>2.10.1</version>
+				<version>2.9.3</version>
 			</dependency>
 			<dependency>
 				<groupId>com.foursquare</groupId>

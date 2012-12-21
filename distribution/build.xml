@@ -20,8 +20,8 @@
 <project default="distribute">
 
 	<property name="version" value="0.1" />
-	<property name="jetty.version" value="8.1.5.v20120716" />
-	<property name="maxmind.version" value="GeoLiteCity_20120807"/>
+	<property name="jetty.version" value="8.1.8.v20121106" />
+	<property name="maxmind.version" value="GeoLiteCity_20120807" />
 
 	<taskdef name="geoipimport" classname="net.mad.ads.services.geo.ant.GeoIpImportTask">
 		<classpath location="../modules/services/geo/target/services.geo-${version}-jar-with-dependencies.jar" />
@@ -31,11 +31,11 @@
 		<delete dir="services" />
 		<mkdir dir="services" />
 		<mkdir dir="services/ipdb" />
-		
+
 		<get src="http://geolite.maxmind.com/download/geoip/database/GeoLiteCity_CSV/${maxmind.version}.zip" dest="services/maxmind_${maxmind.version}.zip" verbose="true" />
 		<unzip src="services/maxmind_${maxmind.version}.zip" dest="./services/" />
-		
-		<geoipimport importdir="services/${maxmind.version}/" exportdir="services/ipdb/db"/>
+
+		<geoipimport importdir="services/${maxmind.version}/" exportdir="services/ipdb/db" />
 	</target>
 
 
@@ -78,6 +78,10 @@
 				<exclude name="README.txt" />
 				<exclude name="start.ini" />
 				<exclude name="VERSION.txt" />
+				<exclude name="LICENSE-ECLIPSE-1.0.html" />
+				<exclude name="LICENSE-APACHE-2.0.txt" />
+				<exclude name="javadoc" />
+				<exclude name="resources" />
 			</fileset>
 		</copy>
 		<delete dir="dist-${version}" quiet="true" includeemptydirs="true">
@@ -85,13 +89,13 @@
 			<include name="webapps" />
 			<include name="javadoc" />
 		</delete>
-		
+
 		<copy todir="dist-${version}/content" file="../modules/server/adserver/target/adserver-${version}.war">
 		</copy>
-		
+
 		<move file="dist-${version}/content/adserver-${version}.war" tofile="dist-${version}/content/adserver.war" />
-		<move  toDir="dist-${version}/data/services/ipdb" >
-			<fileset dir="services/ipdb"/>
+		<move toDir="dist-${version}/data/services/ipdb">
+			<fileset dir="services/ipdb" />
 		</move>
 
 
@@ -101,4 +105,69 @@
 		<echo>build finished</echo>
 
 	</target>
+
+	<target name="distribute_controller">
+		<echo>maven build</echo>
+
+		<exec dir="../" executable="cmd" os="Windows 7">
+			<arg value="/c" />
+			<arg value="mvn.bat" />
+			<arg line="clean package install -DskipTests" />
+		</exec>
+
+		<exec dir="../" executable="mvn" os="Linux">
+			<arg line="clean package install -DskipTests" />
+		</exec>
+
+		<echo>unzip jetty-distribution ${jetty.version}</echo>
+
+
+		<delete dir="dist-controller-${version}" />
+		<mkdir dir="dist-controller-${version}" />
+
+		<delete dir="temp-controller" />
+		<mkdir dir="temp-controller" />
+
+		<echo>Get jetty distribution ${jetty.version}</echo>
+		<get src="http://download.eclipse.org/jetty/${jetty.version}/dist/jetty-distribution-${jetty.version}.zip" dest="temp-controller/jetty-distribution-${jetty.version}.zip" verbose="true" />
+		<unzip src="temp-controller/jetty-distribution-${jetty.version}.zip" dest="./temp-controller/" />
+
+		<copy todir="dist-controller-${version}">
+			<fileset dir="adcontroller">
+			</fileset>
+			<fileset dir="temp-controller/jetty-distribution-${jetty.version}">
+				<exclude name="**/contexts/*" />
+				<exclude name="**/contexts/**/*" />
+				<exclude name="**/contexts-available/*" />
+				<exclude name="**/webapps/*" />
+				<exclude name="**/javadoc/*" />
+				<exclude name="about.html" />
+				<exclude name="notice.html" />
+				<exclude name="README.txt" />
+				<exclude name="start.ini" />
+				<exclude name="VERSION.txt" />
+				<exclude name="LICENSE-ECLIPSE-1.0.html" />
+				<exclude name="LICENSE-APACHE-2.0.txt" />
+				<exclude name="javadoc" />
+				<exclude name="resources" />
+			</fileset>
+		</copy>
+		<delete dir="dist-controller-${version}" quiet="true" includeemptydirs="true">
+			<include name="contexts-available" />
+			<include name="webapps" />
+			<include name="javadoc" />
+		</delete>
+
+		<copy todir="dist-controller-${version}/content" file="../modules/server/adcontroller/target/adcontroller-${version}.war">
+		</copy>
+
+		<move file="dist-controller-${version}/content/adcontroller-${version}.war" tofile="dist-controller-${version}/content/adcontroller.war" />
+
+
+		<delete dir="temp-controller" />
+
+		<echo>build finished</echo>
+
+	</target>
+
 </project>
