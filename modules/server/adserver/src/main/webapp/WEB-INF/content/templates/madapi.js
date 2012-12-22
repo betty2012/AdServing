@@ -14,6 +14,17 @@
 if (typeof madApi == "undefined") {
 	madApi = {};
 
+	/**
+	 * Insert JavaScript into head for asynchron loading
+	 */
+	madApi.insetScript = function (scriptpath) {
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.async = true;
+		script.src = scriptpath;
+		(document.getElementsByTagName('head')[0] || document.body).appendChild(script);
+	};
+	
 	madApi.onload = function(func) {
 		var oldonload = window.onload;
 		if (typeof window.onload != 'function') {
@@ -62,7 +73,7 @@ if (typeof madApi == "undefined") {
 	};
 
 	/**
-	 * Liefert H�he und Breite eines Elements
+	 * Liefert Höhe und Breite eines Elements
 	 * 
 	 * @param obj
 	 * @returns {height, width}
@@ -105,7 +116,7 @@ if (typeof madApi == "undefined") {
 	};
 
 	/**
-	 * Liefert die gr��e des Browserfensters
+	 * Liefert die größe des Browserfensters
 	 * 
 	 * @returns {height, width}
 	 */
@@ -199,17 +210,17 @@ if (typeof madApi == "undefined") {
 	 * 
 	 * 
 	 * @param integer
-	 *            ben�tigte Flash Plugin Version
+	 *            benötigte Flash Plugin Version
 	 * @param integer
-	 *            maximal zu pr�fende Versionen
+	 *            maximal zu prüfende Versionen
 	 * @return array vorhandene Version (0 = kein Flash Plugin installiert) und
-	 *         ben�tigte Version (integer)
+	 *         benötigte Version (integer)
 	 * 
 	 * 
 	 * Hinweise:
 	 * 
-	 * Wie wir ja alle wissen gibt es keine 100% zuverl�ssige Flash Detection,
-	 * und genauso verh�lt es sich mit dieser. Sie wird nicht mit allen Systemen
+	 * Wie wir ja alle wissen gibt es keine 100% zuverlüssige Flash Detection,
+	 * und genauso verhält es sich mit dieser. Sie wird nicht mit allen Systemen
 	 * funktionieren. Wie dem auch sei, sie wurde erfolgreich getestet unter
 	 * WindowsXP (SP1) mit MSIE 6, NS 7.1, Opera 7.11, Mozilla 1.4 und Firefox
 	 * 1.0
@@ -219,10 +230,10 @@ if (typeof madApi == "undefined") {
 		var max_version = max;
 		var available_version = 0;
 
-		/* dieser Abschnitt ist f�r NS, Mozilla, Firefox und �hnliche Browser */
+		/* dieser Abschnitt ist für NS, Mozilla, Firefox und ähnliche Browser */
 		if (typeof (navigator.plugins["Shockwave Flash"]) == "object") {
 			/*
-			 * Wenn wir hier landen, dann ist Flash installiert, und wir k�nnen
+			 * Wenn wir hier landen, dann ist Flash installiert, und wir können
 			 * die Version aus der Beschreibung auslesen.
 			 */
 			var description = navigator.plugins["Shockwave Flash"].description;
@@ -230,23 +241,23 @@ if (typeof madApi == "undefined") {
 					".", 16) - 16));
 		}
 		/*
-		 * dieser Abschnitt ist f�r den IE und �hnliche Browser die ActiveX
+		 * dieser Abschnitt ist für den IE und ähnliche Browser die ActiveX
 		 * benutzen um Flash anzuzeigen.
 		 */
 		else if (typeof (ActiveXObject) == "function") {
 			/*
 			 * durchlaufen der Flash Versionen von 2 bis zur maximal zu
-			 * pr�fenden Version
+			 * prüfenden Version
 			 */
 			for ( var i = 2; i < (max_version + 1); i++) {
 				/*
 				 * wir beugen mittels try und catch (JS 1.5+ / IE5+) einem
 				 * Fehler vor (welcher einen Abbruch des Scripts zur Folge
-				 * h�tte), so k�nnen wir auch auf ein extra VBScript verzichten.
+				 * hätte), so können wir auch auf ein extra VBScript verzichten.
 				 */
 				try {
 					/*
-					 * l��t sich das ActiveX Flash Objekt Version i erstellen,
+					 * läßt sich das ActiveX Flash Objekt Version i erstellen,
 					 * so ist diese Version auch installiert
 					 */
 					if (typeof (new ActiveXObject(
@@ -258,7 +269,7 @@ if (typeof madApi == "undefined") {
 			}
 		}
 
-		/* die Werte werden in Form eines Arrays zur�ckgegeben */
+		/* die Werte werden in Form eines Arrays zurückgegeben */
 		return {
 			available : available_version,
 			required : required_version

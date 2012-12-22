@@ -39,7 +39,6 @@ if (typeof madRequestID == "undefined") {
 var mad_ad_date = new Date();
 
 var differenceInMinutes = -mad_ad_date.getTimezoneOffset();
-differenceInMinutes;
 
 var flashVersion = madApi.flash(7, 10).available;
 
