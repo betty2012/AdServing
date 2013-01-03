@@ -77,11 +77,13 @@ public class AdDBMapDBStore implements AdDBStore {
 	@Override
 	public void addBanner(AdDefinition banner) throws IOException {
 		this.banners.put(banner.getId(), banner);
+		this.db.commit();
 	}
 
 	@Override
 	public void deleteBanner(String id) throws IOException {
 		this.banners.remove(id);
+		this.db.commit();
 	}
 
 	@Override
@@ -97,6 +99,7 @@ public class AdDBMapDBStore implements AdDBStore {
 	@Override
 	public void clear() {
 		this.banners.clear();
+		this.db.commit();
 	}
 
 }
