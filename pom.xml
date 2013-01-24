@@ -14,7 +14,7 @@
 		<jetty.version>8.1.8.v20121106</jetty.version>
 		<infinispan.version>5.1.6.FINAL</infinispan.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<lucene.version>4.0.0</lucene.version>
+		<lucene.version>4.1.0</lucene.version>
 		<hazelcast.version>2.4.1</hazelcast.version>
 	</properties>
 
