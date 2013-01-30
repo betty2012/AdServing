@@ -20,18 +20,15 @@
 		<dependency>
 			<groupId>org.mapdb</groupId>
 			<artifactId>mapdb</artifactId>
-			<version>0.9-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
-			<version>${lucene.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-analyzers-common</artifactId>
-			<version>${lucene.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.mad.ads</groupId>
@@ -56,11 +53,6 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.sleepycat</groupId>
-			<artifactId>je</artifactId>
 		</dependency>
 
 		<dependency>

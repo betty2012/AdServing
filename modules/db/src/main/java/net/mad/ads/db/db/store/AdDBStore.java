@@ -22,6 +22,14 @@ public interface AdDBStore {
 	public void open() throws IOException;
 	public void close() throws IOException;
 	
+	/**
+	 * commit the last added AdDefinition
+	 * @throws IOException
+	 */
+	public void commit () throws IOException;
+	public void rollback () throws IOException;
+	public void beginTransaction () throws IOException;
+	
 	public void addBanner (AdDefinition banner) throws IOException;
 	public void deleteBanner (String id) throws IOException;
 	

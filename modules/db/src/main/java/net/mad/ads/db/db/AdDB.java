@@ -22,7 +22,6 @@ import net.mad.ads.db.db.index.AdDBIndex;
 import net.mad.ads.db.db.index.impl.AdDBLuceneIndex;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.db.store.AdDBStore;
-import net.mad.ads.db.db.store.impl.AdDBBDBStore;
 import net.mad.ads.db.db.store.impl.AdDBMapDBStore;
 import net.mad.ads.db.db.store.impl.AdDBMapStore;
 import net.mad.ads.db.definition.AdDefinition;
@@ -88,8 +87,23 @@ public class AdDB {
 	 * @throws IOException
 	 */
 	public void addBanner (AdDefinition banner) throws IOException {
-		this.adIndex.addBanner(banner);
-		this.adStore.addBanner(banner);
+		try {
+			this.adIndex.beginTransaction();
+			this.adStore.beginTransaction();
+			
+			this.adIndex.addBanner(banner);
+			this.adStore.addBanner(banner);
+			
+			this.adIndex.commit();
+			this.adStore.commit();
+		} catch (Exception e) {
+			logger.error("", e);
+			
+			this.adIndex.rollback();
+			this.adStore.rollback();
+			
+			throw new IOException("error adding addefintion", e);
+		}
 	}
 	
 	/**
@@ -98,8 +112,23 @@ public class AdDB {
 	 * @throws IOException
 	 */
 	public void deleteBanner (String id) throws IOException {
-		this.adIndex.deleteBanner(id);
-		this.adStore.deleteBanner(id);
+		try {
+			this.adIndex.beginTransaction();
+			this.adStore.beginTransaction();
+			
+			this.adIndex.deleteBanner(id);
+			this.adStore.deleteBanner(id);
+			
+			this.adIndex.commit();
+			this.adStore.commit();
+		} catch (Exception e) {
+			logger.error("", e);
+			
+			this.adIndex.rollback();
+			this.adStore.rollback();
+			
+			throw new IOException("error deleting addefintion", e);
+		}
 	}
 	
 	/**

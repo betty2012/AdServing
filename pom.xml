@@ -16,6 +16,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<lucene.version>4.1.0</lucene.version>
 		<hazelcast.version>2.4.1</hazelcast.version>
+		<mapdb.version>0.9-SNAPSHOT</mapdb.version>
+		<guava.version>13.0.1</guava.version>
+		<slf4j.version>1.7.2</slf4j.version>
+		<log4j.version>1.2.17</log4j.version>
 	</properties>
 
 	<licenses>
@@ -42,6 +46,21 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>org.apache.lucene</groupId>
+				<artifactId>lucene-core</artifactId>
+				<version>${lucene.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.lucene</groupId>
+				<artifactId>lucene-analyzers-common</artifactId>
+				<version>${lucene.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mapdb</groupId>
+				<artifactId>mapdb</artifactId>
+				<version>${mapdb.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.infinispan</groupId>
 				<artifactId>infinispan-core</artifactId>
 				<version>${infinispan.version}</version>
@@ -51,16 +70,7 @@
 				<artifactId>hazelcast</artifactId>
 				<version>${hazelcast.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>net.minidev</groupId>
-				<artifactId>json-smart</artifactId>
-				<version>1.0.9</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-all</artifactId>
-				<version>1.9.0</version>
-			</dependency>
+
 			<dependency>
 				<groupId>com.google.inject</groupId>
 				<artifactId>guice</artifactId>
@@ -111,38 +121,27 @@
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
-				<version>1.6.6</version>
+				<version>${slf4j.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-simple</artifactId>
-				<version>1.6.6</version>
+				<version>${slf4j.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-log4j12</artifactId>
-				<version>1.6.6</version>
+				<version>${slf4j.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
-				<version>1.2.17</version>
+				<version>${log4j.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
 				<version>13.0</version>
-			</dependency>
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.10</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.sleepycat</groupId>
-				<artifactId>je</artifactId>
-				<version>5.0.34</version>
 			</dependency>
 
 			<dependency>
@@ -171,6 +170,24 @@
 				<groupId>com.foursquare</groupId>
 				<artifactId>fongo</artifactId>
 				<version>1.0.3</version>
+			</dependency>
+
+			<!-- Testing -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.10</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>net.minidev</groupId>
+				<artifactId>json-smart</artifactId>
+				<version>1.0.9</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>1.9.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

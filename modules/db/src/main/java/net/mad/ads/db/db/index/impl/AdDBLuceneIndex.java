@@ -87,7 +87,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 			index = FSDirectory.open(temp);
 		}
 		
-		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_40,
+		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_41,
 				new KeywordAnalyzer());
 		// CREATE_OR_APPEND
 		config.setOpenMode(OpenMode.CREATE_OR_APPEND);
@@ -209,6 +209,21 @@ public class AdDBLuceneIndex implements AdDBIndex {
 			this.writer.rollback();
 			throw ioe;
 		}
+	}
+
+	@Override
+	public void commit() throws IOException {
+		this.writer.commit();
+	}
+
+	@Override
+	public void rollback() throws IOException {
+		this.writer.rollback();
+	}
+
+	@Override
+	public void beginTransaction() throws IOException {
+		this.writer.prepareCommit();
 	}
 
 }

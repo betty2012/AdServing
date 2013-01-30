@@ -102,4 +102,19 @@ public class AdDBMapDBStore implements AdDBStore {
 		this.db.commit();
 	}
 
+	@Override
+	public void commit() throws IOException {
+		this.db.commit();
+	}
+
+	@Override
+	public void rollback() {
+		this.db.rollback();
+	}
+
+	@Override
+	public void beginTransaction() throws IOException {
+		// not necessary
+	}
+
 }

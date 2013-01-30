@@ -23,6 +23,13 @@ import net.mad.ads.db.definition.AdDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Simple Map Store
+ * 
+ * Transactions are not supported
+ * @author thmarx
+ *
+ */
 public class AdDBMapStore implements AdDBStore {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdDBMapStore.class);
@@ -62,6 +69,21 @@ public class AdDBMapStore implements AdDBStore {
 	@Override
 	public void clear() {
 		this.banners.clear();
+	}
+
+	@Override
+	public void commit() throws IOException {
+		
+	}
+
+	@Override
+	public void rollback() throws IOException {
+		
+	}
+
+	@Override
+	public void beginTransaction() throws IOException {
+		
 	}
 
 }
