@@ -113,24 +113,4 @@
 		<location>/error.html</location>
 	</error-page>
 
-	<!-- WebService -->
-	<!-- <servlet> <servlet-name>XmlRpcServlet</servlet-name> <servlet-class>de.marx.common.web.xmlrpc.servlet.MySimpleXmlRpcServlet</servlet-class> 
-		<init-param> <param-name>enabledForExtensions</param-name> <param-value>true</param-value> 
-		</init-param> </servlet> <servlet-mapping> <servlet-name>XmlRpcServlet</servlet-name> 
-		<url-pattern>/xmlrpc</url-pattern> </servlet-mapping> -->
-
-	<listener>
-		<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
-	</listener>
-	<servlet>
-		<description>AdServerService</description>
-		<display-name>AdServerService</display-name>
-		<servlet-name>AdServerService</servlet-name>
-		<servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AdServerService</servlet-name>
-		<url-pattern>/adservice</url-pattern>
-	</servlet-mapping>
 </web-app>
