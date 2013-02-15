@@ -17,14 +17,13 @@ package net.mad.ads.controller.utils;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import org.mapdb.DB;
 
 import com.hazelcast.core.HazelcastInstance;
 
-import net.mad.ads.common.template.TemplateManager;
-import net.mad.ads.db.AdDBManager;
-import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.definition.AdDefinition;
 
 
@@ -46,7 +45,11 @@ public class RuntimeContext {
 
 	private static HazelcastInstance hazelcastInstance = null;
 	
+	private static final Executor executor = Executors.newSingleThreadExecutor();
 	
+	public static Executor getExecutor() {
+		return executor;
+	}
 	
 	public static HazelcastInstance getHazelcastInstance() {
 		return hazelcastInstance;

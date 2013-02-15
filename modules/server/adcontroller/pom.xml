@@ -116,12 +116,11 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${jetty.version}</version>
 				<configuration>
-					<jettyConfig>${basedir}/server_root/config/jetty.xml</jettyConfig>
+					
 					<scanIntervalSeconds>0</scanIntervalSeconds>
 					<useTestClasspath>true</useTestClasspath>
 					<webAppConfig>
 						<contextPath>/</contextPath>
-						<overrideDescriptor>${basedir}/server_root/config/override-web.xml</overrideDescriptor>
 					</webAppConfig>
 
 					<systemProperties>
