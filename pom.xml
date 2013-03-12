@@ -11,13 +11,13 @@
 	<inceptionYear>2011</inceptionYear>
 
 	<properties>
-		<jetty.version>8.1.9.v20130131</jetty.version>
-		<infinispan.version>5.1.6.FINAL</infinispan.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<lucene.version>4.1.0</lucene.version>
+		<jetty.version>9.0.0.v20130308</jetty.version>
+		<infinispan.version>5.2.4.Final</infinispan.version>
+		<lucene.version>4.2.0</lucene.version>
 		<hazelcast.version>2.5</hazelcast.version>
 		<mapdb.version>0.9-SNAPSHOT</mapdb.version>
-		<guava.version>13.0.1</guava.version>
+		<guava.version>14.0</guava.version>
 		<guice.version>3.0</guice.version>
 		<slf4j.version>1.7.2</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
@@ -26,7 +26,7 @@
 		<hsqldb.version>2.2.9</hsqldb.version>
 		<uuid.version>3.2</uuid.version>
 		<mongo-driver.version>2.10.1</mongo-driver.version>
-		<fongo.version>1.0.4</fongo.version>
+		<fongo.version>1.0.5</fongo.version>
 		<jongo.version>0.3</jongo.version>
 		<junit.version>4.11</junit.version>
 		<mockito.version>1.9.5</mockito.version>

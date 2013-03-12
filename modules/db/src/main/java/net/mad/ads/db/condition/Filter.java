@@ -20,7 +20,7 @@ import net.mad.ads.db.definition.AdDefinition;
 import com.google.common.base.Predicate;
 
 /**
- * Filter werden nach der Suche  über das Ergebnis laufen gelassen. Dadurch können 
+ * Filter werden nach der Suche über das Ergebnis laufen gelassen. Dadurch können 
  * noch Banner gefiltert werden, die eine Bestimmte Eigenschaft nicht erfüllen
  * 
  * @author thmarx
