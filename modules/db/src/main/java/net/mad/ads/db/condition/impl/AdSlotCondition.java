@@ -39,7 +39,7 @@ import org.apache.lucene.search.TermQuery;
  * @author thmarx
  *
  */
-public class AdSlotCondition implements Condition {
+public class AdSlotCondition implements Condition<Document, BooleanQuery> {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {

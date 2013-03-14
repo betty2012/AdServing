@@ -43,7 +43,7 @@ import org.apache.lucene.util.BytesRef;
  * @author tmarx
  *
  */
-public class TimeCondition implements Condition {
+public class TimeCondition implements Condition<Document, BooleanQuery> {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {

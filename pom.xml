@@ -160,9 +160,9 @@
 				<version>${guava.version}</version>
 			</dependency>
 			<dependency>
-    			<groupId>net.sf.uadetector</groupId>
-    			<artifactId>uadetector-resources</artifactId>
-    			<version>${uadetector.version}</version>
+				<groupId>net.sf.uadetector</groupId>
+				<artifactId>uadetector-resources</artifactId>
+				<version>${uadetector.version}</version>
 			</dependency>
 
 			<dependency>
@@ -187,7 +187,7 @@
 				<artifactId>mongo-java-driver</artifactId>
 				<version>${mongo-driver.version}</version>
 			</dependency>
-			
+
 
 			<!-- Testing -->
 			<dependency>
@@ -273,6 +273,12 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.sonar</groupId>
+				<artifactId>sonar-maven3-plugin</artifactId>
+				<version>3.5</version>
 			</plugin>
 
 		</plugins>

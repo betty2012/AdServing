@@ -39,7 +39,7 @@ import org.apache.lucene.util.BytesRef;
  * @author thmarx
  *
  */
-public class DateCondition implements Condition {
+public class DateCondition implements Condition<Document, BooleanQuery> {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {

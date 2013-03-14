@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.lucene.document.Document;
+import org.apache.lucene.search.BooleanQuery;
+
 import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.condition.impl.AdSlotCondition;
 import net.mad.ads.db.condition.impl.CountryCondition;
@@ -39,7 +42,7 @@ public class AdDBManager {
 	
 	private final AdDBContext context = new AdDBContext();
 	
-	private final List<Condition> conditions = new ArrayList<Condition>();
+	private final List<Condition<Document, BooleanQuery>> conditions = new ArrayList<Condition<Document, BooleanQuery>>();
 	
 	private ExecutorService executorService = null;
 	
@@ -89,7 +92,7 @@ public class AdDBManager {
 		return adDB;
 	}
 	
-	public List<Condition> getConditions () {
+	public List<Condition<Document, BooleanQuery>> getConditions () {
 		return conditions;
 	}
 	

@@ -34,7 +34,7 @@ import com.google.common.base.Strings;
  * @author tmarx
  *
  */
-public class ExcludeSiteCondition implements Condition, Filter {
+public class ExcludeSiteCondition implements Condition<Document, BooleanQuery>, Filter {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {

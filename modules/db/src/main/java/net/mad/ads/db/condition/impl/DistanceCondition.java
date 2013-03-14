@@ -35,7 +35,7 @@ import com.javadocmd.simplelatlng.util.LengthUnit;
  * @author tmarx
  *
  */
-public class DistanceCondition implements Condition, Filter {
+public class DistanceCondition implements Condition<Document, BooleanQuery>, Filter {
 
 	@Override
 	public Predicate<AdDefinition> getFilterPredicate(final AdRequest request) {

@@ -38,7 +38,7 @@ import org.apache.lucene.search.TermQuery;
  * @author tmarx
  *
  */
-public class CountryCondition implements Condition {
+public class CountryCondition implements Condition <Document, BooleanQuery> {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {

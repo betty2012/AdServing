@@ -43,7 +43,7 @@ import org.apache.lucene.search.TermQuery;
  * @author tmarx
  *
  */
-public class KeyValueCondition extends AbstractCondition implements Condition {
+public class KeyValueCondition extends AbstractCondition implements Condition<Document, BooleanQuery> {
 
 	
 	public KeyValueCondition (AdDB addb) {

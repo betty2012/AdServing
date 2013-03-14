@@ -40,7 +40,7 @@ import org.apache.lucene.search.TermQuery;
  * @author tmarx
  *
  */
-public class KeywordCondition implements Condition {
+public class KeywordCondition implements Condition<Document, BooleanQuery> {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {

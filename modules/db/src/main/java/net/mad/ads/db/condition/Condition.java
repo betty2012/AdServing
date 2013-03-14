@@ -33,19 +33,19 @@ import org.apache.lucene.search.BooleanQuery;
  * @author thmarx
  *
  */
-public interface Condition extends Serializable {
+public interface Condition<D, Q> extends Serializable {
 	/**
 	 * Aufbereitung des Queries
 	 * 
 	 * @param request
 	 * @param mainQuery
 	 */
-	public void addQuery (AdRequest request, BooleanQuery mainQuery);
+	public void addQuery (AdRequest request, Q mainQuery);
 	/**
-	 * Erweitert das Dokument um die f�r diese Bedingung benötigten Felder
+	 * Erweitert das Dokument um die für diese Bedingung benötigten Felder
 	 * 
 	 * @param bannerDoc
 	 * @param bannerDefinition
 	 */
-	public void addFields (Document bannerDoc, AdDefinition bannerDefinition);
+	public void addFields (D adDoc, AdDefinition bannerDefinition);
 }

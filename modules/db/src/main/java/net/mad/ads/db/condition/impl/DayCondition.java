@@ -46,7 +46,7 @@ import org.apache.lucene.search.TermQuery;
  * @author thmarx
  *
  */
-public class DayCondition implements Condition {
+public class DayCondition implements Condition<Document, BooleanQuery> {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {
