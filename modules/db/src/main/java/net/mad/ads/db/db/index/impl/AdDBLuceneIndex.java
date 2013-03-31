@@ -27,8 +27,8 @@ import net.mad.ads.db.db.search.AdCollector;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.model.format.AdFormat;
 import net.mad.ads.db.model.type.AdType;
-import net.mad.ads.db.utils.DocumentHelper;
-import net.mad.ads.db.utils.QueryHelper;
+import net.mad.ads.db.utils.LuceneDocumentHelper;
+import net.mad.ads.db.utils.LuceneQueryHelper;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
@@ -115,7 +115,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 
 	@Override
 	public void addBanner(AdDefinition banner) throws IOException {
-		Document doc = DocumentHelper.getInstance().getBannerDocument(banner, this.addb);
+		Document doc = LuceneDocumentHelper.getInstance().getBannerDocument(banner, this.addb);
 		this.writer.addDocument(doc, new KeywordAnalyzer());
 	}
 
@@ -153,7 +153,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 			mainQuery.add(formatQuery, Occur.MUST);
 
 			// Query für die Bedingungen unter denen ein Banner angezeigt werden soll
-			Query cq = QueryHelper.getInstance().getConditionalQuery(request, this.addb);
+			Query cq = LuceneQueryHelper.getInstance().getConditionalQuery(request, this.addb);
 			if (cq != null) {
 				mainQuery.add(cq, Occur.MUST);
 			}

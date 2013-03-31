@@ -11,24 +11,9 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package net.mad.ads.db;
+package net.mad.ads.db.enums;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import net.mad.ads.db.enums.Mode;
-
-public class AdDBContext {
-	public boolean useRamOnly = true;
-//	public String tempDir = null;
-	
-	public Mode mode = Mode.LUCENE;
-	
-	public String datadir = null;
-	
-	public Set<String> validKeys = new HashSet<String>();
-	
-	public Map<String, Object> configuration = new HashMap<String, Object>();
+public enum Mode {
+	LUCENE,
+	MONGO
 }

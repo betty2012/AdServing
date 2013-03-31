@@ -23,6 +23,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>net.mad.ads</groupId>
+			<artifactId>utilities.common</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
 		</dependency>
@@ -30,11 +35,18 @@
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-analyzers-common</artifactId>
 		</dependency>
+		
 		<dependency>
-			<groupId>net.mad.ads</groupId>
-			<artifactId>utilities.common</artifactId>
+			<groupId>org.mongodb</groupId>
+    		<artifactId>mongo-java-driver</artifactId>
 		</dependency>
-
+		<dependency>
+    		<groupId>com.foursquare</groupId>
+    		<artifactId>fongo</artifactId>
+    		<scope>test</scope>
+		</dependency>
+		
+	
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

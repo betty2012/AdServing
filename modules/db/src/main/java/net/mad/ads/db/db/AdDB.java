@@ -20,11 +20,13 @@ import java.util.List;
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.index.AdDBIndex;
 import net.mad.ads.db.db.index.impl.AdDBLuceneIndex;
+import net.mad.ads.db.db.index.impl.AdDBMongoIndex;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.db.store.AdDBStore;
 import net.mad.ads.db.db.store.impl.AdDBMapDBStore;
 import net.mad.ads.db.db.store.impl.AdDBMapStore;
 import net.mad.ads.db.definition.AdDefinition;
+import net.mad.ads.db.enums.Mode;
 import net.mad.ads.db.utils.ConditionHelper;
 
 import org.slf4j.Logger;
@@ -50,13 +52,19 @@ public class AdDB {
 	}
 
 	public void open() throws IOException {
-		adIndex = new AdDBLuceneIndex(this);
+		
+		if (manager.getContext().mode.equals(Mode.MONGO)) {
+			adIndex = new AdDBMongoIndex(this);
+		} else if (manager.getContext().mode.equals(Mode.LUCENE)) {
+			adIndex = new AdDBLuceneIndex(this);
+		}
+		
+		
 		adIndex.open();
 		
 		if (manager.getContext().useRamOnly) {
 			adStore = new AdDBMapStore();
 		} else {
-//			adStore = new AdDBBDBStore(this);
 			adStore = new AdDBMapDBStore(this);
 		}
 		this.adStore.open();

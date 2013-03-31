@@ -45,7 +45,7 @@
 		<exec dir="../" executable="cmd" os="Windows 7">
 			<arg value="/c" />
 			<arg value="mvn.bat" />
-			<arg line="clean package install -DskipTests" />
+			<arg line="package install -DskipTests" /><!-- clean -->
 		</exec>
 
 		<exec dir="../" executable="mvn" os="Linux">

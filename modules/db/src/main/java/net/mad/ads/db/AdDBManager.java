@@ -18,23 +18,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.lucene.document.Document;
-import org.apache.lucene.search.BooleanQuery;
-
 import net.mad.ads.db.condition.Condition;
-import net.mad.ads.db.condition.impl.AdSlotCondition;
-import net.mad.ads.db.condition.impl.CountryCondition;
-import net.mad.ads.db.condition.impl.DateCondition;
-import net.mad.ads.db.condition.impl.DayCondition;
-import net.mad.ads.db.condition.impl.DistanceCondition;
-import net.mad.ads.db.condition.impl.ExcludeSiteCondition;
-import net.mad.ads.db.condition.impl.KeyValueCondition;
-import net.mad.ads.db.condition.impl.KeywordCondition;
-import net.mad.ads.db.condition.impl.SiteCondition;
-import net.mad.ads.db.condition.impl.StateCondition;
-import net.mad.ads.db.condition.impl.TimeCondition;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.nonblocking.NonBlockingAdDB;
+import net.mad.ads.db.enums.Mode;
 
 public class AdDBManager {
 
@@ -42,7 +29,7 @@ public class AdDBManager {
 	
 	private final AdDBContext context = new AdDBContext();
 	
-	private final List<Condition<Document, BooleanQuery>> conditions = new ArrayList<Condition<Document, BooleanQuery>>();
+	private final List<Condition<?, ?>> conditions = new ArrayList<Condition<?, ?>>();
 	
 	private ExecutorService executorService = null;
 	
@@ -50,25 +37,40 @@ public class AdDBManager {
 		return new Builder();
 	}
 	
-	private AdDBManager (boolean blocking, boolean closeExecutorService) {
+	private AdDBManager (Mode mode, boolean blocking, boolean closeExecutorService) {
 		if (blocking) {
 			this.adDB = new AdDB(this);
 		} else {
 			this.adDB = new NonBlockingAdDB(this);
 		}
+		this.context.mode = mode;
 		
-		// Default Conditions 
-		conditions.add(new CountryCondition());
-		conditions.add(new StateCondition());
-		conditions.add(new DateCondition());
-		conditions.add(new DayCondition());
-		conditions.add(new TimeCondition());
-		conditions.add(new KeywordCondition());
-		conditions.add(new KeyValueCondition(this.adDB));
-		conditions.add(new SiteCondition());
-		conditions.add(new AdSlotCondition());
-		conditions.add(new ExcludeSiteCondition());
-		conditions.add(new DistanceCondition());
+		// Default Conditions
+		if (mode.equals(Mode.LUCENE)) {
+			conditions.add(new net.mad.ads.db.condition.impl.lucene.CountryCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.lucene.StateCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.lucene.DateCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.lucene.DayCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.lucene.TimeCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.lucene.KeywordCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.lucene.KeyValueCondition(this.adDB));
+			conditions.add(new net.mad.ads.db.condition.impl.lucene.SiteCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.lucene.AdSlotCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.lucene.ExcludeSiteCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.lucene.DistanceCondition());
+		} else if (mode.equals(Mode.MONGO)) {
+			conditions.add(new net.mad.ads.db.condition.impl.mongo.CountryCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.mongo.StateCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.mongo.DateCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.mongo.DayCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.mongo.TimeCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.mongo.KeywordCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.mongo.KeyValueCondition(this.adDB));
+			conditions.add(new net.mad.ads.db.condition.impl.mongo.SiteCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.mongo.AdSlotCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.mongo.ExcludeSiteCondition());
+			conditions.add(new net.mad.ads.db.condition.impl.mongo.DistanceCondition());
+		}
 		/*
 		 * should the executor service be closed after shutdown
 		 * 
@@ -92,7 +94,7 @@ public class AdDBManager {
 		return adDB;
 	}
 	
-	public List<Condition<Document, BooleanQuery>> getConditions () {
+	public List<Condition<?, ?>> getConditions () {
 		return conditions;
 	}
 	
@@ -104,6 +106,7 @@ public class AdDBManager {
 		private boolean blocking = true;
 		private ExecutorService executorService = null;
 		private boolean closeExecutorService = false;
+		private Mode mode = Mode.LUCENE;
 		
 		private Builder () {
 			
@@ -111,6 +114,10 @@ public class AdDBManager {
 		
 		public Builder blocking (boolean blocking) {
 			this.blocking = blocking;
+			return this;
+		}
+		public Builder mode (Mode mode) {
+			this.mode = mode;
 			return this;
 		}
 		
@@ -125,7 +132,7 @@ public class AdDBManager {
 		}
 		
 		public AdDBManager build () {
-			AdDBManager manager = new AdDBManager(blocking, closeExecutorService);
+			AdDBManager manager = new AdDBManager(mode, blocking, closeExecutorService);
 			if (!blocking && executorService == null) {
 				executorService = Executors.newFixedThreadPool(1);
 			}

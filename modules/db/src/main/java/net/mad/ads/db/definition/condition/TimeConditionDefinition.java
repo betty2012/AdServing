@@ -34,6 +34,7 @@ public class TimeConditionDefinition implements ConditionDefinition {
 		ALL_TIMES.setFrom(AdDBConstants.ADDB_AD_TIME_ALL);
 		ALL_TIMES.setTo(AdDBConstants.ADDB_AD_TIME_ALL);
 	}
+	// max period count
 	public static final int MAX_PERIOD_COUNT = 4;
 
 	private Set<TimeConditionDefinition.Period> periods = new HashSet<TimeConditionDefinition.Period>();

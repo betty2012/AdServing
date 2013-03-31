@@ -11,24 +11,30 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package net.mad.ads.db;
+package net.mad.ads.db.test.lucene;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.io.IOException;
 
-import net.mad.ads.db.enums.Mode;
+import junit.framework.TestCase;
+import net.mad.ads.db.AdDBManager;
+import net.mad.ads.db.db.AdDB;
 
-public class AdDBContext {
-	public boolean useRamOnly = true;
-//	public String tempDir = null;
+import org.junit.After;
+import org.junit.Before;
+
+public abstract class AdDBTestCase extends TestCase {
+
+	protected static AdDB db = null;
+	protected static AdDBManager manager = null;
 	
-	public Mode mode = Mode.LUCENE;
-	
-	public String datadir = null;
-	
-	public Set<String> validKeys = new HashSet<String>();
-	
-	public Map<String, Object> configuration = new HashMap<String, Object>();
+	@Before
+	public void setUp () throws IOException {
+		manager = AdDBManager.builder().build();
+		db = manager.getAdDB();
+		db.open();
+	}
+	@After
+	public void tearDown () throws IOException {
+		db.close();
+	}
 }
