@@ -23,6 +23,15 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>net.mad.ads</groupId>
 			<artifactId>utilities.common</artifactId>
 		</dependency>
@@ -35,18 +44,18 @@
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-analyzers-common</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.mongodb</groupId>
-    		<artifactId>mongo-java-driver</artifactId>
+			<artifactId>mongo-java-driver</artifactId>
 		</dependency>
 		<dependency>
-    		<groupId>com.foursquare</groupId>
-    		<artifactId>fongo</artifactId>
-    		<scope>test</scope>
+			<groupId>com.foursquare</groupId>
+			<artifactId>fongo</artifactId>
+			<scope>test</scope>
 		</dependency>
-		
-	
+
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

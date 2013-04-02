@@ -40,6 +40,7 @@ public abstract class AdDBTestCase extends TestCase {
 		Fongo fongo = new Fongo("test mongo server");
 		DB testdb = fongo.getDB("test");
 		DBCollection index = testdb.getCollection("index");
+		DBCollection store = testdb.getCollection("store");
 		
 //		MongoClient fongo = new MongoClient("localhost");
 //		DB testdb = fongo.getDB("adserver");
@@ -47,6 +48,7 @@ public abstract class AdDBTestCase extends TestCase {
 		
 		manager = AdDBManager.builder().mode(Mode.MONGO).build();
 		manager.getContext().configuration.put("index.collection", index);
+		manager.getContext().configuration.put("store.collection", store);
 		db = manager.getAdDB();
 		db.open();
 	}

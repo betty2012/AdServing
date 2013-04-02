@@ -25,6 +25,7 @@ import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.db.store.AdDBStore;
 import net.mad.ads.db.db.store.impl.AdDBMapDBStore;
 import net.mad.ads.db.db.store.impl.AdDBMapStore;
+import net.mad.ads.db.db.store.impl.AdDBMongoStore;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.enums.Mode;
 import net.mad.ads.db.utils.ConditionHelper;
@@ -65,7 +66,11 @@ public class AdDB {
 		if (manager.getContext().useRamOnly) {
 			adStore = new AdDBMapStore();
 		} else {
-			adStore = new AdDBMapDBStore(this);
+			if (manager.getContext().mode.equals(Mode.MONGO)) {
+				adStore = new AdDBMongoStore(this);
+			} else {
+				adStore = new AdDBMapDBStore(this);
+			}
 		}
 		this.adStore.open();
 	}

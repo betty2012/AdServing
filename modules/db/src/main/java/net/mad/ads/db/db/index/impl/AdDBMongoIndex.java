@@ -23,35 +23,17 @@ import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.index.AdDBIndex;
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.db.search.AdCollector;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.model.format.AdFormat;
 import net.mad.ads.db.model.type.AdType;
-import net.mad.ads.db.utils.LuceneDocumentHelper;
+
 import net.mad.ads.db.utils.MongoDocumentHelper;
-import net.mad.ads.db.utils.LuceneQueryHelper;
+
 import net.mad.ads.db.utils.MongoQueryHelper;
 
-import org.apache.lucene.analysis.core.KeywordAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.IndexWriterConfig.OpenMode;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause.Occur;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.NRTManager;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.store.RAMDirectory;
-import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Strings;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -62,6 +44,7 @@ public class AdDBMongoIndex implements AdDBIndex {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(AdDBMongoIndex.class);
+	
 	public static final String INDEX_COLLECTION = "index.collection";
 
 	private DBCollection indexCollection = null;
@@ -154,7 +137,8 @@ public class AdDBMongoIndex implements AdDBIndex {
 		try {
 			while (cursor.hasNext()) {
 				DBObject doc = cursor.next();
-				result.add(addb.getBanner((String) doc.get(AdDBConstants.ADDB_AD_ID)));
+				result.add(addb.getBanner((String) doc
+						.get(AdDBConstants.ADDB_AD_ID)));
 			}
 		} finally {
 			cursor.close();
