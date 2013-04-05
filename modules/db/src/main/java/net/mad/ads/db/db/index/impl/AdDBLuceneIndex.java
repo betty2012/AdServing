@@ -70,7 +70,7 @@ public class AdDBLuceneIndex implements AdDBIndex {
 	@Override
 	public void open() throws IOException {
 		
-		if (addb.manager.getContext().useRamOnly) {
+		if (addb.manager.getContext().memoryOnly) {
 			index = new RAMDirectory();
 		} else {
 			if (Strings.isNullOrEmpty(addb.manager.getContext().datadir)) {

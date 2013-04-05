@@ -63,7 +63,7 @@ public class AdDB {
 		
 		adIndex.open();
 		
-		if (manager.getContext().useRamOnly) {
+		if (manager.getContext().memoryOnly) {
 			adStore = new AdDBMapStore();
 		} else {
 			if (manager.getContext().mode.equals(Mode.MONGO)) {

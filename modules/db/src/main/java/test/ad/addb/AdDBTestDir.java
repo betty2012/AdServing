@@ -35,7 +35,7 @@ public class AdDBTestDir {
 		AdDBManager manager = AdDBManager.builder().build();
 		
 		
-		manager.getContext().useRamOnly = false;
+		manager.getContext().memoryOnly = false;
 		manager.getContext().datadir = "/tmp/addb";
 		
 		manager.getAdDB().open();

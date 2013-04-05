@@ -44,7 +44,7 @@ public class ClusterTest {
 
 		
 		AdDBManager manager = AdDBManager.builder().build();
-		manager.getContext().useRamOnly = true;
+		manager.getContext().memoryOnly = true;
 		manager.getAdDB().open();
 		RuntimeContext.setAdDB(manager.getAdDB());
 		RuntimeContext.setManager(manager);

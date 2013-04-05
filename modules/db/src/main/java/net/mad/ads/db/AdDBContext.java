@@ -21,8 +21,7 @@ import java.util.Set;
 import net.mad.ads.db.enums.Mode;
 
 public class AdDBContext {
-	public boolean useRamOnly = true;
-//	public String tempDir = null;
+	public boolean memoryOnly = true;
 	
 	public Mode mode = Mode.LUCENE;
 	

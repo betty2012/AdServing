@@ -211,7 +211,7 @@ public class StartupPlugIn implements ServletContextListener {
 		
 		long before = System.currentTimeMillis();
 		AdDBManager manager = AdDBManager.builder().build();
-		manager.getContext().useRamOnly = false;
+		manager.getContext().memoryOnly = false;
 		manager.getContext().datadir = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_DB_DIRECOTRY);
 		RuntimeContext.setManager(manager);
 		RuntimeContext.setAdDB(manager.getAdDB());
