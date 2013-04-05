@@ -41,6 +41,7 @@ public class ConditionHelper {
 	 * @param banners
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	public List<AdDefinition> processFilter (AdRequest request, List<AdDefinition> banners, AdDB db) {
 		if (!request.hasConditions()) {
 			return banners;

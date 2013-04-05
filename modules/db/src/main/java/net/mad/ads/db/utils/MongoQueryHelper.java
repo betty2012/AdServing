@@ -17,9 +17,6 @@ import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.request.AdRequest;
 
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.Query;
-
 import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
 

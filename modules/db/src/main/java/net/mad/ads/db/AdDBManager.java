@@ -45,32 +45,6 @@ public class AdDBManager {
 		}
 		this.context.mode = mode;
 		
-		// Default Conditions
-		if (mode.equals(Mode.LUCENE)) {
-			conditions.add(new net.mad.ads.db.condition.impl.lucene.CountryCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.lucene.StateCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.lucene.DateCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.lucene.DayCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.lucene.TimeCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.lucene.KeywordCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.lucene.KeyValueCondition(this.adDB));
-			conditions.add(new net.mad.ads.db.condition.impl.lucene.SiteCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.lucene.AdSlotCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.lucene.ExcludeSiteCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.lucene.DistanceCondition());
-		} else if (mode.equals(Mode.MONGO)) {
-			conditions.add(new net.mad.ads.db.condition.impl.mongo.CountryCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.mongo.StateCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.mongo.DateCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.mongo.DayCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.mongo.TimeCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.mongo.KeywordCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.mongo.KeyValueCondition(this.adDB));
-			conditions.add(new net.mad.ads.db.condition.impl.mongo.SiteCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.mongo.AdSlotCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.mongo.ExcludeSiteCondition());
-			conditions.add(new net.mad.ads.db.condition.impl.mongo.DistanceCondition());
-		}
 		/*
 		 * should the executor service be closed after shutdown
 		 * 
@@ -133,6 +107,35 @@ public class AdDBManager {
 		
 		public AdDBManager build () {
 			AdDBManager manager = new AdDBManager(mode, blocking, closeExecutorService);
+			
+			
+			// Default Conditions
+			if (mode.equals(Mode.LUCENE)) {
+				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.CountryCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.StateCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.DateCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.DayCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.TimeCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.KeywordCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.KeyValueCondition(manager.adDB));
+				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.SiteCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.AdSlotCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.ExcludeSiteCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.DistanceCondition());
+			} else if (mode.equals(Mode.MONGO)) {
+				manager.conditions.add(new net.mad.ads.db.condition.impl.mongo.CountryCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.mongo.StateCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.mongo.DateCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.mongo.DayCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.mongo.TimeCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.mongo.KeywordCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.mongo.KeyValueCondition(manager.adDB));
+				manager.conditions.add(new net.mad.ads.db.condition.impl.mongo.SiteCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.mongo.AdSlotCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.mongo.ExcludeSiteCondition());
+				manager.conditions.add(new net.mad.ads.db.condition.impl.mongo.DistanceCondition());
+			}
+			
 			if (!blocking && executorService == null) {
 				executorService = Executors.newFixedThreadPool(1);
 			}

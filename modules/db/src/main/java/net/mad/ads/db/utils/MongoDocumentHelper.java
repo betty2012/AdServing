@@ -18,13 +18,8 @@ import net.mad.ads.db.condition.Condition;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.definition.AdDefinition;
 
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import com.mongodb.QueryBuilder;
 
 public class MongoDocumentHelper {
 	private static MongoDocumentHelper INSTANCE = null;
