@@ -13,10 +13,8 @@
  */
 package net.mad.ads.db.db.index.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
 import net.mad.ads.db.AdDBConstants;
@@ -26,9 +24,7 @@ import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.model.format.AdFormat;
 import net.mad.ads.db.model.type.AdType;
-
 import net.mad.ads.db.utils.MongoDocumentHelper;
-
 import net.mad.ads.db.utils.MongoQueryHelper;
 
 import org.slf4j.Logger;

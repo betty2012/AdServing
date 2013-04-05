@@ -16,7 +16,17 @@ package net.mad.ads.base.api.importer;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.lang.reflect.*;
+import java.lang.reflect.Type;
+
+import net.mad.ads.base.api.importer.job.Job;
+import net.mad.ads.base.api.importer.job.JobFile;
+import net.mad.ads.base.api.importer.job.jobs.DeleteJob;
+import net.mad.ads.base.api.importer.job.jobs.ImportJob;
+import net.mad.ads.base.api.importer.job.jobs.UpdateJob;
+import net.mad.ads.base.api.importer.reader.AdXmlReader;
+import net.mad.ads.common.util.Strings;
+import net.mad.ads.db.db.AdDB;
+import net.mad.ads.db.definition.AdDefinition;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -30,16 +40,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
-import net.mad.ads.base.api.importer.job.Job;
-import net.mad.ads.base.api.importer.job.JobFile;
-import net.mad.ads.base.api.importer.job.jobs.DeleteJob;
-import net.mad.ads.base.api.importer.job.jobs.ImportJob;
-import net.mad.ads.base.api.importer.job.jobs.UpdateJob;
-import net.mad.ads.base.api.importer.reader.AdXmlReader;
-import net.mad.ads.common.util.Strings;
-import net.mad.ads.db.db.AdDB;
-import net.mad.ads.db.definition.AdDefinition;
 
 
 public class Importer {

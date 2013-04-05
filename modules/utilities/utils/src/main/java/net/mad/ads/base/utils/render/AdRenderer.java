@@ -14,7 +14,6 @@
 package net.mad.ads.base.utils.render;
 
 import java.io.IOException;
-import java.util.Map;
 
 public interface AdRenderer {
 	public void init (String templatePath) throws IOException;

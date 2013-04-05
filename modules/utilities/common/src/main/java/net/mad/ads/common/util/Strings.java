@@ -13,8 +13,6 @@
  */
 package net.mad.ads.common.util;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Strings {
 	/**

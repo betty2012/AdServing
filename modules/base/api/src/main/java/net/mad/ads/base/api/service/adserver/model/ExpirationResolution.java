@@ -13,7 +13,6 @@
  */
 package net.mad.ads.base.api.service.adserver.model;
 
-import com.google.common.base.Strings;
 
 public abstract class ExpirationResolution {
 	public static final String DAY = "DAY";

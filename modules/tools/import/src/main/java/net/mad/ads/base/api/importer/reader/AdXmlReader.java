@@ -15,28 +15,22 @@ package net.mad.ads.base.api.importer.reader;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
-import org.jdom.input.SAXBuilder;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-
-import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.definition.Keyword;
 import net.mad.ads.db.definition.impl.ad.expandable.ExpandableImageAdDefinition;
 import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
 import net.mad.ads.db.definition.impl.ad.flash.FlashAdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import net.mad.ads.db.model.Country;
-import net.mad.ads.db.enums.Day;
-import net.mad.ads.db.model.State;
 import net.mad.ads.db.model.type.impl.ExternAdType;
 import net.mad.ads.db.model.type.impl.FlashAdType;
 import net.mad.ads.db.model.type.impl.ImageAdType;
 import net.mad.ads.db.services.AdFormats;
 import net.mad.ads.db.utils.mapper.AdTypeMapping;
+
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
 
 public class AdXmlReader {
 	public static AdDefinition readBannerDefinition (String filename) throws IOException{

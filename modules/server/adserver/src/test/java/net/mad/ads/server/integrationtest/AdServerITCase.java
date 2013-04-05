@@ -13,8 +13,6 @@
  */
 package net.mad.ads.server.integrationtest;
 
-import static org.junit.Assert.*;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

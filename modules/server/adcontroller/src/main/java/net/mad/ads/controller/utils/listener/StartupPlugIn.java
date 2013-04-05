@@ -14,25 +14,15 @@
 package net.mad.ads.controller.utils.listener;
 
 import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ConcurrentNavigableMap;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import net.mad.ads.common.template.TemplateManager;
-import net.mad.ads.common.template.impl.freemarker.FMTemplateManager;
 import net.mad.ads.common.util.Properties2;
-import net.mad.ads.common.util.Strings;
 import net.mad.ads.controller.utils.RuntimeContext;
-import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.model.type.AdType;
-import net.mad.ads.db.services.AdTypes;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.mapdb.DB;

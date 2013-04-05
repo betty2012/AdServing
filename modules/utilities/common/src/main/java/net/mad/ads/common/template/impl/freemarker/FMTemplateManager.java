@@ -22,12 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.mad.ads.common.template.TemplateManager;
-
-
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
 
 public class FMTemplateManager implements TemplateManager {
 

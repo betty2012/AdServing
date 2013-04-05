@@ -13,19 +13,16 @@
  */
 package net.mad.ads.base.api.importer.reader;
 
-import org.junit.Assert;
-
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.condition.ClickExpirationConditionDefinition;
-import net.mad.ads.db.definition.condition.DateConditionDefinition;
 import net.mad.ads.db.definition.condition.DayConditionDefinition;
 import net.mad.ads.db.definition.condition.DistanceConditionDefinition;
 import net.mad.ads.db.definition.condition.StateConditionDefinition;
-import net.mad.ads.db.definition.condition.TimeConditionDefinition;
 import net.mad.ads.db.definition.condition.ViewExpirationConditionDefinition;
-import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
 import net.mad.ads.db.enums.ExpirationResolution;
+
+import org.junit.Assert;
 
 
 public class AdReaderTest {

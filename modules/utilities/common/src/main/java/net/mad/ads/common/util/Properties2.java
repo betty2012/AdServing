@@ -18,14 +18,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.stringtemplate.v4.ST;
-import org.antlr.stringtemplate.*;
-import org.antlr.stringtemplate.language.*;
 
 /**
  * Helper for loading property-files

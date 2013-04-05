@@ -13,7 +13,7 @@
  */
 package net.mad.ads.services.tracking.impl.mongo;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Calendar;
 import java.util.Date;

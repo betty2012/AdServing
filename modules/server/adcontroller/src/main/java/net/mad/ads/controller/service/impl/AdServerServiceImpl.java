@@ -22,7 +22,6 @@ import net.mad.ads.base.api.service.adserver.AdServerService;
 import net.mad.ads.base.api.service.adserver.model.ImageAd;
 import net.mad.ads.base.api.service.adserver.model.Period;
 import net.mad.ads.controller.utils.RuntimeContext;
-import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.Campaign;
 import net.mad.ads.db.definition.condition.ClickExpirationConditionDefinition;
 import net.mad.ads.db.definition.condition.CountryConditionDefinition;

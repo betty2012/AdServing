@@ -24,13 +24,6 @@ import net.mad.ads.db.definition.AdSlot;
 import net.mad.ads.db.definition.condition.AdSlotConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
 
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause.Occur;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.TermQuery;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.QueryBuilder;
 

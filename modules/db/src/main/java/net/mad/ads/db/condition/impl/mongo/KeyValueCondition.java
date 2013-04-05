@@ -15,7 +15,6 @@ package net.mad.ads.db.condition.impl.mongo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.condition.AbstractCondition;
@@ -26,18 +25,11 @@ import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.KeyValue;
 import net.mad.ads.db.definition.condition.KeyValueConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.model.Country;
 
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.TermQuery;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 import com.mongodb.BasicDBObject;
 import com.mongodb.QueryBuilder;
 

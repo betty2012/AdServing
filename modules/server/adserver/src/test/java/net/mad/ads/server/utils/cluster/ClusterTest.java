@@ -14,20 +14,19 @@
 package net.mad.ads.server.utils.cluster;
 
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Map;
-
-import org.junit.Test;
-
-import com.hazelcast.core.Hazelcast;
 
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import net.mad.ads.db.services.AdFormats;
-import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.RuntimeContext;
+
+import org.junit.Test;
+
+import com.hazelcast.core.Hazelcast;
 
 public class ClusterTest {
 

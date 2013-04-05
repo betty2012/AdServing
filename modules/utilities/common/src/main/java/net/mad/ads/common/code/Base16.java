@@ -13,7 +13,6 @@
  */
 package net.mad.ads.common.code;
 
-import java.util.UUID;
 
 
 /**

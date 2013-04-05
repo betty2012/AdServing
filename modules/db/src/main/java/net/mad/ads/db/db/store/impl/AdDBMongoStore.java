@@ -14,28 +14,20 @@
 package net.mad.ads.db.db.store.impl;
 
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
-import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.store.AdDBStore;
 import net.mad.ads.db.definition.AdDefinition;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Strings;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
-
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.mapdb.*;
 
 
 

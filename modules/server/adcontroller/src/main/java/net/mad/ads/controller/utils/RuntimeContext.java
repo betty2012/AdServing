@@ -20,11 +20,11 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import net.mad.ads.db.definition.AdDefinition;
+
 import org.mapdb.DB;
 
 import com.hazelcast.core.HazelcastInstance;
-
-import net.mad.ads.db.definition.AdDefinition;
 
 
 

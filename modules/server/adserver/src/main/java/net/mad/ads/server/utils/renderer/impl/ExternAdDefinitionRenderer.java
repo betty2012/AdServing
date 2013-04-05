@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import net.mad.ads.base.utils.render.RenderContext;
 import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
 import net.mad.ads.db.model.type.AdType;
-import net.mad.ads.db.model.type.impl.ExpandableImageAdType;
 import net.mad.ads.db.model.type.impl.ExternAdType;
 import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.AdServerConstants;

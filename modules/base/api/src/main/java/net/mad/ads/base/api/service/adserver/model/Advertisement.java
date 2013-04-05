@@ -16,7 +16,6 @@ package net.mad.ads.base.api.service.adserver.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public abstract class Advertisement {
 	/*

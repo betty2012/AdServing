@@ -23,11 +23,9 @@ import java.util.Map;
 
 import net.mad.ads.base.utils.render.AdRenderer;
 import net.mad.ads.base.utils.render.RenderContext;
-
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
 
 public class FreemarkerAdRenderer implements AdRenderer {
 

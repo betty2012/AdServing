@@ -16,11 +16,11 @@ package net.mad.ads.server.utils.cluster;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.server.utils.RuntimeContext;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.hazelcast.core.EntryEvent;
 import com.hazelcast.core.EntryListener;

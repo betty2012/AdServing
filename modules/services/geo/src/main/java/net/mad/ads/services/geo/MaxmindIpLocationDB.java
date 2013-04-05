@@ -16,7 +16,6 @@ package net.mad.ads.services.geo;
 
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -26,7 +25,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 import net.mad.ads.services.geo.helper.ValidateIP;
 

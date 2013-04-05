@@ -13,11 +13,6 @@
  */
 package net.mad.ads.server;
 
-import javax.servlet.ServletContextEvent;
-
-import net.mad.ads.server.mocks.MockServletContext;
-import net.mad.ads.server.utils.listener.StartupPlugIn;
-
 import junit.framework.TestCase;
 
 public class ContextTest extends TestCase {

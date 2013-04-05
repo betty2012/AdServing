@@ -15,20 +15,16 @@ package net.mad.ads.services.geo;
 
 
 import java.io.BufferedReader;
-
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Scanner;
 
 import net.mad.ads.services.geo.helper.ValidateIP;
 
 import org.hsqldb.jdbc.pool.JDBCPooledDataSource;
-
-
 
 import au.com.bytecode.opencsv.CSVReader;
 import biz.source_code.miniConnectionPoolManager.MiniConnectionPoolManager;

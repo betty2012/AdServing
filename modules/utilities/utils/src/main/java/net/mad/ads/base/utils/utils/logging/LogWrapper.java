@@ -14,15 +14,11 @@
 package net.mad.ads.base.utils.utils.logging;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Properties;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.mad.ads.base.utils.utils.logging.handler.RollingFileHandler;

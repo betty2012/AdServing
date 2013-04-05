@@ -13,11 +13,21 @@
  */
 package net.mad.ads.base.utils.utils.logging.handler;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.logging.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.logging.ErrorManager;
 import java.util.logging.Formatter;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.LogRecord;
+import java.util.logging.StreamHandler;
 
 /**
  * File handler that supports different kind of rolling than

@@ -13,13 +13,11 @@
  */
 package net.mad.ads.base.api.importer;
 
-import static org.junit.Assert.*;
 import junit.framework.TestCase;
-
-import org.junit.Test;
-
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.AdDB;
+
+import org.junit.Test;
 
 public class ImporterTest extends TestCase {
 

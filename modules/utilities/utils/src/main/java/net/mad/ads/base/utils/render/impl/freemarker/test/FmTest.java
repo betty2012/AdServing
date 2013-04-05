@@ -14,9 +14,6 @@
 package net.mad.ads.base.utils.render.impl.freemarker.test;
 
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.mad.ads.base.utils.render.AdRenderer;
 import net.mad.ads.base.utils.render.RenderContext;
 import net.mad.ads.base.utils.render.impl.freemarker.FreemarkerAdRenderer;

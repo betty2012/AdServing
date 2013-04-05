@@ -17,30 +17,16 @@ package net.mad.ads.services.geo.lucene;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 import net.mad.ads.services.geo.Location;
 import net.mad.ads.services.geo.helper.ValidateIP;
 
-import org.apache.lucene.analysis.KeywordAnalyzer;
-import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -49,30 +35,17 @@ import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.NumericField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.NumericRangeQuery;
-import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.SortField;
-import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.search.WildcardQuery;
-import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
-import org.hsqldb.jdbc.JDBCDataSource;
-import org.hsqldb.jdbc.pool.JDBCPooledDataSource;
-
-
-
 
 import au.com.bytecode.opencsv.CSVReader;
-import biz.source_code.miniConnectionPoolManager.MiniConnectionPoolManager;
 
 /**
  * Aufbau der Ortsdaten loc_id ags ascii name lat lon amt plz vorwahl einwohner

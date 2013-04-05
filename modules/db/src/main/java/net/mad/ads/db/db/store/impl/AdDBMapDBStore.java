@@ -22,11 +22,12 @@ import net.mad.ads.db.db.AdDB;
 import net.mad.ads.db.db.store.AdDBStore;
 import net.mad.ads.db.definition.AdDefinition;
 
+import org.mapdb.DB;
+import org.mapdb.DBMaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Strings;
-import org.mapdb.*;
 
 
 

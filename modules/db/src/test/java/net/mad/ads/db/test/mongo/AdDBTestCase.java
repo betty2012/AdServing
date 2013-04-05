@@ -26,8 +26,6 @@ import org.junit.Before;
 import com.foursquare.fongo.Fongo;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
 
 public abstract class AdDBTestCase extends TestCase {
 

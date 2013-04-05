@@ -15,7 +15,6 @@ package net.mad.ads.services.tracking.events;
 
 import java.io.Serializable;
 import java.util.EnumMap;
-import java.util.HashMap;
 
 public class TrackEvent extends EnumMap<EventAttribute, String> implements Serializable{
 	

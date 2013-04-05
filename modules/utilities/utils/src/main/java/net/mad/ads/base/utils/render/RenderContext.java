@@ -13,8 +13,6 @@
  */
 package net.mad.ads.base.utils.render;
 
-import java.util.HashMap;
-
 import net.mad.ads.base.utils.BaseObject;
 import net.mad.ads.db.definition.AdDefinition;
 

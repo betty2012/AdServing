@@ -13,11 +13,7 @@
  */
 package net.mad.ads.base.api.service.adserver;
 
-import static org.junit.Assert.*;
-
 import javax.xml.ws.spi.Provider;
-
-
 
 import net.mad.ads.base.api.service.adserver.model.ImageAd;
 

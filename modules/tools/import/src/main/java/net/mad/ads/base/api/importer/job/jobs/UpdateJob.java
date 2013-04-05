@@ -14,7 +14,6 @@
 package net.mad.ads.base.api.importer.job.jobs;
 
 import net.mad.ads.base.api.importer.job.Job;
-import net.mad.ads.base.api.importer.job.Job.Type;
 
 /**
  * Update eines Banners

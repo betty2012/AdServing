@@ -15,13 +15,9 @@ package net.mad.ads.base.api.importer.reader;
 
 import java.util.List;
 
-import org.jdom.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.mad.ads.db.AdDBConstants;
-import net.mad.ads.db.definition.AdSlot;
 import net.mad.ads.db.definition.AdDefinition;
+import net.mad.ads.db.definition.AdSlot;
 import net.mad.ads.db.definition.KeyValue;
 import net.mad.ads.db.definition.Keyword;
 import net.mad.ads.db.definition.condition.AdSlotConditionDefinition;
@@ -38,11 +34,15 @@ import net.mad.ads.db.definition.condition.StateConditionDefinition;
 import net.mad.ads.db.definition.condition.TimeConditionDefinition;
 import net.mad.ads.db.definition.condition.ViewExpirationConditionDefinition;
 import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.model.Country;
 import net.mad.ads.db.enums.Day;
 import net.mad.ads.db.enums.ExpirationResolution;
+import net.mad.ads.db.model.Country;
 import net.mad.ads.db.model.State;
 import net.mad.ads.db.utils.geo.GeoLocation;
+
+import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ConditionReader {
 	

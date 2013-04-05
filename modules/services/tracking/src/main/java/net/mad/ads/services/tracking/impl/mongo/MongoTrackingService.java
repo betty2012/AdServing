@@ -17,19 +17,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.bson.BasicBSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import antlr.debug.Event;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.Mongo;
-
 import net.mad.ads.base.utils.BaseContext;
 import net.mad.ads.base.utils.exception.ServiceException;
 import net.mad.ads.services.tracking.Criterion;
@@ -39,6 +26,15 @@ import net.mad.ads.services.tracking.events.EventAttribute;
 import net.mad.ads.services.tracking.events.EventType;
 import net.mad.ads.services.tracking.events.ImpressionTrackEvent;
 import net.mad.ads.services.tracking.events.TrackEvent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 public class MongoTrackingService implements TrackingService {
 
