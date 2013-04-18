@@ -21,6 +21,7 @@ import java.util.Map;
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
+import net.mad.ads.db.enums.Mode;
 import net.mad.ads.db.services.AdFormats;
 import net.mad.ads.server.utils.RuntimeContext;
 
@@ -43,8 +44,7 @@ public class ClusterTest {
 		}
 
 		
-		AdDBManager manager = AdDBManager.builder().build();
-		manager.getContext().memoryOnly = true;
+		AdDBManager manager = AdDBManager.builder().mode(Mode.MEMORY).build();
 		manager.getAdDB().open();
 		RuntimeContext.setAdDB(manager.getAdDB());
 		RuntimeContext.setManager(manager);

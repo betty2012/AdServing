@@ -34,6 +34,7 @@ import net.mad.ads.common.util.Properties2;
 import net.mad.ads.common.util.Strings;
 import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.definition.AdDefinition;
+import net.mad.ads.db.enums.Mode;
 import net.mad.ads.db.model.type.AdType;
 import net.mad.ads.db.services.AdTypes;
 import net.mad.ads.server.utils.AdServerConstants;
@@ -210,8 +211,7 @@ public class StartupPlugIn implements ServletContextListener {
 	private void initBannerDB () throws Exception {
 		
 		long before = System.currentTimeMillis();
-		AdDBManager manager = AdDBManager.builder().build();
-		manager.getContext().memoryOnly = false;
+		AdDBManager manager = AdDBManager.builder().mode(Mode.LOCAL).build();
 		manager.getContext().datadir = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_DB_DIRECOTRY);
 		RuntimeContext.setManager(manager);
 		RuntimeContext.setAdDB(manager.getAdDB());
