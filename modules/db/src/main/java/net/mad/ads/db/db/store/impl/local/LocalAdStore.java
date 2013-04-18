@@ -1,93 +1,110 @@
-/**
- * Mad-Advertisement
- * Copyright (C) 2011 Thorsten Marx <thmarx@gmx.net>
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- *
- * 	http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
- */
-package net.mad.ads.db.db.index.impl;
+package net.mad.ads.db.db.store.impl.local;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.lucene.analysis.core.KeywordAnalyzer;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.index.IndexWriterConfig.OpenMode;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.NRTManager;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.RAMDirectory;
+import org.apache.lucene.util.Version;
+import org.mapdb.DB;
+import org.mapdb.DBMaker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Strings;
 
 import net.mad.ads.db.AdDBConstants;
 import net.mad.ads.db.db.AdDB;
-import net.mad.ads.db.db.index.AdDBIndex;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.db.search.AdCollector;
+import net.mad.ads.db.db.store.AdStore;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.model.format.AdFormat;
 import net.mad.ads.db.model.type.AdType;
 import net.mad.ads.db.utils.LuceneDocumentHelper;
 import net.mad.ads.db.utils.LuceneQueryHelper;
 
-import org.apache.lucene.analysis.core.KeywordAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.IndexWriterConfig.OpenMode;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause.Occur;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.NRTManager;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.store.RAMDirectory;
-import org.apache.lucene.util.Version;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+public class LocalAdStore implements AdStore {
 
-import com.google.common.base.Strings;
+	private static final Logger logger = LoggerFactory.getLogger(LocalAdStore.class);
+	
+	private Map<String, AdDefinition> store = null;
+	
+	private AdDB addb = null;
 
-public class AdDBLuceneIndex implements AdDBIndex {
-
-	private static final Logger logger = LoggerFactory
-			.getLogger(AdDBLuceneIndex.class);
-
+	// MapDB
+	private DB db;
+	// Lucene
 	private Directory index = null;
 	private IndexWriter writer = null;
 	
 	private NRTManager nrt_manager = null;
-
-	private AdDB addb = null;
-
-	public AdDBLuceneIndex(AdDB db) {
+	
+	private boolean memoryMode = false;
+	
+	public LocalAdStore(AdDB db) {
 		this.addb = db;
 	}
-
+	public LocalAdStore(AdDB db, boolean memoryMode) {
+		this(db);
+		this.memoryMode = memoryMode;
+	}
+	
 	@Override
 	public void open() throws IOException {
 		
-		if (addb.manager.getContext().memoryOnly) {
-			index = new RAMDirectory();
+		if (memoryMode) {
+			this.index = new RAMDirectory();
+			this.store = new HashMap<String, AdDefinition>();
 		} else {
 			if (Strings.isNullOrEmpty(addb.manager.getContext().datadir)) {
-				throw new IOException("temp directory can not be empty");
+				throw new IOException("data directory can not be empty");
 			}
+			
 			String dir = addb.manager.getContext().datadir;
 			if (!dir.endsWith("/") || !dir.endsWith("\\")) {
 				dir += "/";
 			}
-			File temp = new File(dir + "index");
+			File temp = new File(dir + "store");
 			if (!temp.exists()) {
 				temp.mkdirs();
 			}
+			temp = new File(dir + "index");
+			if (!temp.exists()) {
+				temp.mkdirs();
+			}
+			// create lucene index directory
 			index = FSDirectory.open(temp);
+			
+			// create database
+			db = DBMaker.newFileDB(new File(dir + "store/ads"))
+				    .closeOnJvmShutdown()
+				    .make();
+			
+			store = db.getTreeMap("collectionName");
 		}
 		
-		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_41,
+		
+		
+		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_42,
 				new KeywordAnalyzer());
 		// CREATE_OR_APPEND
 		config.setOpenMode(OpenMode.CREATE_OR_APPEND);
@@ -99,6 +116,11 @@ public class AdDBLuceneIndex implements AdDBIndex {
 
 	@Override
 	public void close() throws IOException {
+		if (!memoryMode) {
+            db.close();
+            db = null;
+        }
+		
 		this.writer.commit();
 		this.writer.close();
 		nrt_manager.close();
@@ -114,14 +136,31 @@ public class AdDBLuceneIndex implements AdDBIndex {
 	}
 
 	@Override
-	public void addBanner(AdDefinition banner) throws IOException {
-		Document doc = LuceneDocumentHelper.getInstance().getBannerDocument(banner, this.addb);
+	public void add(AdDefinition definition) throws IOException {
+		// add index
+		Document doc = LuceneDocumentHelper.getInstance().getBannerDocument(definition, this.addb);
 		this.writer.addDocument(doc, new KeywordAnalyzer());
+		// add to map
+		this.store.put(definition.getId(), definition);
+		if (!memoryMode) {
+			this.db.commit();
+		}
 	}
 
 	@Override
-	public void deleteBanner(String id) throws IOException {
+	public void delete(String id) throws IOException {
+		// add to index
 		this.writer.deleteDocuments(new Term(AdDBConstants.ADDB_AD_ID, id));
+		// add to db
+		this.store.remove(id);
+		if (!memoryMode) {
+			this.db.commit();
+		}
+	}
+
+	@Override
+	public AdDefinition get(String id) {
+		return this.store.get(id);
 	}
 
 	@Override
@@ -202,28 +241,19 @@ public class AdDBLuceneIndex implements AdDBIndex {
 
 	@Override
 	public void clear() throws IOException {
+		
 		this.writer.deleteAll();
 		try {
 			this.reopen();
+			
+			this.store.clear();
+			if (!memoryMode) {
+				this.db.commit();
+			}
 		} catch (IOException ioe) {
 			this.writer.rollback();
 			throw ioe;
 		}
-	}
-
-	@Override
-	public void commit() throws IOException {
-		this.writer.commit();
-	}
-
-	@Override
-	public void rollback() throws IOException {
-		this.writer.rollback();
-	}
-
-	@Override
-	public void beginTransaction() throws IOException {
-		this.writer.prepareCommit();
 	}
 
 }

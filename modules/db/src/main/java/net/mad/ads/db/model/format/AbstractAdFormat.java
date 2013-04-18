@@ -13,6 +13,7 @@
  */
 package net.mad.ads.db.model.format;
 
+
 public abstract class AbstractAdFormat implements AdFormat {
 	private String name = null;
 	private int width = -1;

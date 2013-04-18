@@ -37,7 +37,7 @@ public class CountryConditionTest extends AdDBTestCase {
 	public void testStateCondition () throws Exception {
 		System.out.println("CountryCondition");
 		
-		AdDefinition b = new ImageAdDefinition();
+		ImageAdDefinition b = new ImageAdDefinition();
 		b.setId("1");
 		
 		CountryConditionDefinition sdef = new CountryConditionDefinition();
@@ -62,7 +62,7 @@ public class CountryConditionTest extends AdDBTestCase {
 		
 		request.setCountry(new Country("DE"));
 		result = db.search(request);
-		assertEquals(result.size(), 1);
+		assertEquals(1, result.size());
 		
 		request.setCountry(Country.ALL);
 		result = db.search(request);

@@ -13,6 +13,7 @@
  */
 package net.mad.ads.db.model.type.impl;
 
+
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import net.mad.ads.db.model.type.AbstractAdType;

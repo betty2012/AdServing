@@ -48,7 +48,7 @@ public class RealtimeTest extends AdDBTestCase {
 		System.out.println(sw.getElapsedTime() + "ms");
 		
 		
-		assertEquals(db.size(), 0);
+		assertEquals(0, db.size());
 		
 		sw = sw.reset();
 		sw.start();

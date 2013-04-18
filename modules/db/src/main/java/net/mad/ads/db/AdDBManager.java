@@ -80,7 +80,7 @@ public class AdDBManager {
 		private boolean blocking = true;
 		private ExecutorService executorService = null;
 		private boolean closeExecutorService = false;
-		private Mode mode = Mode.LUCENE;
+		private Mode mode = Mode.MEMORY;
 		
 		private Builder () {
 			
@@ -110,7 +110,7 @@ public class AdDBManager {
 			
 			
 			// Default Conditions
-			if (mode.equals(Mode.LUCENE)) {
+			if (Mode.LOCAL.equals(mode) || Mode.MEMORY.equals(mode)) {
 				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.CountryCondition());
 				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.StateCondition());
 				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.DateCondition());
@@ -122,7 +122,7 @@ public class AdDBManager {
 				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.AdSlotCondition());
 				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.ExcludeSiteCondition());
 				manager.conditions.add(new net.mad.ads.db.condition.impl.lucene.DistanceCondition());
-			} else if (mode.equals(Mode.MONGO)) {
+			} else if (mode.equals(Mode.REMOTE)) {
 				manager.conditions.add(new net.mad.ads.db.condition.impl.mongo.CountryCondition());
 				manager.conditions.add(new net.mad.ads.db.condition.impl.mongo.StateCondition());
 				manager.conditions.add(new net.mad.ads.db.condition.impl.mongo.DateCondition());

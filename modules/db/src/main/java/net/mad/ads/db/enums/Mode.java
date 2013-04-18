@@ -14,6 +14,7 @@
 package net.mad.ads.db.enums;
 
 public enum Mode {
-	LUCENE,
-	MONGO
+	MEMORY,
+	LOCAL,
+	REMOTE
 }

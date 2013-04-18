@@ -21,6 +21,7 @@ import net.mad.ads.db.AdDBManager;
 import net.mad.ads.db.db.request.AdRequest;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
+import net.mad.ads.db.enums.Mode;
 import net.mad.ads.db.model.format.impl.MediumRectangleAdFormat;
 import net.mad.ads.db.model.type.impl.ImageAdType;
 import net.mad.ads.db.services.AdFormats;
@@ -35,7 +36,7 @@ public class AdDBTestDir {
 		AdDBManager manager = AdDBManager.builder().build();
 		
 		
-		manager.getContext().memoryOnly = false;
+		manager.getContext().mode = Mode.LOCAL;
 		manager.getContext().datadir = "/tmp/addb";
 		
 		manager.getAdDB().open();

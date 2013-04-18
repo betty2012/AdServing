@@ -18,14 +18,11 @@ import java.io.IOException;
 import java.util.List;
 
 import net.mad.ads.db.AdDBManager;
-import net.mad.ads.db.db.index.AdDBIndex;
-import net.mad.ads.db.db.index.impl.AdDBLuceneIndex;
-import net.mad.ads.db.db.index.impl.AdDBMongoIndex;
+
 import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.db.store.AdDBStore;
-import net.mad.ads.db.db.store.impl.AdDBMapDBStore;
-import net.mad.ads.db.db.store.impl.AdDBMapStore;
-import net.mad.ads.db.db.store.impl.AdDBMongoStore;
+import net.mad.ads.db.db.store.AdStore;
+import net.mad.ads.db.db.store.impl.local.LocalAdStore;
+import net.mad.ads.db.db.store.impl.remote.RemoteAdStore;
 import net.mad.ads.db.definition.AdDefinition;
 import net.mad.ads.db.enums.Mode;
 import net.mad.ads.db.utils.ConditionHelper;
@@ -43,8 +40,9 @@ public class AdDB {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdDB.class);
 	
-    private AdDBStore adStore;
-    private AdDBIndex adIndex = null;
+//    private AdDBStore adStore;
+//    private AdDBIndex adIndex = null;
+	private AdStore store;
     
     public final AdDBManager manager;
     
@@ -54,43 +52,28 @@ public class AdDB {
 
 	public void open() throws IOException {
 		
-		if (manager.getContext().mode.equals(Mode.MONGO)) {
-			adIndex = new AdDBMongoIndex(this);
-		} else if (manager.getContext().mode.equals(Mode.LUCENE)) {
-			adIndex = new AdDBLuceneIndex(this);
-		}
+		if (manager.getContext().mode.equals(Mode.REMOTE)) {
+			this.store = new RemoteAdStore(this);
+		} else if (manager.getContext().mode.equals(Mode.LOCAL)) {
+			store = new LocalAdStore(this);
+		} else if (manager.getContext().mode.equals(Mode.MEMORY)) {
+			store = new LocalAdStore(this, true);
+		} 
 		
 		
-		adIndex.open();
-		
-		if (manager.getContext().memoryOnly) {
-			adStore = new AdDBMapStore();
-		} else {
-			if (manager.getContext().mode.equals(Mode.MONGO)) {
-				adStore = new AdDBMongoStore(this);
-			} else {
-				adStore = new AdDBMapDBStore(this);
-			}
-		}
-		this.adStore.open();
+		store.open();
 	}
 	
 	public void reopen () throws IOException {
-		adIndex.reopen();
+		store.reopen();
 	}
 	
 	public void clear () throws IOException {
-		try {
-			adIndex.clear();
-			adStore.clear();
-		} catch (IOException ioe) {
-			throw ioe;
-		}
+		store.clear();
 	}
 	
 	public void close() throws IOException {
-		this.adIndex.close();
-		this.adStore.close();
+		this.store.close();
 	}
 	
 	/**
@@ -100,23 +83,7 @@ public class AdDB {
 	 * @throws IOException
 	 */
 	public void addBanner (AdDefinition banner) throws IOException {
-		try {
-			this.adIndex.beginTransaction();
-			this.adStore.beginTransaction();
-			
-			this.adIndex.addBanner(banner);
-			this.adStore.addBanner(banner);
-			
-			this.adIndex.commit();
-			this.adStore.commit();
-		} catch (Exception e) {
-			logger.error("", e);
-			
-			this.adIndex.rollback();
-			this.adStore.rollback();
-			
-			throw new IOException("error adding addefintion", e);
-		}
+		store.add(banner);
 	}
 	
 	/**
@@ -125,23 +92,7 @@ public class AdDB {
 	 * @throws IOException
 	 */
 	public void deleteBanner (String id) throws IOException {
-		try {
-			this.adIndex.beginTransaction();
-			this.adStore.beginTransaction();
-			
-			this.adIndex.deleteBanner(id);
-			this.adStore.deleteBanner(id);
-			
-			this.adIndex.commit();
-			this.adStore.commit();
-		} catch (Exception e) {
-			logger.error("", e);
-			
-			this.adIndex.rollback();
-			this.adStore.rollback();
-			
-			throw new IOException("error deleting addefintion", e);
-		}
+		store.delete(id);
 	}
 	
 	/**
@@ -152,7 +103,7 @@ public class AdDB {
 	 * @throws IOException
 	 */
 	public List<AdDefinition> search (AdRequest request) throws IOException {
-		List<AdDefinition> result = this.adIndex.search(request);
+		List<AdDefinition> result = this.store.search(request);
 		
 		/*
 		 * Zu letzt wird das Ergebnis gefiltert
@@ -173,7 +124,7 @@ public class AdDB {
 	 * @return
 	 */
 	public AdDefinition getBanner (String id) {
-		return this.adStore.getBanner(id);
+		return this.store.get(id);
 	}
 	
 	/**
@@ -181,6 +132,6 @@ public class AdDB {
 	 * @return
 	 */
 	public int size () {		
-		return this.adIndex.size();
+		return this.store.size();
 	}
 }

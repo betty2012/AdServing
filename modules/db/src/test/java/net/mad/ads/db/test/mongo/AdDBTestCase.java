@@ -26,6 +26,7 @@ import org.junit.Before;
 import com.foursquare.fongo.Fongo;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.MongoClient;
 
 public abstract class AdDBTestCase extends TestCase {
 
@@ -43,8 +44,9 @@ public abstract class AdDBTestCase extends TestCase {
 //		MongoClient fongo = new MongoClient("localhost");
 //		DB testdb = fongo.getDB("adserver");
 //		DBCollection index = testdb.getCollection("index");
+//		DBCollection store = testdb.getCollection("store");
 		
-		manager = AdDBManager.builder().mode(Mode.MONGO).build();
+		manager = AdDBManager.builder().mode(Mode.REMOTE).build();
 		manager.getContext().configuration.put("index.collection", index);
 		manager.getContext().configuration.put("store.collection", store);
 		db = manager.getAdDB();
