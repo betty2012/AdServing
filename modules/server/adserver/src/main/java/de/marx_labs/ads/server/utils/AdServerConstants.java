@@ -45,6 +45,13 @@ public abstract class AdServerConstants {
 			public static final String IPLOCATIONSERVICE_CLASS = "iplocation.service.class";
 			
 			public static final String CLUSTERMODE = "clustermode";
+			
+			public static final String TRACKING_MONGO_AUTHENTICATION = "tracking.mongo.authentication";
+			public static final String TRACKING_MONGO_HOST = "tracking.mongo.host";
+			public static final String TRACKING_MONGO_DB = "tracking.mongo.db";
+			public static final String TRACKING_MONGO_COLLECTION = "tracking.mongo.collection";
+			public static final String TRACKING_MONGO_USERNAME = "tracking.mongo.username";
+			public static final String TRACKING_MONGO_PASSWORD = "tracking.mongo.password";
 		}
 	}
 	

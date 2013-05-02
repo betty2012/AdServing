@@ -47,6 +47,8 @@ public class StartupPlugIn implements ServletContextListener {
 			String enviroment = event.getServletContext().getInitParameter(
 					"enviroment");
 
+			RuntimeContext.setEnviroment(enviroment);
+			
 			String configDirectory = new File(".").getAbsolutePath(); // event.getServletContext().getInitParameter("configDirectory");
 
 			if (System.getProperties().containsKey("mad.home")) {
@@ -64,9 +66,9 @@ public class StartupPlugIn implements ServletContextListener {
 			// configure log4j
 
 			PropertyConfigurator.configure(Properties2
-					.loadProperties(configDirectory + "log4j.properties"));
+					.loadProperties(configDirectory + "log4j_controller.properties"));
 
-			RuntimeContext.setEnviroment(enviroment);
+			
 			String path = event.getServletContext().getRealPath("/");
 			RuntimeContext.setProperties(Properties2
 					.loadProperties(configDirectory + "config_controller.properties"));

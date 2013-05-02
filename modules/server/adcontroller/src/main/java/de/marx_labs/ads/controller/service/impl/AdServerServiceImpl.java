@@ -40,6 +40,8 @@ import de.marx_labs.ads.db.services.AdFormats;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.hazelcast.core.Transaction;
+
 @WebService()
 @BindingType(value = javax.xml.ws.soap.SOAPBinding.SOAP12HTTP_BINDING)
 @SOAPBinding(style = javax.jws.soap.SOAPBinding.Style.RPC, use = javax.jws.soap.SOAPBinding.Use.LITERAL)
@@ -51,6 +53,7 @@ public class AdServerServiceImpl implements AdServerService {
 
 	@Override
 	public boolean add(@WebParam(name = "ad") ImageAd ad) {
+		Transaction tx = RuntimeContext.getHazelcastInstance().getTransaction();
 		try {
 			// RuntimeContext.getAdDB().addBanner(banner);
 			System.out.println(ad.getId());
@@ -157,7 +160,9 @@ public class AdServerServiceImpl implements AdServerService {
 		} catch (Exception e) {
 			logger.error("error add Banner: " + ad.getId(), e);
 			RuntimeContext.getDb().rollback();
+			tx.rollback();
 		} finally {
+			tx.commit();
 			RuntimeContext.getDb().commit();
 		}
 		return false;

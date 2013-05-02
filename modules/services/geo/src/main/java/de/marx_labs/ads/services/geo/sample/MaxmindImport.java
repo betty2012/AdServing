@@ -23,11 +23,11 @@ public class MaxmindImport {
 	public static void main(String[] args) throws Exception {
 
 		IPLocationDB readerhsql = new MaxmindIpLocationDB();
-		readerhsql.open("data/geo/maxmind/ipinfo");
+		readerhsql.open("/www/apps/adserver/data/services/ipdb/db");
 
 		long before = System.currentTimeMillis();
 		System.out.println("start import maxmind");
-		readerhsql.importCountry("data/geo/imp/");
+		readerhsql.importCountry("/www/apps/adserver/data/services/import");
 		long after = System.currentTimeMillis();
 
 		System.out.println("end import after: " + (after - before) + "ms");

@@ -17,13 +17,13 @@
     this program. If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<project default="distribute">
+<project >
 
 	<property name="version" value="0.1" />
-	<property name="jetty.version" value="8.1.8.v20121106" />
-	<property name="maxmind.version" value="GeoLiteCity_20120807" />
+	<property name="jetty.version" value="9.0.2.v20130417" />
+	<property name="maxmind.version" value="GeoLiteCity_20130402" />
 
-	<taskdef name="geoipimport" classname="de.marx-labs.ads.services.geo.ant.GeoIpImportTask">
+	<taskdef name="geoipimport" classname="de.marx_labs.ads.services.geo.ant.GeoIpImportTask">
 		<classpath location="../modules/services/geo/target/services.geo-${version}-jar-with-dependencies.jar" />
 	</taskdef>
 
@@ -31,7 +31,7 @@
 		<delete dir="services" />
 		<mkdir dir="services" />
 		<mkdir dir="services/ipdb" />
-
+		
 		<get src="http://geolite.maxmind.com/download/geoip/database/GeoLiteCity_CSV/${maxmind.version}.zip" dest="services/maxmind_${maxmind.version}.zip" verbose="true" />
 		<unzip src="services/maxmind_${maxmind.version}.zip" dest="./services/" />
 
@@ -41,17 +41,18 @@
 
 	<target name="distribute" depends="ipdb">
 		<echo>maven build</echo>
-
+	
+	<!--
 		<exec dir="../" executable="cmd" os="Windows 7">
 			<arg value="/c" />
 			<arg value="mvn.bat" />
-			<arg line="package install -DskipTests" /><!-- clean -->
+			<arg line="package install -DskipTests" />
 		</exec>
 
 		<exec dir="../" executable="mvn" os="Linux">
 			<arg line="clean package install -DskipTests" />
 		</exec>
-
+	-->
 		<echo>unzip jetty-distribution ${jetty.version}</echo>
 
 		<delete dir="dist-${version}" />
@@ -67,21 +68,17 @@
 			<fileset dir="adserver">
 			</fileset>
 			<fileset dir="temp/jetty-distribution-${jetty.version}">
-				<exclude name="**/contexts/*" />
-				<exclude name="**/contexts/**/*" />
-				<exclude name="**/contexts-available/*" />
-				<exclude name="**/webapps/*" />
-				<exclude name="**/javadoc/*" />
-				<exclude name="etc/jetty.xml" />
-				<exclude name="about.html" />
-				<exclude name="notice.html" />
-				<exclude name="README.txt" />
-				<exclude name="start.ini" />
-				<exclude name="VERSION.txt" />
-				<exclude name="LICENSE-ECLIPSE-1.0.html" />
-				<exclude name="LICENSE-APACHE-2.0.txt" />
-				<exclude name="javadoc" />
-				<exclude name="resources" />
+				<include name="bin/**/*" />
+				<include name="etc/**/*" />
+				<include name="lib/**/*" />
+				<include name="logs/**/*" />
+				<include name="resources/**/*" />
+				<include name="license-eplv10-aslv20.html" />
+				<include name="notice.html" />
+				<include name="README" />
+				<include name="VERSION.txt" />
+				<include name="start.jar" />
+				<include name="start.d" />
 			</fileset>
 		</copy>
 		<delete dir="dist-${version}" quiet="true" includeemptydirs="true">
@@ -100,7 +97,7 @@
 
 
 		<delete dir="temp" />
-		<delete dir="service" />
+		<!--delete dir="service" /-->
 
 		<echo>build finished</echo>
 
@@ -108,7 +105,7 @@
 
 	<target name="distribute_controller">
 		<echo>maven build</echo>
-
+		<!--
 		<exec dir="../" executable="cmd" os="Windows 7">
 			<arg value="/c" />
 			<arg value="mvn.bat" />
@@ -118,7 +115,7 @@
 		<exec dir="../" executable="mvn" os="Linux">
 			<arg line="clean package install -DskipTests" />
 		</exec>
-
+		-->
 		<echo>unzip jetty-distribution ${jetty.version}</echo>
 
 
@@ -132,10 +129,12 @@
 		<get src="http://download.eclipse.org/jetty/${jetty.version}/dist/jetty-distribution-${jetty.version}.zip" dest="temp-controller/jetty-distribution-${jetty.version}.zip" verbose="true" />
 		<unzip src="temp-controller/jetty-distribution-${jetty.version}.zip" dest="./temp-controller/" />
 
+		
 		<copy todir="dist-controller-${version}">
 			<fileset dir="adcontroller">
 			</fileset>
 			<fileset dir="temp-controller/jetty-distribution-${jetty.version}">
+			<!--
 				<exclude name="**/contexts/*" />
 				<exclude name="**/contexts/**/*" />
 				<exclude name="**/contexts-available/*" />
@@ -150,10 +149,26 @@
 				<exclude name="LICENSE-APACHE-2.0.txt" />
 				<exclude name="javadoc" />
 				<exclude name="resources" />
+				<exclude name="webapps" />
+				<exclude name="start.d" />
+				<exclude name="**/start.d" />
+				<exclude name="**/webapps/ROOT" />
+				<exclude name="**/webapps/test.d" />
+			-->
+				<include name="bin/**/*" />
+				<include name="etc/**/*" />
+				<include name="lib/**/*" />
+				<include name="logs/**/*" />
+				<include name="resources/**/*" />
+				<include name="license-eplv10-aslv20.html" />
+				<include name="notice.html" />
+				<include name="README" />
+				<include name="VERSION.txt" />
+				<include name="start.jar" />
+				<include name="start.d" />
 			</fileset>
 		</copy>
-		<delete dir="dist-controller-${version}" quiet="true" includeemptydirs="true">
-			<include name="contexts-available" />
+		<delete dir="dist-controller-${version}" quiet="true" includeemptydirs="true">	
 			<include name="webapps" />
 			<include name="javadoc" />
 		</delete>

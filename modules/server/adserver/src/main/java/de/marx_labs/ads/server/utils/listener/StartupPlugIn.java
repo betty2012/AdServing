@@ -216,6 +216,8 @@ public class StartupPlugIn implements ServletContextListener {
 		RuntimeContext.setManager(manager);
 		RuntimeContext.setAdDB(manager.getAdDB());
 		RuntimeContext.getAdDB().open();
+		
+		/*
 		String bannerPath = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_DATA_DIRECOTRY);
 		
 		File bdir = new File(bannerPath);
@@ -238,8 +240,9 @@ public class StartupPlugIn implements ServletContextListener {
 		}
 		
 		RuntimeContext.getAdDB().reopen();
-		
+		*/
 		long after = System.currentTimeMillis();
+		
 		logger.debug("finish bannerDB: " + (after - before) + "ms");
 	}
 }

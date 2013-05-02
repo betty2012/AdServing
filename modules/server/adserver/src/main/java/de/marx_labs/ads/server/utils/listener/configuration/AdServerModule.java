@@ -13,6 +13,8 @@
  */
 package de.marx_labs.ads.server.utils.listener.configuration;
 
+import java.net.UnknownHostException;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -26,11 +28,16 @@ import de.marx_labs.ads.services.geo.IPLocationDB;
 import de.marx_labs.ads.services.tracking.TrackingContextKeys;
 import de.marx_labs.ads.services.tracking.TrackingService;
 import de.marx_labs.ads.services.tracking.impl.local.h2.H2TrackingService;
+import de.marx_labs.ads.services.tracking.impl.mongo.MongoTrackingService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.inject.AbstractModule;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 
 public class AdServerModule extends AbstractModule {
 
@@ -85,6 +92,29 @@ public class AdServerModule extends AbstractModule {
 				DataSource ds = (DataSource) ctx.lookup("jdbc/trackingds");
 
 				context.put(TrackingContextKeys.EMBEDDED_TRACKING_DATASOURCE, ds);
+			} else if (trackService instanceof MongoTrackingService) {
+				String host = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.TRACKING_MONGO_HOST, "");
+				String db = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.TRACKING_MONGO_DB, "");
+				String collectionName = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.TRACKING_MONGO_COLLECTION, "");
+				String username = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.TRACKING_MONGO_USERNAME, "");
+				String password = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.TRACKING_MONGO_PASSWORD, "");
+				String authentication = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.TRACKING_MONGO_AUTHENTICATION, "false");
+				
+				MongoClient mongoClient = new MongoClient(host);
+				DB mongoDB = mongoClient.getDB(db);
+				mongoDB.isAuthenticated();
+				boolean auth = true;
+				if ("true".equalsIgnoreCase(authentication)) {
+					auth = mongoDB.authenticate(username, password.toCharArray());
+				}
+				if (auth) {
+					DBCollection collection = mongoDB.getCollection(collectionName);
+					
+					context.put(MongoTrackingService.MONGO_DB, mongoDB);
+					context.put(MongoTrackingService.MONGO_DB_COLLECTION, collection);
+				} else {
+					throw new RuntimeException("MongoDB Exception: not authorized");
+				}
 			}
 			
 			trackService.open(context);
@@ -102,6 +132,8 @@ public class AdServerModule extends AbstractModule {
 		} catch (IllegalAccessException e) {
 			logger.error("", e);
 		} catch (ClassNotFoundException e) {
+			logger.error("", e);
+		} catch (UnknownHostException e) {
 			logger.error("", e);
 		}
 	}

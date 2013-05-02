@@ -35,6 +35,11 @@ public class RuntimeContext {
 	 */
 	private static Properties properties = new Properties();
 	
+	public static final String ENVIROMENT_DECELOPMENT 	= "development";
+	public static final String ENVIROMENT_TEST 			= "test";
+	public static final String ENVIROMENT_STAGING		= "staging";
+	public static final String ENVIROMENT_PRODUCTION 	= "production";
+			
 	private static String enviroment;
 
 	private static DB db = null;
@@ -45,11 +50,11 @@ public class RuntimeContext {
 
 	private static HazelcastInstance hazelcastInstance = null;
 	
-	private static final Executor executor = Executors.newSingleThreadExecutor();
-	
-	public static Executor getExecutor() {
-		return executor;
-	}
+//	private static final Executor executor = Executors.newSingleThreadExecutor();
+//	
+//	public static Executor getExecutor() {
+//		return executor;
+//	}
 	
 	public static HazelcastInstance getHazelcastInstance() {
 		return hazelcastInstance;
