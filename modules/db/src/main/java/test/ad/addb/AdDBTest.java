@@ -17,14 +17,14 @@ package test.ad.addb;
 import java.io.IOException;
 import java.util.List;
 
-import net.mad.ads.db.AdDBManager;
-import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import net.mad.ads.db.model.format.impl.MediumRectangleAdFormat;
-import net.mad.ads.db.model.type.impl.ImageAdType;
-import net.mad.ads.db.services.AdFormats;
-import net.mad.ads.db.services.AdTypes;
+import de.marx_labs.ads.db.AdDBManager;
+import de.marx_labs.ads.db.db.request.AdRequest;
+import de.marx_labs.ads.db.definition.AdDefinition;
+import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
+import de.marx_labs.ads.db.model.format.impl.MediumRectangleAdFormat;
+import de.marx_labs.ads.db.model.type.impl.ImageAdType;
+import de.marx_labs.ads.db.services.AdFormats;
+import de.marx_labs.ads.db.services.AdTypes;
 
 public class AdDBTest {
 

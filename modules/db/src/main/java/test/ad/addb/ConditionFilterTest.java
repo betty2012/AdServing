@@ -16,20 +16,20 @@ package test.ad.addb;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.mad.ads.db.AdDBManager;
-import net.mad.ads.db.db.request.AdRequest;
-import net.mad.ads.db.definition.AdDefinition;
-import net.mad.ads.db.definition.condition.CountryConditionDefinition;
-import net.mad.ads.db.definition.condition.DistanceConditionDefinition;
-import net.mad.ads.db.definition.impl.ad.extern.ExternAdDefinition;
-import net.mad.ads.db.enums.ConditionDefinitions;
-import net.mad.ads.db.model.Country;
-import net.mad.ads.db.model.format.AdFormat;
-import net.mad.ads.db.model.format.impl.FullBannerAdFormat;
-import net.mad.ads.db.model.type.AdType;
-import net.mad.ads.db.model.type.impl.ExternAdType;
-import net.mad.ads.db.services.AdTypes;
-import net.mad.ads.db.utils.geo.GeoLocation;
+import de.marx_labs.ads.db.AdDBManager;
+import de.marx_labs.ads.db.db.request.AdRequest;
+import de.marx_labs.ads.db.definition.AdDefinition;
+import de.marx_labs.ads.db.definition.condition.CountryConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.DistanceConditionDefinition;
+import de.marx_labs.ads.db.definition.impl.ad.extern.ExternAdDefinition;
+import de.marx_labs.ads.db.enums.ConditionDefinitions;
+import de.marx_labs.ads.db.model.Country;
+import de.marx_labs.ads.db.model.format.AdFormat;
+import de.marx_labs.ads.db.model.format.impl.FullBannerAdFormat;
+import de.marx_labs.ads.db.model.type.AdType;
+import de.marx_labs.ads.db.model.type.impl.ExternAdType;
+import de.marx_labs.ads.db.services.AdTypes;
+import de.marx_labs.ads.db.utils.geo.GeoLocation;
 
 public class ConditionFilterTest {
 	public ConditionFilterTest () {

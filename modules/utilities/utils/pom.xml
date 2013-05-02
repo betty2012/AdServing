@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>net.mad.ads</groupId>
+		<groupId>de.marx-labs.ads</groupId>
 		<artifactId>advertisement</artifactId>
 		<version>0.1</version>
 		<relativePath>../../../pom.xml</relativePath>
@@ -19,11 +19,11 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>net.mad.ads</groupId>
+			<groupId>de.marx-labs.ads</groupId>
 			<artifactId>db</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.mad.ads</groupId>
+			<groupId>de.marx-labs.ads</groupId>
 			<artifactId>utilities.common</artifactId>
 		</dependency>
 		<dependency>

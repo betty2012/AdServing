@@ -34,7 +34,7 @@
 	</context-param>
 
 	<listener>
-		<listener-class>net.mad.ads.controller.utils.listener.StartupPlugIn</listener-class>
+		<listener-class>de.marx_labs.ads.controller.utils.listener.StartupPlugIn</listener-class>
 	</listener>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

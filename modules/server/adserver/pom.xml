@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>net.mad.ads</groupId>
+		<groupId>de.marx-labs.ads</groupId>
 		<artifactId>advertisement</artifactId>
 		<version>0.1</version>
 		<relativePath>../../../pom.xml</relativePath>
@@ -25,11 +25,11 @@
 			<artifactId>hazelcast</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.mad.ads</groupId>
+			<groupId>de.marx-labs.ads</groupId>
 			<artifactId>utilities.common</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.mad.ads</groupId>
+			<groupId>de.marx-labs.ads</groupId>
 			<artifactId>utilities.utils</artifactId>
 			<exclusions>
 				<exclusion>
@@ -40,7 +40,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>net.mad.ads</groupId>
+			<groupId>de.marx-labs.ads</groupId>
 			<artifactId>base.api</artifactId>
 			<exclusions>
 				<exclusion>
@@ -51,22 +51,22 @@
 		</dependency>
 
 		<dependency>
-			<groupId>net.mad.ads</groupId>
+			<groupId>de.marx-labs.ads</groupId>
 			<artifactId>db</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>net.mad.ads</groupId>
+			<groupId>de.marx-labs.ads</groupId>
 			<artifactId>tools.import</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>net.mad.ads</groupId>
+			<groupId>de.marx-labs.ads</groupId>
 			<artifactId>services.geo</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>net.mad.ads</groupId>
+			<groupId>de.marx-labs.ads</groupId>
 			<artifactId>services.tracking</artifactId>
 		</dependency>
 

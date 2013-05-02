@@ -23,7 +23,7 @@
 
   <bannerLeft>
     <name>${project.name}</name>
-    <src>http://cedarsoft.org/net.mad.adserver/$artifactId.jpg</src>
+    <src>http://cedarsoft.org/de.marx-labs.adserver/$artifactId.jpg</src>
     <href>index.html</href>
   </bannerLeft>
 

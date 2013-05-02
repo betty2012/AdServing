@@ -1,0 +1,5 @@
+de.marx_labs.ads.db.model.type.impl.ExpandableImageAdType
+de.marx_labs.ads.db.model.type.impl.ExternAdType
+de.marx_labs.ads.db.model.type.impl.FlashAdType
+de.marx_labs.ads.db.model.type.impl.ImageAdType
+de.marx_labs.ads.db.model.type.impl.TextlinkAdType

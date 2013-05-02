@@ -34,7 +34,7 @@
 	</context-param>
 	<servlet>
 		<servlet-name>AdServlet</servlet-name>
-		<servlet-class>net.mad.ads.server.servlet.AdServlet</servlet-class>
+		<servlet-class>de.marx_labs.ads.server.servlet.AdServlet</servlet-class>
 		<init-param>
 			<param-name>threadpoolsize</param-name>
 			<param-value>2</param-value>
@@ -47,7 +47,7 @@
 	<servlet>
 		<display-name>AdClick</display-name>
 		<servlet-name>AdClick</servlet-name>
-		<servlet-class>net.mad.ads.server.servlet.AdClick</servlet-class>
+		<servlet-class>de.marx_labs.ads.server.servlet.AdClick</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdClick</servlet-name>
@@ -57,7 +57,7 @@
 		<description></description>
 		<display-name>AdSelect</display-name>
 		<servlet-name>AdSelect</servlet-name>
-		<servlet-class>net.mad.ads.server.servlet.AdSelect</servlet-class>
+		<servlet-class>de.marx_labs.ads.server.servlet.AdSelect</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdSelect</servlet-name>
@@ -68,7 +68,7 @@
 		Objekt und stellt es über ein ThreadLocal Variable zur Verfügung. -->
 	<filter>
 		<filter-name>AdContextFilter</filter-name>
-		<filter-class>net.mad.ads.server.utils.http.listener.AdContextListener</filter-class>
+		<filter-class>de.marx_labs.ads.server.utils.http.listener.AdContextListener</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>AdContextFilter</filter-name>
@@ -98,7 +98,7 @@
 		<filter-name>ExpiresHeaderFlter</filter-name> <url-pattern>/js/ads.js</url-pattern> 
 		</filter-mapping> -->
 	<listener>
-		<listener-class>net.mad.ads.server.utils.listener.StartupPlugIn</listener-class>
+		<listener-class>de.marx_labs.ads.server.utils.listener.StartupPlugIn</listener-class>
 	</listener>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

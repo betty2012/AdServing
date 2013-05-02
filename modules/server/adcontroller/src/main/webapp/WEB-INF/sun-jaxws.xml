@@ -28,11 +28,11 @@
 <!-- 
     <endpoint
         name='fromjava'
-        implementation='net.mad.ads.server.service.impl.TestService'
+        implementation='de.marx_labs.ads.server.service.impl.TestService'
         url-pattern='/addnumbers'/>
  --> 
     <endpoint
         name='fromjava'
-        implementation='net.mad.ads.controller.service.impl.AdServerServiceImpl'
+        implementation='de.marx_labs.ads.controller.service.impl.AdServerServiceImpl'
         url-pattern='/adservice'/>
 </endpoints>
