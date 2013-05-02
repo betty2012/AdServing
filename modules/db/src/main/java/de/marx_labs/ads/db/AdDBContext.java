@@ -28,4 +28,38 @@ public class AdDBContext {
 	public Set<String> validKeys = new HashSet<String>();
 	
 	public Map<String, Object> configuration = new HashMap<String, Object>();
+
+	public Mode getMode() {
+		return mode;
+	}
+
+	public void setMode(Mode mode) {
+		this.mode = mode;
+	}
+
+	public String getDatadir() {
+		return datadir;
+	}
+
+	public void setDatadir(String datadir) {
+		this.datadir = datadir;
+	}
+
+	public Set<String> getValidKeys() {
+		return validKeys;
+	}
+
+	public void setValidKeys(Set<String> validKeys) {
+		this.validKeys = validKeys;
+	}
+
+	public Map<String, Object> getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(Map<String, Object> configuration) {
+		this.configuration = configuration;
+	}
+	
+	
 }

@@ -13,6 +13,9 @@
  */
 package de.marx_labs.ads.db.spring;
 
+import java.io.IOException;
+
+import de.marx_labs.ads.db.AdDBContext;
 import de.marx_labs.ads.db.AdDBManager;
 import de.marx_labs.ads.db.enums.Mode;
 
@@ -24,12 +27,59 @@ public class AdDBManagerSpringFactory {
 	
 	private String mode = Mode.MEMORY.name();
 	
+	private AdDBContext context = null;
+	
 	public AdDBManagerSpringFactory () {
 		
 	}
 	
 	
-	public void init () {
-		this.manager = AdDBManager.builder().blocking(this.blocking).mode(Mode.valueOf(mode)).closeExecutorService(true).build();
+	public void init () throws IOException {
+		this.manager = AdDBManager.builder().blocking(this.blocking).mode(Mode.valueOf(mode)).closeExecutorService(true).context(context).build();
+		this.manager.getAdDB().open();
 	}
+	public void destroy () throws IOException {
+		this.manager.getAdDB().close();
+	}
+
+	public boolean isBlocking() {
+		return blocking;
+	}
+
+
+	public void setBlocking(boolean blocking) {
+		this.blocking = blocking;
+	}
+
+
+	public AdDBManager getManager() {
+		return manager;
+	}
+
+
+	public void setManager(AdDBManager manager) {
+		this.manager = manager;
+	}
+
+
+	public String getMode() {
+		return mode;
+	}
+
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+
+
+	public AdDBContext getContext() {
+		return context;
+	}
+
+
+	public void setContext(AdDBContext context) {
+		this.context = context;
+	}
+	
+	
 }

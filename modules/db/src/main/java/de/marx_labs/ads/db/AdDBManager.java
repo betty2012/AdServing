@@ -27,7 +27,7 @@ public class AdDBManager {
 
 	private final AdDB adDB;
 	
-	private final AdDBContext context = new AdDBContext();
+	private final AdDBContext context;
 	
 	private final List<Condition<?, ?>> conditions = new ArrayList<Condition<?, ?>>();
 	
@@ -37,13 +37,14 @@ public class AdDBManager {
 		return new Builder();
 	}
 	
-	private AdDBManager (Mode mode, boolean blocking, boolean closeExecutorService) {
+	private AdDBManager (boolean blocking, boolean closeExecutorService, AdDBContext context) {
+		this.context = context;
 		if (blocking) {
 			this.adDB = new AdDB(this);
 		} else {
 			this.adDB = new NonBlockingAdDB(this);
 		}
-		this.context.mode = mode;
+		
 		
 		/*
 		 * should the executor service be closed after shutdown
@@ -81,6 +82,7 @@ public class AdDBManager {
 		private ExecutorService executorService = null;
 		private boolean closeExecutorService = false;
 		private Mode mode = Mode.MEMORY;
+		private AdDBContext context = null;
 		
 		private Builder () {
 			
@@ -88,6 +90,10 @@ public class AdDBManager {
 		
 		public Builder blocking (boolean blocking) {
 			this.blocking = blocking;
+			return this;
+		}
+		public Builder context (AdDBContext context) {
+			this.context = context;
 			return this;
 		}
 		public Builder mode (Mode mode) {
@@ -106,7 +112,11 @@ public class AdDBManager {
 		}
 		
 		public AdDBManager build () {
-			AdDBManager manager = new AdDBManager(mode, blocking, closeExecutorService);
+			if (this.context == null) {
+				this.context = new AdDBContext();
+			}
+			this.context.mode = mode;
+			AdDBManager manager = new AdDBManager(blocking, closeExecutorService, this.context);
 			
 			
 			// Default Conditions
