@@ -12,7 +12,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jetty.version>9.0.0.v20130308</jetty.version>
+		<jetty.version>9.0.2.v20130417</jetty.version>
 		<infinispan.version>5.2.4.Final</infinispan.version>
 		<lucene.version>4.2.1</lucene.version>
 		<hazelcast.version>2.5</hazelcast.version>
@@ -48,6 +48,7 @@
 		<module>modules/utilities/thirdparty</module>
 		<module>modules/db</module>
 		<module>modules/server/adserver</module>
+		<module>modules/server/adserver2</module>
 		<module>modules/server/adcontroller</module>
 		<!-- module>modules/server/mobileadserver</module -->
 		<module>modules/tools/import</module>

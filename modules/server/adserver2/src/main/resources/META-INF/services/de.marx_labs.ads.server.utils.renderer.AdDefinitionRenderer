@@ -1,0 +1,4 @@
+de.marx_labs.ads.server.utils.renderer.impl.ExpandableImageAdDefinitionRenderer
+de.marx_labs.ads.server.utils.renderer.impl.ExternAdDefinitionRenderer
+de.marx_labs.ads.server.utils.renderer.impl.FlashAdDefinitionRenderer
+de.marx_labs.ads.server.utils.renderer.impl.ImageAdDefinitionRenderer
