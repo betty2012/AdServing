@@ -11,14 +11,25 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package de.marx_labs.ads.db.model.format.impl;
+package de.marx_labs.ads.db.spring;
 
-import de.marx_labs.ads.db.model.format.AbstractAdFormat;
+import de.marx_labs.ads.db.AdDBManager;
+import de.marx_labs.ads.db.enums.Mode;
 
-public class WideButton2AdFormat extends AbstractAdFormat {
+public class AdDBManagerSpringFactory {
 
-	public WideButton2AdFormat() {
-		super("Widebutton 2", 160, 60);
+	private boolean blocking = true;
+	
+	private AdDBManager manager = null;
+	
+	private String mode = Mode.MEMORY.name();
+	
+	public AdDBManagerSpringFactory () {
+		
 	}
-
+	
+	
+	public void init () {
+		this.manager = AdDBManager.builder().blocking(this.blocking).mode(Mode.valueOf(mode)).closeExecutorService(true).build();
+	}
 }

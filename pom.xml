@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 
 	<version>0.1</version>
-	<inceptionYear>2011</inceptionYear>
+	<inceptionYear>2011-2013</inceptionYear>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
