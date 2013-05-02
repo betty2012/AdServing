@@ -156,6 +156,9 @@ public class AdServerServiceImpl implements AdServerService {
 			return true;
 		} catch (Exception e) {
 			logger.error("error add Banner: " + ad.getId(), e);
+			RuntimeContext.getDb().rollback();
+		} finally {
+			RuntimeContext.getDb().commit();
 		}
 		return false;
 	}

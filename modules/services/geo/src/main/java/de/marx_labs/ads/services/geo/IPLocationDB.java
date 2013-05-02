@@ -19,7 +19,7 @@ import biz.source_code.miniConnectionPoolManager.MiniConnectionPoolManager;
 
 public interface IPLocationDB {
 
-	public abstract void open(String db) throws ClassNotFoundException, SQLException;
+	public void open(String db) throws ClassNotFoundException, SQLException;
 
 	/**
 	 * Falls die Datenbank von verschiedenen Services verwendet wird, kann eine
@@ -27,12 +27,12 @@ public interface IPLocationDB {
 	 * 
 	 * @param con
 	 */
-	public abstract void open(MiniConnectionPoolManager poolmgr);
+	public void open(MiniConnectionPoolManager poolmgr);
 
-	public abstract void close() throws SQLException;
+	public void close() throws SQLException;
 
-	public abstract void importCountry(String path);
+	public void importCountry(String path);
 
-	public abstract Location searchIp(String ip);
+	public Location searchIp(String ip);
 
 }

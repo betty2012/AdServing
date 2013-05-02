@@ -62,7 +62,7 @@ public class RuntimeContext {
 	
 
 	/*
-	 * Der Cache enthält Eine Liste mit allen BannerIDs für einen einzelnen Request, 
+	 * Der Cache enthält eine Liste mit allen BannerIDs für einen einzelnen Request, 
 	 * dadruch werden doppelte Anzeigen eines Banners auf einer Seite verhindert.
 	 * 
 	 * Achtung: Diese einfach Implementierung verlangt, dass alle Request die von einer Seite kommen

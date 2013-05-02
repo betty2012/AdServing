@@ -76,7 +76,8 @@ public class StartupPlugIn implements ServletContextListener {
 							new File(RuntimeContext.getProperties()
 									.getProperty("db.dir")))
 					.closeOnJvmShutdown().make();
-
+			// call compact at starttime
+			db.compact();
 			// open existing an collection (or create new)
 			ConcurrentNavigableMap<String, AdDefinition> map = db
 					.getTreeMap("ads");
