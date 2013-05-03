@@ -49,10 +49,10 @@ public class ClusterManager {
 	private final ExecutorService executor;
 	
 	public ClusterManager () {
-		executor = new PausableThreadPoolExecutor(1);
+		executor = new PausableThreadPoolExecutor((int) Math.round(Runtime.getRuntime().availableProcessors() * .75));
         instance = Hazelcast.newHazelcastInstance();
         ads = instance.getMap("ads");
-        ads.addEntryListener(new AdEntryListener(), true);
+        ads.addEntryListener(new AdEntryListener(this), true);
 	}
 	
 	/**
@@ -66,19 +66,24 @@ public class ClusterManager {
 		updateRunning = true;
 		try {
 			LOGGER.debug("found " + ads.size() + " AdDefinitions");
+			RuntimeContext.getAdDB().clear();
 			for (AdDefinition ad : ads.values()) {
-				try {
-					RuntimeContext.getAdDB().deleteBanner(ad.getId());
+				
+//					RuntimeContext.getAdDB().deleteBanner(ad.getId());
 					RuntimeContext.getAdDB().addBanner(ad);
-				} catch (IOException e) {
-					LOGGER.error("error updating AdDefinition " + ad.getId(), e);
-				}		
+						
 			}
+		} catch (IOException e) {
+			LOGGER.error("error running full update ", e);
 		} finally {
 			updateRunning = false;
 		}
 	}
 	
+	/**
+	 * is currently a full update running
+	 * @return
+	 */
 	public boolean isUpdating () {
 		return this.updateRunning;
 	}
@@ -86,24 +91,30 @@ public class ClusterManager {
 	
 	class AdEntryListener implements EntryListener<String, AdDefinition> {
 
+		private ClusterManager manager = null;
+		
+		public AdEntryListener (ClusterManager manager) {
+			this.manager = manager;
+		}
+		
 		@Override
 		public void entryAdded(EntryEvent<String, AdDefinition> entry) {
-			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(), entry.getKey(), false)));
+			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(), entry.getKey(), false), this.manager));
 		}
 
 		@Override
 		public void entryEvicted(EntryEvent<String, AdDefinition> entry) {
-			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(), entry.getKey(), true)));
+			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(), entry.getKey(), true), this.manager));
 		}
 
 		@Override
 		public void entryRemoved(EntryEvent<String, AdDefinition> entry) {
-			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(), entry.getKey(), true)));
+			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(), entry.getKey(), true), this.manager));
 		}
 
 		@Override
 		public void entryUpdated(EntryEvent<String, AdDefinition> entry) {
-			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(), entry.getKey(), false)));
+			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(), entry.getKey(), false), this.manager));
 		}	
 	}
 	
@@ -129,16 +140,18 @@ public class ClusterManager {
 	static class AdTaskRunnable implements Runnable {
 
 		private AdTask task;
+		private ClusterManager manager;
 		
-		public AdTaskRunnable (AdTask task) {
+		public AdTaskRunnable (AdTask task, ClusterManager manager) {
 			this.task = task;
+			this.manager = manager;
 		}
 		
 		@Override
 		public void run() {
 			if (RuntimeContext.getClusterManager().isUpdating()) {
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					LOGGER.error("error while waiting");
 				}
@@ -157,6 +170,8 @@ public class ClusterManager {
 				
 			} catch (IOException e) {
 				LOGGER.error("error updating AdDefinition " + (task.toString()), e);
+				// on error reindex the advertisements
+				manager.init();
 			}
 		}
 		
