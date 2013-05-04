@@ -26,6 +26,14 @@ abstract class Advertisement {
 	 */
 	public $campaign;
 	/*
+	 * AdFormat
+	 */
+	public $adFormat;
+	/*
+	 * Link Target
+	 */
+	public $linkTarget;
+	/*
 	 * The sites this ad should be displayed on
 	 */
 	public $sites = array();
@@ -78,6 +86,22 @@ abstract class Advertisement {
 		$this->campaign = $campaign;
 	}
 
+	public function getAdFormat() {
+		return $this->adFormat;
+	}
+
+	public function setAdFormat($adFormat) {
+		$this->adFormat = $adFormat;
+	}
+	
+	public function getLinkTarget() {
+		return $this->linkTarget;
+	}
+
+	public function setLinkTarget($linkTarget) {
+		$this->linkTarget = $linkTarget;
+	}
+	
 	public function getTimePeriods() {
 		return $this->timePeriods;
 	}

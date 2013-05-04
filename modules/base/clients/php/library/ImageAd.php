@@ -19,26 +19,16 @@ class ImageAd extends Advertisement {
 	/*
 	 * ImageData base64 encoded
 	 */
-	private $imageData;
-	private $imageType;
+	private $imageUrl;
 	
-	public function getImageData () {
-		return $this->imageData;
-	}
-	public function getImageType () {
-		return $this->imageType;
+	public function getImageUrl () {
+		return $this->imageUrl;
 	}
 	
-	public function setImageData ($imageData) {
-		$this->imageData = $imageData;
-	}
-	public function setImageType ($imageType) {
-		$this->imageType = $imageType;
+	public function setImageUrl ($imageUrl) {
+		$this->imageUrl = $imageUrl;
 	}
 	
-	public function setImageFile ($imagefile) {
-		base64_encode_image($imagefile);
-	}
 	
 	private function base64_encode_image ($imagefile) {
 		$imgtype = array('jpg', 'gif', 'png');
