@@ -9,4 +9,6 @@ nbproject
 /distribution/dist-0.1
 /distribution/dist-controller-0.1
 /distribution/services
+/distribution/temp
 /modules/base/clients/php/nbproject/private/
+logs

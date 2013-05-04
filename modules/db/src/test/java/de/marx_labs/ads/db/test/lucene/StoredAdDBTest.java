@@ -38,6 +38,8 @@ public class StoredAdDBTest {
 		manager.getContext().datadir = "D:/www/apps/adserver/temp/";
 		manager.getAdDB().open();
 		
+		manager.getAdDB().clear();
+		
 		ImageAdDefinition ib = new ImageAdDefinition();
 		ib.setFormat(new MediumRectangleAdFormat());
 		ib.setId("1");
@@ -58,6 +60,14 @@ public class StoredAdDBTest {
 		
 		System.out.println(result.size());
 		
+		
+		manager.getAdDB().close();
+		
+		manager.getAdDB().open();
+		
+		manager.getAdDB().clear();
+		
+		manager.getAdDB().reopen();
 		
 		manager.getAdDB().close();
 	}

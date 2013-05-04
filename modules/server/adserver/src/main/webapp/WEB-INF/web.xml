@@ -63,6 +63,16 @@
 		<servlet-name>AdSelect</servlet-name>
 		<url-pattern>/js/select.js</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<display-name>AdStatus</display-name>
+		<servlet-name>AdStatus</servlet-name>
+		<servlet-class>de.marx_labs.ads.server.servlet.AdStatus</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdStatus</servlet-name>
+		<url-pattern>/admin/status</url-pattern>
+	</servlet-mapping>
 
 	<!-- Der AdContextFilter erzeugt aus dem Request und den Cookies ein AdContext 
 		Objekt und stellt es über ein ThreadLocal Variable zur Verfügung. -->
@@ -83,20 +93,6 @@
 		<url-pattern>/click</url-pattern>
 	</filter-mapping>
 
-	<!-- <filter> <filter-name>CompressionFilter</filter-name> <filter-class>de.marx.common.web.filter.compression.CompressionFilter</filter-class> 
-		<init-param> <param-name>compressType</param-name> <param-value>gzip_first</param-value> 
-		</init-param> </filter> <filter-mapping> <filter-name>CompressionFilter</filter-name> 
-		<url-pattern>/js/select.js</url-pattern> </filter-mapping> <filter-mapping> 
-		<filter-name>CompressionFilter</filter-name> <url-pattern>/js/ads.js</url-pattern> 
-		</filter-mapping> <filter> <filter-name>VaryHeaderFlter</filter-name> <filter-class>de.marx.common.web.filter.header.HttpHeaderFilter</filter-class> 
-		<init-param> <param-name>Vary</param-name> <param-value>&quot;Accept-Encoding&quot;</param-value> 
-		</init-param> </filter> <filter-mapping> <filter-name>VaryHeaderFlter</filter-name> 
-		<url-pattern>/js/ads.js</url-pattern> </filter-mapping> <filter> <filter-name>ExpiresHeaderFlter</filter-name> 
-		<filter-class>de.marx.common.web.filter.header.HttpHeaderFilter</filter-class> 
-		<init-param> <param-name>Expires</param-name> <param-value>(now.time + 1000 
-		* 60 * 60 * 24 * 7)</param-value> </init-param> </filter> <filter-mapping> 
-		<filter-name>ExpiresHeaderFlter</filter-name> <url-pattern>/js/ads.js</url-pattern> 
-		</filter-mapping> -->
 	<listener>
 		<listener-class>de.marx_labs.ads.server.utils.listener.StartupPlugIn</listener-class>
 	</listener>

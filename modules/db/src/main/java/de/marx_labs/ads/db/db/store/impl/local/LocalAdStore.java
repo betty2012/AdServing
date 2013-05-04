@@ -108,7 +108,7 @@ public class LocalAdStore implements AdStore {
 			index = FSDirectory.open(temp);
 			
 			// create database
-			db = DBMaker.newFileDB(new File(dir + "store/ads"))
+			db = DBMaker.newAppendFileDB(new File(dir + "store/ads"))
 				    .closeOnJvmShutdown()
 				    .make();
 			

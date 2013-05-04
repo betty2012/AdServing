@@ -67,7 +67,12 @@ public class ImageAdDefinitionRenderer implements AdDefinitionRenderer<ImageAdDe
 		RenderContext renderContext = new RenderContext();
 		renderContext.put("banner", banner);
 		renderContext.put("staticUrl", staticurl);
-		renderContext.put("clickUrl", clickurl + "?id=" + banner.getId() + "&" + RequestHelper.slot + "=" + context.getSlot().toString());
+		
+		String toClickUrl = clickurl + "?id=" + banner.getId();
+		if (context.getSlot() != null) {
+			toClickUrl += "&" + RequestHelper.slot + "=" + context.getSlot().toString();
+		}
+		renderContext.put("clickUrl", toClickUrl);
 		
 		try {
 			return RuntimeContext.getBannerRenderer().render(AdTypes.forType(ImageAdType.TYPE).getName().toLowerCase(), renderContext);

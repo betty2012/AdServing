@@ -55,6 +55,7 @@ public class AdServerServiceImpl implements AdServerService {
 	public boolean add(@WebParam(name = "ad") ImageAd ad) {
 		Transaction tx = RuntimeContext.getHazelcastInstance().getTransaction();
 		try {
+			tx.begin();
 			// RuntimeContext.getAdDB().addBanner(banner);
 			System.out.println(ad.getId());
 			System.out.println(ad.getCampaign());
@@ -79,7 +80,7 @@ public class AdServerServiceImpl implements AdServerService {
 			adDef.setLinkTarget(ad.getLinkTarget());
 
 			adDef.setFormat(AdFormats.forName(ad.getAdFormat()));
-			// Klicks
+//			 Klicks
 			if (!ad.getClickExpiration().isEmpty()) {
 				ClickExpirationConditionDefinition condition = new ClickExpirationConditionDefinition();
 				for (String key : ad.getClickExpiration().keySet()) {
@@ -90,7 +91,7 @@ public class AdServerServiceImpl implements AdServerService {
 				adDef.addConditionDefinition(
 						ConditionDefinitions.CLICK_EXPIRATION, condition);
 			}
-			// Impressions
+//			 Impressions
 			if (!ad.getViewExpiration().isEmpty()) {
 				ViewExpirationConditionDefinition condition = new ViewExpirationConditionDefinition();
 				for (String key : ad.getViewExpiration().keySet()) {
@@ -101,7 +102,7 @@ public class AdServerServiceImpl implements AdServerService {
 				adDef.addConditionDefinition(
 						ConditionDefinitions.VIEW_EXPIRATION, condition);
 			}
-			// Days
+//			 Days
 			if (!ad.getDays().isEmpty()) {
 				DayConditionDefinition condition = new DayConditionDefinition();
 				for (int day : ad.getDays()) {
@@ -110,7 +111,7 @@ public class AdServerServiceImpl implements AdServerService {
 				adDef.addConditionDefinition(ConditionDefinitions.DAY,
 						condition);
 			}
-			// Sites
+//			 Sites
 			if (!ad.getSites().isEmpty()) {
 				SiteConditionDefinition condition = new SiteConditionDefinition();
 				for (String site : ad.getSites()) {
@@ -119,7 +120,7 @@ public class AdServerServiceImpl implements AdServerService {
 				adDef.addConditionDefinition(ConditionDefinitions.SITE,
 						condition);
 			}
-			// Countries
+//			 Countries
 			if (!ad.getCountries().isEmpty()) {
 				CountryConditionDefinition condition = new CountryConditionDefinition();
 				for (String code : ad.getCountries()) {
@@ -129,7 +130,7 @@ public class AdServerServiceImpl implements AdServerService {
 				adDef.addConditionDefinition(ConditionDefinitions.COUNTRY,
 						condition);
 			}
-			// Dates
+//			 Dates
 			if (!ad.getDatePeriods().isEmpty()) {
 				DateConditionDefinition condition = new DateConditionDefinition();
 				for (Period p : ad.getDatePeriods()) {
@@ -140,7 +141,7 @@ public class AdServerServiceImpl implements AdServerService {
 				adDef.addConditionDefinition(ConditionDefinitions.DATE,
 						condition);
 			}
-			// Times
+//			 Times
 			if (!ad.getTimePeriods().isEmpty()) {
 				TimeConditionDefinition condition = new TimeConditionDefinition();
 				for (Period p : ad.getTimePeriods()) {
@@ -152,7 +153,7 @@ public class AdServerServiceImpl implements AdServerService {
 						condition);
 			}
 			
-			// put the AdDefinition in the persistence store
+//			 put the AdDefinition in the persistence store
 			RuntimeContext.getPersistentAds().put(adDef.getId(), adDef);
 			RuntimeContext.getDistributedAds().put(adDef.getId(), adDef);
 
@@ -170,13 +171,19 @@ public class AdServerServiceImpl implements AdServerService {
 
 	@Override
 	public boolean delete(@WebParam(name = "id") String id) {
+		Transaction tx = RuntimeContext.getHazelcastInstance().getTransaction();
 		try {
+			tx.begin();
 			RuntimeContext.getDistributedAds().remove(id);
 			RuntimeContext.getPersistentAds().remove(id);
 
 			return true;
 		} catch (Exception e) {
 			logger.error("error delete Banner: " + id, e);
+			tx.rollback();
+		} finally {
+			RuntimeContext.getDb().commit();
+			tx.commit();
 		}
 		return false;
 	}

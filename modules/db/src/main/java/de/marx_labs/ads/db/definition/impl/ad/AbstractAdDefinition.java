@@ -14,6 +14,8 @@
 package de.marx_labs.ads.db.definition.impl.ad;
 
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.Campaign;
@@ -41,7 +43,7 @@ public class AbstractAdDefinition implements AdDefinition {
 	/*
 	 * Bedingungen für die Anzeige des Banners
 	 */
-	private EnumMap<ConditionDefinitions, ConditionDefinition> conditionDefinitions = new EnumMap<ConditionDefinitions, ConditionDefinition>(ConditionDefinitions.class);
+	private Map<ConditionDefinitions, ConditionDefinition> conditionDefinitions = new HashMap<ConditionDefinitions, ConditionDefinition>();//new HashMap<ConditionDefinitions, ConditionDefinition>(ConditionDefinitions.class);
 	/*
 	 * Name of the product or null
 	 */

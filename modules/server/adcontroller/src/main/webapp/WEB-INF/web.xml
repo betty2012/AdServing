@@ -49,12 +49,6 @@
 		<location>/error.html</location>
 	</error-page>
 
-	<!-- WebService -->
-	<!-- <servlet> <servlet-name>XmlRpcServlet</servlet-name> <servlet-class>de.marx.common.web.xmlrpc.servlet.MySimpleXmlRpcServlet</servlet-class> 
-		<init-param> <param-name>enabledForExtensions</param-name> <param-value>true</param-value> 
-		</init-param> </servlet> <servlet-mapping> <servlet-name>XmlRpcServlet</servlet-name> 
-		<url-pattern>/xmlrpc</url-pattern> </servlet-mapping> -->
-
 	<listener>
 		<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
 	</listener>
@@ -68,5 +62,15 @@
 	<servlet-mapping>
 		<servlet-name>AdServerService</servlet-name>
 		<url-pattern>/adservice</url-pattern>
+	</servlet-mapping>
+	
+		<servlet>
+		<display-name>AdStatus</display-name>
+		<servlet-name>AdStatus</servlet-name>
+		<servlet-class>de.marx_labs.ads.controller.servlets.AdStatus</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdStatus</servlet-name>
+		<url-pattern>/admin/status</url-pattern>
 	</servlet-mapping>
 </web-app>

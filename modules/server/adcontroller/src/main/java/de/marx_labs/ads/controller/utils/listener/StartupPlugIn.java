@@ -74,23 +74,31 @@ public class StartupPlugIn implements ServletContextListener {
 					.loadProperties(configDirectory + "config_controller.properties"));
 
 			DB db = DBMaker
-					.newFileDB(
+					.newAppendFileDB(
 							new File(RuntimeContext.getProperties()
 									.getProperty("db.dir")))
 					.closeOnJvmShutdown().make();
-			// call compact at starttime
-			db.compact();
+
 			// open existing an collection (or create new)
-			ConcurrentNavigableMap<String, AdDefinition> map = db
+			ConcurrentNavigableMap<String, AdDefinition> persistentMap = db
 					.getTreeMap("ads");
 			
 			RuntimeContext.setDb(db);
-			RuntimeContext.setPersistentAds(map);
+			RuntimeContext.setPersistentAds(persistentMap);
 			
 			RuntimeContext.setHazelcastInstance(Hazelcast.newHazelcastInstance());
-			Map<String, AdDefinition> adMap = RuntimeContext.getHazelcastInstance().getMap("ads");
-			RuntimeContext.setDistributedAds(adMap);
+			Map<String, AdDefinition> distributedMap = RuntimeContext.getHazelcastInstance().getMap("ads");
+			RuntimeContext.setDistributedAds(distributedMap);
 
+			// synchronize Maps
+			if (persistentMap.size() != distributedMap.size()) {
+				logger.info("distributed and presistent maps are out of sync");
+				logger.debug("persistent ads: " + persistentMap.size());
+				logger.debug("distributed ads: " + distributedMap.size());
+				distributedMap.clear();
+				distributedMap.putAll(persistentMap);
+			}
+			
 		} catch (Exception e) {
 			logger.error("", e);
 			throw new RuntimeException(e);
@@ -99,7 +107,8 @@ public class StartupPlugIn implements ServletContextListener {
 
 	public void contextDestroyed(ServletContextEvent event) {
 		try {
-
+			RuntimeContext.getDb().compact();
+			RuntimeContext.getDb().close();
 		} catch (Exception e) {
 			logger.error("", e);
 		}

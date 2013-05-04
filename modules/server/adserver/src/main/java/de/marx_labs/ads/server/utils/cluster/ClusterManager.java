@@ -29,105 +29,128 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 
 /**
- * The Clustermanager 
+ * The Clustermanager
  * 
- * 1. Update the AdDb after starting the AdServer
- * 2. Listen for changes and update the AdDb
+ * 1. Update the AdDb after starting the AdServer 2. Listen for changes and
+ * update the AdDb
  * 
  * @author marx
- *
+ * 
  */
 public class ClusterManager {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ClusterManager.class);
-	
+
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(ClusterManager.class);
+
 	private boolean updateRunning = false;
-	
+	private long updateStarted = 0l;
+
 	private HazelcastInstance instance = null;
 	private IMap<String, AdDefinition> ads = null;
-	
+
 	private final ExecutorService executor;
-	
-	public ClusterManager () {
-		executor = new PausableThreadPoolExecutor((int) Math.round(Runtime.getRuntime().availableProcessors() * .75));
-        instance = Hazelcast.newHazelcastInstance();
-        ads = instance.getMap("ads");
-        ads.addEntryListener(new AdEntryListener(this), true);
+
+	public ClusterManager() {
+		executor = new PausableThreadPoolExecutor((int) Math.round(Runtime
+				.getRuntime().availableProcessors() * .75));
+		instance = Hazelcast.newHazelcastInstance();
+		ads = instance.getMap("ads");
+		ads.addEntryListener(new AdEntryListener(this), true);
 	}
-	
+
 	/**
-	 * init should be called directly after starting the AdServer
-	 * in this step all AdDefinitions are loaded and added to the database
+	 * init should be called directly after starting the AdServer in this step
+	 * all AdDefinitions are loaded and added to the database
 	 * 
 	 * this step should only run once
 	 */
-	public void init () {
+	public void init() {
 		LOGGER.debug("running initial database fillup");
 		updateRunning = true;
+		updateStarted = System.currentTimeMillis();
 		try {
 			LOGGER.debug("found " + ads.size() + " AdDefinitions");
-			RuntimeContext.getAdDB().clear();
-			for (AdDefinition ad : ads.values()) {
-				
-//					RuntimeContext.getAdDB().deleteBanner(ad.getId());
-					RuntimeContext.getAdDB().addBanner(ad);
-						
+			if (RuntimeContext.getAdDB().size() > 0) {
+				RuntimeContext.getAdDB().clear();
 			}
+			
+			for (AdDefinition ad : ads.values()) {
+
+				// RuntimeContext.getAdDB().deleteBanner(ad.getId());
+				RuntimeContext.getAdDB().addBanner(ad);
+			}
+			// reopen after all updates are done
+			RuntimeContext.getAdDB().reopen();
 		} catch (IOException e) {
 			LOGGER.error("error running full update ", e);
 		} finally {
 			updateRunning = false;
+			updateStarted = 0l;
 		}
+	}
+
+	/**
+	 * is currently a full update running
+	 * 
+	 * @return
+	 */
+	public boolean isUpdating() {
+		return this.updateRunning;
 	}
 	
 	/**
-	 * is currently a full update running
-	 * @return
+	 * 
+	 * @return the timestamp when the update was startet
 	 */
-	public boolean isUpdating () {
-		return this.updateRunning;
+	public long getUpdateStarted() {
+		return updateStarted;
 	}
 
-	
+
 	class AdEntryListener implements EntryListener<String, AdDefinition> {
 
 		private ClusterManager manager = null;
-		
-		public AdEntryListener (ClusterManager manager) {
+
+		public AdEntryListener(ClusterManager manager) {
 			this.manager = manager;
 		}
-		
+
 		@Override
 		public void entryAdded(EntryEvent<String, AdDefinition> entry) {
-			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(), entry.getKey(), false), this.manager));
+			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(),
+					entry.getKey(), false), this.manager));
 		}
 
 		@Override
 		public void entryEvicted(EntryEvent<String, AdDefinition> entry) {
-			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(), entry.getKey(), true), this.manager));
+			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(),
+					entry.getKey(), true), this.manager));
 		}
 
 		@Override
 		public void entryRemoved(EntryEvent<String, AdDefinition> entry) {
-			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(), entry.getKey(), true), this.manager));
+			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(),
+					entry.getKey(), true), this.manager));
 		}
 
 		@Override
 		public void entryUpdated(EntryEvent<String, AdDefinition> entry) {
-			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(), entry.getKey(), false), this.manager));
-		}	
+			executor.submit(new AdTaskRunnable(new AdTask(entry.getValue(),
+					entry.getKey(), false), this.manager));
+		}
 	}
-	
+
 	static class AdTask {
 		public final AdDefinition ad;
 		public final String adid;
 		public final boolean remove;
-		public AdTask (AdDefinition ad, String adid, boolean remove) {
+
+		public AdTask(AdDefinition ad, String adid, boolean remove) {
 			this.ad = ad;
 			this.adid = adid;
 			this.remove = remove;
 		}
-		
+
 		@Override
 		public String toString() {
 			if (ad != null) {
@@ -136,17 +159,17 @@ public class ClusterManager {
 			return "AdDefinition" + adid;
 		}
 	}
-	
+
 	static class AdTaskRunnable implements Runnable {
 
 		private AdTask task;
 		private ClusterManager manager;
-		
-		public AdTaskRunnable (AdTask task, ClusterManager manager) {
+
+		public AdTaskRunnable(AdTask task, ClusterManager manager) {
 			this.task = task;
 			this.manager = manager;
 		}
-		
+
 		@Override
 		public void run() {
 			if (RuntimeContext.getClusterManager().isUpdating()) {
@@ -163,17 +186,17 @@ public class ClusterManager {
 				} else if (task.ad != null) {
 					RuntimeContext.getAdDB().deleteBanner(task.ad.getId());
 					RuntimeContext.getAdDB().addBanner(task.ad);
-					
+
 					LOGGER.info("add AdDefinition " + task.ad.getId());
 				}
-				
-				
+
 			} catch (IOException e) {
-				LOGGER.error("error updating AdDefinition " + (task.toString()), e);
+				LOGGER.error(
+						"error updating AdDefinition " + (task.toString()), e);
 				// on error reindex the advertisements
 				manager.init();
 			}
 		}
-		
+
 	}
 }
