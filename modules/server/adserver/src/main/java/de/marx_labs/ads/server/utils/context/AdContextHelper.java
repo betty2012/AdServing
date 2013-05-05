@@ -76,8 +76,10 @@ public class AdContextHelper {
 		 */
 		if (request.getHeader("X-Real-IP") != null) {
 			clientIP = request.getHeader("X-Real-IP");
-		} else if (request.getHeader("HTTP_X_FORWARDED_FOR") != null) { // X-Forwarded-For
+		} else if (request.getHeader("HTTP_X_FORWARDED_FOR") != null) {
 			clientIP = request.getHeader("HTTP_X_FORWARDED_FOR");
+		} else if (request.getHeader("X-Forwarded-For") != null) {
+			clientIP = request.getHeader("X-Forwarded-For");
 			
 		}
 		context.setIp(clientIP);
