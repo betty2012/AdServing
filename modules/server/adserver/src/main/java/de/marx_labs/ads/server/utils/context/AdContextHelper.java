@@ -72,7 +72,7 @@ public class AdContextHelper {
 		 * if we are behind a proxy or loadbalancer
 		 * the the X-Real-IP header should be set
 		 * 
-		 * if using haproxy, HTTP_X_FORWARDED_FOR is set 
+		 * if using haproxy, HTTP_X_FORWARDED_FOR should be set 
 		 */
 		if (request.getHeader("X-Real-IP") != null) {
 			clientIP = request.getHeader("X-Real-IP");
