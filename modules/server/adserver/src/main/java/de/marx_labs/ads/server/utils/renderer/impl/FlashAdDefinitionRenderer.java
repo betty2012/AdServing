@@ -67,7 +67,12 @@ public class FlashAdDefinitionRenderer implements AdDefinitionRenderer<FlashAdDe
 		RenderContext renderContext = new RenderContext();
 		renderContext.put("banner", banner);
 		renderContext.put("staticUrl", staticurl);
-		renderContext.put("clickUrl", clickurl + "?id=" + banner.getId() + "&" + RequestHelper.slot + "=" + context.getSlot().toString());
+		
+		String toClickUrl = clickurl + "?id=" + banner.getId();
+		if (context.getAdSlot() != null) {
+			toClickUrl += "&" + RequestHelper.slot + "=" + context.getAdSlot().toString();
+		}
+		renderContext.put("clickUrl", toClickUrl);
 		
 		try {
 			return RuntimeContext.getBannerRenderer().render(AdTypes.forType(FlashAdType.TYPE).getName().toLowerCase(), renderContext);

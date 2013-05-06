@@ -154,7 +154,7 @@ public class AdServlet extends HttpServlet {
 					// context.put("adrequest_id",
 					// AdContextListener.ADCONTEXT.get()
 					// .getRequestid());
-					context.put("adrequest_id", adcontext.getRequestid());
+					context.put("adrequest_id", adcontext.getRequestId());
 					context.put("enviroment", RuntimeContext.getEnviroment()
 							.toLowerCase());
 

@@ -69,8 +69,8 @@ public class ImageAdDefinitionRenderer implements AdDefinitionRenderer<ImageAdDe
 		renderContext.put("staticUrl", staticurl);
 		
 		String toClickUrl = clickurl + "?id=" + banner.getId();
-		if (context.getSlot() != null) {
-			toClickUrl += "&" + RequestHelper.slot + "=" + context.getSlot().toString();
+		if (context.getAdSlot() != null) {
+			toClickUrl += "&" + RequestHelper.slot + "=" + context.getAdSlot().toString();
 		}
 		renderContext.put("clickUrl", toClickUrl);
 		

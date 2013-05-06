@@ -27,6 +27,9 @@ import de.marx_labs.ads.server.utils.RuntimeContext;
 import de.marx_labs.ads.server.utils.http.CookieUtils;
 import de.marx_labs.ads.server.utils.request.RequestHelper;
 
+import net.sf.uadetector.UserAgent;
+import net.sf.uadetector.UserAgentType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +37,8 @@ import org.slf4j.LoggerFactory;
 public class AdContextHelper {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdContextHelper.class);
+	
+	private static final CachedUserAgentStringParser userAgentParser = new CachedUserAgentStringParser();
 	
 	public static AdContext getAdContext (HttpServletRequest request, HttpServletResponse response) {
 		AdContext context = new AdContext();
@@ -47,19 +52,19 @@ public class AdContextHelper {
 			userID = UUID.randomUUID().toString();
 			CookieUtils.addCookie(response, AdServerConstants.Cookie.USERID, userID, CookieUtils.ONE_YEAR, RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.COOKIE_DOMAIN));
 		}
-		context.setUserid(userID);
+		context.setUserId(userID);
 		
 		String requestID = (String)request.getParameter(RequestHelper.requestId);
 		if (Strings.isEmpty(requestID)) {
 			requestID = UUID.randomUUID().toString();
 		}
-		context.setRequestid(requestID);
+		context.setRequestId(requestID);
 		
 		String slot = (String)request.getParameter(RequestHelper.slot);
 		if (!Strings.isEmpty(slot)) {
 			try {
 				AdSlot aduuid = AdSlot.fromString(slot);
-				context.setSlot(aduuid);
+				context.setAdSlot(aduuid);
 			} catch (Exception e) {
 				logger.error("", e);
 			}
@@ -70,9 +75,7 @@ public class AdContextHelper {
 		
 		/*
 		 * if we are behind a proxy or loadbalancer
-		 * the the X-Real-IP header should be set
-		 * 
-		 * if using haproxy, HTTP_X_FORWARDED_FOR should be set 
+		 * the client ip is mostly set in one of the following header fields
 		 */
 		if (request.getHeader("X-Real-IP") != null) {
 			clientIP = request.getHeader("X-Real-IP");
@@ -82,7 +85,10 @@ public class AdContextHelper {
 			clientIP = request.getHeader("X-Forwarded-For");
 			
 		}
-		context.setIp(clientIP);
+		context.setClientIp(clientIP);
+		
+		UserAgent userAgent = userAgentParser.parse(request.getHeader("User-Agent"));
+		context.setUserAgent(userAgent);
 		
 		
 		return context;

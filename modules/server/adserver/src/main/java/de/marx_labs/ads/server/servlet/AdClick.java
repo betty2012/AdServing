@@ -139,13 +139,13 @@ public class AdClick extends HttpServlet {
 						trackEvent.setBannerId(banner.getId());
 						trackEvent.setCampaign(banner.getCampaign() != null ? banner
 								.getCampaign().getId() : "");
-						trackEvent.setUser(context.getUserid());
+						trackEvent.setUser(context.getUserId());
 						trackEvent.setId(UUID.randomUUID().toString());
 						trackEvent.setTime(System.currentTimeMillis());
-						trackEvent.setIp(context.getIp());
+						trackEvent.setIp(context.getClientIp());
 						
-						if (context.getSlot() != null) {
-							trackEvent.setSite(context.getSlot().getSite());
+						if (context.getAdSlot() != null) {
+							trackEvent.setSite(context.getAdSlot().getSite());
 						} else {
 							trackEvent.setSite("NONE_PAGE");
 						}

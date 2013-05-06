@@ -47,7 +47,6 @@ import com.google.common.base.Strings;
 import de.marx_labs.ads.db.AdDBConstants;
 import de.marx_labs.ads.db.db.AdDB;
 import de.marx_labs.ads.db.db.request.AdRequest;
-import de.marx_labs.ads.db.db.search.AdCollector;
 import de.marx_labs.ads.db.db.store.AdStore;
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.model.format.AdFormat;

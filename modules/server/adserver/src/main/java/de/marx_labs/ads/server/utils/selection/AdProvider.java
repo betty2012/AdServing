@@ -136,7 +136,7 @@ public final class AdProvider {
 			
 			// wird schon ein Produkt angezeigt, dann verwenden wir genau dieses Banner
 			for (AdDefinition banner : result) {
-				if (RuntimeContext.getRequestBanners().containsKey("prod" + context.getRequestid() + "_" + banner.getProduct())) {
+				if (RuntimeContext.getRequestBanners().containsKey("prod" + context.getRequestId() + "_" + banner.getProduct())) {
 					Collection<AdDefinition> result2 = new ArrayList<AdDefinition>();
 					result2.add(banner);
 					
@@ -246,7 +246,7 @@ public final class AdProvider {
 		/*
 		 * filter out duplicate ads
 		 */
-		result = (Collection<AdDefinition>) Collections2.filter(result, new DuplicatAdFilter(context.getRequestid()));
+		result = (Collection<AdDefinition>) Collections2.filter(result, new DuplicatAdFilter(context.getRequestId()));
 		
 		return result;
 	}

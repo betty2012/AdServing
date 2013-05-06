@@ -98,9 +98,9 @@ public class RequestHelper {
 			
 			adRequest.setKeywords(KeywordUtils.getKeywords(request));
 			
-			if (context.getSlot() != null) {
-				adRequest.setSite(context.getSlot().getSite());
-				adRequest.setAdSlot(context.getSlot().toString());
+			if (context.getAdSlot() != null) {
+				adRequest.setSite(context.getAdSlot().getSite());
+				adRequest.setAdSlot(context.getAdSlot().toString());
 			}
 
 			addTimeCondition(request, adRequest);
