@@ -23,6 +23,7 @@ import de.marx_labs.ads.db.model.Country;
 import de.marx_labs.ads.db.model.format.impl.FullBannerAdFormat;
 
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 
 public class RealtimeTest extends AdDBTestCase {

@@ -22,19 +22,23 @@ import de.marx_labs.ads.db.db.AdDB;
 import org.junit.After;
 import org.junit.Before;
 
-public abstract class AdDBTestCase extends TestCase {
+import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
+
+
+public abstract class AdDBTestCase extends AbstractBenchmark {
 
 	protected static AdDB db = null;
 	protected static AdDBManager manager = null;
-	
+
 	@Before
-	public void setUp () throws IOException {
+	public void setUp() throws IOException {
 		manager = AdDBManager.builder().build();
 		db = manager.getAdDB();
 		db.open();
 	}
+
 	@After
-	public void tearDown () throws IOException {
+	public void tearDown() throws IOException {
 		db.close();
 	}
 }

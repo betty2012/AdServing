@@ -29,7 +29,7 @@ import de.marx_labs.ads.db.model.type.impl.ImageAdType;
 import de.marx_labs.ads.db.services.AdTypes;
 
 import org.junit.Test;
-
+import static org.junit.Assert.*;
 
 public class ExcludeSiteConditionTest extends AdDBTestCase {
 	
