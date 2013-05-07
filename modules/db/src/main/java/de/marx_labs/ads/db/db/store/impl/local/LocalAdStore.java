@@ -238,13 +238,16 @@ public class LocalAdStore implements AdStore {
 	}
 
 	@Override
-	public int size() {
-		IndexSearcher searcher = nrt_manager.acquire();
+	public int size() throws IOException {
+		IndexSearcher searcher = null;
 		try {
+			searcher =  nrt_manager.acquire();
 			return searcher.getIndexReader().numDocs();
 		} finally {
 			try {
-				nrt_manager.release(searcher);
+				if (searcher != null) {
+					nrt_manager.release(searcher);
+				}
 			} catch (IOException e) {
 				logger.error("", e);
 			}

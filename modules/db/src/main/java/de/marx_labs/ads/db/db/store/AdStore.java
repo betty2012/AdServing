@@ -66,7 +66,7 @@ public interface AdStore {
 	 * AdDefinition count
 	 * @return
 	 */
-	public int size ();
+	public int size () throws IOException;
 	/**
 	 * Remove all AdDefinitions from AdStore
 	 * @throws IOException

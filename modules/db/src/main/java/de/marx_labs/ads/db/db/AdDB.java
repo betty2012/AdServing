@@ -131,7 +131,7 @@ public class AdDB {
 	 * liefert die Anzahl der Banner in der Datenbank
 	 * @return
 	 */
-	public int size () {		
+	public int size () throws IOException {		
 		return this.store.size();
 	}
 }
