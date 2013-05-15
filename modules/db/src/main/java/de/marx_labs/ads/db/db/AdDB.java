@@ -22,6 +22,7 @@ import de.marx_labs.ads.db.AdDBManager;
 import de.marx_labs.ads.db.db.request.AdRequest;
 import de.marx_labs.ads.db.db.store.AdStore;
 import de.marx_labs.ads.db.db.store.impl.local.LocalAdStore;
+import de.marx_labs.ads.db.db.store.impl.local.LocalLuceneAdStore;
 import de.marx_labs.ads.db.db.store.impl.remote.RemoteAdStore;
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.enums.Mode;
@@ -55,9 +56,11 @@ public class AdDB {
 		if (manager.getContext().mode.equals(Mode.REMOTE)) {
 			this.store = new RemoteAdStore(this);
 		} else if (manager.getContext().mode.equals(Mode.LOCAL)) {
-			store = new LocalAdStore(this);
+//			store = new LocalAdStore(this);
+			store = new LocalLuceneAdStore(this);
 		} else if (manager.getContext().mode.equals(Mode.MEMORY)) {
-			store = new LocalAdStore(this, true);
+//			store = new LocalAdStore(this, true);
+			store = new LocalLuceneAdStore(this, true);
 		} 
 		
 		

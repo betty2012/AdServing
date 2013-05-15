@@ -34,7 +34,7 @@
 		<jaxws.version>2.2.8-promoted-b146</jaxws.version>
 		<jackson.version>2.1.4</jackson.version>
 		<spring.version>3.2.2.RELEASE</spring.version>
-		<msgpack.version>0.6.7</msgpack.version>
+		<kryo.version>2.21</kryo.version>
 	</properties>
 
 	<licenses>
@@ -62,9 +62,9 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>org.msgpack</groupId>
-				<artifactId>msgpack</artifactId>
-				<version>${msgpack.version}</version>
+				<groupId>com.esotericsoftware.kryo</groupId>
+				<artifactId>kryo</artifactId>
+				<version>${kryo.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>

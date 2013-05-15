@@ -22,6 +22,9 @@ public class Country implements Serializable {
 	public static Country ALL = new Country(AdDBConstants.ADDB_AD_COUNTRY_ALL); 
 	
 	private String code = "";
+	public Country () {
+		
+	}
 	public Country (String code) {
 		this.code = code;
 	}

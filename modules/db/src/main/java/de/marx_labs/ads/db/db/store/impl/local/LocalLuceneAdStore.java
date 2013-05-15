@@ -13,6 +13,8 @@
  */
 package de.marx_labs.ads.db.db.store.impl.local;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,28 +26,33 @@ import java.util.Map;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.document.BinaryDocValuesField;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.StoredField;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
+import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.NRTManager;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.Version;
-import org.mapdb.DB;
-import org.mapdb.DBMaker;
-import org.msgpack.MessagePack;
+//import org.msgpack.MessagePack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.Strings;
 
 import de.marx_labs.ads.db.AdDBConstants;
@@ -53,14 +60,22 @@ import de.marx_labs.ads.db.db.AdDB;
 import de.marx_labs.ads.db.db.request.AdRequest;
 import de.marx_labs.ads.db.db.store.AdStore;
 import de.marx_labs.ads.db.definition.AdDefinition;
+import de.marx_labs.ads.db.definition.ConditionDefinition;
+import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
+import de.marx_labs.ads.db.enums.ConditionDefinitions;
 import de.marx_labs.ads.db.model.format.AdFormat;
 import de.marx_labs.ads.db.model.type.AdType;
+import de.marx_labs.ads.db.services.AdTypes;
 import de.marx_labs.ads.db.utils.LuceneDocumentHelper;
 import de.marx_labs.ads.db.utils.LuceneQueryHelper;
 
 public class LocalLuceneAdStore implements AdStore {
 
 	private static final Logger logger = LoggerFactory.getLogger(LocalLuceneAdStore.class);
+	
+	private static final String ADV_ID = "adv_id";
+	private static final String ADV_TYPE = "adv_type";
+	private static final String ADV_CONTENT = "adv_type";
 	
 	private AdDB addb = null;
 
@@ -72,10 +87,14 @@ public class LocalLuceneAdStore implements AdStore {
 	
 	private boolean memoryMode = false;
 	
-	private MessagePack msgpack = new MessagePack();
+//	private MessagePack msgpack = new MessagePack();
+	private Kryo kryo = new Kryo();
 	
 	public LocalLuceneAdStore(AdDB db) {
 		this.addb = db;
+		
+		kryo.register(ImageAdDefinition.class);
+//		msgpack.register(ConditionDefinitions.class);
 	}
 	public LocalLuceneAdStore(AdDB db, boolean memoryMode) {
 		this(db);
@@ -137,7 +156,14 @@ public class LocalLuceneAdStore implements AdStore {
 		// add index
 		Document doc = LuceneDocumentHelper.getInstance().getBannerDocument(definition, this.addb);
 		
-		doc.add(new StoredField("advertisement", new BytesRef(msgpack.write(definition))));
+		
+		ByteArrayOutputStream bout = new ByteArrayOutputStream();
+		Output output = new Output(bout);
+		kryo.writeObject(output, definition);
+		
+		doc.add(new StoredField(ADV_CONTENT, new BytesRef(output.getBuffer())));
+		doc.add(new StringField(ADV_TYPE, definition.getType().getType(), Store.YES));
+		doc.add(new StringField(ADV_ID, definition.getId(), Store.YES));
 		
 		this.writer.addDocument(doc, new KeywordAnalyzer());
 	}
@@ -153,10 +179,22 @@ public class LocalLuceneAdStore implements AdStore {
 		IndexSearcher searcher = null;
 		try {
 			searcher =  nrt_manager.acquire();
-			Document doc = null;
-			if (doc != null) {
-				StoredField field = (StoredField) doc.getField("advertisement");
-				return msgpack.read(field.binaryValue().bytes, AdDefinition.class);
+			
+			BooleanQuery query = new BooleanQuery();
+			query.add(new BooleanClause(new TermQuery(new Term(ADV_ID, id)), Occur.MUST));
+			TopDocs topdocs = searcher.search(query, 1);
+			
+			if (topdocs.totalHits == 1) {
+				Document doc = searcher.doc(topdocs.scoreDocs[0].doc);
+				StoredField field = (StoredField) doc.getField(ADV_CONTENT);
+				
+				String type = doc.get(ADV_TYPE);
+				AdType ad_type = AdTypes.forType(type);
+				if (ad_type != null) {
+					Input input = new Input(field.binaryValue().bytes);
+					
+					return kryo.readObject(input, ad_type.getAdDefinition().getClass());
+				}
 			}
 			
 		} catch (IOException e) {
