@@ -1,16 +1,3 @@
-/*
- * Mad-Advertisement
- * Copyright (C) 2011-2013 Thorsten Marx <thmarx@gmx.net>
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- *
- * 	http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
- */
 "undefined"==typeof madApi&&(madApi={insetScript:function(b){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=b;(document.getElementsByTagName("head")[0]||document.body).appendChild(a)},onload:function(b){var a=window.onload;window.onload="function"!=typeof window.onload?b:function(){a();b()}},delegate:function(b,a,d){var c=d||arguments,e=function(){return b.apply(arguments.callee.target,c)};e.target=a;e.func=this;return e},position:function(b){var a=0,d=0;if(b.offsetParent){do a+=
 b.offsetLeft,d+=b.offsetTop;while(b=b.offsetParent)}return{left:a,top:d}},size:function(b){return{height:b.offsetHeight,width:b.offsetWidth}},isIE:function(b){return 0<window.navigator.userAgent.indexOf("MSIE ")?!0:!1},isBrowser:function(b,a){versionOk=browserOk=!1;browserOk=-1!=navigator.appName.indexOf(b);versionOk=0==a?!0:a<=parseInt(navigator.appVersion);return browserOk&&versionOk},getWindowSize:function(){var b=0,a=0;if("number"==typeof window.innerWidth)b=window.innerWidth,a=window.innerHeight;
 else if(document.documentElement&&(document.documentElement.clientWidth||document.documentElement.clientHeight))b=document.documentElement.clientWidth,a=document.documentElement.clientHeight;else if(document.body&&(document.body.clientWidth||document.body.clientHeight))b=document.body.clientWidth,a=document.body.clientHeight;return{width:b,height:a}},getScrollXY:function(b){var a=b=0;if("number"==typeof window.pageYOffset)a=window.pageYOffset,b=window.pageXOffset;else if(document.body&&(document.body.scrollLeft||

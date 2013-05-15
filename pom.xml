@@ -319,6 +319,7 @@
 						<exclude>distribution/**</exclude>
 						<exckude>modules/utilities/thirdparty/**</exckude>
 						<exckude>**/MiniConnectionPoolManager.java</exckude>
+						<exckude>**/madapi_production.js</exckude>
 					</excludes>
 				</configuration>
 				<executions>
