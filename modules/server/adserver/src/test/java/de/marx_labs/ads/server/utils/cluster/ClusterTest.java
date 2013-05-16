@@ -35,27 +35,30 @@ public class ClusterTest {
 	public void test_1 () throws Exception {
 		Map<String, AdDefinition> ads = Hazelcast.newHazelcastInstance().getMap("ads");
 		
+		
+//		Thread.sleep(60000);
+		
 		for (int i = 0; i < 100; i++) {
 			ImageAdDefinition def = new ImageAdDefinition();
 			def.setFormat(AdFormats.forCompoundName("468x60"));
 			def.setImageUrl("http://www.bannergestaltung.com/img/formate/468x60.gif");
 			def.setTargetUrl("http://www.google.de");
+			def.setLinkTarget("_blank");
 			
 			def.setId("1" + i);
 
 			ads.put(def.getId(), def);
 		}
 
-//		Thread.sleep(50000);
+		Thread.sleep(20000);
 		
-		AdDBManager manager = AdDBManager.builder().build();
-		manager.getContext().mode = Mode.LOCAL;
+		AdDBManager manager = AdDBManager.builder().mode(Mode.LOCAL).build();
 		manager.getContext().datadir = "D:/www/apps/adserver/temp3/";
 		manager.getAdDB().open();
 		manager.getAdDB().clear();
 		RuntimeContext.setAdDB(manager.getAdDB());
 		RuntimeContext.setManager(manager);
-//		
+
 		ClusterManager cluster = new ClusterManager();
 		RuntimeContext.setClusterManager(cluster);
 		RuntimeContext.getClusterManager().init();

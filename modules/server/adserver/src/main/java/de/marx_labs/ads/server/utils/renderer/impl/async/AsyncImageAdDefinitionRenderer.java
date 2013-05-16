@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Strings;
+
 import de.marx_labs.ads.base.utils.render.RenderContext;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import de.marx_labs.ads.db.model.type.AdType;
@@ -50,14 +52,14 @@ public class AsyncImageAdDefinitionRenderer implements AsyncAdDefinitionRenderer
 		
 		String clickurl = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.CLICK_URL);
 		String staticurl = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.STATIC_URL);
-		if (!staticurl.endsWith("/")) {
+		if (!Strings.isNullOrEmpty(staticurl) && !staticurl.endsWith("/")) {
 			staticurl += "/";
 		}
 		
 		RenderContext renderContext = new RenderContext();
 		renderContext.put("banner", banner);
 		renderContext.put("staticUrl", staticurl);
-		renderContext.put("divId", RequestHelper.getParameter(request, RequestHelper.div_id, ""));
+		renderContext.put("divId", RequestHelper.getParameter(request, RequestHelper.div_id, "")[0]);
 		
 		String toClickUrl = clickurl + "?id=" + banner.getId();
 		if (context.getAdSlot() != null) {

@@ -22,14 +22,15 @@ Image-Banner
 	Anhand der Request-ID kann sichergestellt werden, dass ein User auf der selben Seite
 	nicht zweimal das gleiche Banner sieht
 -->
-if (typeof madRequestID == "undefined") {
-	madRequestID = "${adrequest_id}";
-}
+
 (function () {
 	function insertImageBanner () {
 		
 		var aNode = document.createElement("a");
-		aNode.setAttribute("target", "${banner.linkTarget}");
+		<#if banner.linkTarget??>
+			aNode.setAttribute("target", "${banner.linkTarget}");
+		</#if>
+		
 		aNode.setAttribute("href", "${clickUrl}");
 		<#if banner.linkTitle??>
 			aNode.setAttribute("title", "${banner.linkTitle}");	
@@ -47,8 +48,8 @@ if (typeof madRequestID == "undefined") {
 	
 		aNode.appendChild(iNode);
 		
-		document.getElementById(c_ad_node).appendChild(aNode);
-		document.getElementById(c_ad_node).style.opacity = 1;
+		document.getElementById("${divId}").appendChild(aNode);
+		document.getElementById("${divId}").style.opacity = 1;
 	}	
 	
 	madApi.onload(madApi.delegate(insertImageBanner,this, []));

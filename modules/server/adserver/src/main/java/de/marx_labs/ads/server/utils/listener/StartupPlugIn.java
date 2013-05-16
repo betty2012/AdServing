@@ -34,6 +34,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.marx_labs.ads.base.api.importer.Importer;
+import de.marx_labs.ads.base.api.service.adserver.model.ImageAd;
 import de.marx_labs.ads.base.utils.utils.logging.LogWrapper;
 import de.marx_labs.ads.common.template.TemplateManager;
 import de.marx_labs.ads.common.template.impl.freemarker.FMTemplateManager;
@@ -42,6 +43,7 @@ import de.marx_labs.ads.common.util.Strings;
 import de.marx_labs.ads.db.AdDBManager;
 import de.marx_labs.ads.db.enums.Mode;
 import de.marx_labs.ads.db.model.type.AdType;
+import de.marx_labs.ads.db.model.type.impl.ImageAdType;
 import de.marx_labs.ads.db.services.AdTypes;
 import de.marx_labs.ads.server.utils.AdServerConstants;
 import de.marx_labs.ads.server.utils.RuntimeContext;
@@ -190,6 +192,9 @@ public class StartupPlugIn implements ServletContextListener {
 		
 		for (AdType type : AdTypes.getTypes()) {
 			RuntimeContext.getBannerRenderer().registerTemplate(type.getName().toLowerCase(), type.getName().toLowerCase()+".ftl");
+			if (type instanceof ImageAdType) {
+				RuntimeContext.getBannerRenderer().registerTemplate(type.getName().toLowerCase() + "_async", type.getName().toLowerCase()+"_async.ftl");
+			}
 		}
 	}
 	

@@ -124,10 +124,16 @@ public class LocalLuceneAdStore implements AdStore {
 	
 	private boolean memoryMode = false;
 	
-	private Kryo kryo = new Kryo();
-	
 	public LocalLuceneAdStore(AdDB db) {
 		this.addb = db;
+	}
+	public LocalLuceneAdStore(AdDB db, boolean memoryMode) {
+		this(db);
+		this.memoryMode = memoryMode;
+	}
+	
+	private Kryo kryo () {
+		Kryo kryo = new Kryo();
 		
 		int id = kryo.getNextRegistrationId();
 		kryo.register(ImageAdDefinition.class, 1 + id);
@@ -176,10 +182,8 @@ public class LocalLuceneAdStore implements AdStore {
 		kryo.register(StateConditionDefinition.class, 160 + id);
 		kryo.register(TimeConditionDefinition.class, 161 + id);
 		kryo.register(ViewExpirationConditionDefinition.class, 162 + id);
-	}
-	public LocalLuceneAdStore(AdDB db, boolean memoryMode) {
-		this(db);
-		this.memoryMode = memoryMode;
+		
+		return kryo;
 	}
 	
 	@Override
@@ -240,7 +244,7 @@ public class LocalLuceneAdStore implements AdStore {
 		
 		ByteArrayOutputStream bout = new ByteArrayOutputStream();
 		Output output = new Output(bout);
-		kryo.writeObject(output, definition);
+		kryo().writeObject(output, definition);
 		
 		
 		doc.add(new StoredField(ADV_CONTENT, new BytesRef(output.getBuffer())));
@@ -276,7 +280,7 @@ public class LocalLuceneAdStore implements AdStore {
 				if (ad_type != null) {
 					Input input = new Input(field.binaryValue().bytes);
 //					Input input = new Input(BaseEncoding.base64().decode(doc.get(ADV_CONTENT)));
-					return kryo.readObject(input, ad_type.getAdDefinition().getClass());
+					return kryo().readObject(input, ad_type.getAdDefinition().getClass());
 				}
 			}
 			
