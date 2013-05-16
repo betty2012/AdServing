@@ -16,6 +16,12 @@ package de.marx_labs.ads.db.condition.impl.mongo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.lucene.search.BooleanQuery;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.QueryBuilder;
+
 import de.marx_labs.ads.db.AdDBConstants;
 import de.marx_labs.ads.db.condition.Condition;
 import de.marx_labs.ads.db.db.request.AdRequest;
@@ -23,12 +29,6 @@ import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.condition.TimeConditionDefinition;
 import de.marx_labs.ads.db.definition.condition.TimeConditionDefinition.Period;
 import de.marx_labs.ads.db.enums.ConditionDefinitions;
-
-import org.apache.lucene.search.BooleanQuery;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.QueryBuilder;
 
 /**
  * Bedingung bzgl. des Zeitraums in dem das Banner angezeigt werden soll

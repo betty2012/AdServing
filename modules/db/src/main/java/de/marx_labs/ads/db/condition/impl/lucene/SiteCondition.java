@@ -15,13 +15,6 @@ package de.marx_labs.ads.db.condition.impl.lucene;
 
 import java.util.List;
 
-import de.marx_labs.ads.db.AdDBConstants;
-import de.marx_labs.ads.db.condition.Condition;
-import de.marx_labs.ads.db.db.request.AdRequest;
-import de.marx_labs.ads.db.definition.AdDefinition;
-import de.marx_labs.ads.db.definition.condition.SiteConditionDefinition;
-import de.marx_labs.ads.db.enums.ConditionDefinitions;
-
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
@@ -29,6 +22,13 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.TermQuery;
+
+import de.marx_labs.ads.db.AdDBConstants;
+import de.marx_labs.ads.db.condition.Condition;
+import de.marx_labs.ads.db.db.request.AdRequest;
+import de.marx_labs.ads.db.definition.AdDefinition;
+import de.marx_labs.ads.db.definition.condition.SiteConditionDefinition;
+import de.marx_labs.ads.db.enums.ConditionDefinitions;
 
 
 public class SiteCondition implements Condition<Document, BooleanQuery> {

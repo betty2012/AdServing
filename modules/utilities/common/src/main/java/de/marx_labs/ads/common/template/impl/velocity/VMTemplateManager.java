@@ -20,12 +20,12 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.marx_labs.ads.common.template.TemplateManager;
-
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
+
+import de.marx_labs.ads.common.template.TemplateManager;
 
 
 

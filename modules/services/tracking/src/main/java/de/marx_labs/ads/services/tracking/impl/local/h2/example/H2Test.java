@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import org.h2.jdbcx.JdbcDataSource;
+
 import de.marx_labs.ads.base.utils.BaseContext;
 import de.marx_labs.ads.base.utils.exception.ServiceException;
 import de.marx_labs.ads.base.utils.utils.DateHelper;
@@ -30,8 +32,6 @@ import de.marx_labs.ads.services.tracking.events.EventType;
 import de.marx_labs.ads.services.tracking.events.ImpressionTrackEvent;
 import de.marx_labs.ads.services.tracking.events.TrackEvent;
 import de.marx_labs.ads.services.tracking.impl.local.h2.H2TrackingService;
-
-import org.h2.jdbcx.JdbcDataSource;
 
 /**
  * 

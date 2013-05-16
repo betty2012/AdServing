@@ -17,6 +17,9 @@ package de.marx_labs.ads.server.utils;
 import java.util.HashMap;
 import java.util.Properties;
 
+import org.infinispan.Cache;
+import org.infinispan.manager.EmbeddedCacheManager;
+
 import de.marx_labs.ads.base.api.importer.Importer;
 import de.marx_labs.ads.base.utils.render.AdRenderer;
 import de.marx_labs.ads.base.utils.render.impl.freemarker.FreemarkerAdRenderer;
@@ -27,9 +30,6 @@ import de.marx_labs.ads.db.db.AdDB;
 import de.marx_labs.ads.server.utils.cluster.ClusterManager;
 import de.marx_labs.ads.services.geo.IPLocationDB;
 import de.marx_labs.ads.services.tracking.TrackingService;
-
-import org.infinispan.Cache;
-import org.infinispan.manager.EmbeddedCacheManager;
 
 
 public class RuntimeContext {

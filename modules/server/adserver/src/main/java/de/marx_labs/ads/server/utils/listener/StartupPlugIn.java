@@ -25,15 +25,21 @@ import java.util.TimerTask;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.apache.log4j.PropertyConfigurator;
+import org.infinispan.manager.DefaultCacheManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 import de.marx_labs.ads.base.api.importer.Importer;
-import de.marx_labs.ads.base.api.importer.reader.AdXmlReader;
 import de.marx_labs.ads.base.utils.utils.logging.LogWrapper;
 import de.marx_labs.ads.common.template.TemplateManager;
 import de.marx_labs.ads.common.template.impl.freemarker.FMTemplateManager;
 import de.marx_labs.ads.common.util.Properties2;
 import de.marx_labs.ads.common.util.Strings;
 import de.marx_labs.ads.db.AdDBManager;
-import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.enums.Mode;
 import de.marx_labs.ads.db.model.type.AdType;
 import de.marx_labs.ads.db.services.AdTypes;
@@ -44,14 +50,6 @@ import de.marx_labs.ads.server.utils.listener.configuration.AdServerModule;
 import de.marx_labs.ads.server.utils.runnable.AdDbUpdateTask;
 import de.marx_labs.ads.services.geo.IPLocationDB;
 import de.marx_labs.ads.services.tracking.TrackingService;
-
-import org.apache.log4j.PropertyConfigurator;
-import org.infinispan.manager.DefaultCacheManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 
 /**

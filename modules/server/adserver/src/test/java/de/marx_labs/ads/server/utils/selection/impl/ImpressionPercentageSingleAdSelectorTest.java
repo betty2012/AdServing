@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import de.marx_labs.ads.base.utils.BaseContext;
 import de.marx_labs.ads.base.utils.exception.ServiceException;
 import de.marx_labs.ads.db.definition.AdDefinition;
@@ -31,9 +34,6 @@ import de.marx_labs.ads.services.tracking.Criterion;
 import de.marx_labs.ads.services.tracking.TrackingService;
 import de.marx_labs.ads.services.tracking.events.EventType;
 import de.marx_labs.ads.services.tracking.events.TrackEvent;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 public class ImpressionPercentageSingleAdSelectorTest {
 

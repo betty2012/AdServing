@@ -15,9 +15,9 @@ package de.marx_labs.ads.db.definition;
 
 import java.io.Serializable;
 
-import de.marx_labs.ads.common.code.Base16;
-
 import com.google.common.base.Strings;
+
+import de.marx_labs.ads.common.code.Base16;
 
 
 /**

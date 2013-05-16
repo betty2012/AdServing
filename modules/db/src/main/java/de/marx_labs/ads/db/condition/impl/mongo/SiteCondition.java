@@ -16,15 +16,15 @@ package de.marx_labs.ads.db.condition.impl.mongo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.QueryBuilder;
+
 import de.marx_labs.ads.db.AdDBConstants;
 import de.marx_labs.ads.db.condition.Condition;
 import de.marx_labs.ads.db.db.request.AdRequest;
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.condition.SiteConditionDefinition;
 import de.marx_labs.ads.db.enums.ConditionDefinitions;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.QueryBuilder;
 
 
 public class SiteCondition implements Condition<BasicDBObject, QueryBuilder> {

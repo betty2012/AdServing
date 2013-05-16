@@ -13,14 +13,14 @@
  */
 package de.marx_labs.ads.db.utils;
 
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
+
 import de.marx_labs.ads.db.AdDBConstants;
 import de.marx_labs.ads.db.condition.Condition;
 import de.marx_labs.ads.db.db.AdDB;
 import de.marx_labs.ads.db.definition.AdDefinition;
-
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
 
 public class LuceneDocumentHelper {
 	private static LuceneDocumentHelper INSTANCE = null;

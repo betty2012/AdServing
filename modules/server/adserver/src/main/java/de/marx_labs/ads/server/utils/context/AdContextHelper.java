@@ -20,18 +20,17 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.uadetector.UserAgent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.marx_labs.ads.common.util.Strings;
 import de.marx_labs.ads.db.definition.AdSlot;
 import de.marx_labs.ads.server.utils.AdServerConstants;
 import de.marx_labs.ads.server.utils.RuntimeContext;
 import de.marx_labs.ads.server.utils.http.CookieUtils;
 import de.marx_labs.ads.server.utils.request.RequestHelper;
-
-import net.sf.uadetector.UserAgent;
-import net.sf.uadetector.UserAgentType;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class AdContextHelper {

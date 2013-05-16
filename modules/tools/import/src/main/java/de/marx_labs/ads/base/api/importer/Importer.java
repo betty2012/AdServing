@@ -18,16 +18,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.lang.reflect.Type;
 
-import de.marx_labs.ads.base.api.importer.job.Job;
-import de.marx_labs.ads.base.api.importer.job.JobFile;
-import de.marx_labs.ads.base.api.importer.job.jobs.DeleteJob;
-import de.marx_labs.ads.base.api.importer.job.jobs.ImportJob;
-import de.marx_labs.ads.base.api.importer.job.jobs.UpdateJob;
-import de.marx_labs.ads.base.api.importer.reader.AdXmlReader;
-import de.marx_labs.ads.common.util.Strings;
-import de.marx_labs.ads.db.db.AdDB;
-import de.marx_labs.ads.db.definition.AdDefinition;
-
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +30,16 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+
+import de.marx_labs.ads.base.api.importer.job.Job;
+import de.marx_labs.ads.base.api.importer.job.JobFile;
+import de.marx_labs.ads.base.api.importer.job.jobs.DeleteJob;
+import de.marx_labs.ads.base.api.importer.job.jobs.ImportJob;
+import de.marx_labs.ads.base.api.importer.job.jobs.UpdateJob;
+import de.marx_labs.ads.base.api.importer.reader.AdXmlReader;
+import de.marx_labs.ads.common.util.Strings;
+import de.marx_labs.ads.db.db.AdDB;
+import de.marx_labs.ads.db.definition.AdDefinition;
 
 
 public class Importer {

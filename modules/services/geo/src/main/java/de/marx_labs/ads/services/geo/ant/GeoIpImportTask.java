@@ -13,11 +13,11 @@
  */
 package de.marx_labs.ads.services.geo.ant;
 
-import de.marx_labs.ads.services.geo.IPLocationDB;
-import de.marx_labs.ads.services.geo.MaxmindIpLocationDB;
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
+
+import de.marx_labs.ads.services.geo.IPLocationDB;
+import de.marx_labs.ads.services.geo.MaxmindIpLocationDB;
 
 public class GeoIpImportTask extends Task {
 	

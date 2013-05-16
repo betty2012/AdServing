@@ -14,9 +14,11 @@
 package de.marx_labs.ads.server.utils.context;
 
 import java.util.concurrent.TimeUnit;
+
 import net.sf.uadetector.UserAgent;
 import net.sf.uadetector.UserAgentStringParser;
 import net.sf.uadetector.service.UADetectorServiceFactory;
+
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 

@@ -14,10 +14,11 @@
 package de.marx_labs.ads.base.api.importer;
 
 import junit.framework.TestCase;
-import de.marx_labs.ads.db.AdDBManager;
-import de.marx_labs.ads.db.db.AdDB;
 
 import org.junit.Test;
+
+import de.marx_labs.ads.db.AdDBManager;
+import de.marx_labs.ads.db.db.AdDB;
 
 public class ImporterTest extends TestCase {
 

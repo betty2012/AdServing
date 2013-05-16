@@ -18,13 +18,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.google.common.collect.Collections2;
+
 import de.marx_labs.ads.db.condition.Condition;
 import de.marx_labs.ads.db.condition.Filter;
 import de.marx_labs.ads.db.db.AdDB;
 import de.marx_labs.ads.db.db.request.AdRequest;
 import de.marx_labs.ads.db.definition.AdDefinition;
-
-import com.google.common.collect.Collections2;
 
 public class ConditionHelper {
 

@@ -13,40 +13,36 @@
  */
 package de.marx_labs.ads.db.db.store.impl.local;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
-import org.apache.lucene.document.BinaryDocValuesField;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.StoredField;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.Term;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.NRTManager;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.Version;
-//import org.msgpack.MessagePack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,20 +50,61 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.Strings;
+import com.google.common.io.BaseEncoding;
 
 import de.marx_labs.ads.db.AdDBConstants;
 import de.marx_labs.ads.db.db.AdDB;
 import de.marx_labs.ads.db.db.request.AdRequest;
 import de.marx_labs.ads.db.db.store.AdStore;
 import de.marx_labs.ads.db.definition.AdDefinition;
-import de.marx_labs.ads.db.definition.ConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.AdSlotConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.ClickExpirationConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.CountryConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.DateConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.DayConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.DistanceConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.ExcludeSiteConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.KeyValueConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.KeywordConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.SiteConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.StateConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.TimeConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.ViewExpirationConditionDefinition;
+import de.marx_labs.ads.db.definition.impl.ad.flash.FlashAdDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import de.marx_labs.ads.db.enums.ConditionDefinitions;
+import de.marx_labs.ads.db.definition.impl.ad.text.TextlinkAdDefinition;
+import de.marx_labs.ads.db.model.Country;
+import de.marx_labs.ads.db.model.State;
 import de.marx_labs.ads.db.model.format.AdFormat;
+import de.marx_labs.ads.db.model.format.impl.Button1AdFormat;
+import de.marx_labs.ads.db.model.format.impl.Button2AdFormat;
+import de.marx_labs.ads.db.model.format.impl.Button3AdFormat;
+import de.marx_labs.ads.db.model.format.impl.FullBannerAdFormat;
+import de.marx_labs.ads.db.model.format.impl.HalfBannerAdFormat;
+import de.marx_labs.ads.db.model.format.impl.HalfPageAdFormat;
+import de.marx_labs.ads.db.model.format.impl.LargeRectangleAdFormat;
+import de.marx_labs.ads.db.model.format.impl.LeaderboardAdFormat;
+import de.marx_labs.ads.db.model.format.impl.MediumRectangleAdFormat;
+import de.marx_labs.ads.db.model.format.impl.MicroBarAdFormat;
+import de.marx_labs.ads.db.model.format.impl.MicroButtonAdFormat;
+import de.marx_labs.ads.db.model.format.impl.RectangleAdFormat;
+import de.marx_labs.ads.db.model.format.impl.SkyscraperAdFormat;
+import de.marx_labs.ads.db.model.format.impl.SquareAdFormat;
+import de.marx_labs.ads.db.model.format.impl.SquareButtonAdFormat;
+import de.marx_labs.ads.db.model.format.impl.VerticalBannerAdFormat;
+import de.marx_labs.ads.db.model.format.impl.VerticalRectangleAdFormat;
+import de.marx_labs.ads.db.model.format.impl.WideButton1AdFormat;
+import de.marx_labs.ads.db.model.format.impl.WideButton2AdFormat;
+import de.marx_labs.ads.db.model.format.impl.WideButton3AdFormat;
+import de.marx_labs.ads.db.model.format.impl.WideSkyscraperAdFormat;
 import de.marx_labs.ads.db.model.type.AdType;
+import de.marx_labs.ads.db.model.type.impl.FlashAdType;
+import de.marx_labs.ads.db.model.type.impl.ImageAdType;
+import de.marx_labs.ads.db.model.type.impl.TextlinkAdType;
 import de.marx_labs.ads.db.services.AdTypes;
 import de.marx_labs.ads.db.utils.LuceneDocumentHelper;
 import de.marx_labs.ads.db.utils.LuceneQueryHelper;
+//import org.msgpack.MessagePack;
 
 public class LocalLuceneAdStore implements AdStore {
 
@@ -75,7 +112,7 @@ public class LocalLuceneAdStore implements AdStore {
 	
 	private static final String ADV_ID = "adv_id";
 	private static final String ADV_TYPE = "adv_type";
-	private static final String ADV_CONTENT = "adv_type";
+	private static final String ADV_CONTENT = "adv_content";
 	
 	private AdDB addb = null;
 
@@ -87,14 +124,58 @@ public class LocalLuceneAdStore implements AdStore {
 	
 	private boolean memoryMode = false;
 	
-//	private MessagePack msgpack = new MessagePack();
 	private Kryo kryo = new Kryo();
 	
 	public LocalLuceneAdStore(AdDB db) {
 		this.addb = db;
 		
-		kryo.register(ImageAdDefinition.class);
-//		msgpack.register(ConditionDefinitions.class);
+		int id = kryo.getNextRegistrationId();
+		kryo.register(ImageAdDefinition.class, 1 + id);
+		kryo.register(FlashAdDefinition.class, 2 + id);
+		kryo.register(TextlinkAdDefinition.class, 3 + id);
+		
+		kryo.register(ImageAdType.class, 20 + id);
+		kryo.register(FlashAdType.class, 21 + id);
+		kryo.register(TextlinkAdType.class, 22 + id);
+		
+		kryo.register(Button1AdFormat.class, 40 + id);
+		kryo.register(Button2AdFormat.class, 41 + id);
+		kryo.register(Button3AdFormat.class, 42 + id);
+		kryo.register(FullBannerAdFormat.class, 43 + id);
+		kryo.register(HalfBannerAdFormat.class, 44 + id);
+		kryo.register(HalfPageAdFormat.class, 45 + id);
+		kryo.register(LargeRectangleAdFormat.class, 46 + id);
+		kryo.register(LeaderboardAdFormat.class, 47 + id);
+		kryo.register(MediumRectangleAdFormat.class, 48 + id);
+		kryo.register(MicroBarAdFormat.class, 49 + id);
+		kryo.register(MicroButtonAdFormat.class, 50 + id);
+		kryo.register(RectangleAdFormat.class, 51 + id);
+		kryo.register(SkyscraperAdFormat.class, 52 + id);
+		kryo.register(SquareAdFormat.class, 53 + id);
+		kryo.register(SquareButtonAdFormat.class, 54 + id);
+		kryo.register(VerticalBannerAdFormat.class, 55 + id);
+		kryo.register(VerticalRectangleAdFormat.class, 56 + id);
+		kryo.register(WideButton1AdFormat.class, 57 + id);
+		kryo.register(WideButton2AdFormat.class, 58 + id);
+		kryo.register(WideButton3AdFormat.class, 59 + id);
+		kryo.register(WideSkyscraperAdFormat.class, 60 + id);
+	
+		kryo.register(Country.class, 100 + id);
+		kryo.register(State.class, 101 + id);
+		
+		kryo.register(AdSlotConditionDefinition.class, 150 + id);
+		kryo.register(ClickExpirationConditionDefinition.class, 151 + id);
+		kryo.register(CountryConditionDefinition.class, 152 + id);
+		kryo.register(DateConditionDefinition.class, 153 + id);
+		kryo.register(DayConditionDefinition.class, 154 + id);
+		kryo.register(DistanceConditionDefinition.class, 155 + id);
+		kryo.register(ExcludeSiteConditionDefinition.class, 156 + id);
+		kryo.register(KeyValueConditionDefinition.class, 157 + id);
+		kryo.register(KeywordConditionDefinition.class, 158 + id);
+		kryo.register(SiteConditionDefinition.class, 159 + id);
+		kryo.register(StateConditionDefinition.class, 160 + id);
+		kryo.register(TimeConditionDefinition.class, 161 + id);
+		kryo.register(ViewExpirationConditionDefinition.class, 162 + id);
 	}
 	public LocalLuceneAdStore(AdDB db, boolean memoryMode) {
 		this(db);
@@ -161,7 +242,9 @@ public class LocalLuceneAdStore implements AdStore {
 		Output output = new Output(bout);
 		kryo.writeObject(output, definition);
 		
+		
 		doc.add(new StoredField(ADV_CONTENT, new BytesRef(output.getBuffer())));
+//		doc.add(new StoredField(ADV_CONTENT, BaseEncoding.base64().encode(output.getBuffer())));
 		doc.add(new StringField(ADV_TYPE, definition.getType().getType(), Store.YES));
 		doc.add(new StringField(ADV_ID, definition.getId(), Store.YES));
 		
@@ -192,7 +275,7 @@ public class LocalLuceneAdStore implements AdStore {
 				AdType ad_type = AdTypes.forType(type);
 				if (ad_type != null) {
 					Input input = new Input(field.binaryValue().bytes);
-					
+//					Input input = new Input(BaseEncoding.base64().decode(doc.get(ADV_CONTENT)));
 					return kryo.readObject(input, ad_type.getAdDefinition().getClass());
 				}
 			}

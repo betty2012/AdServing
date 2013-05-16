@@ -15,29 +15,17 @@ package de.marx_labs.ads.db.test.lucene;
 
 
 import java.io.IOException;
-import java.util.List;
 
-import de.marx_labs.ads.common.benchmark.StopWatch;
 import de.marx_labs.ads.db.AdDBManager;
-import de.marx_labs.ads.db.db.request.AdRequest;
-import de.marx_labs.ads.db.definition.AdDefinition;
-import de.marx_labs.ads.db.definition.condition.CountryConditionDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
-import de.marx_labs.ads.db.enums.ConditionDefinitions;
 import de.marx_labs.ads.db.enums.Mode;
-import de.marx_labs.ads.db.model.Country;
-import de.marx_labs.ads.db.model.format.impl.FullBannerAdFormat;
 import de.marx_labs.ads.db.model.format.impl.MediumRectangleAdFormat;
-import de.marx_labs.ads.db.model.type.impl.ImageAdType;
-import de.marx_labs.ads.db.services.AdTypes;
-
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 
 public class Benchmark  {
 	
 	public static void main(String[] args) throws IOException {
+		
 		AdDBManager manager = AdDBManager.builder().build();
 		manager.getContext().mode = Mode.LOCAL;
 		manager.getContext().datadir = "D:/www/apps/adserver/temp/";

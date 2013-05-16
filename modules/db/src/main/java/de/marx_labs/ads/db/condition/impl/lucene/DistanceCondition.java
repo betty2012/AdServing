@@ -13,13 +13,6 @@
  */
 package de.marx_labs.ads.db.condition.impl.lucene;
 
-import de.marx_labs.ads.db.condition.Condition;
-import de.marx_labs.ads.db.condition.Filter;
-import de.marx_labs.ads.db.db.request.AdRequest;
-import de.marx_labs.ads.db.definition.AdDefinition;
-import de.marx_labs.ads.db.definition.condition.DistanceConditionDefinition;
-import de.marx_labs.ads.db.enums.ConditionDefinitions;
-
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.BooleanQuery;
 
@@ -27,6 +20,13 @@ import com.google.common.base.Predicate;
 import com.javadocmd.simplelatlng.LatLng;
 import com.javadocmd.simplelatlng.LatLngTool;
 import com.javadocmd.simplelatlng.util.LengthUnit;
+
+import de.marx_labs.ads.db.condition.Condition;
+import de.marx_labs.ads.db.condition.Filter;
+import de.marx_labs.ads.db.db.request.AdRequest;
+import de.marx_labs.ads.db.definition.AdDefinition;
+import de.marx_labs.ads.db.definition.condition.DistanceConditionDefinition;
+import de.marx_labs.ads.db.enums.ConditionDefinitions;
 
 /**
  * Condition zum Filtern von Bannern, die nur in einem bestimmten Radius um

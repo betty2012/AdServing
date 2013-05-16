@@ -13,17 +13,17 @@
  */
 package de.marx_labs.ads.services.tracking.impl.local.h2;
 
+import org.h2.jdbcx.JdbcDataSource;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import de.marx_labs.ads.base.utils.BaseContext;
 import de.marx_labs.ads.base.utils.exception.ServiceException;
 import de.marx_labs.ads.services.tracking.TrackingContextKeys;
 import de.marx_labs.ads.services.tracking.TrackingService;
 import de.marx_labs.ads.services.tracking.events.ClickTrackEvent;
 import de.marx_labs.ads.services.tracking.events.TrackEvent;
-
-import org.h2.jdbcx.JdbcDataSource;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 public class H2TrackingServiceTest {
 

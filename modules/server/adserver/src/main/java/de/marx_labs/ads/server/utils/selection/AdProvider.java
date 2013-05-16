@@ -21,6 +21,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.common.collect.Collections2;
+
 import de.marx_labs.ads.common.util.Strings;
 import de.marx_labs.ads.db.db.request.AdRequest;
 import de.marx_labs.ads.db.definition.AdDefinition;
@@ -39,8 +41,6 @@ import de.marx_labs.ads.server.utils.filter.FlashVersionAdFilter;
 import de.marx_labs.ads.server.utils.filter.ViewExpirationFilter;
 import de.marx_labs.ads.server.utils.request.RequestHelper;
 import de.marx_labs.ads.server.utils.selection.impl.ImpressionPercentageSingleAdSelector;
-
-import com.google.common.collect.Collections2;
 
 
 /**

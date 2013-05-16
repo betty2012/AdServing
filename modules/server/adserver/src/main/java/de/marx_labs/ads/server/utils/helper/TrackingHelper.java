@@ -13,13 +13,14 @@
  */
 package de.marx_labs.ads.server.utils.helper;
 
-import de.marx_labs.ads.server.utils.RuntimeContext;
-import de.marx_labs.ads.server.utils.context.AdContext;
-import de.marx_labs.ads.services.tracking.events.TrackEvent;
 import net.minidev.json.JSONObject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import de.marx_labs.ads.server.utils.RuntimeContext;
+import de.marx_labs.ads.server.utils.context.AdContext;
+import de.marx_labs.ads.services.tracking.events.TrackEvent;
 
 public class TrackingHelper {
 	public static final Logger logger = LoggerFactory.getLogger(TrackingHelper.class);

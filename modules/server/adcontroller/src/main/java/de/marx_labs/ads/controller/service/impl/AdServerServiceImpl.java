@@ -18,6 +18,11 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.ws.BindingType;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.hazelcast.core.Transaction;
+
 import de.marx_labs.ads.base.api.service.adserver.AdServerService;
 import de.marx_labs.ads.base.api.service.adserver.model.ImageAd;
 import de.marx_labs.ads.base.api.service.adserver.model.Period;
@@ -36,11 +41,6 @@ import de.marx_labs.ads.db.enums.Day;
 import de.marx_labs.ads.db.enums.ExpirationResolution;
 import de.marx_labs.ads.db.model.Country;
 import de.marx_labs.ads.db.services.AdFormats;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.hazelcast.core.Transaction;
 
 @WebService()
 @BindingType(value = javax.xml.ws.soap.SOAPBinding.SOAP12HTTP_BINDING)

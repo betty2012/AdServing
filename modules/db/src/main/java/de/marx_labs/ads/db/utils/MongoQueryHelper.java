@@ -13,12 +13,12 @@
  */
 package de.marx_labs.ads.db.utils;
 
+import com.mongodb.DBObject;
+import com.mongodb.QueryBuilder;
+
 import de.marx_labs.ads.db.condition.Condition;
 import de.marx_labs.ads.db.db.AdDB;
 import de.marx_labs.ads.db.db.request.AdRequest;
-
-import com.mongodb.DBObject;
-import com.mongodb.QueryBuilder;
 
 
 public class MongoQueryHelper {

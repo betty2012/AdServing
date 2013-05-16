@@ -20,6 +20,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.foursquare.fongo.Fongo;
+import com.mongodb.DBCollection;
+
 import de.marx_labs.ads.base.utils.BaseContext;
 import de.marx_labs.ads.services.tracking.Criterion;
 import de.marx_labs.ads.services.tracking.Criterion.Criteria;
@@ -27,13 +34,6 @@ import de.marx_labs.ads.services.tracking.events.ClickTrackEvent;
 import de.marx_labs.ads.services.tracking.events.EventType;
 import de.marx_labs.ads.services.tracking.events.ImpressionTrackEvent;
 import de.marx_labs.ads.services.tracking.events.TrackEvent;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import com.foursquare.fongo.Fongo;
-import com.mongodb.DBCollection;
 
 public class MongoTrackingServiceTest {
 	private static MongoTrackingService service = null;

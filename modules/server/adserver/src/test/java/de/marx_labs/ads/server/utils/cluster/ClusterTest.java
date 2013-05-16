@@ -18,16 +18,16 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Map;
 
+import org.junit.Test;
+
+import com.hazelcast.core.Hazelcast;
+
 import de.marx_labs.ads.db.AdDBManager;
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import de.marx_labs.ads.db.enums.Mode;
 import de.marx_labs.ads.db.services.AdFormats;
 import de.marx_labs.ads.server.utils.RuntimeContext;
-
-import org.junit.Test;
-
-import com.hazelcast.core.Hazelcast;
 
 public class ClusterTest {
 
@@ -36,19 +36,26 @@ public class ClusterTest {
 		Map<String, AdDefinition> ads = Hazelcast.newHazelcastInstance().getMap("ads");
 		
 		for (int i = 0; i < 100; i++) {
-			AdDefinition def = new ImageAdDefinition();
-			def.setFormat(AdFormats.forName("Button 1"));
+			ImageAdDefinition def = new ImageAdDefinition();
+			def.setFormat(AdFormats.forCompoundName("468x60"));
+			def.setImageUrl("http://www.bannergestaltung.com/img/formate/468x60.gif");
+			def.setTargetUrl("http://www.google.de");
+			
 			def.setId("1" + i);
 
 			ads.put(def.getId(), def);
 		}
 
+//		Thread.sleep(50000);
 		
-		AdDBManager manager = AdDBManager.builder().mode(Mode.MEMORY).build();
+		AdDBManager manager = AdDBManager.builder().build();
+		manager.getContext().mode = Mode.LOCAL;
+		manager.getContext().datadir = "D:/www/apps/adserver/temp3/";
 		manager.getAdDB().open();
+		manager.getAdDB().clear();
 		RuntimeContext.setAdDB(manager.getAdDB());
 		RuntimeContext.setManager(manager);
-		
+//		
 		ClusterManager cluster = new ClusterManager();
 		RuntimeContext.setClusterManager(cluster);
 		RuntimeContext.getClusterManager().init();
@@ -56,5 +63,8 @@ public class ClusterTest {
 		Thread.sleep(5000);
 		RuntimeContext.getAdDB().reopen();
 		assertEquals(100, RuntimeContext.getAdDB().size());
+		
+		AdDefinition ad = RuntimeContext.getAdDB().getBanner("11");
+		System.out.println(ad != null);
 	}
 }

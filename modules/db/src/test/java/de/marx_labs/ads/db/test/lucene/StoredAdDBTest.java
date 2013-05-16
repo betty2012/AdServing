@@ -24,6 +24,7 @@ import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import de.marx_labs.ads.db.enums.Mode;
 import de.marx_labs.ads.db.model.format.impl.MediumRectangleAdFormat;
 import de.marx_labs.ads.db.model.type.impl.ImageAdType;
+import de.marx_labs.ads.db.services.AdFormats;
 import de.marx_labs.ads.db.services.AdTypes;
 
 
@@ -40,36 +41,41 @@ public class StoredAdDBTest {
 		
 		manager.getAdDB().clear();
 		
-		ImageAdDefinition ib = new ImageAdDefinition();
-		ib.setFormat(new MediumRectangleAdFormat());
-		ib.setId("1");
-		manager.getAdDB().addBanner(ib);
-		
-		ib = new ImageAdDefinition();
-		ib.setFormat(new MediumRectangleAdFormat());
-		ib.setId("2");
-		manager.getAdDB().addBanner(ib);
+		for (int i = 0; i < 10000; i++) {
+			ImageAdDefinition def = new ImageAdDefinition();
+			def.setFormat(AdFormats.forCompoundName("468x60"));
+			def.setImageUrl("http://www.bannergestaltung.com/img/formate/468x60.gif");
+			def.setTargetUrl("http://www.google.de");
+			def.setId(String.valueOf(i+1));
+			manager.getAdDB().addBanner(def);
+			
+		}
 		
 		manager.getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
-		request.getFormats().add(new MediumRectangleAdFormat());
+		request.getFormats().add(AdFormats.forCompoundName("468x60"));
 		request.getTypes().add(AdTypes.forType(ImageAdType.TYPE));
 		
 		List<AdDefinition> result = manager.getAdDB().search(request);
 		
 		System.out.println(result.size());
 		
+		for (int i = 0; i < 500; i++) {
+			AdDefinition def = manager.getAdDB().getBanner(String.valueOf(i+1));
+			System.out.println(def != null);
+		}
 		
 		manager.getAdDB().close();
 		
-		manager.getAdDB().open();
 		
-		manager.getAdDB().clear();
-		
-		manager.getAdDB().reopen();
-		
-		manager.getAdDB().close();
+//		manager.getAdDB().open();
+//		
+//		manager.getAdDB().clear();
+//		
+//		manager.getAdDB().reopen();
+//		
+//		manager.getAdDB().close();
 	}
 
 }

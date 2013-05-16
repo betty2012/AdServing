@@ -14,7 +14,6 @@
 package de.marx_labs.ads.server.utils.context;
 
 import net.sf.uadetector.UserAgent;
-import de.marx_labs.ads.base.utils.BaseObject;
 import de.marx_labs.ads.db.definition.AdSlot;
 
 /**
@@ -32,13 +31,7 @@ import de.marx_labs.ads.db.definition.AdSlot;
  * @author thmarx
  *
  */
-public class AdContext /*extends BaseObject*/ {
-	
-	private static final String USER_ID = "userid";
-	private static final String REQUEST_ID = "requestid";
-	private static final String SLOT = "slot";
-	private static final String IP = "ip";
-	private static final String USER_AGENT = "user_agent";
+public class AdContext {
 	
 	private String clientIp;
 	private String userId;
@@ -89,39 +82,4 @@ public class AdContext /*extends BaseObject*/ {
 	public void setUserAgent(UserAgent userAgent) {
 		this.userAgent = userAgent;
 	}
-	
-	
-	
-//	public UserAgent getUserAgent () {
-//		return get(AdContext.USER_AGENT, UserAgent.class, null);
-//	}
-//	public void setUserAgent (UserAgent userAgent) {
-//		put(AdContext.USER_AGENT, USER_AGENT);
-//	}
-//	
-//	public String getIp () {
-//		return get(AdContext.IP, String.class, null);
-//	}
-//	public void setIp (String ip) {
-//		put(AdContext.IP, ip);
-//	}
-//	public String getUserid () {
-//		return get(AdContext.USER_ID, String.class, null);
-//	}
-//	public void setUserid (String userid) {
-//		put(AdContext.USER_ID, userid);
-//	}
-//	public String getRequestid () {
-//		return get(AdContext.REQUEST_ID, String.class, null);
-//	}
-//	public void setRequestid (String requestid) {
-//		put(AdContext.REQUEST_ID, requestid);
-//	}
-//	
-//	public void setSlot (AdSlot slot) {
-//		put(AdContext.SLOT, slot);
-//	}
-//	public AdSlot getSlot () {
-//		return get(AdContext.SLOT, AdSlot.class, null);
-//	}
 }

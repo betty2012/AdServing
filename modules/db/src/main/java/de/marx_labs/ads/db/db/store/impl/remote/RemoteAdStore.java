@@ -17,10 +17,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -39,6 +37,7 @@ import de.marx_labs.ads.db.model.type.AdType;
 import de.marx_labs.ads.db.utils.MongoDocumentHelper;
 import de.marx_labs.ads.db.utils.MongoQueryHelper;
 import de.marx_labs.ads.db.utils.mapper.JsonMapping;
+//import org.codehaus.jackson.map.ObjectMapper;
 
 public class RemoteAdStore implements AdStore {
 

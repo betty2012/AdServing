@@ -17,19 +17,17 @@ package de.marx_labs.ads.db.db;
 import java.io.IOException;
 import java.util.List;
 
-import de.marx_labs.ads.db.AdDBManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import de.marx_labs.ads.db.AdDBManager;
 import de.marx_labs.ads.db.db.request.AdRequest;
 import de.marx_labs.ads.db.db.store.AdStore;
-import de.marx_labs.ads.db.db.store.impl.local.LocalAdStore;
 import de.marx_labs.ads.db.db.store.impl.local.LocalLuceneAdStore;
 import de.marx_labs.ads.db.db.store.impl.remote.RemoteAdStore;
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.enums.Mode;
 import de.marx_labs.ads.db.utils.ConditionHelper;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * BDB - BannerDatenbank

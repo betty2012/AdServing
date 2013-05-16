@@ -13,13 +13,13 @@
  */
 package de.marx_labs.ads.server.utils.filter;
 
-import de.marx_labs.ads.db.definition.AdDefinition;
-import de.marx_labs.ads.server.utils.RuntimeContext;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Predicate;
+
+import de.marx_labs.ads.db.definition.AdDefinition;
+import de.marx_labs.ads.server.utils.RuntimeContext;
 
 /**
  * Dieser Filter verhindert das doppelte Anzeigen eines Banners auf der selben 

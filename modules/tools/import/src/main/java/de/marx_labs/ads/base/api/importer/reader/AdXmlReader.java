@@ -16,6 +16,11 @@ package de.marx_labs.ads.base.api.importer.reader;
 import java.io.File;
 import java.io.IOException;
 
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.expandable.ExpandableImageAdDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.extern.ExternAdDefinition;
@@ -26,11 +31,6 @@ import de.marx_labs.ads.db.model.type.impl.FlashAdType;
 import de.marx_labs.ads.db.model.type.impl.ImageAdType;
 import de.marx_labs.ads.db.services.AdFormats;
 import de.marx_labs.ads.db.utils.mapper.AdTypeMapping;
-
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
 
 public class AdXmlReader {
 	public static AdDefinition readBannerDefinition (String filename) throws IOException{

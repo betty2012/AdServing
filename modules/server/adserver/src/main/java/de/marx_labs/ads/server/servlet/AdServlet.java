@@ -17,8 +17,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
@@ -45,21 +43,13 @@ public class AdServlet extends HttpServlet {
 	public static final int CALLBACK_TIMEOUT = 60000;
 	public static final int MAX_SIMULATED_TASK_LENGTH_MS = 5000;
 
-	/** executor svc */
-	private ExecutorService exec;
 
 	/** create the executor */
 	public void init() throws ServletException {
-
-		int size = Integer.parseInt(getInitParameter("threadpoolsize"));
-		exec = Executors.newFixedThreadPool(size);
-
 	}
 
 	/** destroy the executor */
 	public void destroy() {
-
-		exec.shutdown();
 
 	}
 

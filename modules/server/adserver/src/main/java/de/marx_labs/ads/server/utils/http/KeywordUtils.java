@@ -26,16 +26,16 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import de.marx_labs.ads.common.util.Strings;
-import de.marx_labs.ads.server.utils.helper.EncodeHelper;
-import de.marx_labs.ads.server.utils.request.RequestHelper;
-
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import de.marx_labs.ads.common.util.Strings;
+import de.marx_labs.ads.server.utils.helper.EncodeHelper;
+import de.marx_labs.ads.server.utils.request.RequestHelper;
 
 
 public class KeywordUtils {

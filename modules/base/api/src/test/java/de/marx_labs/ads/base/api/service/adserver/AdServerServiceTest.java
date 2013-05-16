@@ -15,11 +15,11 @@ package de.marx_labs.ads.base.api.service.adserver;
 
 import javax.xml.ws.spi.Provider;
 
-import de.marx_labs.ads.base.api.service.adserver.model.ImageAd;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import de.marx_labs.ads.base.api.service.adserver.model.ImageAd;
 
 public class AdServerServiceTest {
 

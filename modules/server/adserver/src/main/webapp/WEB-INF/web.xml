@@ -14,15 +14,6 @@
     specific language governing permissions and limitations under the License.
 
 -->
-<!-- Mad-Advertisement Copyright (C) 2011 Thorsten Marx <thmarx@gmx.net> 
-	This program is free software: you can redistribute it and/or modify it under 
-	the terms of the GNU General Public License as published by the Free Software 
-	Foundation, either version 3 of the License, or (at your option) any later 
-	version. This program is distributed in the hope that it will be useful, 
-	but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
-	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for 
-	more details. You should have received a copy of the GNU General Public License 
-	along with this program. If not, see <http://www.gnu.org/licenses/>. -->
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
@@ -35,10 +26,6 @@
 	<servlet>
 		<servlet-name>AdServlet</servlet-name>
 		<servlet-class>de.marx_labs.ads.server.servlet.AdServlet</servlet-class>
-		<init-param>
-			<param-name>threadpoolsize</param-name>
-			<param-value>2</param-value>
-		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdServlet</servlet-name>
@@ -74,6 +61,27 @@
 		<url-pattern>/admin/status</url-pattern>
 	</servlet-mapping>
 
+	<!-- Async -->
+	<servlet>
+		<servlet-name>AsyncAdServlet</servlet-name>
+		<servlet-class>de.marx_labs.ads.server.servlet.async.AdServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AsyncAdServlet</servlet-name>
+		<url-pattern>/js/async/ads.js</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<display-name>AsyncAdSelect</display-name>
+		<servlet-name>AsyncAdSelect</servlet-name>
+		<servlet-class>de.marx_labs.ads.server.servlet.async.AdSelect</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AsyncAdSelect</servlet-name>
+		<url-pattern>/js/async/select.js</url-pattern>
+	</servlet-mapping>
+	
+
+
 	<!-- Der AdContextFilter erzeugt aus dem Request und den Cookies ein AdContext 
 		Objekt und stellt es über ein ThreadLocal Variable zur Verfügung. -->
 	<filter>
@@ -88,6 +96,16 @@
 		<filter-name>AdContextFilter</filter-name>
 		<url-pattern>/js/select.js</url-pattern>
 	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>AdContextFilter</filter-name>
+		<url-pattern>/js/async/ads.js</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>AdContextFilter</filter-name>
+		<url-pattern>/js/async/select.js</url-pattern>
+	</filter-mapping>
+	
 	<filter-mapping>
 		<filter-name>AdContextFilter</filter-name>
 		<url-pattern>/click</url-pattern>

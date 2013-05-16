@@ -13,7 +13,6 @@
  */
 package de.marx_labs.ads.db.definition.impl.ad;
 
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 

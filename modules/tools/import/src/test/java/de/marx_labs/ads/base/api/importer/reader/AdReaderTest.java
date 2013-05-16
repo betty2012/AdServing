@@ -13,6 +13,8 @@
  */
 package de.marx_labs.ads.base.api.importer.reader;
 
+import org.junit.Assert;
+
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.condition.ClickExpirationConditionDefinition;
 import de.marx_labs.ads.db.definition.condition.DayConditionDefinition;
@@ -21,8 +23,6 @@ import de.marx_labs.ads.db.definition.condition.StateConditionDefinition;
 import de.marx_labs.ads.db.definition.condition.ViewExpirationConditionDefinition;
 import de.marx_labs.ads.db.enums.ConditionDefinitions;
 import de.marx_labs.ads.db.enums.ExpirationResolution;
-
-import org.junit.Assert;
 
 
 public class AdReaderTest {

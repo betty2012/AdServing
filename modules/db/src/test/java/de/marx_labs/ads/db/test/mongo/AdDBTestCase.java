@@ -16,9 +16,6 @@ package de.marx_labs.ads.db.test.mongo;
 import java.io.IOException;
 
 import junit.framework.TestCase;
-import de.marx_labs.ads.db.AdDBManager;
-import de.marx_labs.ads.db.db.AdDB;
-import de.marx_labs.ads.db.enums.Mode;
 
 import org.junit.After;
 import org.junit.Before;
@@ -26,7 +23,10 @@ import org.junit.Before;
 import com.foursquare.fongo.Fongo;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.MongoClient;
+
+import de.marx_labs.ads.db.AdDBManager;
+import de.marx_labs.ads.db.db.AdDB;
+import de.marx_labs.ads.db.enums.Mode;
 
 public abstract class AdDBTestCase extends TestCase {
 
