@@ -28,7 +28,6 @@
 		<uuid.version>3.2</uuid.version>
 		<mongo-driver.version>2.11.0</mongo-driver.version>
 		<fongo.version>1.0.6</fongo.version>
-		<jongo.version>0.3</jongo.version>
 		<junit.version>4.11</junit.version>
 		<mockito.version>1.9.5</mockito.version>
 		<jaxws.version>2.2.8-promoted-b146</jaxws.version>
