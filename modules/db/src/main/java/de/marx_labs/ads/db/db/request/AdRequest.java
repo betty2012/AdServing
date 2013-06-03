@@ -17,6 +17,7 @@ package de.marx_labs.ads.db.db.request;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import de.marx_labs.ads.db.enums.Day;
@@ -53,6 +54,8 @@ public class AdRequest {
 	 * Das Land in dem sich der Aufrufer befindet
 	 */
 	private Country country = null;
+	
+	private Locale locale = null;
 	/*
 	 * Die Zeit des Aufrufers
 	 */
@@ -151,7 +154,17 @@ public class AdRequest {
 	public void setCountry(Country country) {
 		this.country = country;
 	}
+
 	
+	
+	public Locale getLocale() {
+		return locale;
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
+
 	public int getCount() {
 		return count;
 	}
@@ -211,7 +224,7 @@ public class AdRequest {
 	public boolean hasConditions () {
 		return (
 					day != null || state != null || time != null || 
-					date != null || country != null || (keywords != null && keywords.size() > 0) || 
+					date != null || country != null || locale != null || (keywords != null && keywords.size() > 0) || 
 					site != null || geoLocation != null || ((keyValues != null && !keyValues.isEmpty())));
 	}
 }

@@ -37,6 +37,8 @@ public final class AdDBConstants {
 	public static final String ADDB_AD_STATE_ALL = "0";
 	public static final String ADDB_AD_COUNTRY = "ad_country";
 	public static final String ADDB_AD_COUNTRY_ALL = "all";
+	public static final String ADDB_AD_LANGUAGE = "ad_language";
+	public static final String ADDB_AD_LANGUAGE_ALL = "all";
 	
 	public static final String ADDB_AD_KEYWORD = "ad_keyword";
 	public static final String ADDB_AD_KEYWORD_ALL = "all";

@@ -89,6 +89,7 @@ public class AdContextHelper {
 		UserAgent userAgent = userAgentParser.parse(request.getHeader("User-Agent"));
 		context.setUserAgent(userAgent);
 		
+		context.setLocale(request.getLocale());
 		
 		return context;
 	}

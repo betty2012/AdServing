@@ -11,34 +11,32 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package de.marx_labs.ads.db.test.lucene;
+package de.marx_labs.ads.db.definition.condition;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-
-import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
-
-import de.marx_labs.ads.db.AdDBManager;
-import de.marx_labs.ads.db.db.AdDB;
-
-
-public abstract class AdDBTestCase extends AbstractBenchmark {
-
-	protected static AdDB db = null;
-	protected static AdDBManager manager = null;
-
-	@Before
-	public void setUp() throws IOException {
-		manager = AdDBManager.builder().build();
-		db = manager.getAdDB();
-		db.open();
+import de.marx_labs.ads.db.definition.ConditionDefinition;
+/**
+ * Steuerung für welche Sprache das Banner angezeit werden soll
+ * @author tmarx
+ *
+ */
+public class LanguageConditionDefinition implements ConditionDefinition {
+	
+	private List<String> languages = new ArrayList<String>();
+	
+	public LanguageConditionDefinition () {
 		
 	}
 
-	@After
-	public void tearDown() throws IOException {
-		db.close();
+	public List<String> getLanguages() {
+		return languages;
 	}
+
+	public void setLanguages(List<String> languages) {
+		this.languages = languages;
+	}
+	
+	
 }

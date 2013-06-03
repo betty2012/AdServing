@@ -13,6 +13,8 @@
  */
 package de.marx_labs.ads.server.utils.context;
 
+import java.util.Locale;
+
 import net.sf.uadetector.UserAgent;
 import de.marx_labs.ads.db.definition.AdSlot;
 
@@ -38,10 +40,25 @@ public class AdContext {
 	private String requestId;
 	private AdSlot adSlot;
 	private UserAgent userAgent;
+	private Locale locale;
 	
 	public AdContext () {
 		
 	}
+
+	
+	
+	public Locale getLocale() {
+		return locale;
+	}
+
+
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
+
+
 
 	public String getClientIp() {
 		return clientIp;

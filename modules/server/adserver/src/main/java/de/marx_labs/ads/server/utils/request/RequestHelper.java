@@ -107,6 +107,8 @@ public class RequestHelper {
 			
 			adRequest.setKeywords(KeywordUtils.getKeywords(request));
 			
+			adRequest.setLocale(context.getLocale());
+			
 			if (context.getAdSlot() != null) {
 				adRequest.setSite(context.getAdSlot().getSite());
 				adRequest.setAdSlot(context.getAdSlot().toString());

@@ -20,6 +20,7 @@ public enum ConditionDefinitions implements Serializable {
 	DAY,
 	DATE,
 	COUNTRY,
+	LANGUAGE,
 	STATE,
 	SITE,
 	EXCLUDE_SITE,
