@@ -12,7 +12,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jetty.version>9.0.2.v20130417</jetty.version>
+		<jetty.version>9.0.3.v20130506</jetty.version>
 		<infinispan.version>5.2.4.Final</infinispan.version>
 		<lucene.version>4.3.0</lucene.version>
 		<hazelcast.version>2.5.1</hazelcast.version>
@@ -30,10 +30,10 @@
 		<fongo.version>1.0.6</fongo.version>
 		<junit.version>4.11</junit.version>
 		<mockito.version>1.9.5</mockito.version>
-		<jaxws.version>2.2.8-promoted-b146</jaxws.version>
 		<jackson.version>2.1.4</jackson.version>
 		<spring.version>3.2.2.RELEASE</spring.version>
 		<kryo.version>2.21</kryo.version>
+		<jersey.version>2.0</jersey.version>
 	</properties>
 
 	<licenses>
@@ -60,6 +60,29 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- REST dependencies -->
+			<dependency>
+				<groupId>org.glassfish.jersey.media</groupId>
+				<artifactId>jersey-media-json-jackson</artifactId>
+				<version>${jersey.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jersey.containers</groupId>
+				<artifactId>jersey-container-servlet-core</artifactId>
+				<version>${jersey.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jersey.ext</groupId>
+				<artifactId>jersey-proxy-client</artifactId>
+				<version>${jersey.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jersey.core</groupId>
+				<artifactId>jersey-client</artifactId>
+				<version>${jersey.version}</version>
+			</dependency>
+
+
 			<dependency>
 				<groupId>com.esotericsoftware.kryo</groupId>
 				<artifactId>kryo</artifactId>
@@ -120,11 +143,6 @@
 				<groupId>com.hazelcast</groupId>
 				<artifactId>hazelcast</artifactId>
 				<version>${hazelcast.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.sun.xml.ws</groupId>
-				<artifactId>jaxws-rt</artifactId>
-				<version>${jaxws.version}</version>
 			</dependency>
 
 			<dependency>

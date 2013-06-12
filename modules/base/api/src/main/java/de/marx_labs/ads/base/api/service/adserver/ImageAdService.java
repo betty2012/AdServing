@@ -13,6 +13,16 @@
  */
 package de.marx_labs.ads.base.api.service.adserver;
 
+import java.util.Map;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import de.marx_labs.ads.base.api.service.adserver.model.ImageAd;
 
 /**
@@ -20,9 +30,23 @@ import de.marx_labs.ads.base.api.service.adserver.model.ImageAd;
  * @author marx
  * 
  */
-public interface AdServerService {
+@Path("/imagead")
+public interface ImageAdService {
 	
-	public boolean add(ImageAd ad);
+	@POST
+	@Path("/add")
+	@Produces({ MediaType.APPLICATION_JSON})
+	@Consumes({ MediaType.APPLICATION_JSON})
+	public Map<String, Object> add(ImageAd ad);
 
-	public boolean delete(String id);
+	@DELETE
+	@Path("/delete")
+	@Produces({ "application/x-javascript", MediaType.APPLICATION_JSON})
+	@Consumes({ "application/x-javascript", MediaType.APPLICATION_JSON})
+	public Map<String, Object> delete(String id);
+	
+	@GET
+	@Path("/test")
+	@Produces({ MediaType.TEXT_PLAIN})
+	public String test();
 }

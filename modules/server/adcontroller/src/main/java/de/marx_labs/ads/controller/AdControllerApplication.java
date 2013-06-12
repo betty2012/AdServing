@@ -11,21 +11,29 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package de.marx_labs.ads.base.api.cluster.message;
+package de.marx_labs.ads.controller;
 
-import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-import de.marx_labs.ads.base.api.cluster.Member;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.server.ResourceConfig;
 
-public abstract class Message implements Serializable {
+import de.marx_labs.ads.controller.resources.ImageAdResource;
 
-	private Member member;
 
-	public Member getMember() {
-		return member;
+public class AdControllerApplication extends ResourceConfig {
+ 
+	static Set<Class<?>> resources = new HashSet<Class<?>>();
+	static {
+		resources.add(ImageAdResource.class);
+		
 	}
-
-	public void setMember(Member member) {
-		this.member = member;
+	
+	
+	public AdControllerApplication () {
+		super(resources);
+		
+		register(JacksonFeature.class);		
 	}
 }

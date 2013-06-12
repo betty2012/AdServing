@@ -11,19 +11,27 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package de.marx_labs.ads.controller.service.impl;
+package de.marx_labs.ads.controller.resources;
 
-import javax.jws.WebParam;
-import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
-import javax.xml.ws.BindingType;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import org.glassfish.jersey.server.JSONP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.hazelcast.core.Transaction;
 
-import de.marx_labs.ads.base.api.service.adserver.AdServerService;
+import de.marx_labs.ads.base.api.service.adserver.ImageAdService;
 import de.marx_labs.ads.base.api.service.adserver.model.ImageAd;
 import de.marx_labs.ads.base.api.service.adserver.model.Period;
 import de.marx_labs.ads.controller.utils.RuntimeContext;
@@ -42,49 +50,50 @@ import de.marx_labs.ads.db.enums.ExpirationResolution;
 import de.marx_labs.ads.db.model.Country;
 import de.marx_labs.ads.db.services.AdFormats;
 
-@WebService()
-@BindingType(value = javax.xml.ws.soap.SOAPBinding.SOAP12HTTP_BINDING)
-@SOAPBinding(style = javax.jws.soap.SOAPBinding.Style.RPC, use = javax.jws.soap.SOAPBinding.Use.LITERAL)
-// @SOAPBinding(style=javax.jws.soap.SOAPBinding.Style.RPC)
-public class AdServerServiceImpl implements AdServerService {
+@Path("/imagead")
+public class ImageAdResource implements ImageAdService {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(AdServerServiceImpl.class);
-
-	@Override
-	public boolean add(@WebParam(name = "ad") ImageAd ad) {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ImageAdResource.class);
+	
+	@POST
+	@Path("/add")
+	@Produces({ MediaType.APPLICATION_JSON})
+	@Consumes({ MediaType.APPLICATION_JSON})
+	public Map<String, Object> add (ImageAd advertisement) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
 		Transaction tx = RuntimeContext.getHazelcastInstance().getTransaction();
 		try {
 			tx.begin();
 			// RuntimeContext.getAdDB().addBanner(banner);
-			System.out.println(ad.getId());
-			System.out.println(ad.getCampaign());
+			System.out.println(advertisement.getId());
+			System.out.println(advertisement.getCampaign());
 			System.out.println("ClickExpiration: "
-					+ ad.getClickExpiration().size());
-			System.out.println("DatePeriods: " + ad.getDatePeriods().size());
-			System.out.println("Days: " + ad.getDays().size());
-			System.out.println("TimePeriods: " + ad.getTimePeriods().size());
+					+ advertisement.getClickExpiration().size());
+			System.out.println("DatePeriods: " + advertisement.getDatePeriods().size());
+			System.out.println("Days: " + advertisement.getDays().size());
+			System.out.println("TimePeriods: " + advertisement.getTimePeriods().size());
 			System.out.println("ViewExpiration: "
-					+ ad.getViewExpiration().size());
-			System.out.println("Sites: " + ad.getSites().size());
-			System.out.println("Countries: " + ad.getCountries().size());
+					+ advertisement.getViewExpiration().size());
+			System.out.println("Sites: " + advertisement.getSites().size());
+			System.out.println("Countries: " + advertisement.getCountries().size());
 
 			ImageAdDefinition adDef = new ImageAdDefinition();
-			adDef.setId(ad.getId());
+			adDef.setId(advertisement.getId());
 			Campaign camp = new Campaign();
-			camp.setId(ad.getCampaign());
+			camp.setId(advertisement.getCampaign());
 			adDef.setCampaign(camp);
 
-			adDef.setImageUrl(ad.getImageUrl());
-			adDef.setTargetUrl(ad.getLinkUrl());
-			adDef.setLinkTarget(ad.getLinkTarget());
+			adDef.setImageUrl(advertisement.getImageUrl());
+			adDef.setTargetUrl(advertisement.getLinkUrl());
+			adDef.setLinkTarget(advertisement.getLinkTarget());
 
-			adDef.setFormat(AdFormats.forName(ad.getAdFormat()));
+			adDef.setFormat(AdFormats.forName(advertisement.getAdFormat()));
 //			 Klicks
-			if (!ad.getClickExpiration().isEmpty()) {
+			if (!advertisement.getClickExpiration().isEmpty()) {
 				ClickExpirationConditionDefinition condition = new ClickExpirationConditionDefinition();
-				for (String key : ad.getClickExpiration().keySet()) {
-					int value = ad.getClickExpiration().get(key);
+				for (String key : advertisement.getClickExpiration().keySet()) {
+					int value = advertisement.getClickExpiration().get(key);
 					condition.getClickExpirations().put(
 							ExpirationResolution.forName(key), value);
 				}
@@ -92,10 +101,10 @@ public class AdServerServiceImpl implements AdServerService {
 						ConditionDefinitions.CLICK_EXPIRATION, condition);
 			}
 //			 Impressions
-			if (!ad.getViewExpiration().isEmpty()) {
+			if (!advertisement.getViewExpiration().isEmpty()) {
 				ViewExpirationConditionDefinition condition = new ViewExpirationConditionDefinition();
-				for (String key : ad.getViewExpiration().keySet()) {
-					int value = ad.getViewExpiration().get(key);
+				for (String key : advertisement.getViewExpiration().keySet()) {
+					int value = advertisement.getViewExpiration().get(key);
 					condition.getViewExpirations().put(
 							ExpirationResolution.forName(key), value);
 				}
@@ -103,27 +112,27 @@ public class AdServerServiceImpl implements AdServerService {
 						ConditionDefinitions.VIEW_EXPIRATION, condition);
 			}
 //			 Days
-			if (!ad.getDays().isEmpty()) {
+			if (!advertisement.getDays().isEmpty()) {
 				DayConditionDefinition condition = new DayConditionDefinition();
-				for (int day : ad.getDays()) {
+				for (int day : advertisement.getDays()) {
 					condition.addDay(Day.getDayForInt(day));
 				}
 				adDef.addConditionDefinition(ConditionDefinitions.DAY,
 						condition);
 			}
 //			 Sites
-			if (!ad.getSites().isEmpty()) {
+			if (!advertisement.getSites().isEmpty()) {
 				SiteConditionDefinition condition = new SiteConditionDefinition();
-				for (String site : ad.getSites()) {
+				for (String site : advertisement.getSites()) {
 					condition.addSite(site);
 				}
 				adDef.addConditionDefinition(ConditionDefinitions.SITE,
 						condition);
 			}
 //			 Countries
-			if (!ad.getCountries().isEmpty()) {
+			if (!advertisement.getCountries().isEmpty()) {
 				CountryConditionDefinition condition = new CountryConditionDefinition();
-				for (String code : ad.getCountries()) {
+				for (String code : advertisement.getCountries()) {
 					Country country = new Country(code);
 					condition.addCountry(country);
 				}
@@ -131,9 +140,9 @@ public class AdServerServiceImpl implements AdServerService {
 						condition);
 			}
 //			 Dates
-			if (!ad.getDatePeriods().isEmpty()) {
+			if (!advertisement.getDatePeriods().isEmpty()) {
 				DateConditionDefinition condition = new DateConditionDefinition();
-				for (Period p : ad.getDatePeriods()) {
+				for (Period p : advertisement.getDatePeriods()) {
 					de.marx_labs.ads.db.definition.condition.DateConditionDefinition.Period period = new de.marx_labs.ads.db.definition.condition.DateConditionDefinition.Period();
 					period.setFrom(p.getFrom());
 					period.setTo(p.getTo());
@@ -142,9 +151,9 @@ public class AdServerServiceImpl implements AdServerService {
 						condition);
 			}
 //			 Times
-			if (!ad.getTimePeriods().isEmpty()) {
+			if (!advertisement.getTimePeriods().isEmpty()) {
 				TimeConditionDefinition condition = new TimeConditionDefinition();
-				for (Period p : ad.getTimePeriods()) {
+				for (Period p : advertisement.getTimePeriods()) {
 					de.marx_labs.ads.db.definition.condition.TimeConditionDefinition.Period period = new de.marx_labs.ads.db.definition.condition.TimeConditionDefinition.Period();
 					period.setFrom(p.getFrom());
 					period.setTo(p.getTo());
@@ -156,36 +165,58 @@ public class AdServerServiceImpl implements AdServerService {
 //			 put the AdDefinition in the persistence store
 			RuntimeContext.getPersistentAds().put(adDef.getId(), adDef);
 			RuntimeContext.getDistributedAds().put(adDef.getId(), adDef);
-
-			return true;
+			
+			
+			model.put("error", false);
 		} catch (Exception e) {
-			logger.error("error add Banner: " + ad.getId(), e);
+			LOGGER.error("", e);
+			
+			model.put("error", true);
+			model.put("message", e.getMessage());
+			
 			RuntimeContext.getDb().rollback();
 			tx.rollback();
 		} finally {
 			tx.commit();
 			RuntimeContext.getDb().commit();
 		}
-		return false;
+		
+		return model;
 	}
 
 	@Override
-	public boolean delete(@WebParam(name = "id") String id) {
+	@DELETE
+	@Path("/delete")
+	@Produces({ "application/x-javascript", "application/json" })
+	@Consumes({ "application/x-javascript", "application/json" })
+	public Map<String, Object> delete(String id) {
+		Map<String, Object> model = new HashMap<String, Object>();
 		Transaction tx = RuntimeContext.getHazelcastInstance().getTransaction();
 		try {
 			tx.begin();
 			RuntimeContext.getDistributedAds().remove(id);
 			RuntimeContext.getPersistentAds().remove(id);
 
-			return true;
+			model.put("error", false);
 		} catch (Exception e) {
-			logger.error("error delete Banner: " + id, e);
+			LOGGER.error("error delete Banner: " + id, e);
 			tx.rollback();
+			RuntimeContext.getDb().rollback();
+			
+			model.put("error", true);
+			model.put("message", e.getMessage());
 		} finally {
 			RuntimeContext.getDb().commit();
 			tx.commit();
 		}
-		return false;
+		
+		return model;
 	}
-
+	
+	@GET
+	@Path("/test")
+	@Produces({ MediaType.TEXT_PLAIN })
+	public String test() {
+		return "test";
+	}
 }
