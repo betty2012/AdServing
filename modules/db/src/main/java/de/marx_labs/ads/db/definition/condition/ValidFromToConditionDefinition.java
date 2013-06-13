@@ -24,45 +24,44 @@ import de.marx_labs.ads.db.definition.ConditionDefinition;
  * Steuerung der Tageszeit, zu der ein Banner angezeigt werden soll
  * So kann gesteuert werden, dass ein Banner nur zwischen 8 und 12 Uhr angezeigt werden soll
  * 
- * time formatting: HHmm
+ * time formatting: yyyyMMddHHmm
  * 
  * @author tmarx
  *
  */
-public class TimeConditionDefinition implements ConditionDefinition {
+public class ValidFromToConditionDefinition implements ConditionDefinition {
 	
 	public static final Period ALL_TIMES = new Period();
 	static {
 		ALL_TIMES.setFrom(AdDBConstants.ADDB_AD_TIME_ALL);
 		ALL_TIMES.setTo(AdDBConstants.ADDB_AD_TIME_ALL);
 	}
-	// max period count
-	public static final int MAX_PERIOD_COUNT = 4;
 
-	private Set<TimeConditionDefinition.Period> periods = new HashSet<TimeConditionDefinition.Period>();
+	private Period period = null;
 	
-	public TimeConditionDefinition () {
+	public ValidFromToConditionDefinition () {
 	}
 	
-	public Set<TimeConditionDefinition.Period> getPeriods() {
-		return periods;
+	public ValidFromToConditionDefinition.Period getPeriod() {
+		return period;
 	}
 	
-	public void addPeriod (String from, String to) {
-		Period p = new Period();
+	public void setPeriod (String from, String to) {
+		this.period = new Period();
 		if (from != null) {
-			p.setFrom(from);
+			this.period.setFrom(from);
 		} else {
-			p.setFrom(AdDBConstants.ADDB_AD_TIME_ALL);
+			this.period.setFrom(AdDBConstants.ADDB_AD_VALID_ALL);
 		}
 		
 		if (to != null) {
-			p.setTo(to);
+			this.period.setTo(to);
 		} else {
-			p.setTo(AdDBConstants.ADDB_AD_TIME_ALL);
+			this.period.setTo(AdDBConstants.ADDB_AD_VALID_ALL);
 		}
-		
-		periods.add(p);
+	}
+	public void setPeriod (Period period) {
+		this.period = period;
 	}
 
 	public static class Period implements Serializable {

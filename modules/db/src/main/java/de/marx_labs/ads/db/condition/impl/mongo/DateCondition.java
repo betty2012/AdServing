@@ -99,7 +99,7 @@ public class DateCondition implements Condition<BasicDBObject, QueryBuilder> {
 					bannerDoc.put(AdDBConstants.ADDB_AD_DATE_FROM + count, AdDBConstants.ADDB_AD_DATE_ALL);
 				}
 				
-				if (p.getFrom() != null) {
+				if (p.getTo() != null) {
 					bannerDoc.put(AdDBConstants.ADDB_AD_DATE_TO + count, p.getTo());
 				} else {
 					bannerDoc.put(AdDBConstants.ADDB_AD_DATE_TO + count, AdDBConstants.ADDB_AD_DATE_ALL);

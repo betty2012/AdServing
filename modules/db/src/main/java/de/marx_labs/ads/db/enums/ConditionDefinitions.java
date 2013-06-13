@@ -28,6 +28,7 @@ public enum ConditionDefinitions implements Serializable {
 	KEYVALUE,
 	DISTANCE,
 	ADSLOT,
+	VALIDFROMTO,
 	
 	VIEW_EXPIRATION,
 	CLICK_EXPIRATION

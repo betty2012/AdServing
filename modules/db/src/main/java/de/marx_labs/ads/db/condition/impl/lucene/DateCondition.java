@@ -94,7 +94,7 @@ public class DateCondition implements Condition<Document, BooleanQuery> {
 					bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_DATE_FROM + count, AdDBConstants.ADDB_AD_DATE_ALL, Field.Store.NO));
 				}
 				
-				if (p.getFrom() != null) {
+				if (p.getTo() != null) {
 					bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_DATE_TO + count, p.getTo(), Field.Store.NO));
 				} else {
 					bannerDoc.add(new StringField(AdDBConstants.ADDB_AD_DATE_TO + count, AdDBConstants.ADDB_AD_DATE_ALL, Field.Store.NO));

@@ -127,7 +127,7 @@ public class TimeCondition implements Condition<BasicDBObject, QueryBuilder> {
 					bannerDoc.put(AdDBConstants.ADDB_AD_TIME_FROM + count, AdDBConstants.ADDB_AD_TIME_ALL);
 				}
 				
-				if (p.getFrom() != null) {
+				if (p.getTo() != null) {
 					bannerDoc.put(AdDBConstants.ADDB_AD_TIME_TO + count, p.getTo());
 				} else {
 					bannerDoc.put(AdDBConstants.ADDB_AD_TIME_TO + count, AdDBConstants.ADDB_AD_TIME_ALL);

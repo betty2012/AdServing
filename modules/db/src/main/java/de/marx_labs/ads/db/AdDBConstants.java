@@ -25,6 +25,9 @@ public final class AdDBConstants {
 	public static final String ADDB_AD_PRODUCT_FALSE = "0";
 	public static final String ADDB_AD_PRODUCT_TRUE = "1";
 	
+	public static final String ADDB_AD_VALID_FROM = "ad_valid_from";
+	public static final String ADDB_AD_VALID_TO = "ad_valid_to";
+	public static final String ADDB_AD_VALID_ALL = "all";
 	public static final String ADDB_AD_TIME_FROM = "ad_time_from";
 	public static final String ADDB_AD_TIME_TO = "ad_time_to";
 	public static final String ADDB_AD_TIME_ALL = "all";
