@@ -41,6 +41,7 @@ import de.marx_labs.ads.common.template.impl.freemarker.FMTemplateManager;
 import de.marx_labs.ads.common.util.Properties2;
 import de.marx_labs.ads.common.util.Strings;
 import de.marx_labs.ads.db.AdDBManager;
+import de.marx_labs.ads.db.db.store.impl.local.LocalAdStore;
 import de.marx_labs.ads.db.enums.Mode;
 import de.marx_labs.ads.db.model.type.AdType;
 import de.marx_labs.ads.db.model.type.impl.ImageAdType;
@@ -215,7 +216,7 @@ public class StartupPlugIn implements ServletContextListener {
 		
 		long before = System.currentTimeMillis();
 		AdDBManager manager = AdDBManager.builder().mode(Mode.LOCAL).build();
-		manager.getContext().datadir = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_DB_DIRECOTRY);
+		manager.getContext().getConfiguration().put(LocalAdStore.CONFIG_DATADIR, RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_DB_DIRECOTRY));
 		RuntimeContext.setManager(manager);
 		RuntimeContext.setAdDB(manager.getAdDB());
 		RuntimeContext.getAdDB().open();

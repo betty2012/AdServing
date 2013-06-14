@@ -23,7 +23,7 @@ import de.marx_labs.ads.db.enums.Mode;
 public class AdDBContext {
 	public Mode mode = Mode.MEMORY;
 	
-	public String datadir = null;
+//	public String datadir = null;
 	
 	public Set<String> validKeys = new HashSet<String>();
 	
@@ -37,13 +37,14 @@ public class AdDBContext {
 		this.mode = mode;
 	}
 
-	public String getDatadir() {
-		return datadir;
-	}
-
-	public void setDatadir(String datadir) {
-		this.datadir = datadir;
-	}
+	
+//	public String getDatadir() {
+//		return datadir;
+//	}
+//
+//	public void setDatadir(String datadir) {
+//		this.datadir = datadir;
+//	}
 
 	public Set<String> getValidKeys() {
 		return validKeys;

@@ -19,6 +19,7 @@ import java.util.List;
 
 import de.marx_labs.ads.db.AdDBManager;
 import de.marx_labs.ads.db.db.request.AdRequest;
+import de.marx_labs.ads.db.db.store.impl.local.LocalAdStore;
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import de.marx_labs.ads.db.enums.Mode;
@@ -36,7 +37,7 @@ public class StoredAdDBTest {
 	public static void main(String[] args) throws IOException {
 		AdDBManager manager = AdDBManager.builder().build();
 		manager.getContext().mode = Mode.LOCAL;
-		manager.getContext().datadir = "D:/www/apps/adserver/temp/";
+		manager.getContext().getConfiguration().put(LocalAdStore.CONFIG_DATADIR, "D:/www/apps/adserver/temp/");
 		manager.getAdDB().open();
 		
 		manager.getAdDB().clear();

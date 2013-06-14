@@ -58,6 +58,8 @@ public class LocalAdStore implements AdStore {
 
 	private static final Logger logger = LoggerFactory.getLogger(LocalAdStore.class);
 	
+	public static final String CONFIG_DATADIR = "datadir";
+	
 	private Map<String, AdDefinition> store = null;
 	
 	private AdDB addb = null;
@@ -87,11 +89,11 @@ public class LocalAdStore implements AdStore {
 			this.index = new RAMDirectory();
 			this.store = new HashMap<String, AdDefinition>();
 		} else {
-			if (Strings.isNullOrEmpty(addb.manager.getContext().datadir)) {
+			if (!addb.manager.getContext().getConfiguration().containsKey(CONFIG_DATADIR)) {
 				throw new IOException("data directory can not be empty");
 			}
 			
-			String dir = addb.manager.getContext().datadir;
+			String dir = (String) addb.manager.getContext().getConfiguration().get(CONFIG_DATADIR);
 			if (!dir.endsWith("/") || !dir.endsWith("\\")) {
 				dir += "/";
 			}

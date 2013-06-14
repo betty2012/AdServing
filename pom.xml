@@ -50,7 +50,7 @@
 		<module>modules/utilities/thirdparty</module>
 		<module>modules/db</module>
 		<module>modules/server/adserver</module>
-		<module>modules/server/adserver2</module>
+<!-- 		<module>modules/server/adserver2</module> -->
 		<module>modules/server/adcontroller</module>
 		<!-- module>modules/server/mobileadserver</module -->
 		<module>modules/tools/import</module>

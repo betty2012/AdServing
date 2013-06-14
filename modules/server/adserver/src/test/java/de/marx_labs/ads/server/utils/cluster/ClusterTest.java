@@ -23,6 +23,7 @@ import org.junit.Test;
 import com.hazelcast.core.Hazelcast;
 
 import de.marx_labs.ads.db.AdDBManager;
+import de.marx_labs.ads.db.db.store.impl.local.LocalAdStore;
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import de.marx_labs.ads.db.enums.Mode;
@@ -53,7 +54,7 @@ public class ClusterTest {
 		Thread.sleep(20000);
 		
 		AdDBManager manager = AdDBManager.builder().mode(Mode.LOCAL).build();
-		manager.getContext().datadir = "D:/www/apps/adserver/temp3/";
+		manager.getContext().getConfiguration().put(LocalAdStore.CONFIG_DATADIR, "D:/www/apps/adserver/temp3/");
 		manager.getAdDB().open();
 		manager.getAdDB().clear();
 		RuntimeContext.setAdDB(manager.getAdDB());

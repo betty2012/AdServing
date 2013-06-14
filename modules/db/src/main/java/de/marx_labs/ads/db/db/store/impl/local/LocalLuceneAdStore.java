@@ -69,6 +69,7 @@ import de.marx_labs.ads.db.definition.condition.KeywordConditionDefinition;
 import de.marx_labs.ads.db.definition.condition.SiteConditionDefinition;
 import de.marx_labs.ads.db.definition.condition.StateConditionDefinition;
 import de.marx_labs.ads.db.definition.condition.TimeConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.ValidFromToConditionDefinition;
 import de.marx_labs.ads.db.definition.condition.ViewExpirationConditionDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.flash.FlashAdDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
@@ -182,6 +183,7 @@ public class LocalLuceneAdStore implements AdStore {
 		kryo.register(StateConditionDefinition.class, 160 + id);
 		kryo.register(TimeConditionDefinition.class, 161 + id);
 		kryo.register(ViewExpirationConditionDefinition.class, 162 + id);
+		kryo.register(ValidFromToConditionDefinition.class, 163 + id);
 		
 		return kryo;
 	}
@@ -192,11 +194,11 @@ public class LocalLuceneAdStore implements AdStore {
 		if (memoryMode) {
 			this.index = new RAMDirectory();
 		} else {
-			if (Strings.isNullOrEmpty(addb.manager.getContext().datadir)) {
+			if (!addb.manager.getContext().getConfiguration().containsKey(LocalAdStore.CONFIG_DATADIR)) {
 				throw new IOException("data directory can not be empty");
 			}
 			
-			String dir = addb.manager.getContext().datadir;
+			String dir = (String) addb.manager.getContext().getConfiguration().get(LocalAdStore.CONFIG_DATADIR);
 			if (!dir.endsWith("/") || !dir.endsWith("\\")) {
 				dir += "/";
 			}

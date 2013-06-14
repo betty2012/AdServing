@@ -17,6 +17,7 @@ package de.marx_labs.ads.db.test.lucene;
 import java.io.IOException;
 
 import de.marx_labs.ads.db.AdDBManager;
+import de.marx_labs.ads.db.db.store.impl.local.LocalAdStore;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import de.marx_labs.ads.db.enums.Mode;
 import de.marx_labs.ads.db.model.format.impl.MediumRectangleAdFormat;
@@ -28,7 +29,7 @@ public class Benchmark  {
 		
 		AdDBManager manager = AdDBManager.builder().build();
 		manager.getContext().mode = Mode.LOCAL;
-		manager.getContext().datadir = "D:/www/apps/adserver/temp/";
+		manager.getContext().getConfiguration().put(LocalAdStore.CONFIG_DATADIR, "D:/www/apps/adserver/temp/");
 		manager.getAdDB().open();
 		
 		manager.getAdDB().clear();
