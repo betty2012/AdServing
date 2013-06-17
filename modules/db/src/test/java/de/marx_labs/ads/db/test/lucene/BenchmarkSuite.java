@@ -13,6 +13,8 @@
  */
 package de.marx_labs.ads.db.test.lucene;
 
+import junit.framework.TestSuite;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -21,20 +23,22 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ CountryConditionTest.class, DateConditionTest.class, DayConditionTest.class, ExcludeSiteConditionTest.class, KeyValueConditionTest.class, SiteConditionTest.class, StateConditionTest.class, TimeConditionTest.class, ValidFromToConditionTest.class })
-public class BenchmarkSuite {
-
+public class BenchmarkSuite extends TestSuite {
+	
 	private static long before = 0;
 	
 	@BeforeClass
 	public static void setUpClass() {
 		before = System.currentTimeMillis();
 	}
+	
+
 
 	@AfterClass
 	public static void tearDownClass() {
 		long after = System.currentTimeMillis();
 		
-		System.out.println("took: " + (after - before) + " ms");
+		System.out.println(" - took: " + (after - before) + " ms");
 	}
 
 }

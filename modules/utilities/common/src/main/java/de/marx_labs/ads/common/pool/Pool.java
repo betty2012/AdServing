@@ -30,6 +30,8 @@ public final class Pool<T> {
 	}
 
 	public void giveBack(T object) throws InterruptedException {
-		this.objects.put(object);
+		if (object != null) {
+			this.objects.put(object);
+		}
 	}
 }

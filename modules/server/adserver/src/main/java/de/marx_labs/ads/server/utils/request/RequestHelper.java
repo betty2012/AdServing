@@ -82,8 +82,7 @@ public class RequestHelper {
 		// boolean isInteger = matchesInteger.matches ();
 
 		try {
-			String clientIp = request.getRemoteAddr();
-			Location loc = RuntimeContext.getIpDB().searchIp(clientIp);
+			Location loc = context.getLocation();
 			if (loc != null) {
 				try {
 					GeoLocation geo = new GeoLocation(Double.parseDouble(loc.getLatitude()), Double.parseDouble(loc.getLongitude()));

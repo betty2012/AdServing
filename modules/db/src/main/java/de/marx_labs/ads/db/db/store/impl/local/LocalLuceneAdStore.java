@@ -49,9 +49,8 @@ import org.slf4j.LoggerFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.google.common.base.Strings;
-import com.google.common.io.BaseEncoding;
 
+import de.marx_labs.ads.common.pool.Pool;
 import de.marx_labs.ads.db.AdDBConstants;
 import de.marx_labs.ads.db.db.AdDB;
 import de.marx_labs.ads.db.db.request.AdRequest;
@@ -125,8 +124,16 @@ public class LocalLuceneAdStore implements AdStore {
 	
 	private boolean memoryMode = false;
 	
+	private Pool<Kryo> kryoInstances; 
+	
 	public LocalLuceneAdStore(AdDB db) {
 		this.addb = db;
+		
+		List<Kryo> instances = new ArrayList<Kryo>();
+		for (int i = 0; i < 100; i++) {
+			instances.add(kryo());
+		}
+		kryoInstances = new Pool<Kryo>(instances);
 	}
 	public LocalLuceneAdStore(AdDB db, boolean memoryMode) {
 		this(db);
@@ -240,21 +247,34 @@ public class LocalLuceneAdStore implements AdStore {
 
 	@Override
 	public void add(AdDefinition definition) throws IOException {
-		// add index
-		Document doc = LuceneDocumentHelper.getInstance().getBannerDocument(definition, this.addb);
-		
-		
-		ByteArrayOutputStream bout = new ByteArrayOutputStream();
-		Output output = new Output(bout);
-		kryo().writeObject(output, definition);
-		
-		
-		doc.add(new StoredField(ADV_CONTENT, new BytesRef(output.getBuffer())));
-//		doc.add(new StoredField(ADV_CONTENT, BaseEncoding.base64().encode(output.getBuffer())));
-		doc.add(new StringField(ADV_TYPE, definition.getType().getType(), Store.YES));
-		doc.add(new StringField(ADV_ID, definition.getId(), Store.YES));
-		
-		this.writer.addDocument(doc, new KeywordAnalyzer());
+		Kryo kryo = null;
+		try {
+			kryo = kryoInstances.borrow();
+			
+			// add index
+			Document doc = LuceneDocumentHelper.getInstance().getBannerDocument(definition, this.addb);
+			
+			
+			ByteArrayOutputStream bout = new ByteArrayOutputStream();
+			Output output = new Output(bout);
+			kryo.writeObject(output, definition);
+			
+			
+			doc.add(new StoredField(ADV_CONTENT, new BytesRef(output.getBuffer())));
+//			doc.add(new StoredField(ADV_CONTENT, BaseEncoding.base64().encode(output.getBuffer())));
+			doc.add(new StringField(ADV_TYPE, definition.getType().getType(), Store.YES));
+			doc.add(new StringField(ADV_ID, definition.getId(), Store.YES));
+			
+			this.writer.addDocument(doc, new KeywordAnalyzer());
+		} catch (InterruptedException e) {
+			logger.error("", e);
+		} finally {
+			try {
+				kryoInstances.giveBack(kryo);
+			} catch (InterruptedException e) {
+				logger.error("", e);
+			}
+		}
 	}
 
 	@Override
@@ -266,7 +286,9 @@ public class LocalLuceneAdStore implements AdStore {
 	@Override
 	public AdDefinition get(String id) {
 		IndexSearcher searcher = null;
+		Kryo kryo = null;
 		try {
+			kryo = kryoInstances.borrow();
 			searcher =  nrt_manager.acquire();
 			
 			BooleanQuery query = new BooleanQuery();
@@ -282,11 +304,13 @@ public class LocalLuceneAdStore implements AdStore {
 				if (ad_type != null) {
 					Input input = new Input(field.binaryValue().bytes);
 //					Input input = new Input(BaseEncoding.base64().decode(doc.get(ADV_CONTENT)));
-					return kryo().readObject(input, ad_type.getAdDefinition().getClass());
+					return kryo.readObject(input, ad_type.getAdDefinition().getClass());
 				}
 			}
 			
 		} catch (IOException e) {
+			logger.error("", e);
+		} catch (InterruptedException e) {
 			logger.error("", e);
 		} finally {
 			try {
@@ -294,6 +318,11 @@ public class LocalLuceneAdStore implements AdStore {
 					nrt_manager.release(searcher);
 				}
 			} catch (IOException e) {
+				logger.error("", e);
+			}
+			try {
+				kryoInstances.giveBack(kryo);
+			} catch (InterruptedException e) {
 				logger.error("", e);
 			}
 		}

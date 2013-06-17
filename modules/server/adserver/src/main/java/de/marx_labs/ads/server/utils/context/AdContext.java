@@ -17,6 +17,7 @@ import java.util.Locale;
 
 import net.sf.uadetector.UserAgent;
 import de.marx_labs.ads.db.definition.AdSlot;
+import de.marx_labs.ads.services.geo.Location;
 
 /**
  * Der AdContext enthält die wichtigsten Information zu einem Request.
@@ -41,6 +42,7 @@ public class AdContext {
 	private AdSlot adSlot;
 	private UserAgent userAgent;
 	private Locale locale;
+	private Location location;
 	
 	public AdContext () {
 		
@@ -48,6 +50,24 @@ public class AdContext {
 
 	
 	
+	
+	
+	public Location getLocation() {
+		return location;
+	}
+
+
+
+
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+
+
+
+
 	public Locale getLocale() {
 		return locale;
 	}

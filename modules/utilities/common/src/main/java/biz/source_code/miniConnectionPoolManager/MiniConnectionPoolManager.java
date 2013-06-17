@@ -16,10 +16,9 @@ package biz.source_code.miniConnectionPoolManager;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
-
+import java.util.LinkedList;
 import javax.sql.ConnectionEvent;
 import javax.sql.ConnectionEventListener;
 import javax.sql.ConnectionPoolDataSource;
@@ -88,8 +87,7 @@ public class MiniConnectionPoolManager {
 	 * @param maxConnections
 	 *            the maximum number of connections.
 	 */
-	public MiniConnectionPoolManager(ConnectionPoolDataSource dataSource,
-			int maxConnections) {
+	public MiniConnectionPoolManager(ConnectionPoolDataSource dataSource, int maxConnections) {
 		this(dataSource, maxConnections, 60);
 	}
 
@@ -103,8 +101,7 @@ public class MiniConnectionPoolManager {
 	 * @param timeout
 	 *            the maximum time in seconds to wait for a free connection.
 	 */
-	public MiniConnectionPoolManager(ConnectionPoolDataSource dataSource,
-			int maxConnections, int timeout) {
+	public MiniConnectionPoolManager(ConnectionPoolDataSource dataSource, int maxConnections, int timeout) {
 		this.dataSource = dataSource;
 		this.maxConnections = maxConnections;
 		this.timeoutMs = timeout * 1000L;
@@ -167,8 +164,7 @@ public class MiniConnectionPoolManager {
 		// block.
 		synchronized (this) {
 			if (isDisposed) {
-				throw new IllegalStateException(
-						"Connection pool has been disposed.");
+				throw new IllegalStateException("Connection pool has been disposed.");
 			}
 		}
 		try {
@@ -176,8 +172,7 @@ public class MiniConnectionPoolManager {
 				throw new TimeoutException();
 			}
 		} catch (InterruptedException e) {
-			throw new RuntimeException(
-					"Interrupted while waiting for a database connection.", e);
+			throw new RuntimeException("Interrupted while waiting for a database connection.", e);
 		}
 		boolean ok = false;
 		try {
@@ -193,8 +188,7 @@ public class MiniConnectionPoolManager {
 
 	private synchronized Connection getConnection3() throws SQLException {
 		if (isDisposed) { // test again within synchronized lock
-			throw new IllegalStateException(
-					"Connection pool has been disposed.");
+			throw new IllegalStateException("Connection pool has been disposed.");
 		}
 		PooledConnection pconn;
 		if (!recycledConnections.isEmpty()) {
@@ -259,15 +253,12 @@ public class MiniConnectionPoolManager {
 				try {
 					Thread.sleep(250);
 				} catch (InterruptedException e) {
-					throw new RuntimeException(
-							"Interrupted while waiting for a valid database connection.",
-							e);
+					throw new RuntimeException("Interrupted while waiting for a valid database connection.", e);
 				}
 			}
 			time = System.currentTimeMillis();
 			if (time >= timeoutTime) {
-				throw new TimeoutException(
-						"Timeout while waiting for a valid database connection.");
+				throw new TimeoutException("Timeout while waiting for a valid database connection.");
 			}
 		}
 	}
@@ -339,8 +330,7 @@ public class MiniConnectionPoolManager {
 
 	private synchronized void disposeConnection(PooledConnection pconn) {
 		pconn.removeConnectionEventListener(poolConnectionEventListener);
-		if (!recycledConnections.remove(pconn)
-				&& pconn != connectionInTransition) {
+		if (!recycledConnections.remove(pconn) && pconn != connectionInTransition) {
 			// If the PooledConnection is not in the recycledConnections list
 			// and is not currently within a PooledConnection.getConnection()
 			// call,
@@ -387,8 +377,7 @@ public class MiniConnectionPoolManager {
 		}
 	}
 
-	private class PoolConnectionEventListener implements
-			ConnectionEventListener {
+	private class PoolConnectionEventListener implements ConnectionEventListener {
 		public void connectionClosed(ConnectionEvent event) {
 			PooledConnection pconn = (PooledConnection) event.getSource();
 			recycleConnection(pconn);
