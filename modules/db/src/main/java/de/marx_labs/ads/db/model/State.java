@@ -22,6 +22,9 @@ public class State implements Serializable {
 	public static State ALL = new State(AdDBConstants.ADDB_AD_STATE_ALL); 
 	
 	private String code = "";
+	public State () {
+		
+	}
 	public State (String code) {
 		this.code = code;
 	}

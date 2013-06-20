@@ -37,7 +37,7 @@ public class AdDBTestDir {
 		
 		
 		manager.getContext().mode = Mode.LOCAL;
-		manager.getContext().datadir = "/tmp/addb";
+		manager.getContext().getConfiguration().put("datadir", "/tmp/addb");
 		
 		manager.getAdDB().open();
 		

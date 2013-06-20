@@ -20,10 +20,6 @@ import java.util.concurrent.ConcurrentNavigableMap;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import de.marx_labs.ads.common.util.Properties2;
-import de.marx_labs.ads.controller.utils.RuntimeContext;
-import de.marx_labs.ads.db.definition.AdDefinition;
-
 import org.apache.log4j.PropertyConfigurator;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
@@ -31,6 +27,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.hazelcast.core.Hazelcast;
+
+import de.marx_labs.ads.common.util.Properties2;
+import de.marx_labs.ads.controller.utils.RuntimeContext;
+import de.marx_labs.ads.db.definition.AdDefinition;
 
 /**
  * 

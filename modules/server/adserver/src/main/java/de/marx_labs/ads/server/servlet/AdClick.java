@@ -25,6 +25,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.server.utils.RuntimeContext;
 import de.marx_labs.ads.server.utils.context.AdContext;
@@ -32,9 +35,6 @@ import de.marx_labs.ads.server.utils.helper.TrackingHelper;
 import de.marx_labs.ads.server.utils.http.listener.AdContextListener;
 import de.marx_labs.ads.services.tracking.events.ClickTrackEvent;
 import de.marx_labs.ads.services.tracking.events.TrackEvent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Servlet implementation class AdClick

@@ -16,9 +16,6 @@ package de.marx_labs.ads.server.utils.cluster;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 
-import de.marx_labs.ads.db.definition.AdDefinition;
-import de.marx_labs.ads.server.utils.RuntimeContext;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +24,9 @@ import com.hazelcast.core.EntryListener;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
+
+import de.marx_labs.ads.db.definition.AdDefinition;
+import de.marx_labs.ads.server.utils.RuntimeContext;
 
 /**
  * The Clustermanager

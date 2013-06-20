@@ -20,6 +20,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.condition.ViewExpirationConditionDefinition;
 import de.marx_labs.ads.db.enums.ConditionDefinitions;
@@ -29,9 +32,6 @@ import de.marx_labs.ads.server.utils.context.AdContext;
 import de.marx_labs.ads.server.utils.selection.AdSelector;
 import de.marx_labs.ads.services.tracking.Criterion;
 import de.marx_labs.ads.services.tracking.events.EventType;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Das Banner wird aufgrund der prozentualen Anzeige-Häufigkeit ausgewählt.

@@ -50,17 +50,6 @@
 
 		<dependency>
 			<groupId>de.marx-labs.ads</groupId>
-			<artifactId>base.api</artifactId>
-			<exclusions>
-				<exclusion>
-					<artifactId>servlet-api</artifactId>
-					<groupId>javax.servlet</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>de.marx-labs.ads</groupId>
 			<artifactId>db</artifactId>
 		</dependency>
 

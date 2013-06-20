@@ -13,8 +13,13 @@
  */
 package de.marx_labs.ads.db.test.lucene;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Test;
 
 import de.marx_labs.ads.db.db.request.AdRequest;
 import de.marx_labs.ads.db.definition.AdDefinition;
@@ -27,9 +32,6 @@ import de.marx_labs.ads.db.model.format.impl.FullBannerAdFormat;
 import de.marx_labs.ads.db.model.type.AdType;
 import de.marx_labs.ads.db.model.type.impl.ImageAdType;
 import de.marx_labs.ads.db.services.AdTypes;
-
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 
 public class KeyValueConditionTest extends AdDBTestCase {

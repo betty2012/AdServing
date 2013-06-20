@@ -24,6 +24,8 @@ import de.marx_labs.ads.db.definition.ConditionDefinition;
  * Steuerung der Tageszeit, zu der ein Banner angezeigt werden soll
  * So kann gesteuert werden, dass ein Banner nur zwischen 8 und 12 Uhr angezeigt werden soll
  * 
+ * time formatting: HHmm
+ * 
  * @author tmarx
  *
  */

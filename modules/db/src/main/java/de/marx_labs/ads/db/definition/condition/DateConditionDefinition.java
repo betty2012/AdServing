@@ -31,6 +31,8 @@ import de.marx_labs.ads.db.definition.ConditionDefinition;
  * 01.06.2011 - 31.08.2011
  * 01.10.2011 - 31.10.2011
  * 
+ * date formatting: yyyyMMdd
+ * 
  * @author tmarx
  *
  */

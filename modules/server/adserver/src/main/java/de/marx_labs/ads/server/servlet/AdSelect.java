@@ -42,36 +42,33 @@ import de.marx_labs.ads.services.tracking.events.TrackEvent;
 @WebServlet(asyncSupported = true)
 public class AdSelect extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final int CALLBACK_TIMEOUT = 60000;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+			IOException {
 		processRequest(request, response);
 	}
 
-	private void processRequest(final HttpServletRequest request,
-			final HttpServletResponse response) throws ServletException, IOException {
+	private void processRequest(final HttpServletRequest request, final HttpServletResponse response)
+			throws ServletException, IOException {
 
 		// if we run in clustermode and the db update is runnging
 		if (RuntimeContext.getClusterManager() != null && RuntimeContext.getClusterManager().isUpdating()) {
 			// return 404 to the loadbalancer (eq haproxy)
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
-		
+
 		// create the async context, otherwise getAsyncContext() will be null
 		final AsyncContext ctx = request.startAsync();
 
@@ -81,8 +78,7 @@ public class AdSelect extends HttpServlet {
 		// attach listener to respond to lifecycle events of this AsyncContext
 		ctx.addListener(new AsyncListener() {
 			/**
-			 * complete() has already been called on the async context, nothing
-			 * to do
+			 * complete() has already been called on the async context, nothing to do
 			 */
 			public void onComplete(AsyncEvent event) throws IOException {
 			}
@@ -96,8 +92,7 @@ public class AdSelect extends HttpServlet {
 			}
 
 			/**
-			 * THIS NEVER GETS CALLED - error has occured in async task...
-			 * handle it
+			 * THIS NEVER GETS CALLED - error has occured in async task... handle it
 			 */
 			public void onError(AsyncEvent event) throws IOException {
 				log("onError called");
@@ -130,47 +125,22 @@ public class AdSelect extends HttpServlet {
 					 * 
 					 * Aktuell wird dies zufällig gemacht!
 					 */
-					AdDefinition banner = AdProvider.getInstance().getBanner(
-							context, request);
+					AdDefinition banner = AdProvider.getInstance().getBanner(context, request);
 
 					StringBuilder sb = new StringBuilder();
 					if (banner != null) {
 						/*
-						 * Hier wird der Type des Banners verwendet und nicht
-						 * der Typ der im Request Übergeben wird, da bei der
-						 * Auswahl des Banners evtl. ein Fallback auf einen
-						 * anderen BannerType erfolgen kann. z.B. Flashbanner
-						 * auf Imagebanner
+						 * Hier wird der Type des Banners verwendet und nicht der Typ der im Request Übergeben wird, da
+						 * bei der Auswahl des Banners evtl. ein Fallback auf einen anderen BannerType erfolgen kann.
+						 * z.B. Flashbanner auf Imagebanner
 						 */
-						// if
-						// (banner.getType().getType().equals(ExternAdType.TYPE))
-						// {
-						// sb.append(ExternAdDefinitionRenderer.getInstance().render(banner,
-						// request));
-						// } else if
-						// (banner.getType().getType().equals(ImageAdType.TYPE))
-						// {
-						// sb.append(ImageAdDefinitionRenderer.getInstance().render(banner,
-						// request));
-						// } else if
-						// (banner.getType().getType().equals(FlashAdType.TYPE))
-						// {
-						// sb.append(FlashAdDefinitionRenderer.getInstance().render(banner,
-						// request));
-						// } else if
-						// (banner.getType().getType().equals(ExpandableImageAdType.TYPE))
-						// {
-						// sb.append(ExpandableImageAdDefinitionRenderer.getInstance().render(banner,
-						// request));
-						// }
-						AdDefinitionRenderer<AdDefinition> renderer = AdDefinitionRendererService
-								.forType(banner.getType());
+						AdDefinitionRenderer<AdDefinition> renderer = AdDefinitionRendererService.forType(banner
+								.getType());
 						sb.append(renderer.render(banner, request, context));
 
 						TrackEvent trackEvent = new ImpressionTrackEvent();
 						trackEvent.setBannerId(banner.getId());
-						trackEvent.setCampaign(banner.getCampaign() != null ? banner
-								.getCampaign().getId() : "");
+						trackEvent.setCampaign(banner.getCampaign() != null ? banner.getCampaign().getId() : "");
 						trackEvent.setUser(context.getUserId());
 						trackEvent.setId(UUID.randomUUID().toString());
 						trackEvent.setTime(System.currentTimeMillis());
@@ -187,50 +157,38 @@ public class AdSelect extends HttpServlet {
 
 						/*
 						 * 
-						 * Add request id and the ad id to the requested ad
-						 * cache to rembemer which ad was displayed at the
-						 * current pageview. This is used in the
-						 * DuplicateBannerFilter to filter duplicate ads
+						 * Add request id and the ad id to the requested ad cache to remember which ad was displayed at
+						 * the current pageview. This is used in the DuplicateBannerFilter to filter duplicate ads
 						 * 
-						 * Hier merken wir uns das Banner für diesen Request um
-						 * später im DuplicateBannerFilter die Information
-						 * verwenden zu können
+						 * Hier merken wir uns das Banner für diesen Request um später im DuplicateBannerFilter die
+						 * Information verwenden zu können
 						 * 
-						 * Als Request gelten alle Aufrufe, die durch den selben
-						 * Pageview erzeugt werden
+						 * Als Request gelten alle Aufrufe, die durch den selben Pageview erzeugt werden
 						 * 
 						 * pv = pageview (all request from a single pageview)
 						 */
-						RuntimeContext.getRequestBanners().put(
-								"pv" + context.getRequestId() + "_"
-										+ banner.getId(), Boolean.TRUE);
+						RuntimeContext.getRequestBanners().put("pv" + context.getRequestId() + "_" + banner.getId(),
+								Boolean.TRUE);
 						/*
-						 * Hier merken wir uns, dass ein Benutzer das Banner
-						 * schon gesehen hat. Auf diese Art kann später z.B.
-						 * geregelt werden, dass ein USER ein Banner maximal 5
-						 * mal sehen soll
+						 * Hier merken wir uns, dass ein Benutzer das Banner schon gesehen hat. Auf diese Art kann
+						 * später z.B. geregelt werden, dass ein USER ein Banner maximal 5 mal sehen soll
 						 * 
-						 * TODO: hier muss noch die TimeToLife für das
-						 * Cacheobjekte gesetzt werden
+						 * TODO: hier muss noch die TimeToLife für das Cacheobjekte gesetzt werden
 						 * 
 						 * u = user
 						 */
-						RuntimeContext.getRequestBanners().put(
-								"u" + context.getUserId() + "_"
-										+ banner.getId(), Boolean.TRUE);
+						RuntimeContext.getRequestBanners().put("u" + context.getUserId() + "_" + banner.getId(),
+								Boolean.TRUE);
 
 						/*
-						 * Damit wir später die passenden Banner für die
-						 * Produkte anzeigen können, merken wir uns auch das
-						 * Produkt
+						 * Damit wir später die passenden Banner für die Produkte anzeigen können, merken wir uns auch
+						 * das Produkt
 						 * 
 						 * prod = product
 						 */
 						if (banner.isProduct()) {
-							RuntimeContext
-									.getRequestBanners()
-									.put("prod" + context.getRequestId() + "_"
-											+ banner.getProduct(), Boolean.TRUE);
+							RuntimeContext.getRequestBanners().put(
+									"prod" + context.getRequestId() + "_" + banner.getProduct(), Boolean.TRUE);
 						}
 					}
 

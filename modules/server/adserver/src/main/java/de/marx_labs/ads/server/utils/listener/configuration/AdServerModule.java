@@ -20,6 +20,14 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.inject.AbstractModule;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoClient;
+
 import de.marx_labs.ads.base.utils.BaseContext;
 import de.marx_labs.ads.base.utils.exception.ServiceException;
 import de.marx_labs.ads.server.utils.AdServerConstants;
@@ -29,15 +37,6 @@ import de.marx_labs.ads.services.tracking.TrackingContextKeys;
 import de.marx_labs.ads.services.tracking.TrackingService;
 import de.marx_labs.ads.services.tracking.impl.local.h2.H2TrackingService;
 import de.marx_labs.ads.services.tracking.impl.mongo.MongoTrackingService;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.inject.AbstractModule;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
 
 public class AdServerModule extends AbstractModule {
 

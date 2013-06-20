@@ -13,13 +13,13 @@
  */
 package de.marx_labs.ads.server.utils.filter;
 
-import de.marx_labs.ads.db.definition.AdDefinition;
-import de.marx_labs.ads.db.definition.impl.ad.flash.FlashAdDefinition;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Predicate;
+
+import de.marx_labs.ads.db.definition.AdDefinition;
+import de.marx_labs.ads.db.definition.impl.ad.flash.FlashAdDefinition;
 
 /**
  * Dieser Filter fitlert FlashBanner aus dem Ergebnis, die eine höhere Flashversion benötigen

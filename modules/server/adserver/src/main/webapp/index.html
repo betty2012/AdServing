@@ -13,3 +13,36 @@
     specific language governing permissions and limitations under the License.
 
 -->
+<head>
+	<head></head>
+	<body>
+	
+	
+	<div id="ad_example_1234_1"></div>
+		<script type="text/javascript">
+			(function () {
+				
+				<!-- This part can be modified -->
+				//var mad_ad_date = new Date();
+				//var mad_ad_offset = -mad_ad_date.getTimezoneOffset(); // differenceInMinutes
+				//var mad_ad_flashVersion = madApi.flash(7, 10).available;
+				var mad_ad_format = "468x60";
+				var mad_ad_type = "image";
+				//var mad_ad_slot = "";
+				//var mad_ad_keywords = "";
+				//var mad_ad_tcolor = "";
+				//var mad_ad_bcolor = "";
+				//var mad_ad_referrer = encodeURIComponent(document.referrer);
+				// the id of the div the banner is appended to
+				var mad_ad_div_id = "ad_example_1234_1";
+				<!-- -->
+   				var script = document.createElement('script');
+   				script.type = 'text/javascript';
+   				script.async = true;
+   				script.src = 'http://localhost:8080/js/async/ads.js?_p1=' + mad_ad_format + '&_p2=' + mad_ad_type + "&_p9=" + mad_ad_div_id;
+   				(document.getElementsByTagName('head')[0] || document.body).appendChild(script);
+			})();
+		</script>
+	
+	</body>
+</head>

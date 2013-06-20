@@ -13,13 +13,13 @@
  */
 package de.marx_labs.ads.db.utils;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+
 import de.marx_labs.ads.db.AdDBConstants;
 import de.marx_labs.ads.db.condition.Condition;
 import de.marx_labs.ads.db.db.AdDB;
 import de.marx_labs.ads.db.definition.AdDefinition;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 
 public class MongoDocumentHelper {
 	private static MongoDocumentHelper INSTANCE = null;

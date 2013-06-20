@@ -25,6 +25,9 @@ public final class AdDBConstants {
 	public static final String ADDB_AD_PRODUCT_FALSE = "0";
 	public static final String ADDB_AD_PRODUCT_TRUE = "1";
 	
+	public static final String ADDB_AD_VALID_FROM = "ad_valid_from";
+	public static final String ADDB_AD_VALID_TO = "ad_valid_to";
+	public static final String ADDB_AD_VALID_ALL = "all";
 	public static final String ADDB_AD_TIME_FROM = "ad_time_from";
 	public static final String ADDB_AD_TIME_TO = "ad_time_to";
 	public static final String ADDB_AD_TIME_ALL = "all";
@@ -37,6 +40,8 @@ public final class AdDBConstants {
 	public static final String ADDB_AD_STATE_ALL = "0";
 	public static final String ADDB_AD_COUNTRY = "ad_country";
 	public static final String ADDB_AD_COUNTRY_ALL = "all";
+	public static final String ADDB_AD_LANGUAGE = "ad_language";
+	public static final String ADDB_AD_LANGUAGE_ALL = "all";
 	
 	public static final String ADDB_AD_KEYWORD = "ad_keyword";
 	public static final String ADDB_AD_KEYWORD_ALL = "all";

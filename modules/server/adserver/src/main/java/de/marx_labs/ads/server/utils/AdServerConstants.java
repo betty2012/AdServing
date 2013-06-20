@@ -36,6 +36,8 @@ public abstract class AdServerConstants {
 			public static final String ADSERVER_URL = "adserver.url";
 			public static final String ADSERVER_SELECT_URL = "adserver.select.url";
 			
+			public static final String ADSERVER_ASYNC_SELECT_URL = "adserver.async.select.url";
+			
 			public static final String SERVICES_TRACKING_CASSANDRA_HOST = "services.tracking.cassandra.host";
 			public static final String SERVICES_TRACKING_CASSANDRA_CLUSTER = "services.tracking.cassandra.cluster";			
 			

@@ -13,12 +13,12 @@
  */
 package de.marx_labs.ads.db.utils;
 
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Query;
+
 import de.marx_labs.ads.db.condition.Condition;
 import de.marx_labs.ads.db.db.AdDB;
 import de.marx_labs.ads.db.db.request.AdRequest;
-
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.Query;
 
 
 public class LuceneQueryHelper {

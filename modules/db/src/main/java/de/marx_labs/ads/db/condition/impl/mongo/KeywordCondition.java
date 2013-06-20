@@ -16,6 +16,9 @@ package de.marx_labs.ads.db.condition.impl.mongo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.QueryBuilder;
+
 import de.marx_labs.ads.db.AdDBConstants;
 import de.marx_labs.ads.db.condition.Condition;
 import de.marx_labs.ads.db.db.request.AdRequest;
@@ -23,9 +26,6 @@ import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.Keyword;
 import de.marx_labs.ads.db.definition.condition.KeywordConditionDefinition;
 import de.marx_labs.ads.db.enums.ConditionDefinitions;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.QueryBuilder;
 
 
 /**

@@ -15,14 +15,13 @@ package de.marx_labs.ads.db.test.lucene;
 
 import java.io.IOException;
 
-import junit.framework.TestCase;
-import de.marx_labs.ads.db.AdDBManager;
-import de.marx_labs.ads.db.db.AdDB;
-
 import org.junit.After;
 import org.junit.Before;
 
 import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
+
+import de.marx_labs.ads.db.AdDBManager;
+import de.marx_labs.ads.db.db.AdDB;
 
 
 public abstract class AdDBTestCase extends AbstractBenchmark {
@@ -35,6 +34,7 @@ public abstract class AdDBTestCase extends AbstractBenchmark {
 		manager = AdDBManager.builder().build();
 		db = manager.getAdDB();
 		db.open();
+		
 	}
 
 	@After

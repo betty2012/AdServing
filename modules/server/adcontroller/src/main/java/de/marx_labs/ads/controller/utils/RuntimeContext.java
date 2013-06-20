@@ -17,14 +17,12 @@ package de.marx_labs.ads.controller.utils;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
-import de.marx_labs.ads.db.definition.AdDefinition;
 
 import org.mapdb.DB;
 
 import com.hazelcast.core.HazelcastInstance;
+
+import de.marx_labs.ads.db.definition.AdDefinition;
 
 
 

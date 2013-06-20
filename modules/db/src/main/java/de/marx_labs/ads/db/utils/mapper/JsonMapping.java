@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import net.minidev.json.JSONObject;
+import net.minidev.json.JSONValue;
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.condition.ExcludeSiteConditionDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.extern.ExternAdDefinition;
@@ -33,8 +35,6 @@ import de.marx_labs.ads.db.model.type.impl.ImageAdType;
 import de.marx_labs.ads.db.model.type.impl.TextlinkAdType;
 import de.marx_labs.ads.db.services.AdFormats;
 import de.marx_labs.ads.db.services.AdTypes;
-import net.minidev.json.JSONObject;
-import net.minidev.json.JSONValue;
 
 public class JsonMapping {
 

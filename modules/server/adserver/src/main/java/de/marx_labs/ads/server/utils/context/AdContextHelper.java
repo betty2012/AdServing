@@ -15,10 +15,16 @@ package de.marx_labs.ads.server.utils.context;
 
 
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.uadetector.UserAgent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.marx_labs.ads.common.util.Strings;
 import de.marx_labs.ads.db.definition.AdSlot;
@@ -26,12 +32,7 @@ import de.marx_labs.ads.server.utils.AdServerConstants;
 import de.marx_labs.ads.server.utils.RuntimeContext;
 import de.marx_labs.ads.server.utils.http.CookieUtils;
 import de.marx_labs.ads.server.utils.request.RequestHelper;
-
-import net.sf.uadetector.UserAgent;
-import net.sf.uadetector.UserAgentType;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import de.marx_labs.ads.services.geo.Location;
 
 
 public class AdContextHelper {
@@ -90,6 +91,15 @@ public class AdContextHelper {
 		UserAgent userAgent = userAgentParser.parse(request.getHeader("User-Agent"));
 		context.setUserAgent(userAgent);
 		
+		context.setLocale(request.getLocale());
+		
+//		Location loc = RuntimeContext.getIpDB().searchIp(clientIP);
+		try {
+			Location loc = RuntimeContext.Caches.locations.get(clientIP);
+			context.setLocation(loc);
+		} catch (ExecutionException e) {
+			logger.error("", e);
+		}
 		
 		return context;
 	}

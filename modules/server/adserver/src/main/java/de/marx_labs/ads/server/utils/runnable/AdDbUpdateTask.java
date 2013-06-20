@@ -15,10 +15,10 @@ package de.marx_labs.ads.server.utils.runnable;
 
 import java.util.TimerTask;
 
-import de.marx_labs.ads.server.utils.RuntimeContext;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import de.marx_labs.ads.server.utils.RuntimeContext;
 
 
 
@@ -26,8 +26,8 @@ public class AdDbUpdateTask extends TimerTask {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdDbUpdateTask.class);
 	
-	public static final long delay = 1000 * 60 * 5;
-	public static final long period = 1000 * 60 * 5;
+	public static final long delay = 1000 * 60 * 1;
+	public static final long period = 1000 * 60 * 1;
 	
 	private boolean running = false;
 	

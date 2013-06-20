@@ -20,6 +20,7 @@ public enum ConditionDefinitions implements Serializable {
 	DAY,
 	DATE,
 	COUNTRY,
+	LANGUAGE,
 	STATE,
 	SITE,
 	EXCLUDE_SITE,
@@ -27,6 +28,7 @@ public enum ConditionDefinitions implements Serializable {
 	KEYVALUE,
 	DISTANCE,
 	ADSLOT,
+	VALIDFROMTO,
 	
 	VIEW_EXPIRATION,
 	CLICK_EXPIRATION

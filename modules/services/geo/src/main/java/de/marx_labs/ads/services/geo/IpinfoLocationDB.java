@@ -22,12 +22,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import de.marx_labs.ads.services.geo.helper.ValidateIP;
-
 import org.hsqldb.jdbc.pool.JDBCPooledDataSource;
 
 import au.com.bytecode.opencsv.CSVReader;
 import biz.source_code.miniConnectionPoolManager.MiniConnectionPoolManager;
+import de.marx_labs.ads.services.geo.helper.ValidateIP;
 
 
 

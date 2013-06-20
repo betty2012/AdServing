@@ -25,17 +25,26 @@ import java.util.TimerTask;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.apache.log4j.PropertyConfigurator;
+import org.infinispan.manager.DefaultCacheManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 import de.marx_labs.ads.base.api.importer.Importer;
-import de.marx_labs.ads.base.api.importer.reader.AdXmlReader;
+import de.marx_labs.ads.base.api.service.adserver.model.ImageAd;
 import de.marx_labs.ads.base.utils.utils.logging.LogWrapper;
 import de.marx_labs.ads.common.template.TemplateManager;
 import de.marx_labs.ads.common.template.impl.freemarker.FMTemplateManager;
 import de.marx_labs.ads.common.util.Properties2;
 import de.marx_labs.ads.common.util.Strings;
 import de.marx_labs.ads.db.AdDBManager;
-import de.marx_labs.ads.db.definition.AdDefinition;
+import de.marx_labs.ads.db.db.store.impl.local.LocalAdStore;
 import de.marx_labs.ads.db.enums.Mode;
 import de.marx_labs.ads.db.model.type.AdType;
+import de.marx_labs.ads.db.model.type.impl.ImageAdType;
 import de.marx_labs.ads.db.services.AdTypes;
 import de.marx_labs.ads.server.utils.AdServerConstants;
 import de.marx_labs.ads.server.utils.RuntimeContext;
@@ -44,14 +53,6 @@ import de.marx_labs.ads.server.utils.listener.configuration.AdServerModule;
 import de.marx_labs.ads.server.utils.runnable.AdDbUpdateTask;
 import de.marx_labs.ads.services.geo.IPLocationDB;
 import de.marx_labs.ads.services.tracking.TrackingService;
-
-import org.apache.log4j.PropertyConfigurator;
-import org.infinispan.manager.DefaultCacheManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 
 /**
@@ -192,6 +193,9 @@ public class StartupPlugIn implements ServletContextListener {
 		
 		for (AdType type : AdTypes.getTypes()) {
 			RuntimeContext.getBannerRenderer().registerTemplate(type.getName().toLowerCase(), type.getName().toLowerCase()+".ftl");
+			if (type instanceof ImageAdType) {
+				RuntimeContext.getBannerRenderer().registerTemplate(type.getName().toLowerCase() + "_async", type.getName().toLowerCase()+"_async.ftl");
+			}
 		}
 	}
 	
@@ -212,7 +216,7 @@ public class StartupPlugIn implements ServletContextListener {
 		
 		long before = System.currentTimeMillis();
 		AdDBManager manager = AdDBManager.builder().mode(Mode.LOCAL).build();
-		manager.getContext().datadir = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_DB_DIRECOTRY);
+		manager.getContext().getConfiguration().put(LocalAdStore.CONFIG_DATADIR, RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_DB_DIRECOTRY));
 		RuntimeContext.setManager(manager);
 		RuntimeContext.setAdDB(manager.getAdDB());
 		RuntimeContext.getAdDB().open();

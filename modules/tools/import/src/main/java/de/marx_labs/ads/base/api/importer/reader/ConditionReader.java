@@ -15,6 +15,10 @@ package de.marx_labs.ads.base.api.importer.reader;
 
 import java.util.List;
 
+import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.marx_labs.ads.db.AdDBConstants;
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.AdSlot;
@@ -39,10 +43,6 @@ import de.marx_labs.ads.db.enums.ExpirationResolution;
 import de.marx_labs.ads.db.model.Country;
 import de.marx_labs.ads.db.model.State;
 import de.marx_labs.ads.db.utils.geo.GeoLocation;
-
-import org.jdom.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ConditionReader {
 	

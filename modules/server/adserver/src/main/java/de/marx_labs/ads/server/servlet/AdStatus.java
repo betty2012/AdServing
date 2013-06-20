@@ -15,10 +15,6 @@ package de.marx_labs.ads.server.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
@@ -31,11 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.minidev.json.JSONObject;
-
 import de.marx_labs.ads.server.utils.AdServerConstants;
 import de.marx_labs.ads.server.utils.RuntimeContext;
-import de.marx_labs.ads.server.utils.context.AdContext;
-import de.marx_labs.ads.server.utils.http.listener.AdContextListener;
 
 /**
  * 

@@ -26,6 +26,11 @@ import java.util.List;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
 
+import org.h2.jdbcx.JdbcDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import biz.source_code.miniConnectionPoolManager.MiniConnectionPoolManager;
 import de.marx_labs.ads.base.utils.BaseContext;
 import de.marx_labs.ads.base.utils.exception.ServiceException;
 import de.marx_labs.ads.services.tracking.Criterion;
@@ -35,12 +40,6 @@ import de.marx_labs.ads.services.tracking.events.ClickTrackEvent;
 import de.marx_labs.ads.services.tracking.events.EventType;
 import de.marx_labs.ads.services.tracking.events.ImpressionTrackEvent;
 import de.marx_labs.ads.services.tracking.events.TrackEvent;
-
-import org.h2.jdbcx.JdbcDataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import biz.source_code.miniConnectionPoolManager.MiniConnectionPoolManager;
 
 public class H2TrackingService extends SQLService implements TrackingService {
 	

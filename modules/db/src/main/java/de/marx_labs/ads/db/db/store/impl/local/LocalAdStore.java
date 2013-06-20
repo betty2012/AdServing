@@ -25,14 +25,14 @@ import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.Term;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.NRTManager;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.RAMDirectory;
@@ -57,6 +57,8 @@ import de.marx_labs.ads.db.utils.LuceneQueryHelper;
 public class LocalAdStore implements AdStore {
 
 	private static final Logger logger = LoggerFactory.getLogger(LocalAdStore.class);
+	
+	public static final String CONFIG_DATADIR = "datadir";
 	
 	private Map<String, AdDefinition> store = null;
 	
@@ -87,11 +89,11 @@ public class LocalAdStore implements AdStore {
 			this.index = new RAMDirectory();
 			this.store = new HashMap<String, AdDefinition>();
 		} else {
-			if (Strings.isNullOrEmpty(addb.manager.getContext().datadir)) {
+			if (!addb.manager.getContext().getConfiguration().containsKey(CONFIG_DATADIR)) {
 				throw new IOException("data directory can not be empty");
 			}
 			
-			String dir = addb.manager.getContext().datadir;
+			String dir = (String) addb.manager.getContext().getConfiguration().get(CONFIG_DATADIR);
 			if (!dir.endsWith("/") || !dir.endsWith("\\")) {
 				dir += "/";
 			}

@@ -14,10 +14,10 @@
 package de.marx_labs.ads.db.condition;
 
 
+import com.google.common.base.Predicate;
+
 import de.marx_labs.ads.db.db.request.AdRequest;
 import de.marx_labs.ads.db.definition.AdDefinition;
-
-import com.google.common.base.Predicate;
 
 /**
  * Filter werden nach der Suche über das Ergebnis laufen gelassen. Dadurch können 

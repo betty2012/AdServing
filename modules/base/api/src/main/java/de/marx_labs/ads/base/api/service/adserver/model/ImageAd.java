@@ -13,6 +13,9 @@
  */
 package de.marx_labs.ads.base.api.service.adserver.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class ImageAd extends LinkAdvertisement {
 	
 	/*

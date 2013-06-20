@@ -17,7 +17,7 @@ if (typeof madApi == "undefined") {
 	/**
 	 * Insert JavaScript into head for asynchron loading
 	 */
-	madApi.insetScript = function (scriptpath) {
+	madApi.insertScript = function (scriptpath) {
 		var script = document.createElement('script');
 		script.type = 'text/javascript';
 		script.async = true;

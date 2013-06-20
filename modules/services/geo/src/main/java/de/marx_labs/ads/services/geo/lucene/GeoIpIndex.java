@@ -24,9 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.marx_labs.ads.services.geo.Location;
-import de.marx_labs.ads.services.geo.helper.ValidateIP;
-
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -46,6 +43,8 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
 import au.com.bytecode.opencsv.CSVReader;
+import de.marx_labs.ads.services.geo.Location;
+import de.marx_labs.ads.services.geo.helper.ValidateIP;
 
 /**
  * Aufbau der Ortsdaten loc_id ags ascii name lat lon amt plz vorwahl einwohner

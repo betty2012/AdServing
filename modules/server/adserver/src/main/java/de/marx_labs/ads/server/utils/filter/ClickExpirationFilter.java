@@ -16,6 +16,11 @@ package de.marx_labs.ads.server.utils.filter;
 import java.util.Calendar;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Predicate;
+
 import de.marx_labs.ads.base.utils.exception.ServiceException;
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.condition.ViewExpirationConditionDefinition;
@@ -24,11 +29,6 @@ import de.marx_labs.ads.db.enums.ExpirationResolution;
 import de.marx_labs.ads.server.utils.RuntimeContext;
 import de.marx_labs.ads.services.tracking.Criterion;
 import de.marx_labs.ads.services.tracking.events.EventType;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Predicate;
 
 /**
  * Filter für das entfernen von Bannern, die die konfigurierte Anzahl

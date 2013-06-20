@@ -16,8 +16,6 @@ package de.marx_labs.ads.db.test.mongo;
 //import org.codehaus.jackson.map.ObjectMapper;
 //import org.codehaus.jackson.map.ser.BeanSerializerFactory;
 
-import de.marx_labs.ads.db.definition.AdDefinition;
-import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 
 public class JsonTest {
 //	private static ObjectMapper mapper = new ObjectMapper();

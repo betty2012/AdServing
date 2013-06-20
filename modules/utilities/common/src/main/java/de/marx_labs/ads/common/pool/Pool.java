@@ -11,15 +11,27 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package de.marx_labs.ads.base.api.cluster;
+package de.marx_labs.ads.common.pool;
 
-import java.io.Serializable;
+import java.util.Collection;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
-public class Member implements Serializable {
+public final class Pool<T> {
 
-	private String name;
-	
-	public Member () {
-		
+	private final BlockingQueue<T> objects;
+
+	public Pool(Collection<? extends T> objects) {
+		this.objects = new ArrayBlockingQueue<T>(objects.size(), false, objects);
+	}
+
+	public T borrow() throws InterruptedException {
+		return this.objects.take();
+	}
+
+	public void giveBack(T object) throws InterruptedException {
+		if (object != null) {
+			this.objects.put(object);
+		}
 	}
 }

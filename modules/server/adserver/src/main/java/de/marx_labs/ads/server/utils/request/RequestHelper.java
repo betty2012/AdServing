@@ -23,6 +23,9 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.marx_labs.ads.db.db.request.AdRequest;
 import de.marx_labs.ads.db.enums.Day;
 import de.marx_labs.ads.db.model.Country;
@@ -34,9 +37,6 @@ import de.marx_labs.ads.server.utils.RuntimeContext;
 import de.marx_labs.ads.server.utils.context.AdContext;
 import de.marx_labs.ads.server.utils.http.KeywordUtils;
 import de.marx_labs.ads.services.geo.Location;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Helper zum erzeugen des AdRequest aus dem HttpRequest
@@ -55,6 +55,7 @@ public class RequestHelper {
 	public static final String slot = "_p6";
 	public static final String keywords = "_p7";
 	public static final String referrer = "_p8";
+	public static final String div_id = "_p9";
 	
 //	public static final String hour = "_p3";
 //	public static final String minute = "_p4";
@@ -65,6 +66,14 @@ public class RequestHelper {
 
 	private static final Pattern integerPattern = Pattern.compile("^\\d+$");
 
+	public static String[] getParameter (HttpServletRequest request, String name, String...defaultValue) {
+		if (request.getParameterMap().containsKey(name)) {
+			return request.getParameterMap().get(name);
+		}
+		
+		return defaultValue;
+	}
+	
 	public static AdRequest getAdRequest(AdContext context, HttpServletRequest request) {
 		AdRequest adRequest = new AdRequest();
 
@@ -73,8 +82,7 @@ public class RequestHelper {
 		// boolean isInteger = matchesInteger.matches ();
 
 		try {
-			String clientIp = request.getRemoteAddr();
-			Location loc = RuntimeContext.getIpDB().searchIp(clientIp);
+			Location loc = context.getLocation();
 			if (loc != null) {
 				try {
 					GeoLocation geo = new GeoLocation(Double.parseDouble(loc.getLatitude()), Double.parseDouble(loc.getLongitude()));
@@ -97,6 +105,8 @@ public class RequestHelper {
 			adRequest.getTypes().add(AdTypes.forType(type));
 			
 			adRequest.setKeywords(KeywordUtils.getKeywords(request));
+			
+			adRequest.setLocale(context.getLocale());
 			
 			if (context.getAdSlot() != null) {
 				adRequest.setSite(context.getAdSlot().getSite());

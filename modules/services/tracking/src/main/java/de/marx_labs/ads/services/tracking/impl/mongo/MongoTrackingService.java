@@ -17,6 +17,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+
 import de.marx_labs.ads.base.utils.BaseContext;
 import de.marx_labs.ads.base.utils.exception.ServiceException;
 import de.marx_labs.ads.services.tracking.Criterion;
@@ -26,15 +35,6 @@ import de.marx_labs.ads.services.tracking.events.EventAttribute;
 import de.marx_labs.ads.services.tracking.events.EventType;
 import de.marx_labs.ads.services.tracking.events.ImpressionTrackEvent;
 import de.marx_labs.ads.services.tracking.events.TrackEvent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
 
 public class MongoTrackingService implements TrackingService {
 

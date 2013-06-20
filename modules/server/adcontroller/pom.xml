@@ -45,6 +45,12 @@
 		<dependency>
 			<groupId>de.marx-labs.ads</groupId>
 			<artifactId>db</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>asm</artifactId>
+					<groupId>org.ow2.asm</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -62,9 +68,14 @@
 			<artifactId>log4j</artifactId>
 		</dependency>
 
+		<!-- REST dependencies -->
 		<dependency>
-			<groupId>com.sun.xml.ws</groupId>
-			<artifactId>jaxws-rt</artifactId>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet-core</artifactId>
 		</dependency>
 	</dependencies>
 

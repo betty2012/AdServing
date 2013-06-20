@@ -20,10 +20,8 @@ include der MadApi ueber die einige nötige Methoden zur Verfügung gestellt wer
 
 <#if enviroment == "development">
 	<#include "madapi.js"> 
-<#elseif enviroment == "production">
-  	<#include "madapi_production.js">
 <#else>
-  
+  <#include "madapi_production.js">
 </#if>
 
 (function () {

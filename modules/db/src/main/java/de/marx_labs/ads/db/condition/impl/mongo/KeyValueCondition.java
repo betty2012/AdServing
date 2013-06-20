@@ -16,6 +16,13 @@ package de.marx_labs.ads.db.condition.impl.mongo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.lucene.search.BooleanQuery;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+import com.mongodb.BasicDBObject;
+import com.mongodb.QueryBuilder;
+
 import de.marx_labs.ads.db.AdDBConstants;
 import de.marx_labs.ads.db.condition.AbstractCondition;
 import de.marx_labs.ads.db.condition.Condition;
@@ -25,13 +32,6 @@ import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.KeyValue;
 import de.marx_labs.ads.db.definition.condition.KeyValueConditionDefinition;
 import de.marx_labs.ads.db.enums.ConditionDefinitions;
-
-import org.apache.lucene.search.BooleanQuery;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-import com.mongodb.BasicDBObject;
-import com.mongodb.QueryBuilder;
 
 
 /**

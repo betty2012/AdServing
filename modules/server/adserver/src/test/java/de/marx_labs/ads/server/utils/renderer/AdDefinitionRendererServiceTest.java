@@ -25,8 +25,13 @@ public class AdDefinitionRendererServiceTest {
 	}
 
 	@Test
-	public void test() {
+	public void sync_count() {
 		assertEquals(4, AdDefinitionRendererService.getRenderer().size());
+	}
+	
+	@Test
+	public void async_count() {
+		assertEquals(1, AsyncAdDefinitionRendererService.getRenderer().size());
 	}
 
 }

@@ -14,9 +14,12 @@
 package de.marx_labs.ads.server.utils.context;
 
 import java.util.concurrent.TimeUnit;
+
+import net.sf.uadetector.ReadableUserAgent;
 import net.sf.uadetector.UserAgent;
 import net.sf.uadetector.UserAgentStringParser;
 import net.sf.uadetector.service.UADetectorServiceFactory;
+
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
@@ -36,7 +39,7 @@ public final class CachedUserAgentStringParser implements UserAgentStringParser 
 	public UserAgent parse(final String userAgentString) {
 		UserAgent result = cache.getIfPresent(userAgentString);
 		if (result == null) {
-			result = parser.parse(userAgentString);
+			result = (UserAgent) parser.parse(userAgentString);
 			cache.put(userAgentString, result);
 		}
 		return result;

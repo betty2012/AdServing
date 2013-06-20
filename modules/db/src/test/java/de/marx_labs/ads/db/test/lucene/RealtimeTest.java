@@ -14,6 +14,10 @@
 package de.marx_labs.ads.db.test.lucene;
 
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import de.marx_labs.ads.common.benchmark.StopWatch;
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.condition.CountryConditionDefinition;
@@ -21,9 +25,6 @@ import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import de.marx_labs.ads.db.enums.ConditionDefinitions;
 import de.marx_labs.ads.db.model.Country;
 import de.marx_labs.ads.db.model.format.impl.FullBannerAdFormat;
-
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 
 public class RealtimeTest extends AdDBTestCase {

@@ -15,6 +15,9 @@ package de.marx_labs.ads.server.utils.renderer.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.marx_labs.ads.base.utils.render.RenderContext;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import de.marx_labs.ads.db.model.type.AdType;
@@ -26,9 +29,6 @@ import de.marx_labs.ads.server.utils.context.AdContext;
 import de.marx_labs.ads.server.utils.renderer.AdDefinitionRenderer;
 import de.marx_labs.ads.server.utils.request.RequestHelper;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Renderer für die Bannerdefinitionen des Types Image
  * 
@@ -39,18 +39,8 @@ public class ImageAdDefinitionRenderer implements AdDefinitionRenderer<ImageAdDe
 	
 	public static final Logger logger = LoggerFactory.getLogger(ImageAdDefinitionRenderer.class);
 	
-//	public static AdDefinitionRenderer<ImageAdDefinition> INSTANCE = null;
-	
 	public ImageAdDefinitionRenderer () {
 	}
-	
-//	public static synchronized AdDefinitionRenderer getInstance () {
-//		if (INSTANCE == null) {
-//			INSTANCE = new ImageAdDefinitionRenderer();
-//		}
-//		
-//		return INSTANCE;
-//	}
 	
 	/* (non-Javadoc)
 	 * @see de.marx_labs.ads.server.utils.renderer.BannerDefinitionRenderer#render(de.marx_labs.ads.api.definition.impl.image.ImageBannerDefinition)
