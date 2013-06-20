@@ -24,6 +24,18 @@ if (typeof madApi == "undefined") {
 		script.src = scriptpath;
 		(document.getElementsByTagName('head')[0] || document.body).appendChild(script);
 	};
+	/**
+	 * serialize a javascript object to query parameters
+	 */
+	madApi.serialize = function (obj) {
+		var str = [];
+		for(var p in obj){
+			if (obj.hasOwnProperty(p)) {
+				str.push("kv_"+encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			}
+		}
+		return str.join("&");
+	};
 	
 	madApi.onload = function(func) {
 		var oldonload = window.onload;

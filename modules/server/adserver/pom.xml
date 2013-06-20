@@ -209,7 +209,6 @@
 				<version>1.6</version>
 				<configuration>
 					<target>compile</target>
-					<goal></goal>
 					<tasks>
 						<ant antfile="${basedir}/deploy/build.xml" target="deploy" />
 					</tasks>

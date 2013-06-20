@@ -54,6 +54,9 @@ if (typeof mad_ad_tcolor != "undefined") {
 if (typeof mad_ad_bcolor != "undefined") {
 	selectString +=  "&bcolor=" + encodeURIComponent(mad_ad_bcolor);
 }
+if (typeof mad_ad_keywords != "undefined") {	
+	selectString +=  "&" + madApi.serialize(mad_ad_keywords);
+}
 
 selectString += "&_p8=" + encodeURIComponent(document.referrer);
 

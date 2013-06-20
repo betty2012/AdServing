@@ -94,7 +94,7 @@ public class AdServlet extends AsyncAdServlet {
 	 */
 	@Override
 	public String getServletInfo() {
-		return "AdSErvlet for Async usage";
+		return "AdServlet for Async usage";
 	}
 
 }

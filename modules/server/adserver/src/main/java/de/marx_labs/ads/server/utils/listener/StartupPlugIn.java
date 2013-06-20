@@ -13,9 +13,6 @@
  */
 package de.marx_labs.ads.server.utils.listener;
 
-
-
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -54,61 +51,63 @@ import de.marx_labs.ads.server.utils.runnable.AdDbUpdateTask;
 import de.marx_labs.ads.services.geo.IPLocationDB;
 import de.marx_labs.ads.services.tracking.TrackingService;
 
-
 /**
  * 
  * @author thorsten
  */
 public class StartupPlugIn implements ServletContextListener {
 
-	private static final Logger logger = LoggerFactory.getLogger(StartupPlugIn.class);
-	
+	private static final Logger logger = LoggerFactory
+			.getLogger(StartupPlugIn.class);
+
 	private Timer timer = new Timer();
-	
+
 	private Injector injector = null;
-	
+
 	public void contextInitialized(ServletContextEvent event) {
 		try {
 			// Konfiguration einlesen
-			String enviroment = event.getServletContext().getInitParameter("enviroment");
-			
+			String enviroment = event.getServletContext().getInitParameter(
+					"enviroment");
+
 			String configDirectory = new File(".").getAbsolutePath(); // event.getServletContext().getInitParameter("configDirectory");
-			
+
 			if (System.getProperties().containsKey("mad.home")) {
 				configDirectory = System.getProperty("mad.home");
 			}
-			
+
 			if (!configDirectory.endsWith("/")) {
 				configDirectory += "/";
 			}
-			
+
 			System.setProperty("mad.home", configDirectory);
-			
-			
-			
+
 			configDirectory += "config/";
-			
-			
+
 			// configure log4j
-			
-			PropertyConfigurator.configure(Properties2.loadProperties(configDirectory + "log4j.properties"));
-			
-			
-			
+
+			PropertyConfigurator.configure(Properties2
+					.loadProperties(configDirectory + "log4j.properties"));
+
 			RuntimeContext.setEnviroment(enviroment);
 			String path = event.getServletContext().getRealPath("/");
-			RuntimeContext.setConfiguration(AdServerConstants.CONFIG.PATHES, AdServerConstants.PATHES.WEB, path);
-//			RuntimeContext.getProperties().load(new FileReader(configDirectory + "config.properties"));
-			RuntimeContext.setProperties(Properties2.loadProperties(configDirectory + "config.properties"));
-			
+			RuntimeContext.setConfiguration(AdServerConstants.CONFIG.PATHES,
+					AdServerConstants.PATHES.WEB, path);
+			// RuntimeContext.getProperties().load(new
+			// FileReader(configDirectory + "config.properties"));
+			RuntimeContext.setProperties(Properties2
+					.loadProperties(configDirectory + "config.properties"));
+
 			injector = Guice.createInjector(new AdServerModule());
-			
+
 			// Init event logging
 			RuntimeContext.clickLogger = new LogWrapper();
-			RuntimeContext.clickLogger.init(RuntimeContext.class, new File(configDirectory + "logger_clicks.properties"));
+			RuntimeContext.clickLogger.init(RuntimeContext.class, new File(
+					configDirectory + "logger_clicks.properties"));
 			RuntimeContext.impressionLogger = new LogWrapper();
-			RuntimeContext.impressionLogger.init(RuntimeContext.class, new File(configDirectory + "logger_impression.properties"));
-			
+			RuntimeContext.impressionLogger.init(RuntimeContext.class,
+					new File(configDirectory + "logger_impression.properties"));
+
 			// Banner-Datenbank initialisieren
 			logger.info("init bannerDB");
 			initBannerDB();
@@ -117,24 +116,34 @@ public class StartupPlugIn implements ServletContextListener {
 			initIpDB();
 			logger.info("init trackService");
 			intServices();
-			
+
 			logger.info("init banner templates");
 			initBannerTemplates(path);
-			
+
 			logger.info("init templates");
 			initTemplates(path + "/WEB-INF/content/templates/");
-			
-			RuntimeContext.setImporter(new Importer(RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_IMPORT_DIRECOTRY), RuntimeContext.getAdDB()));
-			
+
+			RuntimeContext
+					.setImporter(new Importer(
+							RuntimeContext
+									.getProperties()
+									.getProperty(
+											AdServerConstants.CONFIG.PROPERTIES.BANNER_IMPORT_DIRECOTRY),
+							RuntimeContext.getAdDB()));
+
 			TimerTask updateTask = new AdDbUpdateTask();
 			updateTask.run();
-			timer.scheduleAtFixedRate(updateTask, AdDbUpdateTask.delay, AdDbUpdateTask.period);
-			
-			RuntimeContext.cacheManager = new DefaultCacheManager(configDirectory + "cluster/infinispan_config.xml");
-			RuntimeContext.requestBanners = RuntimeContext.cacheManager.getCache("requestBanners");
+			timer.scheduleAtFixedRate(updateTask, AdDbUpdateTask.delay,
+					AdDbUpdateTask.period);
+
+			RuntimeContext.cacheManager = new DefaultCacheManager(
+					configDirectory + "cluster/infinispan_config.xml");
+			RuntimeContext.requestBanners = RuntimeContext.cacheManager
+					.getCache("requestBanners");
 			RuntimeContext.requestBanners.addListener(new CacheListener());
-			
-			String clustermode = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.CLUSTERMODE, "false");
+
+			String clustermode = RuntimeContext.getProperties().getProperty(
+					AdServerConstants.CONFIG.PROPERTIES.CLUSTERMODE, "false");
 			if (clustermode.equalsIgnoreCase("true")) {
 				RuntimeContext.setClusterManager(new ClusterManager());
 				RuntimeContext.getClusterManager().init();
@@ -144,28 +153,29 @@ public class StartupPlugIn implements ServletContextListener {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public void contextDestroyed(ServletContextEvent event) {
 		try {
 			RuntimeContext.getAdDB().close();
 			RuntimeContext.getIpDB().close();
 			RuntimeContext.getTrackService().close();
 			RuntimeContext.cacheManager.stop();
-			
+
 			timer.cancel();
 		} catch (Exception e) {
 			logger.error("", e);
 		}
 	}
-	
-	private void intServices () throws Exception {
-		RuntimeContext.setTrackService(injector.getInstance(TrackingService.class));
+
+	private void intServices() throws Exception {
+		RuntimeContext.setTrackService(injector
+				.getInstance(TrackingService.class));
 	}
-	
-	private void initTemplates (String path) throws IOException {
+
+	private void initTemplates(String path) throws IOException {
 		File tdir = new File(path);
 		File[] templates = tdir.listFiles(new FilenameFilter() {
-			
+
 			@Override
 			public boolean accept(File dir, String name) {
 				if (name.endsWith(".ftl")) {
@@ -174,79 +184,98 @@ public class StartupPlugIn implements ServletContextListener {
 				return false;
 			}
 		});
-		
+
 		TemplateManager tempMan = new FMTemplateManager();
 		tempMan.init(path);
 		for (File template : templates) {
-			String tname = Strings.removeExtension(template.getName()).toLowerCase();
+			String tname = Strings.removeExtension(template.getName())
+					.toLowerCase();
 			tempMan.registerTemplate(tname, template.getName());
 		}
-		
+
 		RuntimeContext.setTemplateManager(tempMan);
 	}
-	
-	private void initBannerTemplates (String path) throws IOException {
-//		String templatePath = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_TEMPLATE_DIR);
+
+	private void initBannerTemplates(String path) throws IOException {
+		// String templatePath =
+		// RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_TEMPLATE_DIR);
 		String templatePath = path + "/WEB-INF/content/templates/banner";
-		
+
 		RuntimeContext.getBannerRenderer().init(templatePath);
-		
+
 		for (AdType type : AdTypes.getTypes()) {
-			RuntimeContext.getBannerRenderer().registerTemplate(type.getName().toLowerCase(), type.getName().toLowerCase()+".ftl");
+			RuntimeContext.getBannerRenderer().registerTemplate(
+					type.getName().toLowerCase(),
+					type.getName().toLowerCase() + ".ftl");
 			if (type instanceof ImageAdType) {
-				RuntimeContext.getBannerRenderer().registerTemplate(type.getName().toLowerCase() + "_async", type.getName().toLowerCase()+"_async.ftl");
+				RuntimeContext.getBannerRenderer().registerTemplate(
+						type.getName().toLowerCase() + "_async",
+						type.getName().toLowerCase() + "_async.ftl");
 			}
 		}
 	}
-	
-	private void initIpDB () throws Exception {
-		
+
+	private void initIpDB() throws Exception {
+
 		long before = System.currentTimeMillis();
-		
+
 		IPLocationDB db = injector.getInstance(IPLocationDB.class);
-		db.open(RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.IPDB_DIR));
+		db.open(RuntimeContext.getProperties().getProperty(
+				AdServerConstants.CONFIG.PROPERTIES.IPDB_DIR));
 		RuntimeContext.setIpDB(db);
-		
+
 		RuntimeContext.getIpDB().searchIp("213.83.37.145");
 		long after = System.currentTimeMillis();
 		logger.debug("finish ipDB: " + (after - before) + "ms");
 	}
-	
-	private void initBannerDB () throws Exception {
-		
+
+	private void initBannerDB() throws Exception {
+
 		long before = System.currentTimeMillis();
 		AdDBManager manager = AdDBManager.builder().mode(Mode.LOCAL).build();
-		manager.getContext().getConfiguration().put(LocalAdStore.CONFIG_DATADIR, RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_DB_DIRECOTRY));
-		RuntimeContext.setManager(manager);
-		RuntimeContext.setAdDB(manager.getAdDB());
-		RuntimeContext.getAdDB().open();
+
 		
-		/*
-		String bannerPath = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.BANNER_DATA_DIRECOTRY);
-		
-		File bdir = new File(bannerPath);
-		if (bdir.exists() && bdir.isDirectory()) {
-			String[] banners = bdir.list(new FilenameFilter() {
-				
-				@Override
-				public boolean accept(File dir, String name) {
-					if (name.endsWith(".xml")) {
-						return true;
-					}
-					return false;
-				}
-			});
-			
-			for (String banner : banners) {
-				AdDefinition b = AdXmlReader.readBannerDefinition(bannerPath + File.separator + banner);
-				RuntimeContext.getAdDB().addBanner(b);
+		String validkeysProperty = RuntimeContext.getProperties().getProperty(
+				AdServerConstants.CONFIG.PROPERTIES.ADDB_VALID_KEYS, null);
+
+		if (!Strings.isEmpty(validkeysProperty)) {
+			String[] validKeys = validkeysProperty.split(",");
+			for (String key : validKeys) {
+				manager.getContext().validKeys.add(key);
 			}
 		}
 		
-		RuntimeContext.getAdDB().reopen();
-		*/
+		manager.getContext()
+				.getConfiguration()
+				.put(LocalAdStore.CONFIG_DATADIR,
+						RuntimeContext
+								.getProperties()
+								.getProperty(
+										AdServerConstants.CONFIG.PROPERTIES.BANNER_DB_DIRECOTRY));
+		RuntimeContext.setManager(manager);
+		RuntimeContext.setAdDB(manager.getAdDB());
+		RuntimeContext.getAdDB().open();
+
+		/*
+		 * String bannerPath =
+		 * RuntimeContext.getProperties().getProperty(AdServerConstants
+		 * .CONFIG.PROPERTIES.BANNER_DATA_DIRECOTRY);
+		 * 
+		 * File bdir = new File(bannerPath); if (bdir.exists() &&
+		 * bdir.isDirectory()) { String[] banners = bdir.list(new
+		 * FilenameFilter() {
+		 * 
+		 * @Override public boolean accept(File dir, String name) { if
+		 * (name.endsWith(".xml")) { return true; } return false; } });
+		 * 
+		 * for (String banner : banners) { AdDefinition b =
+		 * AdXmlReader.readBannerDefinition(bannerPath + File.separator +
+		 * banner); RuntimeContext.getAdDB().addBanner(b); } }
+		 * 
+		 * RuntimeContext.getAdDB().reopen();
+		 */
 		long after = System.currentTimeMillis();
-		
+
 		logger.debug("finish bannerDB: " + (after - before) + "ms");
 	}
 }

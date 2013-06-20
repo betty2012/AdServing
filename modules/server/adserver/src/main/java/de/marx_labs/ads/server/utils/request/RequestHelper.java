@@ -18,6 +18,9 @@ package de.marx_labs.ads.server.utils.request;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
@@ -65,6 +68,8 @@ public class RequestHelper {
 //	public static final String date_year = "_p8";
 
 	private static final Pattern integerPattern = Pattern.compile("^\\d+$");
+	private static final String KeyValuePrefix = "kv_";
+	private static final int KeyValuePrefixLength = KeyValuePrefix.length();
 
 	public static String[] getParameter (HttpServletRequest request, String name, String...defaultValue) {
 		if (request.getParameterMap().containsKey(name)) {
@@ -72,6 +77,29 @@ public class RequestHelper {
 		}
 		
 		return defaultValue;
+	}
+	
+	/**
+	 * extract the custom key values from the request
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static Map<String, String> getKeyValues (HttpServletRequest request) {
+		Map<String, String> keywords = new HashMap<String, String>();
+		
+		Enumeration<String> parameterNames = request.getParameterNames();
+		while (parameterNames.hasMoreElements()) {
+			String parameter = parameterNames.nextElement();
+			
+			if (parameter.startsWith(KeyValuePrefix)){
+				String key = parameter.substring(KeyValuePrefixLength);
+				String value = request.getParameter(parameter);
+				keywords.put(key, value);
+			}
+		}
+		
+		return keywords;
 	}
 	
 	public static AdRequest getAdRequest(AdContext context, HttpServletRequest request) {
@@ -107,6 +135,9 @@ public class RequestHelper {
 			adRequest.setKeywords(KeywordUtils.getKeywords(request));
 			
 			adRequest.setLocale(context.getLocale());
+			
+			Map<String, String> keyValues = getKeyValues(request);
+			adRequest.getKeyValues().putAll(keyValues);
 			
 			if (context.getAdSlot() != null) {
 				adRequest.setSite(context.getAdSlot().getSite());
