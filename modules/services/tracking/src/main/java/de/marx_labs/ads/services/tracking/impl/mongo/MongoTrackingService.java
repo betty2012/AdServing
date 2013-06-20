@@ -70,7 +70,7 @@ public class MongoTrackingService implements TrackingService {
 		return bson;
 	}
 
-	public static TrackEvent fromDB(DBObject bson) {
+	private static TrackEvent fromDB(DBObject bson) {
 		String type = (String) bson.get("type");
 		EventType eType = EventType.forName(type);
 

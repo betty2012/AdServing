@@ -34,6 +34,7 @@
 		<jaxws.version>2.2.8-promoted-b146</jaxws.version>
 		<jackson.version>2.1.4</jackson.version>
 		<spring.version>3.2.2.RELEASE</spring.version>
+		<freemarker.version>2.3.19</freemarker.version>
 	</properties>
 
 	<licenses>
@@ -60,7 +61,11 @@
 
 	<dependencyManagement>
 		<dependencies>
-
+			<dependency>
+				<groupId>org.freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+				<version>${freemarker.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
