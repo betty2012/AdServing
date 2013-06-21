@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.marx-labs.ads</groupId>
 		<artifactId>advertisement</artifactId>
-		<version>0.1</version>
+		<version>0.1.0</version>
 		<relativePath>../../../pom.xml</relativePath>
 	</parent>
 
