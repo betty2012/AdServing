@@ -19,7 +19,7 @@
 -->
 <project >
 
-	<property name="version" value="0.1" />
+	<property name="version" value="0.1.0" />
 	<property name="jetty.version" value="9.0.3.v20130506" />
 	<property name="maxmind.version" value="GeoLiteCity_20130507" />
 
