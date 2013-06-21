@@ -31,8 +31,8 @@ import org.slf4j.LoggerFactory;
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.server.utils.RuntimeContext;
 import de.marx_labs.ads.server.utils.context.AdContext;
+import de.marx_labs.ads.server.utils.context.listener.AdContextListener;
 import de.marx_labs.ads.server.utils.helper.TrackingHelper;
-import de.marx_labs.ads.server.utils.http.listener.AdContextListener;
 import de.marx_labs.ads.services.tracking.events.ClickTrackEvent;
 import de.marx_labs.ads.services.tracking.events.TrackEvent;
 

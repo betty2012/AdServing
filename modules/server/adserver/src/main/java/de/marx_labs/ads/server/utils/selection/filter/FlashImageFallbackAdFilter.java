@@ -11,7 +11,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package de.marx_labs.ads.server.utils.filter;
+package de.marx_labs.ads.server.utils.selection.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,31 +22,22 @@ import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.flash.FlashAdDefinition;
 
 /**
- * Dieser Filter fitlert FlashBanner aus dem Ergebnis, die eine höhere Flashversion benötigen
- * als sie im Request übegeben wurde.
+ * Dieser Filter filtert FlashBanner aus dem Ergebnis, die kein Fallback Image haben
  * 
  * @author thmarx
  *
  */
-public class FlashVersionAdFilter implements Predicate<AdDefinition> {
+public class FlashImageFallbackAdFilter implements Predicate<AdDefinition> {
 
-	private static final Logger logger = LoggerFactory.getLogger(FlashVersionAdFilter.class);
+	private static final Logger logger = LoggerFactory.getLogger(FlashImageFallbackAdFilter.class);
 	
-	private int version = -1;
-	
-	public FlashVersionAdFilter (int version) {
-		this.version = version;
+	public FlashImageFallbackAdFilter () {
 	}
 	
 	@Override
 	public boolean apply(AdDefinition banner) {
 		if (banner instanceof FlashAdDefinition) {
-			int minFlash = ((FlashAdDefinition)banner).getMinFlashVersion();
-			
-			if (minFlash > version) {
-				return false;
-			}
-			return true;
+			return ((FlashAdDefinition)banner).getFallbackImageUrl() != null;
 		}
 		return false;
 //		logger.debug("Requestid: " + RuntimeContext.getRequestBanners().containsKey("pv" + requestID + "_" + banner.getId()));

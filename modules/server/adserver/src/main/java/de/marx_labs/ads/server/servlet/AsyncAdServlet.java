@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import de.marx_labs.ads.server.utils.RuntimeContext;
 import de.marx_labs.ads.server.utils.context.AdContext;
-import de.marx_labs.ads.server.utils.http.listener.AdContextListener;
+import de.marx_labs.ads.server.utils.context.listener.AdContextListener;
 
 /**
  * 

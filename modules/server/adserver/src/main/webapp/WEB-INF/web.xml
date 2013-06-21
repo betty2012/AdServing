@@ -86,7 +86,7 @@
 		Objekt und stellt es über ein ThreadLocal Variable zur Verfügung. -->
 	<filter>
 		<filter-name>AdContextFilter</filter-name>
-		<filter-class>de.marx_labs.ads.server.utils.http.listener.AdContextListener</filter-class>
+		<filter-class>de.marx_labs.ads.server.utils.context.listener.AdContextListener</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>AdContextFilter</filter-name>

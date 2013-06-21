@@ -11,7 +11,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package de.marx_labs.ads.server.utils.filter;
+package de.marx_labs.ads.server.utils.selection.filter;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -31,17 +31,17 @@ import de.marx_labs.ads.services.tracking.Criterion;
 import de.marx_labs.ads.services.tracking.events.EventType;
 
 /**
- * Filter zum entfernen von Bannern, die die konfigurierte Anzeigehäufigkeit
- * für einen bestimmten Zeitraum schon erreicht oder überschritten haben  
+ * Filter für das entfernen von Bannern, die die konfigurierte Anzahl
+ * von Klicks für einen bestimmten Zeitraum schon erreicht oder überschritten haben
  * 
  * @author tmarx
  *
  */
-public class ViewExpirationFilter implements Predicate<AdDefinition> {
+public class ClickExpirationFilter implements Predicate<AdDefinition> {
 
-	private static final Logger logger = LoggerFactory.getLogger(ViewExpirationFilter.class);
+	private static final Logger logger = LoggerFactory.getLogger(ClickExpirationFilter.class);
 	
-//	private static final ViewExpirationFilter FILTER = new ViewExpirationFilter();
+//	private static final ClickExpirationFilter FILTER = new ClickExpirationFilter();
 //	
 //	public static final Predicate<BannerDefinition> getFilter () {
 //		return FILTER;
@@ -49,8 +49,8 @@ public class ViewExpirationFilter implements Predicate<AdDefinition> {
 	
 	@Override
 	public boolean apply(AdDefinition banner) {
-		// Banner enth�lt keine View-Beschr�nkung
-		if (!banner.hasConditionDefinition(ConditionDefinitions.VIEW_EXPIRATION)){
+		// Banner enthält keine View-Beschränkung
+		if (!banner.hasConditionDefinition(ConditionDefinitions.CLICK_EXPIRATION)){
 			return true;
 		} else if (RuntimeContext.getTrackService() == null) {
 			return true;
@@ -58,12 +58,12 @@ public class ViewExpirationFilter implements Predicate<AdDefinition> {
 		
 		
 		/*
-		 * 1. Prüfen, ob die Impressions f�r diesen Monat schon erreicht wurden
-		 * 2. Prüfen, ob die Impressions f�r diese Woche schon erreicht wurden
-		 * 3. Prüfen, ob die Impressions f�r diesen Tag schon erreicht wurden
+		 * 1. Prüfen, ob die Clicks für diesen Monat schon erreicht wurden
+		 * 2. Prüfen, ob die Clicks für diese Woche schon erreicht wurden
+		 * 3. Prüfen, ob die Clicks für diesen Tag schon erreicht wurden
 		 */
 		
-		ViewExpirationConditionDefinition def = (ViewExpirationConditionDefinition) banner.getConditionDefinition(ConditionDefinitions.VIEW_EXPIRATION);
+		ViewExpirationConditionDefinition def = (ViewExpirationConditionDefinition) banner.getConditionDefinition(ConditionDefinitions.CLICK_EXPIRATION);
 		
 		try {
 			if (def.getViewExpirations().containsKey(ExpirationResolution.MONTH)) {
@@ -81,7 +81,7 @@ public class ViewExpirationFilter implements Predicate<AdDefinition> {
 				
 				
 				int maxviews = def.getViewExpirations().get(ExpirationResolution.MONTH);
-				long impressions = RuntimeContext.getTrackService().count(new Criterion(Criterion.Criteria.Banner, banner.getId()), EventType.IMPRESSION, from.getTime(), to.getTime());
+				long impressions = RuntimeContext.getTrackService().count(new Criterion(Criterion.Criteria.Banner, banner.getId()), EventType.CLICK, from.getTime(), to.getTime());
 				
 				if (impressions <= maxviews) {
 					return true;
@@ -103,7 +103,7 @@ public class ViewExpirationFilter implements Predicate<AdDefinition> {
 				to.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 				
 				int maxviews = def.getViewExpirations().get(ExpirationResolution.MONTH);
-				long impressions = RuntimeContext.getTrackService().count(new Criterion(Criterion.Criteria.Banner, banner.getId()), EventType.IMPRESSION, from.getTime(), to.getTime());
+				long impressions = RuntimeContext.getTrackService().count(new Criterion(Criterion.Criteria.Banner, banner.getId()), EventType.CLICK, from.getTime(), to.getTime());
 				
 				if (impressions <= maxviews) {
 					return true;
@@ -128,7 +128,7 @@ public class ViewExpirationFilter implements Predicate<AdDefinition> {
 				
 				
 				int maxviews = def.getViewExpirations().get(ExpirationResolution.MONTH);
-				long impressions = RuntimeContext.getTrackService().count(new Criterion(Criterion.Criteria.Banner, banner.getId()), EventType.IMPRESSION, from.getTime(), to.getTime());
+				long impressions = RuntimeContext.getTrackService().count(new Criterion(Criterion.Criteria.Banner, banner.getId()), EventType.CLICK, from.getTime(), to.getTime());
 				
 				if (impressions <= maxviews) {
 					return true;
