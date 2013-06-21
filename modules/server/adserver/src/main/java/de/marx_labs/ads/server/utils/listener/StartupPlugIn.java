@@ -31,7 +31,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.marx_labs.ads.base.api.importer.Importer;
-import de.marx_labs.ads.base.api.service.adserver.model.ImageAd;
 import de.marx_labs.ads.base.utils.utils.logging.LogWrapper;
 import de.marx_labs.ads.common.template.TemplateManager;
 import de.marx_labs.ads.common.template.impl.freemarker.FMTemplateManager;

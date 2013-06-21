@@ -39,7 +39,7 @@ import de.marx_labs.ads.server.utils.filter.DuplicatAdFilter;
 import de.marx_labs.ads.server.utils.filter.FlashImageFallbackAdFilter;
 import de.marx_labs.ads.server.utils.filter.FlashVersionAdFilter;
 import de.marx_labs.ads.server.utils.filter.ViewExpirationFilter;
-import de.marx_labs.ads.server.utils.request.RequestHelper;
+import de.marx_labs.ads.server.utils.http.RequestHelper;
 import de.marx_labs.ads.server.utils.selection.impl.ImpressionPercentageSingleAdSelector;
 
 

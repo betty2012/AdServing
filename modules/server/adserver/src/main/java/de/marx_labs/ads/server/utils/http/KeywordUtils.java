@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
 
 import de.marx_labs.ads.common.util.Strings;
 import de.marx_labs.ads.server.utils.helper.EncodeHelper;
-import de.marx_labs.ads.server.utils.request.RequestHelper;
 
 
 public class KeywordUtils {
@@ -93,7 +92,7 @@ public class KeywordUtils {
 	
 	public static List<String> getTokens (String queryString) {
 		try {
-			GermanAnalyzer a = new GermanAnalyzer(Version.LUCENE_33);
+			GermanAnalyzer a = new GermanAnalyzer(Version.LUCENE_43);
 
 			TokenStream ts = a.tokenStream("",
 					new StringReader(queryString));

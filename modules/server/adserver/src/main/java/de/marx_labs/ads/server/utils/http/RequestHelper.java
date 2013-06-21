@@ -11,7 +11,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package de.marx_labs.ads.server.utils.request;
+package de.marx_labs.ads.server.utils.http;
 
 
 
@@ -38,7 +38,6 @@ import de.marx_labs.ads.db.services.AdTypes;
 import de.marx_labs.ads.db.utils.geo.GeoLocation;
 import de.marx_labs.ads.server.utils.RuntimeContext;
 import de.marx_labs.ads.server.utils.context.AdContext;
-import de.marx_labs.ads.server.utils.http.KeywordUtils;
 import de.marx_labs.ads.services.geo.Location;
 
 /**

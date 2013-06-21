@@ -31,7 +31,7 @@ import de.marx_labs.ads.db.definition.AdSlot;
 import de.marx_labs.ads.server.utils.AdServerConstants;
 import de.marx_labs.ads.server.utils.RuntimeContext;
 import de.marx_labs.ads.server.utils.http.CookieUtils;
-import de.marx_labs.ads.server.utils.request.RequestHelper;
+import de.marx_labs.ads.server.utils.http.RequestHelper;
 import de.marx_labs.ads.services.geo.Location;
 
 

@@ -26,8 +26,8 @@ import de.marx_labs.ads.db.services.AdTypes;
 import de.marx_labs.ads.server.utils.AdServerConstants;
 import de.marx_labs.ads.server.utils.RuntimeContext;
 import de.marx_labs.ads.server.utils.context.AdContext;
+import de.marx_labs.ads.server.utils.http.RequestHelper;
 import de.marx_labs.ads.server.utils.renderer.AdDefinitionRenderer;
-import de.marx_labs.ads.server.utils.request.RequestHelper;
 
 /**
  * Renderer für die Bannerdefinitionen des Types Extern
