@@ -93,12 +93,12 @@ public class ExcludeSiteCondition implements Condition<BasicDBObject, QueryBuild
 					return true;
 				}
 				// keine Seite im Request, aber das Banner hat eine Seitenbeschränkung
-				if (Strings.isNullOrEmpty(request.getSite())) {
+				if (Strings.isNullOrEmpty(request.site())) {
 					return false;
 				}
 				
 				if (sdef != null) {
-					if (sdef.getSites().contains(request.getSite())) {
+					if (sdef.getSites().contains(request.site())) {
 						return false;
 					}
 				}

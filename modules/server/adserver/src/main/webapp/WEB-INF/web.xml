@@ -26,6 +26,7 @@
 	<servlet>
 		<servlet-name>AdServlet</servlet-name>
 		<servlet-class>de.marx_labs.ads.server.servlet.AdServlet</servlet-class>
+		<async-supported>true</async-supported>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdServlet</servlet-name>
@@ -35,6 +36,7 @@
 		<display-name>AdClick</display-name>
 		<servlet-name>AdClick</servlet-name>
 		<servlet-class>de.marx_labs.ads.server.servlet.AdClick</servlet-class>
+		<async-supported>true</async-supported>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdClick</servlet-name>
@@ -45,6 +47,7 @@
 		<display-name>AdSelect</display-name>
 		<servlet-name>AdSelect</servlet-name>
 		<servlet-class>de.marx_labs.ads.server.servlet.AdSelect</servlet-class>
+		<async-supported>true</async-supported>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdSelect</servlet-name>
@@ -55,6 +58,7 @@
 		<display-name>AdStatus</display-name>
 		<servlet-name>AdStatus</servlet-name>
 		<servlet-class>de.marx_labs.ads.server.servlet.AdStatus</servlet-class>
+		<async-supported>true</async-supported>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdStatus</servlet-name>
@@ -65,6 +69,7 @@
 	<servlet>
 		<servlet-name>AsyncAdServlet</servlet-name>
 		<servlet-class>de.marx_labs.ads.server.servlet.async.AdServlet</servlet-class>
+		<async-supported>true</async-supported>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AsyncAdServlet</servlet-name>
@@ -74,6 +79,7 @@
 		<display-name>AsyncAdSelect</display-name>
 		<servlet-name>AsyncAdSelect</servlet-name>
 		<servlet-class>de.marx_labs.ads.server.servlet.async.AdSelect</servlet-class>
+		<async-supported>true</async-supported>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AsyncAdSelect</servlet-name>
@@ -87,6 +93,7 @@
 	<filter>
 		<filter-name>AdContextFilter</filter-name>
 		<filter-class>de.marx_labs.ads.server.utils.context.listener.AdContextListener</filter-class>
+		<async-supported>true</async-supported>
 	</filter>
 	<filter-mapping>
 		<filter-name>AdContextFilter</filter-name>

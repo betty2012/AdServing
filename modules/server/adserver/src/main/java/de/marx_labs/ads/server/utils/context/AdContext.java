@@ -20,22 +20,22 @@ import de.marx_labs.ads.db.definition.AdSlot;
 import de.marx_labs.ads.services.geo.Location;
 
 /**
- * Der AdContext enthält die wichtigsten Information zu einem Request.
- * Alle Informationen, die häufig benötigt werden sind hier enthalten
+ * Der AdContext enthält die wichtigsten Information zu einem Request. Alle Informationen, die häufig benötigt werden
+ * sind hier enthalten
  * 
- * UserID 	= 	über die Benutzer-ID wird ein Benutzer markiert. Sie wird in einem 
- * 				Cookie gespeichert und ist 24 Stunden gültig.
+ * UserID = über die Benutzer-ID wird ein Benutzer markiert. Sie wird in einem Cookie gespeichert und ist 24 Stunden
+ * gültig.
  * 
- * RequestID = 	Die ID des Requests ist bei allen AdServer-Aufrufen, die von einer PageImpression
- * 				erzeugt werden identisch. Sie dient unter anderem dazu doppelte Einblendung zu vermeiden 
- * 				
+ * RequestID = Die ID des Requests ist bei allen AdServer-Aufrufen, die von einer PageImpression erzeugt werden
+ * identisch. Sie dient unter anderem dazu doppelte Einblendung zu vermeiden
+ * 
  * ClientUUID = Die AdUUID enthält die Informationen über die Site, Zone und Places
  * 
  * @author thmarx
- *
+ * 
  */
 public class AdContext {
-	
+
 	private String clientIp;
 	private String userId;
 	private String requestId;
@@ -43,80 +43,71 @@ public class AdContext {
 	private UserAgent userAgent;
 	private Locale locale;
 	private Location location;
-	
-	public AdContext () {
-		
+
+	public AdContext() {
+
 	}
 
-	
-	
-	
-	
-	public Location getLocation() {
+	public Location location() {
 		return location;
 	}
 
-
-
-
-
-	public void setLocation(Location location) {
+	public AdContext location(Location location) {
 		this.location = location;
+		return this;
 	}
 
-
-
-
-
-	public Locale getLocale() {
+	public Locale locale() {
 		return locale;
 	}
 
-
-
-	public void setLocale(Locale locale) {
+	public AdContext locale(Locale locale) {
 		this.locale = locale;
+		return this;
 	}
 
-
-
-	public String getClientIp() {
+	public String clientIP() {
 		return clientIp;
 	}
 
-	public void setClientIp(String clientIp) {
+	public AdContext clientIP(String clientIp) {
 		this.clientIp = clientIp;
+		return this;
 	}
 
-	public String getUserId() {
+	public String userID() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public AdContext userID(String userId) {
 		this.userId = userId;
+		return this;
 	}
 
-	public String getRequestId() {
+	public String requestID() {
 		return requestId;
 	}
 
-	public void setRequestId(String requestId) {
+	public AdContext requestID(String requestId) {
 		this.requestId = requestId;
+		return this;
 	}
 
-	public AdSlot getAdSlot() {
+	public AdSlot adSlot() {
 		return adSlot;
 	}
 
-	public void setAdSlot(AdSlot adSlot) {
+	public AdContext adSlot(AdSlot adSlot) {
 		this.adSlot = adSlot;
+		return this;
 	}
 
-	public UserAgent getUserAgent() {
+	public UserAgent userAgent() {
 		return userAgent;
 	}
 
-	public void setUserAgent(UserAgent userAgent) {
+	public AdContext userAgent(UserAgent userAgent) {
 		this.userAgent = userAgent;
+		return this;
 	}
 }

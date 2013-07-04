@@ -46,9 +46,9 @@ public class AdSlotCondition implements Condition<BasicDBObject, QueryBuilder> {
 		 * für diesen Slot angezeigt werden sollten
 		 * und alle Banner, für die es keine Einschränkung gibt
 		 */
-		if (request.getAdSlot() != null) {
+		if (request.adSlot() != null) {
 			// AdSlot einfügen
-			queries.add(new BasicDBObject(AdDBConstants.ADDB_AD_ADSLOT, request.getAdSlot()));
+			queries.add(new BasicDBObject(AdDBConstants.ADDB_AD_ADSLOT, request.adSlot()));
 		}
 		// all AdSlots einfügen
 		queries.add(new BasicDBObject(AdDBConstants.ADDB_AD_ADSLOT, AdDBConstants.ADDB_AD_ADSLOT_ALL));

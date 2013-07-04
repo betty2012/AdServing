@@ -51,20 +51,20 @@ public class CountryConditionTest extends AdDBTestCase {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
-		request.setCountry(new Country("AT"));
+		request.types(types);
+		request.country(new Country("AT"));
 		
 		List<AdDefinition> result = db.search(request);
 		assertTrue(result.isEmpty());
 		
-		request.setCountry(new Country("DE"));
+		request.country(new Country("DE"));
 		result = db.search(request);
 		assertEquals(1, result.size());
 		
-		request.setCountry(Country.ALL);
+		request.country(Country.ALL);
 		result = db.search(request);
 		assertEquals(result.size(), 1);
 	}

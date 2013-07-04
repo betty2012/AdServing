@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Strings;
+
 import de.marx_labs.ads.base.utils.render.RenderContext;
 import de.marx_labs.ads.db.definition.impl.ad.extern.ExternAdDefinition;
 import de.marx_labs.ads.db.model.type.AdType;
@@ -59,7 +61,7 @@ public class ExternAdDefinitionRenderer implements AdDefinitionRenderer<ExternAd
 	public String render (ExternAdDefinition banner, HttpServletRequest request, AdContext context) {
 		String clickurl = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.CLICK_URL);
 		String staticurl = RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.STATIC_URL);
-		if (!staticurl.endsWith("/")) {
+		if (!staticurl.endsWith("/")  && !Strings.isNullOrEmpty(staticurl)) {
 			staticurl += "/";
 		}
 		
@@ -68,8 +70,8 @@ public class ExternAdDefinitionRenderer implements AdDefinitionRenderer<ExternAd
 		renderContext.put("staticUrl", staticurl);
 		
 		String toClickUrl = clickurl + "?id=" + banner.getId();
-		if (context.getAdSlot() != null) {
-			toClickUrl += "&" + RequestHelper.slot + "=" + context.getAdSlot().toString();
+		if (context.adSlot() != null) {
+			toClickUrl += "&" + RequestHelper.slot + "=" + context.adSlot().toString();
 		}
 		renderContext.put("clickUrl", toClickUrl);
 		

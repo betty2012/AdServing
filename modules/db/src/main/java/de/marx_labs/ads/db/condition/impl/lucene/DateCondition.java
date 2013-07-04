@@ -43,7 +43,7 @@ public class DateCondition implements Condition<Document, BooleanQuery> {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {
-		if (request.getDate() != null) { 
+		if (request.date() != null) { 
 			BooleanQuery tempquery = new BooleanQuery();
 			
 			/*
@@ -53,14 +53,14 @@ public class DateCondition implements Condition<Document, BooleanQuery> {
 				BooleanQuery query = new BooleanQuery();
 				
 				BooleanQuery temp = new BooleanQuery();
-				TermRangeQuery tQuery = new TermRangeQuery(AdDBConstants.ADDB_AD_DATE_FROM + i, null, new BytesRef(request.getDate()), true, true);
+				TermRangeQuery tQuery = new TermRangeQuery(AdDBConstants.ADDB_AD_DATE_FROM + i, null, new BytesRef(request.date()), true, true);
 				temp.add(tQuery, Occur.SHOULD);
 				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_DATE_FROM + i, AdDBConstants.ADDB_AD_DATE_ALL)), Occur.SHOULD);
 				
 				query.add(temp, Occur.MUST);
 				
 				temp = new BooleanQuery();
-				tQuery = new TermRangeQuery(AdDBConstants.ADDB_AD_DATE_TO + i, new BytesRef(request.getDate()), null, true, true);
+				tQuery = new TermRangeQuery(AdDBConstants.ADDB_AD_DATE_TO + i, new BytesRef(request.date()), null, true, true);
 				temp.add(tQuery, Occur.SHOULD);
 				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_DATE_TO + i, AdDBConstants.ADDB_AD_DATE_ALL)), Occur.SHOULD);
 				

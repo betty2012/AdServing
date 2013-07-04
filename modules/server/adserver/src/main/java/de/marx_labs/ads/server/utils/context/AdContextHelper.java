@@ -53,19 +53,19 @@ public class AdContextHelper {
 			userID = UUID.randomUUID().toString();
 			CookieUtils.addCookie(response, AdServerConstants.Cookie.USERID, userID, CookieUtils.ONE_YEAR, RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.COOKIE_DOMAIN));
 		}
-		context.setUserId(userID);
+		context.userID(userID);
 		
 		String requestID = (String)request.getParameter(RequestHelper.requestId);
 		if (Strings.isEmpty(requestID)) {
 			requestID = UUID.randomUUID().toString();
 		}
-		context.setRequestId(requestID);
+		context.requestID(requestID);
 		
 		String slot = (String)request.getParameter(RequestHelper.slot);
 		if (!Strings.isEmpty(slot)) {
 			try {
 				AdSlot aduuid = AdSlot.fromString(slot);
-				context.setAdSlot(aduuid);
+				context.adSlot(aduuid);
 			} catch (Exception e) {
 				logger.error("", e);
 			}
@@ -86,18 +86,18 @@ public class AdContextHelper {
 			clientIP = request.getHeader("X-Forwarded-For");
 			
 		}
-		context.setClientIp(clientIP);
+		context.clientIP(clientIP);
 		
 		UserAgent userAgent = userAgentParser.parse(request.getHeader("User-Agent"));
-		context.setUserAgent(userAgent);
+		context.userAgent(userAgent);
 		
-		context.setLocale(request.getLocale());
+		context.locale(request.getLocale());
 		
 //		Location loc = RuntimeContext.getIpDB().searchIp(clientIP);
 		try {
 			Location loc = RuntimeContext.Caches.locations.get(clientIP);
-			context.setLocation(loc);
-		} catch (ExecutionException e) {
+			context.location(loc);
+		} catch (Exception e) {
 			logger.error("", e);
 		}
 		

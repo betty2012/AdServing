@@ -46,9 +46,9 @@ public class ValidFromToCondition implements Condition<BasicDBObject, QueryBuild
 
 	@Override
 	public void addQuery(AdRequest request, QueryBuilder builder) {
-		if (request.getDate() != null && request.getTime() != null) {
+		if (request.date() != null && request.time() != null) {
 			
-			String currentDate = request.getDate() + request.getTime();
+			String currentDate = request.date() + request.time();
 			
 			QueryBuilder condition = QueryBuilder.start();
 			

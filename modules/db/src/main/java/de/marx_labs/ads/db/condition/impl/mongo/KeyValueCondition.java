@@ -51,18 +51,18 @@ public class KeyValueCondition extends AbstractCondition implements Condition<Ba
 	
 	@Override
 	public void addQuery(AdRequest request, QueryBuilder builder) {
-		if (request.getKeyValues() == null || request.getKeyValues().isEmpty()) {
+		if (request.keyValues() == null || request.keyValues().isEmpty()) {
 			return;
 		}
 		
 		QueryBuilder queryBuilder = QueryBuilder.start();
 		
 		// keyvalues einfügen
-		for (String k : request.getKeyValues().keySet()) {
+		for (String k : request.keyValues().keySet()) {
 			BooleanQuery temp = new BooleanQuery();
 			if (addb.manager.getContext().validKeys.contains(k)) {
 				List<String> countries = new ArrayList<String>();
-				countries.add(request.getKeyValues().get(k));
+				countries.add(request.keyValues().get(k));
 				countries.add(AdDBConstants.ADDB_AD_KEYVALUE_ALL);
 				
 				BasicDBObject dq = new BasicDBObject(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k, new BasicDBObject("$in", countries));

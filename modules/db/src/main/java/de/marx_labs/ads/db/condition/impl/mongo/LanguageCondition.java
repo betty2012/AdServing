@@ -32,10 +32,10 @@ public class LanguageCondition implements Condition<BasicDBObject, QueryBuilder>
 
 	@Override
 	public void addQuery(AdRequest request, QueryBuilder builder) {
-		if (request.getLocale() == null) {
+		if (request.locale() == null) {
 			return;
 		}
-		String language = request.getLocale().getLanguage();
+		String language = request.locale().getLanguage();
 		if (language.equals(AdDBConstants.ADDB_AD_LANGUAGE_ALL)) {
 			return;
 		}

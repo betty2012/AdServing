@@ -44,7 +44,7 @@ public class KeywordCondition implements Condition<Document, BooleanQuery> {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {
-		if (request.getKeywords() == null || request.getKeywords().size() == 0) {
+		if (request.keywords() == null || request.keywords().size() == 0) {
 			return;
 		}
 		
@@ -53,7 +53,7 @@ public class KeywordCondition implements Condition<Document, BooleanQuery> {
 		BooleanQuery temp = new BooleanQuery();
 		
 		// keywords einfügen
-		for (String k : request.getKeywords()) {
+		for (String k : request.keywords()) {
 			temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_KEYWORD, k)), Occur.SHOULD);
 		}
 		// all keywords einfügen

@@ -58,15 +58,11 @@ public class RequestHelper {
 	public static final String keywords = "_p7";
 	public static final String referrer = "_p8";
 	public static final String div_id = "_p9";
-	
-//	public static final String hour = "_p3";
-//	public static final String minute = "_p4";
-//	public static final String day = "_p5";
-//	public static final String date_day = "_p6";
-//	public static final String date_month = "_p7";
-//	public static final String date_year = "_p8";
+	public static final String product = "_p10";
+
 
 	private static final Pattern integerPattern = Pattern.compile("^\\d+$");
+	// prefix for custom key values
 	private static final String KeyValuePrefix = "kv_";
 	private static final int KeyValuePrefixLength = KeyValuePrefix.length();
 
@@ -109,15 +105,15 @@ public class RequestHelper {
 		// boolean isInteger = matchesInteger.matches ();
 
 		try {
-			Location loc = context.getLocation();
+			Location loc = context.location();
 			if (loc != null) {
 				try {
 					GeoLocation geo = new GeoLocation(Double.parseDouble(loc.getLatitude()), Double.parseDouble(loc.getLongitude()));
 					
-					adRequest.setGeoLocation(geo);
+					adRequest.geoLocation(geo);
 					
-					adRequest.setCountry(new Country(loc.getCountry()));
-					adRequest.setState(new State(loc.getRegionName()));
+					adRequest.country(new Country(loc.getCountry()));
+					adRequest.state(new State(loc.getRegionName()));
 				} catch (NumberFormatException nfe) {
 //					logger.error("", nfe);
 				}
@@ -128,19 +124,21 @@ public class RequestHelper {
 			// Type
 			String type = (String) request.getParameter(RequestHelper.type);
 
-			adRequest.getFormats().add(AdFormats.forCompoundName(format));
-			adRequest.getTypes().add(AdTypes.forType(type));
+			adRequest.formats().add(AdFormats.forCompoundName(format));
+			adRequest.types().add(AdTypes.forType(type));
 			
-			adRequest.setKeywords(KeywordUtils.getKeywords(request));
+			adRequest.keywords(KeywordUtils.getKeywords(request));
 			
-			adRequest.setLocale(context.getLocale());
+			adRequest.locale(context.locale());
+			
+			adRequest.product(request.getParameter(RequestHelper.product));
 			
 			Map<String, String> keyValues = getKeyValues(request);
-			adRequest.getKeyValues().putAll(keyValues);
+			adRequest.keyValues().putAll(keyValues);
 			
-			if (context.getAdSlot() != null) {
-				adRequest.setSite(context.getAdSlot().getSite());
-				adRequest.setAdSlot(context.getAdSlot().toString());
+			if (context.adSlot() != null) {
+				adRequest.site(context.adSlot().getSite());
+				adRequest.adSlot(context.adSlot().toString());
 			}
 
 			addTimeCondition(request, adRequest);
@@ -170,10 +168,10 @@ public class RequestHelper {
 		DateFormat timeFormat = new SimpleDateFormat("HHmm");
 		
 		// aktuelle Uhrzeit setzen
-		adRequest.setTime(timeFormat.format(temp.getTime()));
+		adRequest.time(timeFormat.format(temp.getTime()));
 		// aktuelles Datum setzen
-		adRequest.setDate(dateFormat.format(temp.getTime()));
+		adRequest.date(dateFormat.format(temp.getTime()));
 		// Tag der Woche setzten
-		adRequest.setDay(Day.getDayForJava(temp.get(Calendar.DAY_OF_WEEK)));
+		adRequest.day(Day.getDayForJava(temp.get(Calendar.DAY_OF_WEEK)));
 	}
 }

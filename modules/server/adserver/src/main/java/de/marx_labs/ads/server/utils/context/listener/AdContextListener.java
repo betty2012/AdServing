@@ -21,6 +21,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,6 +35,7 @@ import de.marx_labs.ads.server.utils.context.AdContextHelper;
  * @author tmarx
  *
  */
+@WebFilter(asyncSupported=true)
 public class AdContextListener implements Filter {
 
 	public final static ThreadLocal<AdContext> ADCONTEXT = new ThreadLocal<AdContext>();

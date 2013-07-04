@@ -68,16 +68,16 @@ public class SearchTest {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
-		request.setDay(Day.Monday);
+		request.types(types);
+		request.day(Day.Monday);
 		
 		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
-		request.setDay(Day.Saturday);
+		request.day(Day.Saturday);
 		
 		result = manager.getAdDB().search(request);
 		System.out.println(result);
@@ -106,16 +106,16 @@ public class SearchTest {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
-		request.setState(new State("BE"));
+		request.types(types);
+		request.state(new State("BE"));
 		
 		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
-		request.setState(new State("BB"));
+		request.state(new State("BB"));
 		
 		result = manager.getAdDB().search(request);
 		System.out.println(result);
@@ -146,16 +146,16 @@ public class SearchTest {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
-		request.setTime("0800");
+		request.types(types);
+		request.time("0800");
 		
 		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
-		request.setTime("1100");
+		request.time("1100");
 		result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
@@ -193,16 +193,16 @@ public class SearchTest {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
-		request.setDate("20100623");
+		request.types(types);
+		request.date("20100623");
 		
 		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
-		request.setDate("20100724");
+		request.date("20100724");
 		result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
@@ -230,16 +230,16 @@ public class SearchTest {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
-		request.setCountry(new Country("DE"));
+		request.types(types);
+		request.country(new Country("DE"));
 		
 		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result);
 		
-		request.setCountry(new Country("UK"));
+		request.country(new Country("UK"));
 		
 		result = manager.getAdDB().search(request);
 		System.out.println(result);
@@ -272,12 +272,12 @@ public class SearchTest {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ExternAdType.TYPE));
-		request.setTypes(types);
+		request.types(types);
 		
-		request.getKeywords().add("Puma");
+		request.keywords().add("Puma");
 //		request.getKeywords().add("Esprit");
 		
 		List<AdDefinition> result = manager.getAdDB().search(request);
@@ -311,20 +311,20 @@ public class SearchTest {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ExternAdType.TYPE));
-		request.setTypes(types);
+		request.types(types);
 		
 		
 		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result.size());
 		
-		request.setSite("demo_site");
+		request.site("demo_site");
 		result = manager.getAdDB().search(request);
 		System.out.println(result.size());
 		
-		request.setSite("test_site");
+		request.site("test_site");
 		result = manager.getAdDB().search(request);
 		System.out.println(result.size());
 		

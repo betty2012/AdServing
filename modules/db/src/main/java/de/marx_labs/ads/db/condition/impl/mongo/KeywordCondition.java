@@ -40,13 +40,13 @@ public class KeywordCondition implements Condition<BasicDBObject, QueryBuilder> 
 
 	@Override
 	public void addQuery(AdRequest request, QueryBuilder builder) {
-		if (request.getKeywords() == null || request.getKeywords().size() == 0) {
+		if (request.keywords() == null || request.keywords().size() == 0) {
 			return;
 		}
 		
 		
 		List<String> keywords = new ArrayList<String>();
-		for (String k : request.getKeywords()) {
+		for (String k : request.keywords()) {
 			keywords.add(k);
 		}
 		keywords.add(AdDBConstants.ADDB_AD_KEYWORD_ALL);

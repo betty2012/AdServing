@@ -52,40 +52,40 @@ public class DateConditionTest extends AdDBTestCase {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
+		request.types(types);
 		
-		request.setDate("20110214");
+		request.date("20110214");
 		List<AdDefinition> result = db.search(request);
 		assertEquals(0, result.size());
 		
-		request.setDate("20110215");
+		request.date("20110215");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		
-		request.setDate("20110220");
+		request.date("20110220");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		
-		request.setDate("20110221");
+		request.date("20110221");
 		result = db.search(request);
 		assertEquals(0, result.size());
 		
-		request.setDate("20110314");
+		request.date("20110314");
 		result = db.search(request);
 		assertEquals(0, result.size());
 		
-		request.setDate("20110315");
+		request.date("20110315");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		
-		request.setDate("20110320");
+		request.date("20110320");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		
-		request.setDate("20110321");
+		request.date("20110321");
 		result = db.search(request);
 		assertEquals(0, result.size());
 	}

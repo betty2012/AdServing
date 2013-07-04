@@ -39,7 +39,7 @@ public class DateCondition implements Condition<BasicDBObject, QueryBuilder> {
 
 	@Override
 	public void addQuery(AdRequest request, QueryBuilder builder) {
-		if (request.getDate() != null) { 
+		if (request.date() != null) { 
 			List<DBObject> condition_queries = new ArrayList<DBObject>();
 			
 			/*
@@ -50,7 +50,7 @@ public class DateCondition implements Condition<BasicDBObject, QueryBuilder> {
 				QueryBuilder condition = QueryBuilder.start();
 				
 				// from part of the query
-				BasicDBObject query_from_1 = new BasicDBObject(AdDBConstants.ADDB_AD_DATE_FROM + i, new BasicDBObject("$lte", request.getDate()));
+				BasicDBObject query_from_1 = new BasicDBObject(AdDBConstants.ADDB_AD_DATE_FROM + i, new BasicDBObject("$lte", request.date()));
 				BasicDBObject query_from_2 = new BasicDBObject(AdDBConstants.ADDB_AD_DATE_FROM + i, AdDBConstants.ADDB_AD_DATE_ALL);
 				
 				List<BasicDBObject> queries = new ArrayList<BasicDBObject>();
@@ -61,7 +61,7 @@ public class DateCondition implements Condition<BasicDBObject, QueryBuilder> {
 				condition.and(query_from);
 				
 				// to part of the query
-				BasicDBObject query_to_1 = new BasicDBObject(AdDBConstants.ADDB_AD_DATE_TO + i, new BasicDBObject("$gte", request.getDate()));
+				BasicDBObject query_to_1 = new BasicDBObject(AdDBConstants.ADDB_AD_DATE_TO + i, new BasicDBObject("$gte", request.date()));
 				BasicDBObject query_to_2 = new BasicDBObject(AdDBConstants.ADDB_AD_DATE_TO + i, AdDBConstants.ADDB_AD_DATE_ALL);
 				
 				queries = new ArrayList<BasicDBObject>();

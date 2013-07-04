@@ -31,12 +31,12 @@ public class SiteCondition implements Condition<BasicDBObject, QueryBuilder> {
 
 	@Override
 	public void addQuery(AdRequest request, QueryBuilder builder) {
-		if (request.getSite() == null) {
+		if (request.site() == null) {
 			return;
 		}
 		
 		List<String> sites = new ArrayList<String>();
-		sites.add(request.getSite());
+		sites.add(request.site());
 		sites.add(AdDBConstants.ADDB_AD_SITE_ALL);
 		
 		BasicDBObject dq = new BasicDBObject(AdDBConstants.ADDB_AD_SITE, new BasicDBObject("$in", sites));

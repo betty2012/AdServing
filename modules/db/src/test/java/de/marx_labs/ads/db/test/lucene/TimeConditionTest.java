@@ -54,49 +54,49 @@ public class TimeConditionTest extends AdDBTestCase {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
+		request.types(types);
 		
-		request.setTime("0730");
+		request.time("0730");
 		List<AdDefinition> result = db.search(request);
 		assertEquals(0, result.size());
 		
-		request.setTime("0800");
+		request.time("0800");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		
-		request.setTime("0900");
+		request.time("0900");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		
-		request.setTime("1000");
+		request.time("1000");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		
 		
-		request.setTime("1001");
+		request.time("1001");
 		result = db.search(request);
 		assertEquals(0, result.size());
 		
-		request.setTime("1759");
+		request.time("1759");
 		result = db.search(request);
 		assertEquals(0, result.size());
 		
-		request.setTime("1800");
+		request.time("1800");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		
-		request.setTime("1900");
+		request.time("1900");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		
-		request.setTime("2000");
+		request.time("2000");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		
-		request.setTime("2001");
+		request.time("2001");
 		result = db.search(request);
 		assertEquals(0, result.size());
 		

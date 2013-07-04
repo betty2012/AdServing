@@ -127,7 +127,8 @@ public final class AdProvider {
 	 */
 	private Collection<AdDefinition> handleProducts (AdContext context, AdRequest adr, HttpServletRequest request) throws IOException {
 		try {
-			adr.setProducts(true);
+			adr.products(true);
+			// the name of the product is already set @see RequestHelper
 			
 			Collection<AdDefinition> result = RuntimeContext.getAdDB().search(adr);
 			if (result == null || result.isEmpty()) {
@@ -135,20 +136,27 @@ public final class AdProvider {
 			}
 			
 			// wird schon ein Produkt angezeigt, dann verwenden wir genau dieses Banner
+			/*
+			 * if there is currently a ad for the product displayed, we use only ads for that product
+			 * 
+			 * 
+			 */
+			Collection<AdDefinition> result2 = new ArrayList<AdDefinition>();
 			for (AdDefinition banner : result) {
-				if (RuntimeContext.getRequestBanners().containsKey("prod" + context.getRequestId() + "_" + banner.getProduct())) {
-					Collection<AdDefinition> result2 = new ArrayList<AdDefinition>();
-					result2.add(banner);
+				if (RuntimeContext.getRequestBanners().containsKey("prod" + context.requestID() + "_" + banner.getProduct())) {
 					
-					return result2;
+					result2.add(banner);
 				}
+			}
+			if (!result2.isEmpty()) {
+				result = result2;
 			}
 			
 			result = commonFilter(context, result);
 			// ansonten alle für die weiter Verwendung wählen
 			return result;
 		} finally {
-			adr.setProducts(false);
+			adr.products(false);
 		}
 	}
 	
@@ -168,10 +176,8 @@ public final class AdProvider {
 		 */
 		if (result.isEmpty()) {
 			// Fallback auf ImageBanner
-//			adr.getTypes().remove(AdType.FLASH);
-			adr.getTypes().remove(new FlashAdType());
-//			adr.getTypes().add(AdType.IMAGE);
-			adr.getTypes().add(new ImageAdType());
+			adr.types().remove(new FlashAdType());
+			adr.types().add(new ImageAdType());
 			result = RuntimeContext.getAdDB().search(adr);
 			result = commonFilter(context, result);
 		} else {
@@ -204,20 +210,16 @@ public final class AdProvider {
 						result = imageBanners;
 					} else {
 						// Fallback auf ImageBanner
-//						adr.getTypes().remove(AdType.FLASH);
-						adr.getTypes().remove(new FlashAdType());
-//						adr.getTypes().add(AdType.IMAGE);
-						adr.getTypes().add(new ImageAdType());
+						adr.types().remove(new FlashAdType());
+						adr.types().add(new ImageAdType());
 						result = RuntimeContext.getAdDB().search(adr);
 						result = commonFilter(context, result);
 					}
 				}
 			} else {
 				// Fallback auf ImageBanner um sicher zu gehen
-//				adr.getTypes().remove(AdType.FLASH);
-				adr.getTypes().remove(new FlashAdType());
-//				adr.getTypes().add(AdType.IMAGE);
-				adr.getTypes().add(new ImageAdType());
+				adr.types().remove(new FlashAdType());
+				adr.types().add(new ImageAdType());
 				result = RuntimeContext.getAdDB().search(adr);
 				
 				result = commonFilter(context, result);
@@ -246,7 +248,7 @@ public final class AdProvider {
 		/*
 		 * filter out duplicate ads
 		 */
-		result = (Collection<AdDefinition>) Collections2.filter(result, new DuplicatAdFilter(context.getRequestId()));
+		result = (Collection<AdDefinition>) Collections2.filter(result, new DuplicatAdFilter(context.requestID()));
 		
 		return result;
 	}

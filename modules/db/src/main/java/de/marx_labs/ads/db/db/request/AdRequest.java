@@ -90,6 +90,10 @@ public class AdRequest {
 	 * Es sollen nur Produkte für diesen Request geliefert werden 
 	 */
 	private boolean products;
+	/*
+	 * The name of the product to load
+	 */
+	private String product;
 	
 	private String adSlot = null;
 
@@ -98,133 +102,145 @@ public class AdRequest {
 		
 	}
 
-	public String getAdSlot() {
+	public String adSlot() {
 		return adSlot;
 	}
 
 
 
-	public void setAdSlot(String adSlot) {
+	public AdRequest adSlot(String adSlot) {
 		this.adSlot = adSlot;
+		return this;
 	}
 
 
 
-	public boolean isProducts() {
+	public boolean products() {
 		return products;
 	}
 
-	public void setProducts(boolean products) {
+	public AdRequest products(boolean products) {
 		this.products = products;
+		return this;
 	}
 	
-	public final GeoLocation getGeoLocation() {
+	public AdRequest product (String product) {
+		this.product = product;
+		return this;
+	}
+	public String product () {
+		return this.product;
+	}
+	
+	public GeoLocation geoLocation() {
 		return geoLocation;
 	}
-	public final void setGeoLocation(GeoLocation geoLocation) {
+	public AdRequest geoLocation(GeoLocation geoLocation) {
 		this.geoLocation = geoLocation;
+		return this;
 	}
 
-
-
-	public final String getSite () {
+	public String site () {
 		return this.site;
 	}
-	public final void setSite (String site) {
+	public AdRequest site (String site) {
 		this.site = site;
+		return this;
 	}
 	
-	public final List<String> getKeywords() {
+	public List<String> keywords() {
 		return keywords;
 	}
 	
-	public final void setKeywords(List<String> keywords) {
+	public AdRequest keywords(List<String> keywords) {
 		this.keywords = keywords;
+		return this;
 	}
 	
-	public final Map<String, String> getKeyValues () {
+	public Map<String, String> keyValues () {
 		return this.keyValues;
 	}
 
-
-	public Country getCountry() {
+	public Country country() {
 		return country;
 	}
 
-	public void setCountry(Country country) {
+	public AdRequest country(Country country) {
 		this.country = country;
+		return this;
 	}
 
 	
 	
-	public Locale getLocale() {
+	public Locale locale() {
 		return locale;
 	}
 
-	public void setLocale(Locale locale) {
+	public AdRequest locale(Locale locale) {
 		this.locale = locale;
+		return this;
 	}
 
-	public int getCount() {
+	public int count() {
 		return count;
 	}
 
-	public void setCount(int count) {
+	public AdRequest count(int count) {
 		this.count = count;
+		return this;
 	}
 
-	public List<AdFormat> getFormats() {
+	public List<AdFormat> formats() {
 		return formats;
 	}
 
-	public void setFormats(List<AdFormat> formats) {
+	public AdRequest formats(List<AdFormat> formats) {
 		this.formats = formats;
+		return this;
 	}
 
-	public List<AdType> getTypes() {
+	public List<AdType> types() {
 		return types;
 	}
 
-	public void setTypes(List<AdType> types) {
+	public AdRequest types(List<AdType> types) {
 		this.types = types;
+		return this;
 	}
 
-	public Day getDay() {
+	public Day day() {
 		return day;
 	}
 
-	public void setDay(Day day) {
+	public AdRequest day(Day day) {
 		this.day = day;
+		return this;
 	}
 
-	public State getState() {
+	public State state() {
 		return state;
 	}
 
-	public void setState(State state) {
+	public AdRequest state(State state) {
 		this.state = state;
+		return this;
 	}
 
-	public String getTime() {
+	public String time() {
 		return time;
 	}
 
-	public void setTime(String time) {
+	public AdRequest time(String time) {
 		this.time = time;
+		return this;
 	}
 
-	public String getDate() {
+	public String date() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public AdRequest date(String date) {
 		this.date = date;
-	}
-	
-	public boolean hasConditions () {
-		return (
-					day != null || state != null || time != null || 
-					date != null || country != null || locale != null || (keywords != null && keywords.size() > 0) || 
-					site != null || geoLocation != null || ((keyValues != null && !keyValues.isEmpty())));
+		return this;
 	}
 }

@@ -58,16 +58,16 @@ public class StateConditionTest extends AdDBTestCase {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
-		request.setState(new State("BE"));
+		request.types(types);
+		request.state(new State("BE"));
 		
 		List<AdDefinition> result = db.search(request);
 		assertTrue(result.isEmpty());
 		
-		request.setState(new State("BB"));
+		request.state(new State("BB"));
 		
 		result = db.search(request);
 		assertEquals(result.size(), 1);

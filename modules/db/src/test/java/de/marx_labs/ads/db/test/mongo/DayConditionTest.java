@@ -65,24 +65,24 @@ public class DayConditionTest extends AdDBTestCase {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
-		request.setDay(Day.Tuesday);
+		request.types(types);
+		request.day(Day.Tuesday);
 		
 		List<AdDefinition> result = db.search(request);
 		assertEquals(1, result.size());
 		
-		request.setDay(Day.Monday);
+		request.day(Day.Monday);
 		result = db.search(request);
 		assertEquals(2, result.size());
 		
-		request.setDay(Day.Wednesday);
+		request.day(Day.Wednesday);
 		result = db.search(request);
 		assertEquals(2, result.size());
 		
-		request.setDay(Day.Sunday);
+		request.day(Day.Sunday);
 		result = db.search(request);
 		System.out.println("size= " + result.size());
 		System.out.println("id= " + result.get(0).getId());

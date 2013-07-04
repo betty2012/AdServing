@@ -143,6 +143,33 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 		</dependency>
+
+
+		<!-- Integration Tests -->
+<!-- 		<dependency> -->
+<!-- 		<groupId>org.jboss.arquillian.extension</groupId> -->
+<!-- 		<artifactId>arquillian-phantom-driver</artifactId> -->
+<!-- 		<version>1.0.3</version> -->
+<!-- 		<scope>test</scope> -->
+<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.jboss.arquillian.extension</groupId> -->
+		<!-- <artifactId>arquillian-phantom-binary</artifactId> -->
+		<!-- <version>1.9.0</version> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-htmlunit-driver</artifactId>
+			<version>2.33.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>2.33.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -172,17 +199,23 @@
 					<jettyConfig>${basedir}/server_root/config/jetty.xml</jettyConfig>
 					<scanIntervalSeconds>0</scanIntervalSeconds>
 					<useTestClasspath>true</useTestClasspath>
+					<stopKey>foo</stopKey>
+					<stopPort>9099</stopPort>
 					<webAppConfig>
 						<contextPath>/</contextPath>
 						<overrideDescriptor>${basedir}/server_root/config/override-web.xml</overrideDescriptor>
 					</webAppConfig>
 
-					<systemProperties>
-						<systemProperty>
+					<properties>
+						<property>
 							<name>mad.home</name>
 							<value>${basedir}/server_root</value>
-						</systemProperty>
-					</systemProperties>
+						</property>
+						<property>
+							<name>jetty.port</name>
+							<value>9090</value>
+						</property>
+					</properties>
 
 					<contextHandlers>
 						<contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
@@ -259,28 +292,34 @@
 						</executions>
 					</plugin>
 					<plugin>
-						<groupId>org.mortbay.jetty</groupId>
+						<groupId>org.eclipse.jetty</groupId>
 						<artifactId>jetty-maven-plugin</artifactId>
 						<version>${jetty.version}</version>
 						<configuration>
 							<jettyConfig>${basedir}/server_root/config/jetty.xml</jettyConfig>
 							<scanIntervalSeconds>0</scanIntervalSeconds>
 							<useTestClasspath>true</useTestClasspath>
+							<stopKey>foo</stopKey>
+							<stopPort>9099</stopPort>
 							<webAppConfig>
 								<contextPath>/</contextPath>
 								<overrideDescriptor>${basedir}/server_root/config/override-web.xml</overrideDescriptor>
 							</webAppConfig>
-
 							<systemProperties>
 								<systemProperty>
 									<name>mad.home</name>
 									<value>${basedir}/server_root</value>
 								</systemProperty>
-								<systemProperties>
+								<systemProperty>
 									<name>java.net.preferIPv4Stack</name>
 									<value>true</value>
-								</systemProperties>
+								</systemProperty>
+								<systemProperty>
+									<name>jetty.port</name>
+									<value>9090</value>
+								</systemProperty>
 							</systemProperties>
+							
 
 							<contextHandlers>
 								<contextHandler
@@ -291,6 +330,8 @@
 									<resourceBase>${basedir}/../../../documentation/Example/Banner/static</resourceBase>
 								</contextHandler>
 							</contextHandlers>
+
+
 						</configuration>
 						<executions>
 							<execution>

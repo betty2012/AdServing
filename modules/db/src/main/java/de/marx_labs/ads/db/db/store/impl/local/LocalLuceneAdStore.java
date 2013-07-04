@@ -49,6 +49,7 @@ import org.slf4j.LoggerFactory;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.google.common.base.Strings;
 
 import de.marx_labs.ads.common.pool.Pool;
 import de.marx_labs.ads.db.AdDBConstants;
@@ -341,7 +342,7 @@ public class LocalLuceneAdStore implements AdStore {
 			BooleanQuery mainQuery = new BooleanQuery();
 			// Query für den/die BannerTypen
 			BooleanQuery typeQuery = new BooleanQuery();
-			for (AdType type : request.getTypes()) {
+			for (AdType type : request.types()) {
 				TermQuery tq = new TermQuery(new Term(
 						AdDBConstants.ADDB_AD_TYPE, type.getType()));
 				typeQuery.add(tq, Occur.SHOULD);
@@ -350,7 +351,7 @@ public class LocalLuceneAdStore implements AdStore {
 
 			// Query für den/die BannerFormate
 			BooleanQuery formatQuery = new BooleanQuery();
-			for (AdFormat format : request.getFormats()) {
+			for (AdFormat format : request.formats()) {
 				TermQuery tq = new TermQuery(new Term(
 						AdDBConstants.ADDB_AD_FORMAT, format.getCompoundName()));
 				formatQuery.add(tq, Occur.SHOULD);
@@ -366,8 +367,14 @@ public class LocalLuceneAdStore implements AdStore {
 			/*
 			 * Es sollen nur Produkte geliefert werden
 			 */
-			if (request.isProducts()) {
+			if (request.products()) {
+				// search online for products
 				mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_TRUE)), Occur.MUST);
+				
+				// if possible add the product name, so online ads for that product will be found
+				if (!Strings.isNullOrEmpty(request.product())) {
+					mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT_NAME, request.product())), Occur.MUST);
+				}
 			} else {
 				mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_FALSE)), Occur.MUST);
 				

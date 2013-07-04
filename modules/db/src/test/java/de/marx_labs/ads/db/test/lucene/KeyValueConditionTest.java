@@ -69,29 +69,29 @@ public class KeyValueConditionTest extends AdDBTestCase {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
-		request.getKeyValues().put("browser", "opera");
+		request.types(types);
+		request.keyValues().put("browser", "opera");
 		
 		List<AdDefinition> result = db.search(request);
 		assertTrue(result.isEmpty());
 		
-		request.getKeyValues().clear();
-		request.getKeyValues().put("browser", "firefox");
+		request.keyValues().clear();
+		request.keyValues().put("browser", "firefox");
 		result = db.search(request);
 		assertEquals(2, result.size());
 		
-		request.getKeyValues().clear();
-		request.getKeyValues().put("browser", "chrome");
+		request.keyValues().clear();
+		request.keyValues().put("browser", "chrome");
 		
 		result = db.search(request);
 		assertEquals(1, result.size());
 		assertTrue(result.get(0).getId().equals("1"));
 		
-		request.getKeyValues().clear();
-		request.getKeyValues().put("browser", "ie");
+		request.keyValues().clear();
+		request.keyValues().put("browser", "ie");
 		
 		result = db.search(request);
 		assertEquals(1, result.size());
@@ -141,34 +141,34 @@ public class KeyValueConditionTest extends AdDBTestCase {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
-		request.getKeyValues().put("browser", "opera");
-		request.getKeyValues().put("os", "linux");
+		request.types(types);
+		request.keyValues().put("browser", "opera");
+		request.keyValues().put("os", "linux");
 		
 		List<AdDefinition> result = db.search(request);
 		assertEquals(1, result.size());
 		assertTrue(result.get(0).getId().equals("3"));
 		
-		request.getKeyValues().clear();
-		request.getKeyValues().put("browser", "firefox");
-		request.getKeyValues().put("os", "osx");
+		request.keyValues().clear();
+		request.keyValues().put("browser", "firefox");
+		request.keyValues().put("os", "osx");
 		result = db.search(request);
 		assertEquals(2, result.size());
 		
 		
-		request.getKeyValues().clear();
-		request.getKeyValues().put("browser", "chrome");
-		request.getKeyValues().put("os", "osx");
+		request.keyValues().clear();
+		request.keyValues().put("browser", "chrome");
+		request.keyValues().put("os", "osx");
 		
 		result = db.search(request);
 		assertEquals(2, result.size());
 		
-		request.getKeyValues().clear();
-		request.getKeyValues().put("browser", "ie");
-		request.getKeyValues().put("os", "windows");
+		request.keyValues().clear();
+		request.keyValues().put("browser", "ie");
+		request.keyValues().put("os", "windows");
 		
 		result = db.search(request);
 		assertEquals(2, result.size());

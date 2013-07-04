@@ -36,9 +36,6 @@ public class MongoQueryHelper {
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public DBObject getConditionalQuery (AdRequest request, AdDB addb) {
-		if (!request.hasConditions()) {
-			return null;
-		}
 		QueryBuilder query = QueryBuilder.start();
 		
 		for (Condition condition : addb.manager.getConditions()) {

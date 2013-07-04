@@ -52,8 +52,8 @@ public class StoredAdDBTest {
 		manager.getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
-		request.getFormats().add(new MediumRectangleAdFormat());
-		request.getTypes().add(AdTypes.forType(ImageAdType.TYPE));
+		request.formats().add(new MediumRectangleAdFormat());
+		request.types().add(AdTypes.forType(ImageAdType.TYPE));
 		
 		List<AdDefinition> result = manager.getAdDB().search(request);
 		

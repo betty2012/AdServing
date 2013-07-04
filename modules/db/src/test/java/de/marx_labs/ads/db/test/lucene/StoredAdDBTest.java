@@ -23,7 +23,6 @@ import de.marx_labs.ads.db.db.store.impl.local.LocalAdStore;
 import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import de.marx_labs.ads.db.enums.Mode;
-import de.marx_labs.ads.db.model.format.impl.MediumRectangleAdFormat;
 import de.marx_labs.ads.db.model.type.impl.ImageAdType;
 import de.marx_labs.ads.db.services.AdFormats;
 import de.marx_labs.ads.db.services.AdTypes;
@@ -55,8 +54,8 @@ public class StoredAdDBTest {
 		manager.getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
-		request.getFormats().add(AdFormats.forCompoundName("468x60"));
-		request.getTypes().add(AdTypes.forType(ImageAdType.TYPE));
+		request.formats().add(AdFormats.forCompoundName("468x60"));
+		request.types().add(AdTypes.forType(ImageAdType.TYPE));
 		
 		List<AdDefinition> result = manager.getAdDB().search(request);
 		

@@ -62,8 +62,8 @@ public class AsyncImageAdDefinitionRenderer implements AsyncAdDefinitionRenderer
 		renderContext.put("divId", RequestHelper.getParameter(request, RequestHelper.div_id, "")[0]);
 		
 		String toClickUrl = clickurl + "?id=" + banner.getId();
-		if (context.getAdSlot() != null) {
-			toClickUrl += "&" + RequestHelper.slot + "=" + context.getAdSlot().toString();
+		if (context.adSlot() != null) {
+			toClickUrl += "&" + RequestHelper.slot + "=" + context.adSlot().toString();
 		}
 		renderContext.put("clickUrl", toClickUrl);
 		

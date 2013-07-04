@@ -13,9 +13,6 @@
  */
 package de.marx_labs.ads.db.test.mongo;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -59,16 +56,16 @@ public class LanguageConditionTest extends AdDBTestCase {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
-		request.setLocale(new Locale("nl"));
+		request.types(types);
+		request.locale(new Locale("nl"));
 		
 		List<AdDefinition> result = db.search(request);
 		assertTrue(result.isEmpty());
 		
-		request.setLocale(new Locale("de"));
+		request.locale(new Locale("de"));
 		
 		result = db.search(request);
 		assertEquals(result.size(), 1);

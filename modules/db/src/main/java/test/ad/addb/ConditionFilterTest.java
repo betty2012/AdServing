@@ -63,20 +63,20 @@ public class ConditionFilterTest {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ExternAdType.TYPE));
-		request.setTypes(types);
+		request.types(types);
 		
 		gl = new GeoLocation(51.4863, 7.180);
-		request.setGeoLocation(gl);
+		request.geoLocation(gl);
 		
 		List<AdDefinition> result = manager.getAdDB().search(request);
 		System.out.println(result.size());
 		
 		
 		gl = new GeoLocation(51.4857, 7.0958);
-		request.setGeoLocation(gl);
+		request.geoLocation(gl);
 		result = manager.getAdDB().search(request);
 		System.out.println(result.size());
 		

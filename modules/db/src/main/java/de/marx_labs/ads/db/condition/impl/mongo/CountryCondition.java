@@ -38,11 +38,11 @@ public class CountryCondition implements Condition <BasicDBObject, QueryBuilder>
 
 	@Override
 	public void addQuery(AdRequest request, QueryBuilder builder) {
-		if (request.getCountry() == null) {
+		if (request.country() == null) {
 			return;
 		}
 		
-		String country = request.getCountry().getCode();
+		String country = request.country().getCode();
 		if (country.equals(Country.ALL.getCode())) {
 			return;
 		}

@@ -42,11 +42,11 @@ public class CountryCondition implements Condition <Document, BooleanQuery> {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {
-		if (request.getCountry() == null) {
+		if (request.country() == null) {
 			return;
 		}
 		
-		String country = request.getCountry().getCode();
+		String country = request.country().getCode();
 		if (country.equals(Country.ALL.getCode())) {
 			return;
 		}

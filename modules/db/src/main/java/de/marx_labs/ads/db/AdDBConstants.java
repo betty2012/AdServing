@@ -22,6 +22,7 @@ public final class AdDBConstants {
 	public static final String ADDB_AD_TYPE = "ad_type";
 	public static final String ADDB_AD_FORMAT = "ad_format";
 	public static final String ADDB_AD_PRODUCT = "ad_product";
+	public static final String ADDB_AD_PRODUCT_NAME = "ad_product_name";
 	public static final String ADDB_AD_PRODUCT_FALSE = "0";
 	public static final String ADDB_AD_PRODUCT_TRUE = "1";
 	

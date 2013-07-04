@@ -48,10 +48,10 @@ public class ValidFromToCondition implements Condition<Document, BooleanQuery> {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {
-		if (request.getTime() != null && request.getDate() != null) { 
+		if (request.time() != null && request.date() != null) { 
 			
 			// build the correct format
-			String currentDate = request.getDate() + request.getTime();
+			String currentDate = request.date() + request.time();
 			
 			BooleanQuery query = new BooleanQuery();
 			

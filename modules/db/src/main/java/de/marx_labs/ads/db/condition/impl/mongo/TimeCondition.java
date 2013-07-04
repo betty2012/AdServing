@@ -48,7 +48,7 @@ public class TimeCondition implements Condition<BasicDBObject, QueryBuilder> {
 	public void addQuery(AdRequest request, QueryBuilder builder) {
 		BooleanQuery query = null;
 		
-		if (request.getTime() != null) { 
+		if (request.time() != null) { 
 			
 			List<DBObject> condition_queries = new ArrayList<DBObject>();
 			
@@ -60,7 +60,7 @@ public class TimeCondition implements Condition<BasicDBObject, QueryBuilder> {
 				QueryBuilder condition = QueryBuilder.start();
 				
 				// from part of the query
-				BasicDBObject query_from_1 = new BasicDBObject(AdDBConstants.ADDB_AD_TIME_FROM + i, new BasicDBObject("$lte", request.getTime()));
+				BasicDBObject query_from_1 = new BasicDBObject(AdDBConstants.ADDB_AD_TIME_FROM + i, new BasicDBObject("$lte", request.time()));
 				BasicDBObject query_from_2 = new BasicDBObject(AdDBConstants.ADDB_AD_TIME_FROM + i, AdDBConstants.ADDB_AD_TIME_ALL);
 				
 				List<BasicDBObject> queries = new ArrayList<BasicDBObject>();
@@ -71,7 +71,7 @@ public class TimeCondition implements Condition<BasicDBObject, QueryBuilder> {
 				condition.and(query_from);
 				
 				// to part of the query
-				BasicDBObject query_to_1 = new BasicDBObject(AdDBConstants.ADDB_AD_TIME_TO + i, new BasicDBObject("$gte", request.getTime()));
+				BasicDBObject query_to_1 = new BasicDBObject(AdDBConstants.ADDB_AD_TIME_TO + i, new BasicDBObject("$gte", request.time()));
 				BasicDBObject query_to_2 = new BasicDBObject(AdDBConstants.ADDB_AD_TIME_TO + i, AdDBConstants.ADDB_AD_TIME_ALL);
 				
 				queries = new ArrayList<BasicDBObject>();

@@ -189,7 +189,7 @@ public class LocalAdStore implements AdStore {
 			BooleanQuery mainQuery = new BooleanQuery();
 			// Query für den/die BannerTypen
 			BooleanQuery typeQuery = new BooleanQuery();
-			for (AdType type : request.getTypes()) {
+			for (AdType type : request.types()) {
 				TermQuery tq = new TermQuery(new Term(
 						AdDBConstants.ADDB_AD_TYPE, type.getType()));
 				typeQuery.add(tq, Occur.SHOULD);
@@ -198,7 +198,7 @@ public class LocalAdStore implements AdStore {
 
 			// Query für den/die BannerFormate
 			BooleanQuery formatQuery = new BooleanQuery();
-			for (AdFormat format : request.getFormats()) {
+			for (AdFormat format : request.formats()) {
 				TermQuery tq = new TermQuery(new Term(
 						AdDBConstants.ADDB_AD_FORMAT, format.getCompoundName()));
 				formatQuery.add(tq, Occur.SHOULD);
@@ -214,8 +214,15 @@ public class LocalAdStore implements AdStore {
 			/*
 			 * Es sollen nur Produkte geliefert werden
 			 */
-			if (request.isProducts()) {
+			if (request.products()) {
+				// search online for products
 				mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_TRUE)), Occur.MUST);
+				
+				// if possible add the product name, so online ads for that product will be found
+				if (!Strings.isNullOrEmpty(request.product())) {
+					mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT_NAME, request.product())), Occur.MUST);
+				}
+				
 			} else {
 				mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_FALSE)), Occur.MUST);
 				

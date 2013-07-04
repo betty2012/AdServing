@@ -64,7 +64,7 @@ public class AdServlet extends AsyncAdServlet {
 					context.put("ad_type", RequestHelper.getParameter(request, RequestHelper.type, "")[0]);
 					context.put("ad_format", RequestHelper.getParameter(request, RequestHelper.format, "")[0]);
 					
-					context.put("adrequest_id", adcontext.getRequestId());
+					context.put("adrequest_id", adcontext.requestID());
 					context.put("enviroment", RuntimeContext.getEnviroment()
 							.toLowerCase());
 

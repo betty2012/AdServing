@@ -43,9 +43,6 @@ public class ConditionHelper {
 	 */
 	@SuppressWarnings("rawtypes")
 	public List<AdDefinition> processFilter (AdRequest request, List<AdDefinition> banners, AdDB db) {
-		if (!request.hasConditions()) {
-			return banners;
-		}
 		
 		Collection<AdDefinition> bcol = new ArrayList<AdDefinition>();
 		bcol.addAll(banners);

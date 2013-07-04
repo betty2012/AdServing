@@ -52,17 +52,17 @@ public class KeyValueCondition extends AbstractCondition implements Condition<Do
 	
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {
-		if (request.getKeyValues() == null || request.getKeyValues().isEmpty()) {
+		if (request.keyValues() == null || request.keyValues().isEmpty()) {
 			return;
 		}
 		
 		BooleanQuery query = new BooleanQuery();
 		
 		// keyvalues einfügen
-		for (String k : request.getKeyValues().keySet()) {
+		for (String k : request.keyValues().keySet()) {
 			BooleanQuery temp = new BooleanQuery();
 			if (addb.manager.getContext().validKeys.contains(k)) {
-				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k , request.getKeyValues().get(k))), Occur.SHOULD);
+				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k , request.keyValues().get(k))), Occur.SHOULD);
 				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_KEYVALUE + "_" + k, AdDBConstants.ADDB_AD_KEYVALUE_ALL)), Occur.SHOULD);
 				
 				query.add(temp, Occur.MUST);

@@ -46,10 +46,10 @@ public class DayCondition implements Condition<BasicDBObject, QueryBuilder> {
 
 	@Override
 	public void addQuery(AdRequest request, QueryBuilder builder) {
-		if (request.getDay() == null) {
+		if (request.day() == null) {
 			return;
 		}
-		int day = request.getDay().getDay();
+		int day = request.day().getDay();
 		if (day == Day.ALL.getDay()) {
 			return;
 		}

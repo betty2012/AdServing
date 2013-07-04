@@ -36,10 +36,10 @@ public class LanguagesCondition implements Condition<Document, BooleanQuery> {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {
-		if (request.getLocale() == null) {
+		if (request.locale() == null) {
 			return;
 		}
-		String language = request.getLocale().getLanguage();
+		String language = request.locale().getLanguage();
 		
 		BooleanQuery query = new BooleanQuery();
 		

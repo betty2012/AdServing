@@ -14,13 +14,16 @@
 
 -->
 <head>
-<head></head>
+<head>
+	<title>test</title>
+</head>
 <body>
 
 	<!-- synchron -->
 	<script type="text/javascript">
 		<!--
-			mad_ad_format = "300x250";
+			//mad_ad_format = "300x250";
+			mad_ad_format = "468x60";
 			mad_ad_type = "image";
 			mad_ad_keywords = {
 					"key" : "value",
@@ -28,14 +31,15 @@
 			};
 		//-->
 	</script>
-	<script type="text/javascript" src="http://localhost:8080/js/ads.js"></script>
-
+	<div id="ad1">
+		<script type="text/javascript" src="http://localhost:9090/js/ads.js"></script>
+	</div>
 	<!-- asynchron -->
 	<div id="ad_example_1234_1"></div>
 	<script type="text/javascript">
 			(function () {
 				
-				<!-- This part can be modified -->
+// 				This part can be modified
 				//var mad_ad_date = new Date();
 				//var mad_ad_offset = -mad_ad_date.getTimezoneOffset(); // differenceInMinutes
 				//var mad_ad_flashVersion = madApi.flash(7, 10).available;
@@ -48,14 +52,14 @@
 				//var mad_ad_referrer = encodeURIComponent(document.referrer);
 				// the id of the div the banner is appended to
 				var mad_ad_div_id = "ad_example_1234_1";
-				<!-- -->
+				
    				var script = document.createElement('script');
    				script.type = 'text/javascript';
    				script.async = true;
-   				script.src = 'http://localhost:8080/js/async/ads.js?_p1=' + mad_ad_format + '&_p2=' + mad_ad_type + "&_p9=" + mad_ad_div_id;
+   				script.src = 'http://localhost:9090/js/async/ads.js?_p1=' + mad_ad_format + '&_p2=' + mad_ad_type + "&_p9=" + mad_ad_div_id;
    				(document.getElementsByTagName('head')[0] || document.body).appendChild(script);
 			})();
-		</script>
+ 	</script>
 
 </body>
 </head>

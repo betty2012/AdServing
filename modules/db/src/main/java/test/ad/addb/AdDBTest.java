@@ -48,8 +48,8 @@ public class AdDBTest {
 		manager.getAdDB().reopen();
 		
 		AdRequest request = new AdRequest();
-		request.getFormats().add(AdFormats.forCompoundName(new MediumRectangleAdFormat().getCompoundName()));
-		request.getTypes().add(AdTypes.forType(ImageAdType.TYPE));
+		request.formats().add(AdFormats.forCompoundName(new MediumRectangleAdFormat().getCompoundName()));
+		request.types().add(AdTypes.forType(ImageAdType.TYPE));
 		
 		List<AdDefinition> result = manager.getAdDB().search(request);
 		

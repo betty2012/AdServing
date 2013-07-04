@@ -31,10 +31,10 @@ public class StateCondition implements Condition<BasicDBObject, QueryBuilder> {
 
 	@Override
 	public void addQuery(AdRequest request, QueryBuilder builder) {
-		if (request.getState() == null) {
+		if (request.state() == null) {
 			return;
 		}
-		String state = request.getState().getCode();
+		String state = request.state().getCode();
 		if (state.equals(State.ALL.getCode())) {
 			return;
 		}

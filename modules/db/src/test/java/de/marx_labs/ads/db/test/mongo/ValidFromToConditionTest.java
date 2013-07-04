@@ -51,28 +51,28 @@ public class ValidFromToConditionTest extends AdDBTestCase {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
+		request.types(types);
 		
-		request.setDate("20130801");
-		request.setTime("0730");
+		request.date("20130801");
+		request.time("0730");
 		List<AdDefinition> result = db.search(request);
 		assertEquals(0, result.size());
 		
-		request.setDate("20130801");
-		request.setTime("0800");
+		request.date("20130801");
+		request.time("0800");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		
-		request.setDate("20130802");
-		request.setTime("1000");
+		request.date("20130802");
+		request.time("1000");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		
-		request.setDate("20130802");
-		request.setTime("1301");
+		request.date("20130802");
+		request.time("1301");
 		result = db.search(request);
 		assertEquals(0, result.size());
 		

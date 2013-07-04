@@ -35,10 +35,10 @@ public class StateCondition implements Condition<Document, BooleanQuery> {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {
-		if (request.getState() == null) {
+		if (request.state() == null) {
 			return;
 		}
-		String state = request.getState().getCode();
+		String state = request.state().getCode();
 		if (state.equals(State.ALL.getCode())) {
 			return;
 		}

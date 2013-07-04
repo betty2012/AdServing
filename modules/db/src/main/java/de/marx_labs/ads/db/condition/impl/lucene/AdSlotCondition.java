@@ -52,9 +52,9 @@ public class AdSlotCondition implements Condition<Document, BooleanQuery> {
 		 * für diesen Slot angezeigt werden sollten
 		 * und alle Banner, für die es keine Einschränkung gibt
 		 */
-		if (request.getAdSlot() != null) {
+		if (request.adSlot() != null) {
 			// AdSlot einfügen
-			temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_ADSLOT, request.getAdSlot())), Occur.SHOULD);
+			temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_ADSLOT, request.adSlot())), Occur.SHOULD);
 		}
 		// all AdSlots einfügen
 		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_ADSLOT, AdDBConstants.ADDB_AD_ADSLOT_ALL)), Occur.SHOULD);

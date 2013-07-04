@@ -46,7 +46,7 @@ public class DistanceCondition implements Condition<BasicDBObject, QueryBuilder>
 					return true;
 				}
 				DistanceConditionDefinition dcdef = (DistanceConditionDefinition) type.getConditionDefinition(ConditionDefinitions.DISTANCE);
-				if (request.getGeoLocation() == null) {
+				if (request.geoLocation() == null) {
 					/*
 					 * Der Request liefert keine Position, dann wird das Banner ebenfalls angezeigt
 					 * 
@@ -59,7 +59,7 @@ public class DistanceCondition implements Condition<BasicDBObject, QueryBuilder>
 				 * Positionen für Banner und Request
 				 */
 				LatLng bannerPOS = new LatLng(dcdef.getGeoLocation().getLatitude(), dcdef.getGeoLocation().getLongitude());
-				LatLng requestPOS = new LatLng(request.getGeoLocation().getLatitude(), request.getGeoLocation().getLongitude());
+				LatLng requestPOS = new LatLng(request.geoLocation().getLatitude(), request.geoLocation().getLongitude());
 				/*
 				 * Distance zwischen Banner und Request
 				 */

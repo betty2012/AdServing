@@ -124,7 +124,7 @@ public class RemoteAdStore implements AdStore {
 
 		// Query für den/die BannerTypen
 		List<BasicDBObject> typeQuery = new ArrayList<BasicDBObject>();
-		for (AdType type : request.getTypes()) {
+		for (AdType type : request.types()) {
 			typeQuery.add(new BasicDBObject(AdDBConstants.ADDB_AD_TYPE, type
 					.getType()));
 		}
@@ -132,7 +132,7 @@ public class RemoteAdStore implements AdStore {
 
 		// Query für den/die BannerFormate
 		List<BasicDBObject> formatQuery = new ArrayList<BasicDBObject>();
-		for (AdFormat format : request.getFormats()) {
+		for (AdFormat format : request.formats()) {
 			formatQuery.add(new BasicDBObject(AdDBConstants.ADDB_AD_FORMAT,
 					format.getCompoundName()));
 		}
@@ -149,7 +149,7 @@ public class RemoteAdStore implements AdStore {
 		/*
 		 * Es sollen nur Produkte geliefert werden
 		 */
-		if (request.isProducts()) {
+		if (request.products()) {
 			builder.and(new BasicDBObject(AdDBConstants.ADDB_AD_PRODUCT,
 					AdDBConstants.ADDB_AD_PRODUCT_TRUE));
 		} else {

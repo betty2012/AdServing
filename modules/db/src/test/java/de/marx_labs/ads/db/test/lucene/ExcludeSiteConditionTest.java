@@ -57,28 +57,28 @@ public class ExcludeSiteConditionTest extends AdDBTestCase {
 		AdRequest request = new AdRequest();
 		List<AdFormat> formats = new ArrayList<AdFormat>();
 		formats.add(new FullBannerAdFormat());
-		request.setFormats(formats);
+		request.formats(formats);
 		List<AdType> types = new ArrayList<AdType>();
 		types.add(AdTypes.forType(ImageAdType.TYPE));
-		request.setTypes(types);
-		request.setSite("1");
+		request.types(types);
+		request.site("1");
 		
 		List<AdDefinition> result = db.search(request);
 		assertEquals(1, result.size());
 		assertTrue(result.get(0).getId().equals("3"));
 		
-		request.setSite("10");
+		request.site("10");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		assertTrue(result.get(0).getId().equals("1"));
 		
 		
-		request.setSite("11");
+		request.site("11");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		assertTrue(result.get(0).getId().equals("2"));
 
-		request.setSite("12");
+		request.site("12");
 		result = db.search(request);
 		assertEquals(1, result.size());
 		assertTrue(result.get(0).getId().equals("3"));

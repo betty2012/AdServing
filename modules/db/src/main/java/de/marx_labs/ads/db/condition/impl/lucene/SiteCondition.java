@@ -35,7 +35,7 @@ public class SiteCondition implements Condition<Document, BooleanQuery> {
 
 	@Override
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {
-		if (request.getSite() == null) {
+		if (request.site() == null) {
 			return;
 		}
 		
@@ -45,7 +45,7 @@ public class SiteCondition implements Condition<Document, BooleanQuery> {
 		BooleanQuery temp = new BooleanQuery();
 		
 		// Seite einfügen
-		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_SITE, request.getSite())), Occur.SHOULD);
+		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_SITE, request.site())), Occur.SHOULD);
 		// all Seiten einfügen
 		temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_SITE, AdDBConstants.ADDB_AD_SITE_ALL)), Occur.SHOULD);
 		

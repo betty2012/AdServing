@@ -36,9 +36,7 @@ public class LuceneQueryHelper {
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public Query getConditionalQuery (AdRequest request, AdDB addb) {
-		if (!request.hasConditions()) {
-			return null;
-		}
+		
 		BooleanQuery query = new BooleanQuery();
 		
 		for (Condition condition : addb.manager.getConditions()) {

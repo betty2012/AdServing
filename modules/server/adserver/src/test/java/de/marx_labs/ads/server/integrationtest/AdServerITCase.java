@@ -13,14 +13,45 @@
  */
 package de.marx_labs.ads.server.integrationtest;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
+import com.hazelcast.core.Hazelcast;
+
+import de.marx_labs.ads.db.definition.AdDefinition;
+import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
+import de.marx_labs.ads.db.services.AdFormats;
 
 public class AdServerITCase {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		Thread.sleep(60000);
+		
+		
+		Map<String, AdDefinition> ads = Hazelcast.newHazelcastInstance().getMap("ads");
+				
+		for (int i = 0; i < 100; i++) {
+			ImageAdDefinition def = new ImageAdDefinition();
+			def.setFormat(AdFormats.forCompoundName("468x60"));
+			def.setImageUrl("http://www.bannergestaltung.com/img/formate/468x60.gif");
+			def.setTargetUrl("http://www.google.de");
+			def.setLinkTarget("_blank");
+			
+			def.setId("1" + i);
+
+			ads.put(def.getId(), def);
+		}
+		
+		Thread.sleep(60000);
 	}
 
 	@AfterClass
@@ -28,8 +59,21 @@ public class AdServerITCase {
 	}
 
 	@Test
-	public void test() {
+	public void test() throws Exception {
 		System.out.println("test");
+		WebDriver driver = new HtmlUnitDriver(true);
+		
+		driver.get("http://localhost:9090/index.html");
+		
+		System.out.println("title: " + driver.getTitle());
+		
+		WebElement element = driver.findElement(By.id("ad1"));
+		
+		List<WebElement> childs =  element.findElements(By.tagName("div"));
+		System.out.println(childs.size());
+		for (WebElement e : childs) {
+			System.out.println(e.getAttribute("id"));
+		}
 	}
 
 }

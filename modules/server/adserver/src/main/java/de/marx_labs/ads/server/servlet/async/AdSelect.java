@@ -81,12 +81,12 @@ public class AdSelect extends AsyncAdServlet {
 						trackEvent.setBannerId(banner.getId());
 						trackEvent.setCampaign(banner.getCampaign() != null ? banner
 								.getCampaign().getId() : "");
-						trackEvent.setUser(context.getUserId());
+						trackEvent.setUser(context.userID());
 						trackEvent.setId(UUID.randomUUID().toString());
 						trackEvent.setTime(System.currentTimeMillis());
-						trackEvent.setIp(context.getClientIp());
-						if (context.getAdSlot() != null) {
-							trackEvent.setSite(context.getAdSlot().getSite());
+						trackEvent.setIp(context.clientIP());
+						if (context.adSlot() != null) {
+							trackEvent.setSite(context.adSlot().getSite());
 						} else {
 							trackEvent.setSite("NONE_PAGE");
 						}
@@ -112,7 +112,7 @@ public class AdSelect extends AsyncAdServlet {
 						 * pv = pageview (all request from a single pageview)
 						 */
 						RuntimeContext.getRequestBanners().put(
-								"pv" + context.getRequestId() + "_"
+								"pv" + context.requestID() + "_"
 										+ banner.getId(), Boolean.TRUE);
 						/*
 						 * Hier merken wir uns, dass ein Benutzer das Banner
@@ -126,7 +126,7 @@ public class AdSelect extends AsyncAdServlet {
 						 * u = user
 						 */
 						RuntimeContext.getRequestBanners().put(
-								"u" + context.getUserId() + "_"
+								"u" + context.userID() + "_"
 										+ banner.getId(), Boolean.TRUE);
 
 						/*
@@ -139,7 +139,7 @@ public class AdSelect extends AsyncAdServlet {
 						if (banner.isProduct()) {
 							RuntimeContext
 									.getRequestBanners()
-									.put("prod" + context.getRequestId() + "_"
+									.put("prod" + context.requestID() + "_"
 											+ banner.getProduct(), Boolean.TRUE);
 						}
 					}

@@ -49,7 +49,7 @@ public class TimeCondition implements Condition<Document, BooleanQuery> {
 	public void addQuery(AdRequest request, BooleanQuery mainQuery) {
 		BooleanQuery query = null;
 		
-		if (request.getTime() != null) { 
+		if (request.time() != null) { 
 			
 			BooleanQuery tempquery = new BooleanQuery();
 			
@@ -60,14 +60,14 @@ public class TimeCondition implements Condition<Document, BooleanQuery> {
 				query = new BooleanQuery();
 				
 				BooleanQuery temp = new BooleanQuery();
-				TermRangeQuery tQuery = new TermRangeQuery(AdDBConstants.ADDB_AD_TIME_FROM + i, new BytesRef("0000"), new BytesRef(request.getTime()), true, true);
+				TermRangeQuery tQuery = new TermRangeQuery(AdDBConstants.ADDB_AD_TIME_FROM + i, new BytesRef("0000"), new BytesRef(request.time()), true, true);
 				temp.add(tQuery, Occur.SHOULD);
 				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_TIME_FROM + i, AdDBConstants.ADDB_AD_TIME_ALL)), Occur.SHOULD);
 				
 				query.add(temp, Occur.MUST);
 				
 				temp = new BooleanQuery();
-				tQuery = new TermRangeQuery(AdDBConstants.ADDB_AD_TIME_TO + i, new BytesRef(request.getTime()), new BytesRef("2500"), true, true);
+				tQuery = new TermRangeQuery(AdDBConstants.ADDB_AD_TIME_TO + i, new BytesRef(request.time()), new BytesRef("2500"), true, true);
 				temp.add(tQuery, Occur.SHOULD);
 				temp.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_TIME_TO + i, AdDBConstants.ADDB_AD_TIME_ALL)), Occur.SHOULD);
 				
