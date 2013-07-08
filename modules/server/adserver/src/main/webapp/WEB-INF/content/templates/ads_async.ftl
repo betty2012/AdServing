@@ -26,39 +26,43 @@ include der MadApi ueber die einige nötige Methoden zur Verfügung gestellt wer
 
 (function () {
 
-<#--  
-Anhand der Request-ID kann sichergestellt werden, das ein User auf der selben Seite
-nicht zweimal das gleiche Banner sieht
--->
-if (typeof madRequestID == "undefined") {
-	madRequestID = "${adrequest_id}";
-}
+	<#--  
+	Anhand der Request-ID kann sichergestellt werden, das ein User auf der selben Seite
+	nicht zweimal das gleiche Banner sieht
+	-->
+	if (typeof madRequestID == "undefined") {
+		madRequestID = "${adrequest_id}";
+	}
 
-var mad_ad_date = new Date();
+	var mad_ad_date = new Date();
 
-var differenceInMinutes = -mad_ad_date.getTimezoneOffset();
+	var differenceInMinutes = -mad_ad_date.getTimezoneOffset();
 
-var flashVersion = madApi.flash(7, 10).available;
+	var flashVersion = madApi.flash(7, 10).available;
 
-var selectString = "?_p1=${ad_format}&_p2=${ad_type}&_p3=" + differenceInMinutes + "&_p4=" + madRequestID + "&_t=" + mad_ad_date.getTime() + "&_p5=" + flashVersion;
-if (typeof mad_ad_slot != "undefined") {
-	selectString +=  "&_p6=" + mad_ad_slot;
-}
-if (typeof mad_ad_keywords != "undefined") {
-	selectString +=  "&_p7=" + encodeURIComponent(mad_ad_keywords);
-}
+	var selectString = "?_p1=${ad_format}&_p2=${ad_type}&_p3=" + differenceInMinutes + "&_p4=" + madRequestID + "&_t=" + mad_ad_date.getTime() + "&_p5=" + flashVersion;
+	if (typeof mad_ad_slot != "undefined") {
+		selectString +=  "&_p6=" + mad_ad_slot;
+	}
+	if (typeof mad_ad_keywords != "undefined") {
+		selectString +=  "&_p7=" + encodeURIComponent(mad_ad_keywords);
+	}
 
-if (typeof mad_ad_tcolor != "undefined") {
-	selectString +=  "&tcolor=" + encodeURIComponent(mad_ad_tcolor);
-}
-if (typeof mad_ad_bcolor != "undefined") {
-	selectString +=  "&bcolor=" + encodeURIComponent(mad_ad_bcolor);
-}
+	if (typeof mad_ad_tcolor != "undefined") {
+		selectString +=  "&tcolor=" + encodeURIComponent(mad_ad_tcolor);
+	}
+	if (typeof mad_ad_bcolor != "undefined") {
+		selectString +=  "&bcolor=" + encodeURIComponent(mad_ad_bcolor);
+	}
 
-selectString += "&_p8=" + encodeURIComponent(document.referrer);
-selectString += "&_p9=${ad_div_id}";
+	selectString += "&_p8=" + encodeURIComponent(document.referrer);
+	selectString += "&_p9=${ad_div_id}";
 
-madApi.insertScript("${adselect_url}" + selectString);
-//document.write("<script type='text/javascript' src='${adselect_url}" + selectString + "'></script>");
+	if (typeof mad_ad_product != "undefined") {	
+		selectString +=  "&_p10=" + encodeURIComponent(mad_ad_product);
+	}
+
+	madApi.insertScript("${adselect_url}" + selectString);
+	//document.write("<script type='text/javascript' src='${adselect_url}" + selectString + "'></script>");
 
 })();

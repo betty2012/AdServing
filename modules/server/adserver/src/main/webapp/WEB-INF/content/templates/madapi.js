@@ -49,6 +49,11 @@ if (typeof madApi == "undefined") {
 		}
 	};
 
+	/**
+	 * Creates a delegate function
+	 * 
+	 * e.g. madApi.delegate(functionname, this, [param1, "param2"]);
+	 */
 	madApi.delegate = function(func, obj, args) {
 		var params = args || arguments;
 		var f = function() {
@@ -188,8 +193,8 @@ if (typeof madApi == "undefined") {
 	/**
 	 * Verknüpft ein Event mit einem Element
 	 * 
-	 * var h1 = document.getElementById('header'); madApi.addEvent(h1, 'click',
-	 * doSomething, false);
+	 * var h1 = document.getElementById('header'); 
+	 * madApi.addEvent(h1, 'click', doSomething, false);
 	 * 
 	 * @param elem
 	 *            Das Element für das Event

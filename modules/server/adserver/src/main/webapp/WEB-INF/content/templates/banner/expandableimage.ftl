@@ -52,10 +52,10 @@ Expandierendes Image-Banner
 	
 		aNode.appendChild(iNode);
 		
-		<#-- Das kleiner Bild in das Dom einfügen -->
+		<#-- Das kleiner Bild in das Dom einfÃ¼gen -->
 		document.getElementById(c_ad_node).appendChild(aNode);
 		
-		<#-- Das große Bild erzeugen und in das Dom hängen -->
+		<#-- Das groï¿½e Bild erzeugen und in das Dom hï¿½ngen -->
 		iNode2.setAttribute("src", "${staticUrl}${banner.expandedImageUrl}");
 		iNode2.setAttribute("id", "c_ad_i2_" + c_ad_date);
 		iNode2.setAttribute("style", "");
@@ -72,7 +72,7 @@ Expandierendes Image-Banner
 		// <div style="" onclick="doOnOut();" title="">X</div>
 		var close = document.createElement("div");
 		close.setAttribute("style", "background-color: ${bcolor}; cursor: pointer; width: (${banner.expandedImageWidth} - 5)px; text-align: right; padding-right: 5px; color: ${tcolor}; ");
-		close.setAttribute("title", "Schließen");
+		close.setAttribute("title", "Schlieï¿½en");
 		//close.setAttribute("onclick", "doOnOut(\"" + "c_ad_ex_" + c_ad_date + "\")");
 		close.onclick = madApi.delegate(mad_expandableImage_close, this, ["c_ad_ex_" + c_ad_date]);
 		close.appendChild(document.createTextNode("X"));

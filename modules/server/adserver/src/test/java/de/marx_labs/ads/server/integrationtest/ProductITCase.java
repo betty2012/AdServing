@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -30,7 +31,13 @@ import de.marx_labs.ads.db.definition.AdDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import de.marx_labs.ads.db.services.AdFormats;
 
-public class AdServerITCase {
+/**
+ * Test for defined products
+ *  
+ * @author thmarx
+ *
+ */
+public class ProductITCase {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -41,15 +48,40 @@ public class AdServerITCase {
 				
 		for (int i = 0; i < 100; i++) {
 			ImageAdDefinition def = new ImageAdDefinition();
-			def.setFormat(AdFormats.forCompoundName("468x60"));
-			def.setImageUrl("http://www.bannergestaltung.com/img/formate/468x60.gif");
+			if (i % 2 == 0) {
+				def.setFormat(AdFormats.forCompoundName("468x60"));
+				def.setImageUrl("http://www.bannergestaltung.com/img/formate/468x60.gif");
+			} else {
+				def.setFormat(AdFormats.forCompoundName("120x600"));
+				def.setImageUrl("http://www.bannergestaltung.com/img/formate/120x600.gif");
+			}
+			
 			def.setTargetUrl("http://www.google.de");
 			def.setLinkTarget("_blank");
 			
 			def.setId("1" + i);
 
 			ads.put(def.getId(), def);
-		}		
+		}
+		
+		// define to ads for the same product
+		ImageAdDefinition def = new ImageAdDefinition();
+		def.setFormat(AdFormats.forCompoundName("120x600"));
+		def.setImageUrl("http://www.bannergestaltung.com/img/formate/120x600.gif");
+		def.setTargetUrl("http://www.product_1.de");
+		def.setLinkTarget("_blank");
+		def.setId("10001");
+		def.setProduct("prod_1");
+		ads.put(def.getId(), def);
+		
+		def = new ImageAdDefinition();
+		def.setFormat(AdFormats.forCompoundName("468x60"));
+		def.setImageUrl("http://www.bannergestaltung.com/img/formate/468x60.gif");
+		def.setTargetUrl("http://www.product_1.de");
+		def.setLinkTarget("_blank");
+		def.setId("10002");
+		def.setProduct("prod_1");
+		ads.put(def.getId(), def);
 		
 		Thread.sleep(60000);
 	}
@@ -63,17 +95,17 @@ public class AdServerITCase {
 		System.out.println("test");
 		WebDriver driver = new HtmlUnitDriver(true);
 		
-		driver.get("http://localhost:9090/index.html");
+		driver.get("http://localhost:9090/product.html");
 		
 		System.out.println("title: " + driver.getTitle());
 		
-		WebElement element = driver.findElement(By.id("ad1"));
+		WebElement element = driver.findElement(By.cssSelector("#ad1 img"));
+		Assert.assertNotNull(element);
+		Assert.assertEquals("http://www.bannergestaltung.com/img/formate/468x60.gif", element.getAttribute("src"));
 		
-		List<WebElement> childs =  element.findElements(By.tagName("div"));
-		System.out.println(childs.size());
-		for (WebElement e : childs) {
-			System.out.println(e.getAttribute("id"));
-		}
+		element = driver.findElement(By.cssSelector("#ad2 img"));
+		Assert.assertNotNull(element);
+		Assert.assertEquals("http://www.bannergestaltung.com/img/formate/120x600.gif", element.getAttribute("src"));
 	}
 
 }
