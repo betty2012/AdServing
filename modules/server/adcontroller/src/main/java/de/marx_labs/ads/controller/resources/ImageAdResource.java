@@ -21,11 +21,9 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.glassfish.jersey.server.JSONP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +32,7 @@ import com.hazelcast.core.Transaction;
 import de.marx_labs.ads.base.api.service.adserver.ImageAdService;
 import de.marx_labs.ads.base.api.service.adserver.model.ImageAd;
 import de.marx_labs.ads.base.api.service.adserver.model.Period;
+import de.marx_labs.ads.base.api.service.adserver.model.Result;
 import de.marx_labs.ads.controller.utils.RuntimeContext;
 import de.marx_labs.ads.db.definition.Campaign;
 import de.marx_labs.ads.db.definition.condition.ClickExpirationConditionDefinition;
@@ -59,8 +58,8 @@ public class ImageAdResource implements ImageAdService {
 	@Path("/add")
 	@Produces({ MediaType.APPLICATION_JSON})
 	@Consumes({ MediaType.APPLICATION_JSON})
-	public Map<String, Object> add (ImageAd advertisement) {
-		Map<String, Object> model = new HashMap<String, Object>();
+	public Result add (ImageAd advertisement) {
+		Result result = new Result();
 		
 		Transaction tx = RuntimeContext.getHazelcastInstance().getTransaction();
 		try {
@@ -167,12 +166,12 @@ public class ImageAdResource implements ImageAdService {
 			RuntimeContext.getDistributedAds().put(adDef.getId(), adDef);
 			
 			
-			model.put("error", false);
+			
 		} catch (Exception e) {
 			LOGGER.error("", e);
 			
-			model.put("error", true);
-			model.put("message", e.getMessage());
+			result.setError(true);
+			result.setMessage(e.getMessage());
 			
 			RuntimeContext.getDb().rollback();
 			tx.rollback();
@@ -181,7 +180,7 @@ public class ImageAdResource implements ImageAdService {
 			RuntimeContext.getDb().commit();
 		}
 		
-		return model;
+		return result;
 	}
 
 	@Override
@@ -189,28 +188,28 @@ public class ImageAdResource implements ImageAdService {
 	@Path("/delete")
 	@Produces({ "application/x-javascript", "application/json" })
 	@Consumes({ "application/x-javascript", "application/json" })
-	public Map<String, Object> delete(String id) {
-		Map<String, Object> model = new HashMap<String, Object>();
+	public Result delete(String id) {
+		Result result = new Result();
 		Transaction tx = RuntimeContext.getHazelcastInstance().getTransaction();
 		try {
 			tx.begin();
 			RuntimeContext.getDistributedAds().remove(id);
 			RuntimeContext.getPersistentAds().remove(id);
 
-			model.put("error", false);
+			
 		} catch (Exception e) {
 			LOGGER.error("error delete Banner: " + id, e);
 			tx.rollback();
 			RuntimeContext.getDb().rollback();
 			
-			model.put("error", true);
-			model.put("message", e.getMessage());
+			result.setError(true);
+			result.setMessage(e.getMessage());
 		} finally {
 			RuntimeContext.getDb().commit();
 			tx.commit();
 		}
 		
-		return model;
+		return result;
 	}
 	
 	@GET

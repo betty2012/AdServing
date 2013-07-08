@@ -24,6 +24,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import de.marx_labs.ads.base.api.service.adserver.model.ImageAd;
+import de.marx_labs.ads.base.api.service.adserver.model.Result;
 
 /**
  * 
@@ -37,13 +38,13 @@ public interface ImageAdService {
 	@Path("/add")
 	@Produces({ MediaType.APPLICATION_JSON})
 	@Consumes({ MediaType.APPLICATION_JSON})
-	public Map<String, Object> add(ImageAd ad);
+	public Result add(ImageAd ad);
 
 	@DELETE
 	@Path("/delete")
 	@Produces({ "application/x-javascript", MediaType.APPLICATION_JSON})
 	@Consumes({ "application/x-javascript", MediaType.APPLICATION_JSON})
-	public Map<String, Object> delete(String id);
+	public Result delete(String id);
 	
 	@GET
 	@Path("/test")
