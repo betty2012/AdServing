@@ -1,0 +1,6 @@
+
+Changes on the start.ini file of jetty
+---------------------------------------
+--exec
+-Djava.net.preferIPv4Stack=true
+-Dhazelcast.config=config/cluster/hazelcast.xml
