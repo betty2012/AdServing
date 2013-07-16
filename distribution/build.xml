@@ -20,8 +20,8 @@
 <project >
 
 	<property name="version" value="0.1.0" />
-	<property name="jetty.version" value="9.0.3.v20130506" />
-	<property name="maxmind.version" value="GeoLiteCity_20130507" />
+	<property name="jetty.version" value="9.0.4.v20130625" />
+	<property name="maxmind.version" value="GeoLiteCity_20130702" />
 
 	<taskdef name="geoipimport" classname="de.marx_labs.ads.services.geo.ant.GeoIpImportTask">
 		<classpath location="../modules/services/geo/target/services.geo-${version}-jar-with-dependencies.jar" />
