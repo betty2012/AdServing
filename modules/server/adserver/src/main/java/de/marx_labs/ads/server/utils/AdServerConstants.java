@@ -56,6 +56,8 @@ public abstract class AdServerConstants {
 			public static final String TRACKING_MONGO_PASSWORD = "tracking.mongo.password";
 			
 			public static final String ADDB_VALID_KEYS = "addb.validkeys";
+			
+			public static final String HEADER_X_FORWARDED_FOR = "header.x-forwarded-for";
 		}
 	}
 	

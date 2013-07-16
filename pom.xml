@@ -31,7 +31,7 @@
 		<junit.version>4.11</junit.version>
 		<mockito.version>1.9.5</mockito.version>
 		<jackson.version>2.2.2</jackson.version>
-		<spring.version>3.2.2.RELEASE</spring.version>
+		<spring.version>3.2.3.RELEASE</spring.version>
 		<freemarker.version>2.3.19</freemarker.version>
 		<kryo.version>2.21</kryo.version>
 		<jersey.version>2.0</jersey.version>

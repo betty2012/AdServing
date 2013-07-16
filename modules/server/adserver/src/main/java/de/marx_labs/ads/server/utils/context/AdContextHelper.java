@@ -15,7 +15,6 @@ package de.marx_labs.ads.server.utils.context;
 
 
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -78,14 +77,22 @@ public class AdContextHelper {
 		 * if we are behind a proxy or loadbalancer
 		 * the client ip is mostly set in one of the following header fields
 		 */
+		if (RuntimeContext.getProperties().containsKey(AdServerConstants.CONFIG.PROPERTIES.HEADER_X_FORWARDED_FOR)) {
+			String header_ip = request.getHeader(RuntimeContext.getProperties().getProperty(AdServerConstants.CONFIG.PROPERTIES.HEADER_X_FORWARDED_FOR));
+			// check if the header field is realy set
+			if (!Strings.isBlank(header_ip)) {
+				clientIP = header_ip;
+			}
+		}
+		/*
 		if (request.getHeader("X-Real-IP") != null) {
 			clientIP = request.getHeader("X-Real-IP");
 		} else if (request.getHeader("HTTP_X_FORWARDED_FOR") != null) {
 			clientIP = request.getHeader("HTTP_X_FORWARDED_FOR");
 		} else if (request.getHeader("X-Forwarded-For") != null) {
 			clientIP = request.getHeader("X-Forwarded-For");
-			
 		}
+		*/
 		context.clientIP(clientIP);
 		
 		UserAgent userAgent = userAgentParser.parse(request.getHeader("User-Agent"));
