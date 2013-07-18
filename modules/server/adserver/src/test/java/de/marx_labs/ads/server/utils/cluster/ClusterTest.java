@@ -53,7 +53,7 @@ public class ClusterTest {
 
 		Thread.sleep(20000);
 		
-		AdDBManager manager = AdDBManager.builder().mode(Mode.LOCAL).build();
+		AdDBManager manager = AdDBManager.builder().mode(Mode.MEMORY).build();
 		manager.getContext().getConfiguration().put(LocalAdStore.CONFIG_DATADIR, "/www/apps/adserver/temp3/");
 		manager.getAdDB().open();
 		manager.getAdDB().clear();
