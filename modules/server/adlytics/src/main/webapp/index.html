@@ -13,4 +13,20 @@
     specific language governing permissions and limitations under the License.
 
 -->
--->
+<html>
+	<head>
+		<title>AdLytics Testpage</title>
+		
+		<script src="/js/adlytics.js"></script>
+		
+		<script>
+			function callback () {
+				alert("done");
+			}
+			AdLytics.ajax.post("/track", callback, {name: "test"});
+		</script>
+	</head>
+
+	<body>
+	</body>
+</html>

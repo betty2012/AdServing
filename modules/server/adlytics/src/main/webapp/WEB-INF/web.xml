@@ -12,14 +12,14 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
 
-	<display-name>AdController</display-name>
+	<display-name>AdLytics</display-name>
 	<context-param>
 		<param-name>enviroment</param-name>
 		<param-value>development</param-value>
 	</context-param>
 
 	<listener>
-		<listener-class>de.marx_labs.ads.controller.utils.listener.StartupPlugIn</listener-class>
+		<listener-class>de.marx_labs.ads.adlytics.utils.listener.StartupPlugIn</listener-class>
 	</listener>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
@@ -35,26 +35,27 @@
 	</error-page>
 
 	<servlet>
-		<display-name>AdStatus</display-name>
-		<servlet-name>AdStatus</servlet-name>
-		<servlet-class>de.marx_labs.ads.controller.servlets.AdStatus</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AdStatus</servlet-name>
-		<url-pattern>/admin/status</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>AdControllerApplication</servlet-name>
-		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+		<servlet-name>default</servlet-name>
+		<servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>
 		<init-param>
-			<param-name>javax.ws.rs.Application</param-name>
-			<param-value>de.marx_labs.ads.controller.AdControllerApplication</param-value>
+			<param-name>gzip</param-name>
+			<param-value>true</param-value>
 		</init-param>
+	</servlet>
+
+	<!-- <servlet> <servlet-name>AdLyticsApplication</servlet-name> <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class> 
+		<init-param> <param-name>javax.ws.rs.Application</param-name> <param-value>de.marx_labs.ads.adlytics.AdLyticsApplication</param-value> 
+		</init-param> <load-on-startup>1</load-on-startup> <async-supported>true</async-supported> 
+		</servlet> <servlet-mapping> <servlet-name>AdLyticsApplication</servlet-name> 
+		<url-pattern>/rest/*</url-pattern> </servlet-mapping> -->
+	<servlet>
+		<servlet-name>AdLytics</servlet-name>
+		<servlet-class>de.marx_labs.ads.adlytics.servlets.TrackServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>AdControllerApplication</servlet-name>
-		<url-pattern>/rest/*</url-pattern>
+		<servlet-name>AdLytics</servlet-name>
+		<url-pattern>/track</url-pattern>
 	</servlet-mapping>
 </web-app>
