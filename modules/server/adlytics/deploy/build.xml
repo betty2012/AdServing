@@ -20,9 +20,10 @@
 
 	<target name="compile">
 
-		<jscomp compilationLevel="simple" debug="false" output="../src/main/webapp/WEB-INF/content/templates/madapi_production.js">
-			<sources dir="../src/main/webapp/WEB-INF/content/templates">
-				<file name="madapi.js" />
+		<jscomp compilationLevel="simple" debug="false" output="../src/main/webapp/js/adlytics.js">
+			<sources dir="../src/main/webapp/js/source">
+				<file name="json2.js" />
+				<file name="adlytics_source.js" />
 			</sources>
 		</jscomp>
 
