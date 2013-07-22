@@ -340,6 +340,8 @@
 						<exckude>modules/utilities/thirdparty/**</exckude>
 						<exckude>**/MiniConnectionPoolManager.java</exckude>
 						<exckude>**/madapi_production.js</exckude>
+						<exckude>**/json2.js</exckude>
+						<exckude>**/adlytics.js</exckude>
 					</excludes>
 				</configuration>
 				<executions>
