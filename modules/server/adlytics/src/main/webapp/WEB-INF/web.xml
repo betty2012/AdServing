@@ -58,4 +58,15 @@
 		<servlet-name>AdLytics</servlet-name>
 		<url-pattern>/track</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AdImage</servlet-name>
+		<servlet-class>de.marx_labs.ads.adlytics.servlets.ImageServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdImage</servlet-name>
+		<url-pattern>/adimage</url-pattern>
+	</servlet-mapping>
 </web-app>

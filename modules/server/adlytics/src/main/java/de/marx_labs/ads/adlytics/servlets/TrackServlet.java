@@ -23,9 +23,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.minidev.json.JSONObject;
-import net.minidev.json.JSONValue;
-
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
@@ -38,40 +35,38 @@ import de.marx_labs.ads.adlytics.utils.RuntimeContext;
 public class TrackServlet extends HttpServlet {
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+			IOException {
 		final AsyncContext asyncContext = request.startAsync(request, response);
 
-		StringBuffer jb = new StringBuffer();
-		String line = null;
-		try {
-			BufferedReader reader = request.getReader();
-			while ((line = reader.readLine()) != null) {
-				jb.append(line);
-			}
-		} catch (Exception e) { /* report an error */
-		}
-
-		asyncContext.start(new JsonLogger(asyncContext, jb.toString()));
+		asyncContext.start(new JsonLogger(asyncContext));
 	}
 
 	private class JsonLogger implements Runnable {
 		AsyncContext asyncContext;
-		String json;
-
-		public JsonLogger(AsyncContext asyncContext, String json) {
+		
+		public JsonLogger(AsyncContext asyncContext) {
 			this.asyncContext = asyncContext;
-			this.json = json;
 		}
 
 		@Override
 		public void run() {
 
 			try {
+
+				StringBuffer jb = new StringBuffer();
+				String line = null;
+
+				BufferedReader reader = asyncContext.getRequest().getReader();
+				while ((line = reader.readLine()) != null) {
+					jb.append(line);
+				}
+
 				// should be used for validation
 				// JSONObject obj = (JSONObject) JSONValue.parse(json);
-				
-				DBObject dbObject = (DBObject) JSON.parse(json);
-				
+
+				DBObject dbObject = (DBObject) JSON.parse(jb.toString());
+
 				RuntimeContext.db().getCollection("tracking").insert(dbObject);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
