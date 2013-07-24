@@ -19,6 +19,7 @@ if (typeof AdLytics !== "object") {
 		
 		/* local AdLytics */
 		var AdLytics;
+		var now = new Date();
 		var configRequestMethod = 'POST';
 		var windowAlias = window;
 		
@@ -190,16 +191,18 @@ if (typeof AdLytics !== "object") {
 				registerPageLoadTracker : function () {
 					onload(function () {
 						var request = "event=load";
+						request += "&loadtime=" + (new Date().getMilliseconds() - now.getMilliseconds());
 						sendRequest(request, configTrackerUrl);
 					});
 					onunload(function () {
 						var request = "event=unload";
+						request += "&viewtime=" + (new Date().getMilliseconds() - now.getMilliseconds());
 						sendRequest(request, configTrackerUrl);
 					});
-					addEvent(document, "beforeunload", function () {
+					addEvent(window, "beforeunload", function () {
 						var request = "event=beforeunload";
 						sendRequest(request, configTrackerUrl);
-					}, false);
+					})
 				}
 			}
 		};
