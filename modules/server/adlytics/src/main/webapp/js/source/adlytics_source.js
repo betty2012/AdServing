@@ -29,10 +29,9 @@ if (typeof AdLytics !== "object") {
 		
 		if (getCookie("uuid") !== 0) {
 			visitId = getCookie("uuid");
-			console.log("cookie exists: " + getCookie("uuid"));
 		}
 		setCookie("uuid", visitId);
-		console.log(visitId);
+		
 
 		function getCookie(cookieName) {
             var cookiePattern = new RegExp('(^|;)[ ]*' + cookieName + '=([^;]*)'),
@@ -168,7 +167,8 @@ if (typeof AdLytics !== "object") {
 				return;
 			}
 			request += "&_uuid=" + visitId;
-			request += "&_date=" + new Date().toGMTString();
+			request += "&_date=" + encoder(new Date().toGMTString());
+			
 			if (configRequestMethod === 'POST') {
 				sendPostRequest(request, url);
 			} else {

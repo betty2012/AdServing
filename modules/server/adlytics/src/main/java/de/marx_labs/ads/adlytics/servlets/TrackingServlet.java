@@ -13,11 +13,14 @@
  */
 package de.marx_labs.ads.adlytics.servlets;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletRequest;
@@ -33,6 +36,7 @@ import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
 import de.marx_labs.ads.adlytics.utils.RuntimeContext;
+import de.marx_labs.ads.common.util.EncodeHelper;
 
 public abstract class TrackingServlet extends HttpServlet {
 	
@@ -68,6 +72,8 @@ public abstract class TrackingServlet extends HttpServlet {
 					}
 				}
 
+				
+				
 				DBObject dbObject = (DBObject) JSON.parse(json.toJSONString());
 
 				if (dbObject.keySet().isEmpty()) {
@@ -75,6 +81,10 @@ public abstract class TrackingServlet extends HttpServlet {
 				}
 				
 				RuntimeContext.db().getCollection("tracking").insert(dbObject);
+				
+				String _date = EncodeHelper.decodeURIComponent(request.getParameter("_date"));
+				Date d = parseGMT(_date);
+				System.out.println(request.getParameter("_date") + " / " + _date + " = " + d);
 			} catch (Exception e) {
 				LOGGER.error("", e);
 				throw new RuntimeException(e);

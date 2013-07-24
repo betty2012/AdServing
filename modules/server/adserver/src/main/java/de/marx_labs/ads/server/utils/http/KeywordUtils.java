@@ -33,8 +33,8 @@ import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.marx_labs.ads.common.util.EncodeHelper;
 import de.marx_labs.ads.common.util.Strings;
-import de.marx_labs.ads.server.utils.helper.EncodeHelper;
 
 
 public class KeywordUtils {
