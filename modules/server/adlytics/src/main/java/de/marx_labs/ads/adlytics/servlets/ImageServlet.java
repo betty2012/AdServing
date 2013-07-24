@@ -14,35 +14,30 @@
 package de.marx_labs.ads.adlytics.servlets;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Enumeration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.imageio.ImageIO;
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.mongodb.DBObject;
-import com.mongodb.util.JSON;
-
-import de.marx_labs.ads.adlytics.utils.RuntimeContext;
 
 /**
  * @author Keesun Baik To test this class, turn off all filters in web.xml.
  */
 @WebServlet(value = "/track", asyncSupported = true)
-public class ImageServlet extends HttpServlet {
+public class ImageServlet extends TrackingServlet {
 
 	private byte[] image = null;
 	
-	private ExecutorService executor = Executors.newSingleThreadExecutor();
+//	private ExecutorService executor = Executors.newSingleThreadExecutor();
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -57,53 +52,16 @@ public class ImageServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		final AsyncContext asyncContext = request.startAsync(request, response);
-
-//		StringBuffer jb = new StringBuffer();
-//		String line = null;
-//		try {
-//			BufferedReader reader = request.getReader();
-//			while ((line = reader.readLine()) != null) {
-//				jb.append(line);
-//			}
-//		} catch (Exception e) { /* report an error */
-//		}
-
-//		asyncContext.start(new JsonLogger(asyncContext, jb.toString()));
-		
-//		executor.execute(new JsonLogger(jb.toString()));
 		
 		response.setHeader("Content-Type", "image/gif");
 		response.setHeader("Content-Length", String.valueOf(image.length));
 		response.setHeader("Content-Disposition", "inline; filename=\"1x1.gif\"");
 		
 		response.getOutputStream().write(image);
-	}
-
-	private class JsonLogger implements Runnable {
-		String json;
-
-		public JsonLogger(String json) {
 		
-			this.json = json;
-		}
+		final AsyncContext asyncContext = request.startAsync(request, response);
 
-		@Override
-		public void run() {
-
-			try {
-				// should be used for validation
-				// JSONObject obj = (JSONObject) JSONValue.parse(json);
-
-				 DBObject dbObject = (DBObject) JSON.parse(json);
-
-				 RuntimeContext.db().getCollection("tracking").insert(dbObject);
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			} finally {
-				
-			}
-		}
+		asyncContext.start(new JsonLogger(asyncContext));
 	}
 
 	private BufferedImage getImage() throws IOException {

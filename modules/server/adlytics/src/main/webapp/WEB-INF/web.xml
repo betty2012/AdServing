@@ -67,6 +67,6 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdImage</servlet-name>
-		<url-pattern>/adimage</url-pattern>
+		<url-pattern>/image</url-pattern>
 	</servlet-mapping>
 </web-app>

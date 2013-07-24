@@ -26,20 +26,25 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.StoredField;
 import org.apache.lucene.document.StringField;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.TrackingIndexWriter;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.ControlledRealTimeReopenThread;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.NRTManager;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.SearcherFactory;
+import org.apache.lucene.search.SearcherManager;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.NRTCachingDirectory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.Version;
@@ -105,54 +110,59 @@ import de.marx_labs.ads.db.model.type.impl.TextlinkAdType;
 import de.marx_labs.ads.db.services.AdTypes;
 import de.marx_labs.ads.db.utils.LuceneDocumentHelper;
 import de.marx_labs.ads.db.utils.LuceneQueryHelper;
+
 //import org.msgpack.MessagePack;
 
 public class LocalLuceneAdStore implements AdStore {
 
 	private static final Logger logger = LoggerFactory.getLogger(LocalLuceneAdStore.class);
-	
+
 	private static final String ADV_ID = "adv_id";
 	private static final String ADV_TYPE = "adv_type";
 	private static final String ADV_CONTENT = "adv_content";
-	
+
 	private AdDB addb = null;
 
 	// Lucene
 	private Directory index = null;
-	private IndexWriter writer = null;
-	
-	private NRTManager nrt_manager = null;
-	
+	private IndexWriter plain_writer = null;
+//	private TrackingIndexWriter trackingWriter = null;
+
+	private ControlledRealTimeReopenThread<IndexSearcher> nrtThread = null;
+	private SearcherManager nrt_manager;
+	private NRTCachingDirectory nrt_index;
+
 	private boolean memoryMode = false;
-	
-	private Pool<Kryo> kryoInstances; 
-	
+
+	private Pool<Kryo> kryoInstances;
+
 	public LocalLuceneAdStore(AdDB db) {
 		this.addb = db;
-		
+
 		List<Kryo> instances = new ArrayList<Kryo>();
 		for (int i = 0; i < 100; i++) {
 			instances.add(kryo());
 		}
 		kryoInstances = new Pool<Kryo>(instances);
 	}
+
 	public LocalLuceneAdStore(AdDB db, boolean memoryMode) {
 		this(db);
 		this.memoryMode = memoryMode;
 	}
-	
-	private Kryo kryo () {
+
+	private Kryo kryo() {
 		Kryo kryo = new Kryo();
-		
+
 		int id = kryo.getNextRegistrationId();
 		kryo.register(ImageAdDefinition.class, 1 + id);
 		kryo.register(FlashAdDefinition.class, 2 + id);
 		kryo.register(TextlinkAdDefinition.class, 3 + id);
-		
+
 		kryo.register(ImageAdType.class, 20 + id);
 		kryo.register(FlashAdType.class, 21 + id);
 		kryo.register(TextlinkAdType.class, 22 + id);
-		
+
 		kryo.register(Button1AdFormat.class, 40 + id);
 		kryo.register(Button2AdFormat.class, 41 + id);
 		kryo.register(Button3AdFormat.class, 42 + id);
@@ -174,10 +184,10 @@ public class LocalLuceneAdStore implements AdStore {
 		kryo.register(WideButton2AdFormat.class, 58 + id);
 		kryo.register(WideButton3AdFormat.class, 59 + id);
 		kryo.register(WideSkyscraperAdFormat.class, 60 + id);
-	
+
 		kryo.register(Country.class, 100 + id);
 		kryo.register(State.class, 101 + id);
-		
+
 		kryo.register(AdSlotConditionDefinition.class, 150 + id);
 		kryo.register(ClickExpirationConditionDefinition.class, 151 + id);
 		kryo.register(CountryConditionDefinition.class, 152 + id);
@@ -192,10 +202,10 @@ public class LocalLuceneAdStore implements AdStore {
 		kryo.register(TimeConditionDefinition.class, 161 + id);
 		kryo.register(ViewExpirationConditionDefinition.class, 162 + id);
 		kryo.register(ValidFromToConditionDefinition.class, 163 + id);
-		
+
 		return kryo;
 	}
-	
+
 	@Override
 	public void open() throws IOException {
 		
@@ -216,33 +226,50 @@ public class LocalLuceneAdStore implements AdStore {
 			}
 			// create lucene index directory
 			index = FSDirectory.open(temp);
+			nrt_index = new NRTCachingDirectory(index, 5.0, 60.0);
 		}
 		
 		
 		
-		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_43,
+		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_44,
 				new KeywordAnalyzer());
 		// CREATE_OR_APPEND
 		config.setOpenMode(OpenMode.CREATE_OR_APPEND);
-		writer = new IndexWriter(index, config);
+		plain_writer = new IndexWriter(nrt_index != null ? nrt_index : index, config);
 
+	    final SearcherFactory sf = new SearcherFactory() {
+	        @Override
+	        public IndexSearcher newSearcher(IndexReader r) throws IOException {
+	        	System.out.println("new searcher");
+	          IndexSearcher s = new IndexSearcher(r);
+	          
+	          return s;
+	        }
+	      };
+		nrt_manager = new SearcherManager(plain_writer, true, sf);
 		
-		nrt_manager = new NRTManager(new NRTManager.TrackingIndexWriter(writer), null);
+//		trackingWriter = new TrackingIndexWriter(plain_writer);
+//		nrtThread = new ControlledRealTimeReopenThread<IndexSearcher>(trackingWriter, nrt_manager, (double)60, (double)20);
+//		nrtThread.setName("NRTManager Reopen Thread");
+//		nrtThread.setPriority(Math.min(Thread.currentThread().getPriority()+2, Thread.MAX_PRIORITY));
+//		nrtThread.setDaemon(true);
+//		nrtThread.start();
 	}
 
 	@Override
 	public void close() throws IOException {
-		this.writer.commit();
-		this.writer.close();
+		this.plain_writer.commit();
+		this.plain_writer.close();
 		nrt_manager.close();
 		this.index.close();
+//		this.nrtThread.close();
 	}
 
 	@Override
 	public void reopen() throws IOException {
-		this.writer.forceMerge(1); //optimize();
-		this.writer.commit();
-		
+		this.plain_writer.forceMerge(1); // optimize();
+		this.plain_writer.commit();
+
 		nrt_manager.maybeRefresh();
 	}
 
@@ -251,22 +278,20 @@ public class LocalLuceneAdStore implements AdStore {
 		Kryo kryo = null;
 		try {
 			kryo = kryoInstances.borrow();
-			
+
 			// add index
 			Document doc = LuceneDocumentHelper.getInstance().getBannerDocument(definition, this.addb);
-			
-			
+
 			ByteArrayOutputStream bout = new ByteArrayOutputStream();
 			Output output = new Output(bout);
 			kryo.writeObject(output, definition);
-			
-			
+
 			doc.add(new StoredField(ADV_CONTENT, new BytesRef(output.getBuffer())));
-//			doc.add(new StoredField(ADV_CONTENT, BaseEncoding.base64().encode(output.getBuffer())));
+			// doc.add(new StoredField(ADV_CONTENT, BaseEncoding.base64().encode(output.getBuffer())));
 			doc.add(new StringField(ADV_TYPE, definition.getType().getType(), Store.YES));
 			doc.add(new StringField(ADV_ID, definition.getId(), Store.YES));
-			
-			this.writer.addDocument(doc, new KeywordAnalyzer());
+
+			this.plain_writer.addDocument(doc, new KeywordAnalyzer());
 		} catch (InterruptedException e) {
 			logger.error("", e);
 		} finally {
@@ -281,7 +306,7 @@ public class LocalLuceneAdStore implements AdStore {
 	@Override
 	public void delete(String id) throws IOException {
 		// add to index
-		this.writer.deleteDocuments(new Term(AdDBConstants.ADDB_AD_ID, id));
+		this.plain_writer.deleteDocuments(new Term(AdDBConstants.ADDB_AD_ID, id));
 	}
 
 	@Override
@@ -290,25 +315,25 @@ public class LocalLuceneAdStore implements AdStore {
 		Kryo kryo = null;
 		try {
 			kryo = kryoInstances.borrow();
-			searcher =  nrt_manager.acquire();
-			
+			searcher = nrt_manager.acquire();
+
 			BooleanQuery query = new BooleanQuery();
 			query.add(new BooleanClause(new TermQuery(new Term(ADV_ID, id)), Occur.MUST));
 			TopDocs topdocs = searcher.search(query, 1);
-			
+
 			if (topdocs.totalHits == 1) {
 				Document doc = searcher.doc(topdocs.scoreDocs[0].doc);
 				StoredField field = (StoredField) doc.getField(ADV_CONTENT);
-				
+
 				String type = doc.get(ADV_TYPE);
 				AdType ad_type = AdTypes.forType(type);
 				if (ad_type != null) {
 					Input input = new Input(field.binaryValue().bytes);
-//					Input input = new Input(BaseEncoding.base64().decode(doc.get(ADV_CONTENT)));
+					// Input input = new Input(BaseEncoding.base64().decode(doc.get(ADV_CONTENT)));
 					return kryo.readObject(input, ad_type.getAdDefinition().getClass());
 				}
 			}
-			
+
 		} catch (IOException e) {
 			logger.error("", e);
 		} catch (InterruptedException e) {
@@ -343,8 +368,7 @@ public class LocalLuceneAdStore implements AdStore {
 			// Query für den/die BannerTypen
 			BooleanQuery typeQuery = new BooleanQuery();
 			for (AdType type : request.types()) {
-				TermQuery tq = new TermQuery(new Term(
-						AdDBConstants.ADDB_AD_TYPE, type.getType()));
+				TermQuery tq = new TermQuery(new Term(AdDBConstants.ADDB_AD_TYPE, type.getType()));
 				typeQuery.add(tq, Occur.SHOULD);
 			}
 			mainQuery.add(typeQuery, Occur.MUST);
@@ -352,8 +376,7 @@ public class LocalLuceneAdStore implements AdStore {
 			// Query für den/die BannerFormate
 			BooleanQuery formatQuery = new BooleanQuery();
 			for (AdFormat format : request.formats()) {
-				TermQuery tq = new TermQuery(new Term(
-						AdDBConstants.ADDB_AD_FORMAT, format.getCompoundName()));
+				TermQuery tq = new TermQuery(new Term(AdDBConstants.ADDB_AD_FORMAT, format.getCompoundName()));
 				formatQuery.add(tq, Occur.SHOULD);
 			}
 			mainQuery.add(formatQuery, Occur.MUST);
@@ -363,23 +386,27 @@ public class LocalLuceneAdStore implements AdStore {
 			if (cq != null) {
 				mainQuery.add(cq, Occur.MUST);
 			}
-			
+
 			/*
 			 * Es sollen nur Produkte geliefert werden
 			 */
 			if (request.products()) {
 				// search online for products
-				mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_TRUE)), Occur.MUST);
-				
+				mainQuery.add(
+						new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_TRUE)),
+						Occur.MUST);
+
 				// if possible add the product name, so online ads for that product will be found
 				if (!Strings.isNullOrEmpty(request.product())) {
-					mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT_NAME, request.product())), Occur.MUST);
+					mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT_NAME, request.product())),
+							Occur.MUST);
 				}
 			} else {
-				mainQuery.add(new TermQuery(new Term(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_FALSE)), Occur.MUST);
-				
+				mainQuery.add(new TermQuery(
+						new Term(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_FALSE)), Occur.MUST);
+
 			}
-	 
+
 			logger.debug(mainQuery.toString());
 			System.out.println(mainQuery.toString());
 
@@ -402,7 +429,7 @@ public class LocalLuceneAdStore implements AdStore {
 	public int size() throws IOException {
 		IndexSearcher searcher = null;
 		try {
-			searcher =  nrt_manager.acquire();
+			searcher = nrt_manager.acquire();
 			return searcher.getIndexReader().numDocs();
 		} finally {
 			try {
@@ -417,12 +444,12 @@ public class LocalLuceneAdStore implements AdStore {
 
 	@Override
 	public void clear() throws IOException {
-		
-		this.writer.deleteAll();
+
+		this.plain_writer.deleteAll();
 		try {
 			this.reopen();
 		} catch (IOException ioe) {
-			this.writer.rollback();
+			this.plain_writer.rollback();
 			throw ioe;
 		}
 	}

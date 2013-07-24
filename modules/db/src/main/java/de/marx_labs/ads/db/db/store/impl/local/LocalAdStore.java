@@ -27,14 +27,18 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.index.TrackingIndexWriter;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.ControlledRealTimeReopenThread;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.NRTManager;
+//import org.apache.lucene.search.NRTManager;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.SearcherManager;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.NRTCachingDirectory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.mapdb.DB;
@@ -69,8 +73,12 @@ public class LocalAdStore implements AdStore {
 	// Lucene
 	private Directory index = null;
 	private IndexWriter writer = null;
+//	private TrackingIndexWriter trackingWriter = null;
 	
-	private NRTManager nrt_manager = null;
+//	private NRTManager nrt_manager = null;
+//	private ControlledRealTimeReopenThread<IndexSearcher> nrtThread = null;
+	private SearcherManager nrt_manager;
+	private NRTCachingDirectory nrt_index;
 	
 	private boolean memoryMode = false;
 	
@@ -107,6 +115,7 @@ public class LocalAdStore implements AdStore {
 			}
 			// create lucene index directory
 			index = FSDirectory.open(temp);
+			nrt_index = new NRTCachingDirectory(index, 5.0, 60.0);
 			
 			// create database
 			db = DBMaker.newAppendFileDB(new File(dir + "store/ads"))
@@ -118,14 +127,21 @@ public class LocalAdStore implements AdStore {
 		
 		
 		
-		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_42,
+		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_44,
 				new KeywordAnalyzer());
 		// CREATE_OR_APPEND
 		config.setOpenMode(OpenMode.CREATE_OR_APPEND);
-		writer = new IndexWriter(index, config);
+		writer = new IndexWriter(nrt_index != null ? nrt_index : index, config);
 
 		
-		nrt_manager = new NRTManager(new NRTManager.TrackingIndexWriter(writer), null);
+//		nrt_manager = new NRTManager(new NRTManager.TrackingIndexWriter(writer), null);
+		nrt_manager = new SearcherManager(writer, true, null);
+//		trackingWriter = new TrackingIndexWriter(writer);
+//		nrtThread = new ControlledRealTimeReopenThread<IndexSearcher>(trackingWriter, nrt_manager, (double)5, (double)5);
+//		nrtThread.setName("NRTManager Reopen Thread");
+//		nrtThread.setPriority(Math.min(Thread.currentThread().getPriority()+2, Thread.MAX_PRIORITY));
+//		nrtThread.setDaemon(true);
+//		nrtThread.start();
 	}
 
 	@Override
@@ -137,7 +153,7 @@ public class LocalAdStore implements AdStore {
 		
 		this.writer.commit();
 		this.writer.close();
-		nrt_manager.close();
+//		nrt_manager.close();
 		this.index.close();
 	}
 

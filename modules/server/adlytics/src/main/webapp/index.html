@@ -17,17 +17,16 @@
 	<head>
 		<title>AdLytics Testpage</title>
 		
-		<script src="http://localhost:9999/js/source/adlytics_source.js"></script>
+		<script src="/js/source/adlytics_source.js"></script>
 		
 		<script>
-			function callback () {
-				alert("done");
-			}
-			AdLytics.ajax.post("/track", callback, {name: "test"});
+			(function () {
+				var tracker = AdLytics.getTracker("http://localhost:9999", "test");
+				tracker.registerPageLoadTracker();
+				tracker.trackPageView("page=test");
+			}());
 			
 			
-			alert(AdLytics.serialize({person : "test"}));
-			alert(AdLytics.serialize({person : {name : "thorsten", age: 35}}));
 		</script>
 	</head>
 

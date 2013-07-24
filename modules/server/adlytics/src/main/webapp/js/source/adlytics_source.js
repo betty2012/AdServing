@@ -12,135 +12,224 @@
  * specific language governing permissions and limitations under the License.
  */
 
-if (typeof AdLytics == "undefined") {
+if (typeof AdLytics !== "object") {
+	
+	AdLytics = (function() {
+		'use strict';
+		
+		/* local AdLytics */
+		var AdLytics;
+		var configRequestMethod = 'POST';
+		var windowAlias = window;
+		
+        var encoder = windowAlias.encodeURIComponent;
+        var decoder = windowAlias.decodeURIComponent;
+		var visitId = uuid();
+		
+		if (getCookie("uuid") !== 0) {
+			visitId = getCookie("uuid");
+			console.log("cookie exists: " + getCookie("uuid"));
+		}
+		setCookie("uuid", visitId);
+		console.log(visitId);
 
-	AdLytics = {};
+		function getCookie(cookieName) {
+            var cookiePattern = new RegExp('(^|;)[ ]*' + cookieName + '=([^;]*)'),
+                cookieMatch = cookiePattern.exec(document.cookie);
 
-	AdLytics.insertScript = function(scriptpath) {
-		var script = document.createElement('script');
-		script.type = 'text/javascript';
-		script.async = true;
-		script.src = scriptpath;
-		(document.getElementsByTagName('head')[0] || document.body)
-				.appendChild(script);
-	};
+            return cookieMatch ? decoder(cookieMatch[2]) : 0;
+        }
+		
+		function setCookie (name, value) {
+			var now = new Date();
+			var time = now.getTime();
+			time += 1000 * 60 * 30;
+			now.setTime(time);
+			document.cookie = 
+			    name + '=' + encoder(value) + 
+			    '; expires=' + now.toGMTString() + 
+			    '; path=/';
+		}
+		function uuid () {
+			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+			    return v.toString(16);
+			});
+		}
+		function onunload(func) {
+			var oldonunload = window.onunload;
+			if (typeof window.onunload != 'function') {
+				window.onunload = func;
+			} else {
+				window.onunload = function() {
+					oldonunload();
+					func();
+				};
+			}
+		}
+		
+		function onload(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function() {
+					oldonload();
+					func();
+				};
+			}
+		}
+		/**
+		 * Verknüpft ein Event mit einem Element
+		 * 
+		 * var h1 = document.getElementById('header'); madApi.addEvent(h1,
+		 * 'click', doSomething, false);
+		 * 
+		 * @param elem
+		 *            Das Element für das Event
+		 * @param evt
+		 *            Das Event (z.B. click)
+		 * @param func
+		 * @param cap
+		 */
+		function addEvent (elem, evt, func, cap) {
+			if (elem.attachEvent) {
+				// if this evaluates to true, we are working with IE so we use
+				// IE's
+				// code.
+				elem.attachEvent('on' + evt, func);
+			} else {
+				// the statement has evaluated to false, so we are not in IE/
+				// the capture argument is optional. If it's left out, we set it
+				// to
+				// false:
+				if (!cap)
+					cap = false;
+				// and use the normal code to add our event.
+				elem.addEventListener(evt, func, cap);
+			}
+		}
+		function endsWith(str, suffix) {
+		    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+		}
+		
+		/*
+		 * Send image request to Piwik server using GET. The infamous web bug
+		 * (or beacon) is a transparent, single pixel (1x1) image
+		 */
+		function sendImageRequest(request, url) {
+			
+			console.log(url);
+			
+			var image = new Image(1, 1);
 
-	AdLytics.serialize = function(obj, prefix) {
-	    var str = [];
-	    for(var p in obj) {
-	        var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
-	        str.push(typeof v == "object" ? 
-	        	AdLytics.serialize(v, k) :
-	            encodeURIComponent(k) + "=" + encodeURIComponent(v));
-	    }
-	    return str.join("&");
-	};
-
-	AdLytics.onload = function(func) {
-		var oldonload = window.onload;
-		if (typeof window.onload != 'function') {
-			window.onload = func;
-		} else {
-			window.onload = function() {
-				oldonload();
-				func();
+			image.onload = function() {
 			};
+			image.src = url
+				+ (!endsWith(url, '/') ? '/' : '')
+				+ "image?"
+				+ request;
 		}
-	};
 
-	/**
-	 * Creates a delegate function
-	 * 
-	 * e.g. madApi.delegate(functionname, this, [param1, "param2"]);
-	 */
-	AdLytics.delegate = function(func, obj, args) {
-		var params = args || arguments;
-		var f = function() {
-			var target = arguments.callee.target;
-			// var func = arguments.callee.func;
-			return func.apply(target, params);
-		};
+		/*
+		 * 
+		 */
+		function sendPostRequest(request, url) {
+			try {
+				var xhr = windowAlias.XMLHttpRequest ? new windowAlias.XMLHttpRequest()
+						: windowAlias.ActiveXObject ? new ActiveXObject(
+								'Microsoft.XMLHTTP') : null;
 
-		f.target = obj;
-		f.func = this;
+				xhr.open('POST', url + (!endsWith(url, '/') ? '/' : '') + "track", true);
 
-		return f;
-	};
-
-	/**
-	 * Verknüpft ein Event mit einem Element
-	 * 
-	 * var h1 = document.getElementById('header'); madApi.addEvent(h1, 'click',
-	 * doSomething, false);
-	 * 
-	 * @param elem
-	 *            Das Element für das Event
-	 * @param evt
-	 *            Das Event (z.B. click)
-	 * @param func
-	 * @param cap
-	 */
-	AdLytics.addEvent = function(elem, evt, func, cap) {
-		if (elem.attachEvent) {
-			// if this evaluates to true, we are working with IE so we use IE's
-			// code.
-			elem.attachEvent('on' + evt, func);
-		} else {
-			// the statement has evaluated to false, so we are not in IE/
-			// the capture argument is optional. If it's left out, we set it to
-			// false:
-			if (!cap)
-				cap = false;
-			// and use the normal code to add our event.
-			elem.addEventListener(evt, func, cap);
-		}
-	}
-
-	AdLytics.ajax = {
-		// Create a xmlHttpRequest object - this is the constructor.
-		getHTTPObject : function() {
-			var http = false;
-			// Use IE's ActiveX items to load the file.
-			if (typeof ActiveXObject != 'undefined') {
-				try {
-					http = new ActiveXObject("Msxml2.XMLHTTP");
-				} catch (e) {
-					try {
-						http = new ActiveXObject("Microsoft.XMLHTTP");
-					} catch (E) {
-						http = false;
+				// fallback on error
+				xhr.onreadystatechange = function() {
+					if (this.readyState === 4 && this.status !== 200) {
+						sendImageRequest(request, url);
 					}
-				}
-				// If ActiveX is not available, use the XMLHttpRequest of
-				// Firefox/Mozilla etc. to load the document.
-			} else if (window.XMLHttpRequest) {
-				try {
-					http = new XMLHttpRequest();
-				} catch (e) {
-					http = false;
+				};
+				xhr.setRequestHeader('Content-Type',
+						'application/x-www-form-urlencoded; charset=UTF-8');
+
+				xhr.send(request);
+			} catch (e) {
+				console.log(e);
+				// fallback
+				sendImageRequest(request, url);
+			}
+		}
+
+		/*
+		 * Send request
+		 */
+		function sendRequest(request, url) {
+			if (request === "") {
+				return;
+			}
+			request += "&_uuid=" + visitId;
+			request += "&_date=" + new Date().toGMTString();
+			if (configRequestMethod === 'POST') {
+				sendPostRequest(request, url);
+			} else {
+				sendImageRequest(request, url);
+			}
+		}
+		
+		function Tracker(trackerUrl, siteId) {
+			
+			var configTrackerUrl = trackerUrl || '';
+			var configSiteId = siteId || '';
+			
+			return {
+				trackPageView : function  (request) {
+					sendRequest(request, configTrackerUrl);
+				},
+				trackEvent : function  (request) {
+					sendRequest(request, configTrackerUrl);
+				},
+				registerPageLoadTracker : function () {
+					onload(function () {
+						var request = "event=load";
+						sendRequest(request, configTrackerUrl);
+					});
+					onunload(function () {
+						var request = "event=unload";
+						sendRequest(request, configTrackerUrl);
+					});
+					addEvent(document, "beforeunload", function () {
+						var request = "event=beforeunload";
+						sendRequest(request, configTrackerUrl);
+					}, false);
 				}
 			}
-			return http;
-		},
-
-		post : function(url, callback, data) {
-			var http = AdLytics.ajax.getHTTPObject(); // The XMLHttpRequest
-														// object is recreated
-														// at every call - to
-														// defeat Cache problem
-														// in IE
-			if (!http || !url)
-				return;
-
-			http.open("POST", url);
-			http.setRequestHeader('Content-Type',
-					'application/x-www-form-urlencoded; charset=UTF-8');
-			http.send(JSON.stringify(data));
-
-			http.onreadystatechange = function() {
-				callback();
+		};
+		
+		
+		AdLytics = {
+				/**
+				 * Get Tracker (factory method)
+				 * 
+				 * @param string
+				 *            piwikUrl
+				 * @param int|string
+				 *            siteId
+				 * @return Tracker
+				 */
+				getTracker : function(piwikUrl, siteId) {
+					return new Tracker(piwikUrl, siteId);
+				},
+				
+				registerEventHandler : function (element, event, handler) {
+					addEvent(element, event, handler, false);
+				}
 			};
-
+		
+		// Expose AdLytics as an AMD module
+		if (typeof define === 'function' && define.amd) {
+			define('AdLytics', [], function() {
+				return AdLytics;
+			});
 		}
-	};
+		return AdLytics;
+	}());
 }

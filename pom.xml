@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jetty.version>9.0.4.v20130625</jetty.version>
 		<infinispan.version>5.2.6.Final</infinispan.version>
-		<lucene.version>4.3.1</lucene.version>
+		<lucene.version>4.4.0</lucene.version>
 		<hazelcast.version>2.6</hazelcast.version>
 		<mapdb.version>0.9.3</mapdb.version>
 		<guava.version>14.0.1</guava.version>
