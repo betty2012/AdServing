@@ -126,7 +126,7 @@ public class LocalLuceneAdStore implements AdStore {
 	// Lucene
 	private Directory index = null;
 	private IndexWriter plain_writer = null;
-//	private TrackingIndexWriter trackingWriter = null;
+	// private TrackingIndexWriter trackingWriter = null;
 
 	private ControlledRealTimeReopenThread<IndexSearcher> nrtThread = null;
 	private SearcherManager nrt_manager;
@@ -208,14 +208,14 @@ public class LocalLuceneAdStore implements AdStore {
 
 	@Override
 	public void open() throws IOException {
-		
+
 		if (memoryMode) {
 			this.index = new RAMDirectory();
 		} else {
 			if (!addb.manager.getContext().getConfiguration().containsKey(LocalAdStore.CONFIG_DATADIR)) {
 				throw new IOException("data directory can not be empty");
 			}
-			
+
 			String dir = (String) addb.manager.getContext().getConfiguration().get(LocalAdStore.CONFIG_DATADIR);
 			if (!dir.endsWith("/") || !dir.endsWith("\\")) {
 				dir += "/";
@@ -228,32 +228,29 @@ public class LocalLuceneAdStore implements AdStore {
 			index = FSDirectory.open(temp);
 			nrt_index = new NRTCachingDirectory(index, 5.0, 60.0);
 		}
-		
-		
-		
-		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_44,
-				new KeywordAnalyzer());
+
+		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_44, new KeywordAnalyzer());
 		// CREATE_OR_APPEND
 		config.setOpenMode(OpenMode.CREATE_OR_APPEND);
 		plain_writer = new IndexWriter(nrt_index != null ? nrt_index : index, config);
 
-	    final SearcherFactory sf = new SearcherFactory() {
-	        @Override
-	        public IndexSearcher newSearcher(IndexReader r) throws IOException {
-	        	System.out.println("new searcher");
-	          IndexSearcher s = new IndexSearcher(r);
-	          
-	          return s;
-	        }
-	      };
+		final SearcherFactory sf = new SearcherFactory() {
+			@Override
+			public IndexSearcher newSearcher(IndexReader r) throws IOException {
+				IndexSearcher s = new IndexSearcher(r);
+
+				return s;
+			}
+		};
 		nrt_manager = new SearcherManager(plain_writer, true, sf);
-		
-//		trackingWriter = new TrackingIndexWriter(plain_writer);
-//		nrtThread = new ControlledRealTimeReopenThread<IndexSearcher>(trackingWriter, nrt_manager, (double)60, (double)20);
-//		nrtThread.setName("NRTManager Reopen Thread");
-//		nrtThread.setPriority(Math.min(Thread.currentThread().getPriority()+2, Thread.MAX_PRIORITY));
-//		nrtThread.setDaemon(true);
-//		nrtThread.start();
+
+		// trackingWriter = new TrackingIndexWriter(plain_writer);
+		// nrtThread = new ControlledRealTimeReopenThread<IndexSearcher>(trackingWriter, nrt_manager, (double)60,
+		// (double)20);
+		// nrtThread.setName("NRTManager Reopen Thread");
+		// nrtThread.setPriority(Math.min(Thread.currentThread().getPriority()+2, Thread.MAX_PRIORITY));
+		// nrtThread.setDaemon(true);
+		// nrtThread.start();
 	}
 
 	@Override
@@ -262,7 +259,7 @@ public class LocalLuceneAdStore implements AdStore {
 		this.plain_writer.close();
 		nrt_manager.close();
 		this.index.close();
-//		this.nrtThread.close();
+		// this.nrtThread.close();
 	}
 
 	@Override
