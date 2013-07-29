@@ -157,6 +157,8 @@ public class RemoteAdStore implements AdStore {
 					AdDBConstants.ADDB_AD_PRODUCT_FALSE));
 
 		}
+		
+		builder.and(new BasicDBObject(AdDBConstants.ADDB_AD_DEFAULT, request.defaultAd()));
 
 		DBObject query = builder.get();
 		logger.debug(query.toString());

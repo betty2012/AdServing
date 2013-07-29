@@ -19,7 +19,7 @@ import de.marx_labs.ads.db.model.type.AbstractAdType;
 
 public class ExternAdType extends AbstractAdType {
 
-	public static final String TYPE = "exern";
+	public static final String TYPE = "extern";
 	
 	public ExternAdType() {
 		super("Extern", TYPE);

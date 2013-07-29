@@ -94,19 +94,29 @@ public class AdRequest {
 	 * The name of the product to load
 	 */
 	private String product;
-	
+	/*
+	 * id of the adslot
+	 */
 	private String adSlot = null;
-
+	/*
+	 * should the request only find default ads
+	 */
+	private boolean defaultAd = false;
 
 	public AdRequest () {
 		
 	}
 
+	public boolean defaultAd () {
+		return this.defaultAd;
+	}
+	public void defaultAd (boolean defaultAd) {
+		this.defaultAd = defaultAd;
+	}
+	
 	public String adSlot() {
 		return adSlot;
 	}
-
-
 
 	public AdRequest adSlot(String adSlot) {
 		this.adSlot = adSlot;

@@ -134,6 +134,7 @@ public class AdDBManager {
 				manager.conditions.add(new de.marx_labs.ads.db.condition.impl.lucene.ExcludeSiteCondition());
 				manager.conditions.add(new de.marx_labs.ads.db.condition.impl.lucene.DistanceCondition());
 				manager.conditions.add(new de.marx_labs.ads.db.condition.impl.lucene.ValidFromToCondition());
+//				manager.conditions.add(new de.marx_labs.ads.db.condition.impl.lucene.DefaultAdCondition());
 			} else if (mode.equals(Mode.REMOTE)) {
 				manager.conditions.add(new de.marx_labs.ads.db.condition.impl.mongo.CountryCondition());
 				manager.conditions.add(new de.marx_labs.ads.db.condition.impl.mongo.LanguageCondition());
@@ -148,6 +149,7 @@ public class AdDBManager {
 				manager.conditions.add(new de.marx_labs.ads.db.condition.impl.mongo.ExcludeSiteCondition());
 				manager.conditions.add(new de.marx_labs.ads.db.condition.impl.mongo.DistanceCondition());
 				manager.conditions.add(new de.marx_labs.ads.db.condition.impl.mongo.ValidFromToCondition());
+//				manager.conditions.add(new de.marx_labs.ads.db.condition.impl.mongo.DefaultAdCondition());
 			}
 			
 			if (!blocking && executorService == null) {

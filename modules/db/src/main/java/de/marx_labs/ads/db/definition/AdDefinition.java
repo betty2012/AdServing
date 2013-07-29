@@ -26,7 +26,13 @@ public interface AdDefinition extends Serializable {
 	 */
 	public String getId ();
 	public void setId (String id);
+	
+	public boolean isDefault();
 
+	/**
+	 * the id of the campaign.
+	 * @return ID
+	 */
 	public Campaign getCampaign ();
 	
 	/**
@@ -68,9 +74,9 @@ public interface AdDefinition extends Serializable {
 	 * auf einer Seite an verschiedenen Plätzen angezeigt werden.
 	 * 
 	 * Bei der Erstellung von Produkten muss die extra Konfiguration bzgl. Auslieferung beachtet werden.
-	 * Da es verschiedene Banner sind, muss darauf geachtet werden, dass sie auch den selben Einschränkungen unterliegen
+	 * Da es verschiedene Banner sind, muss darauf geachtet werden, dass sie auch den selben Einschränkungen unterliegen.
 	 * 
-	 * Product können auch als Tandem-Banner bezeichnet werden 
+	 * Product können z.B. auch als Tandem-Banner bezeichnet werden.
 	 */
 	public boolean isProduct ();
 	public String getProduct ();

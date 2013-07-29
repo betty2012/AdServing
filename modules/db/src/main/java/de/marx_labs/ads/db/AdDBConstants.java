@@ -18,6 +18,7 @@ public final class AdDBConstants {
 	private AdDBConstants() {
 	}
 	
+	// DB fields
 	public static final String ADDB_AD_ID = "ad_id";
 	public static final String ADDB_AD_TYPE = "ad_type";
 	public static final String ADDB_AD_FORMAT = "ad_format";
@@ -43,6 +44,7 @@ public final class AdDBConstants {
 	public static final String ADDB_AD_COUNTRY_ALL = "all";
 	public static final String ADDB_AD_LANGUAGE = "ad_language";
 	public static final String ADDB_AD_LANGUAGE_ALL = "all";
+	public static final String ADDB_AD_DEFAULT = "ad_default";
 	
 	public static final String ADDB_AD_KEYWORD = "ad_keyword";
 	public static final String ADDB_AD_KEYWORD_ALL = "all";

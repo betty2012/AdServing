@@ -51,9 +51,21 @@ public class AbstractAdDefinition implements AdDefinition {
 	 * the campaign
 	 */
 	private Campaign campaign;
+	/*
+	 * 
+	 */
+	private boolean defaultAd;
 	
 	protected AbstractAdDefinition (AdType type) {
 		this.type = type;
+	}
+	
+	@Override
+	public boolean isDefault() {
+		return this.defaultAd;
+	}
+	public void setDefaultAd (boolean defaultAd) {
+		this.defaultAd = defaultAd;
 	}
 	
 	@Override

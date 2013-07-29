@@ -22,7 +22,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ CountryConditionTest.class, DateConditionTest.class, DayConditionTest.class, ExcludeSiteConditionTest.class, KeyValueConditionTest.class, SiteConditionTest.class, StateConditionTest.class, TimeConditionTest.class, ValidFromToConditionTest.class })
+@SuiteClasses({ CountryConditionTest.class, DateConditionTest.class, DayConditionTest.class, DefaultAdTest.class, ExcludeSiteConditionTest.class, KeyValueConditionTest.class, SiteConditionTest.class, StateConditionTest.class, TimeConditionTest.class, ValidFromToConditionTest.class })
 public class BenchmarkSuite extends TestSuite {
 	
 	private static long before = 0;

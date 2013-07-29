@@ -40,6 +40,8 @@ public class LuceneDocumentHelper {
 		doc.add(new StringField(AdDBConstants.ADDB_AD_ID, String.valueOf(banner.getId()), Field.Store.YES));
 		doc.add(new StringField(AdDBConstants.ADDB_AD_FORMAT, banner.getFormat().getCompoundName(), Field.Store.NO));
 		doc.add(new StringField(AdDBConstants.ADDB_AD_TYPE, banner.getType().getType(), Field.Store.NO));
+		// default Advertisment
+		doc.add(new StringField(AdDBConstants.ADDB_AD_DEFAULT, String.valueOf(banner.isDefault()), Field.Store.NO));
 		
 		if (banner.isProduct()) {
 			doc.add(new StringField(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_TRUE, Field.Store.NO));

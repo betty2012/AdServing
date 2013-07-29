@@ -377,6 +377,10 @@ public class LocalLuceneAdStore implements AdStore {
 				formatQuery.add(tq, Occur.SHOULD);
 			}
 			mainQuery.add(formatQuery, Occur.MUST);
+			
+			// default Advertisment
+			TermQuery defaultQuery = new TermQuery(new Term(AdDBConstants.ADDB_AD_DEFAULT, String.valueOf(request.defaultAd())));
+			mainQuery.add(defaultQuery, Occur.MUST);
 
 			// Query für die Bedingungen unter denen ein Banner angezeigt werden soll
 			Query cq = LuceneQueryHelper.getInstance().getConditionalQuery(request, this.addb);

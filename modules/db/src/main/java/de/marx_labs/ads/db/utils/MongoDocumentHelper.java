@@ -40,6 +40,9 @@ public class MongoDocumentHelper {
 		doc.put(AdDBConstants.ADDB_AD_FORMAT, banner.getFormat().getCompoundName());
 		doc.put(AdDBConstants.ADDB_AD_TYPE, banner.getType().getType());
 		
+		// default advertiment
+		doc.put(AdDBConstants.ADDB_AD_DEFAULT, banner.isDefault());
+		
 		if (banner.isProduct()) {
 			doc.put(AdDBConstants.ADDB_AD_PRODUCT, AdDBConstants.ADDB_AD_PRODUCT_TRUE);
 		} else {
