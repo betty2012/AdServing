@@ -434,6 +434,11 @@
 		</repository>
 	</repositories>
 
-
-
+	<distributionManagement>
+		<repository>
+			<id>bintray-repo-adserving</id>
+			<url>https://api.bintray.com/maven/thmarx/AdServing/AdServing</url>
+		</repository>
+	</distributionManagement>
+	
 </project>
