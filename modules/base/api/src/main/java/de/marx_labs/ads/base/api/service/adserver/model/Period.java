@@ -31,6 +31,12 @@ public class Period {
 	private String from;
 	private String to;
 
+	public Period () {
+	}
+	public Period (String from, String to) {
+		this.from = from;
+		this.to = to;
+	}
 	public final String getFrom() {
 		return from;
 	}

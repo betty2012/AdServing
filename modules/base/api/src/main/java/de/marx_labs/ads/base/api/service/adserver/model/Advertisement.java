@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.persistence.oxm.annotations.XmlPath;
+
 public abstract class Advertisement {
 	/*
 	 * Advertisment id
@@ -66,6 +68,30 @@ public abstract class Advertisement {
 	private String adFormat;
 	private String adType;
 	
+	private Period valid = null;
+	
+	
+	private boolean defaultAd = false;
+	
+	
+	
+	@XmlPath("valid")
+	public Period getValid() {
+		return valid;
+	}
+
+	public void setValid(Period valid) {
+		this.valid = valid;
+	}
+
+	
+	public boolean isDefaultAd() {
+		return defaultAd;
+	}
+
+	public void setDefaultAd(boolean defaultAd) {
+		this.defaultAd = defaultAd;
+	}
 	
 	
 	public String getAdFormat() {
@@ -75,7 +101,7 @@ public abstract class Advertisement {
 	public void setAdFormat(String adFormat) {
 		this.adFormat = adFormat;
 	}
-
+	
 	public String getAdType() {
 		return adType;
 	}
@@ -83,7 +109,7 @@ public abstract class Advertisement {
 	public void setAdType(String adType) {
 		this.adType = adType;
 	}
-
+	
 	public String getId() {
 		return id;
 	}
@@ -100,6 +126,7 @@ public abstract class Advertisement {
 		this.campaign = campaign;
 	}
 
+	@XmlPath("conditions/timePeriods/time")
 	public List<Period> getTimePeriods() {
 		return timePeriods;
 	}
@@ -108,6 +135,7 @@ public abstract class Advertisement {
 		this.timePeriods = timePeriods;
 	}
 
+	@XmlPath("conditions/datePeriods/date")
 	public List<Period> getDatePeriods() {
 		return datePeriods;
 	}
@@ -116,6 +144,7 @@ public abstract class Advertisement {
 		this.datePeriods = datePeriods;
 	}
 
+	@XmlPath("conditions/days/day/text()")
 	public List<Integer> getDays() {
 		return days;
 	}
@@ -124,6 +153,7 @@ public abstract class Advertisement {
 		this.days = days;
 	}
 
+	@XmlPath("conditions/expiration/click")
 	public HashMap<String, Integer> getClickExpiration() {
 		return clickExpiration;
 	}
@@ -133,6 +163,7 @@ public abstract class Advertisement {
 		this.clickExpiration = clickExpiration;
 	}
 
+	@XmlPath("conditions/expiration/view")
 	public HashMap<String, Integer> getViewExpiration() {
 		return viewExpiration;
 	}
@@ -141,6 +172,7 @@ public abstract class Advertisement {
 		this.viewExpiration = viewExpiration;
 	}
 
+	@XmlPath("conditions/sites/site/text()")
 	public List<String> getSites() {
 		return sites;
 	}
@@ -149,6 +181,7 @@ public abstract class Advertisement {
 		this.sites = sites;
 	}
 
+	@XmlPath("conditions/countries/country/text()")
 	public List<String> getCountries() {
 		return countries;
 	}
@@ -157,6 +190,13 @@ public abstract class Advertisement {
 		this.countries = countries;
 	}
 	
+	public void addCountry (String country) {
+		if (countries == null) {
+			countries = new ArrayList<String>();
+		}
+		countries.add(country);
+		
+	}
 	
 	
 	

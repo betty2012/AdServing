@@ -18,6 +18,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ImageAd extends LinkAdvertisement {
 	
+	public ImageAd () {
+		setAdType(AdTypes.IMAGE);
+	}
+	
 	/*
 	 * ImageData base64 encoded
 	 */

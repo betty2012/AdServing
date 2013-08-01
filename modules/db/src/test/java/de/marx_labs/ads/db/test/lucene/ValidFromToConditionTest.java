@@ -22,7 +22,6 @@ import org.junit.Test;
 
 import de.marx_labs.ads.db.db.request.AdRequest;
 import de.marx_labs.ads.db.definition.AdDefinition;
-import de.marx_labs.ads.db.definition.condition.TimeConditionDefinition;
 import de.marx_labs.ads.db.definition.condition.ValidFromToConditionDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import de.marx_labs.ads.db.enums.ConditionDefinitions;

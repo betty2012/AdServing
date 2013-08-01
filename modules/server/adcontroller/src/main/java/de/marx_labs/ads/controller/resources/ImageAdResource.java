@@ -13,9 +13,6 @@
  */
 package de.marx_labs.ads.controller.resources;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -41,6 +38,7 @@ import de.marx_labs.ads.db.definition.condition.DateConditionDefinition;
 import de.marx_labs.ads.db.definition.condition.DayConditionDefinition;
 import de.marx_labs.ads.db.definition.condition.SiteConditionDefinition;
 import de.marx_labs.ads.db.definition.condition.TimeConditionDefinition;
+import de.marx_labs.ads.db.definition.condition.ValidFromToConditionDefinition;
 import de.marx_labs.ads.db.definition.condition.ViewExpirationConditionDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import de.marx_labs.ads.db.enums.ConditionDefinitions;
@@ -79,6 +77,7 @@ public class ImageAdResource implements ImageAdService {
 
 			ImageAdDefinition adDef = new ImageAdDefinition();
 			adDef.setId(advertisement.getId());
+			adDef.setDefaultAd(advertisement.isDefaultAd());
 			Campaign camp = new Campaign();
 			camp.setId(advertisement.getCampaign());
 			adDef.setCampaign(camp);
@@ -159,6 +158,12 @@ public class ImageAdResource implements ImageAdService {
 				}
 				adDef.addConditionDefinition(ConditionDefinitions.TIME,
 						condition);
+			}
+			
+			if (advertisement.getValid() != null) {
+				ValidFromToConditionDefinition sdef = new ValidFromToConditionDefinition();
+				sdef.setPeriod(advertisement.getValid().getFrom(), advertisement.getValid().getTo());
+				adDef.addConditionDefinition(ConditionDefinitions.VALIDFROMTO, sdef);
 			}
 			
 //			 put the AdDefinition in the persistence store

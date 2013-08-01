@@ -14,7 +14,7 @@
 package de.marx_labs.ads.base.api.service.adserver.model;
 
 
-public abstract class ExpirationResolution {
+public abstract class Resolution {
 	public static final String DAY = "DAY";
 	public static final String WEEK = "WEEK";
 	public static final String MONTH = "MONTH";
