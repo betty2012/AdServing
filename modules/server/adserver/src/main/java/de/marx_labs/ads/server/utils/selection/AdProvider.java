@@ -26,9 +26,11 @@ import com.google.common.collect.Collections2;
 import de.marx_labs.ads.common.util.Strings;
 import de.marx_labs.ads.db.db.request.AdRequest;
 import de.marx_labs.ads.db.definition.AdDefinition;
+import de.marx_labs.ads.db.definition.impl.ad.extern.ExternAdDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.flash.FlashAdDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import de.marx_labs.ads.db.model.type.AdType;
+import de.marx_labs.ads.db.model.type.impl.ExternAdType;
 import de.marx_labs.ads.db.model.type.impl.FlashAdType;
 import de.marx_labs.ads.db.model.type.impl.ImageAdType;
 import de.marx_labs.ads.db.services.AdTypes;
@@ -41,6 +43,8 @@ import de.marx_labs.ads.server.utils.selection.filter.FlashImageFallbackAdFilter
 import de.marx_labs.ads.server.utils.selection.filter.FlashVersionAdFilter;
 import de.marx_labs.ads.server.utils.selection.filter.ViewExpirationFilter;
 import de.marx_labs.ads.server.utils.selection.impl.ImpressionPercentageSingleAdSelector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -50,6 +54,8 @@ import de.marx_labs.ads.server.utils.selection.impl.ImpressionPercentageSingleAd
  *
  */
 public final class AdProvider {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(AdProvider.class);
 	
 	private	static final AdProvider INSTANCE = new AdProvider();
 	
@@ -74,19 +80,46 @@ public final class AdProvider {
 			// Type
 			String type = (String)request.getParameter(RequestHelper.type);
 		
-			if (type == null || type.equals("")) {
+			if (Strings.isBlank(type)) {
 				type = ImageAdType.TYPE;
 			}
 			
 			AdType btype = AdTypes.forType(type);
 			
 			AdRequest adr = RequestHelper.getAdRequest(context, request);
-			// Laden der Banner 
+			// try to load products first
 			Collection<AdDefinition> result = handleProducts(context, adr, request); 
 					
+			// no products, lets load other ads
 			if (result == null) {
 				result = RuntimeContext.getAdDB().search(adr);
+				// apply common filters 
 				result = commonFilter(context, result);
+				
+				// handle default ads
+				if (result == null || result.isEmpty()) {
+					List<AdType> types = adr.types();
+					adr.defaultAd(true);
+					try {
+						result = RuntimeContext.getAdDB().search(adr);
+						// apply common filters 
+						result = commonFilter(context, result);
+						
+						if (result == null || result.isEmpty()) {
+							List<AdType> defaultType = new ArrayList<AdType>();
+							defaultType.add(AdTypes.forType(ExternAdType.TYPE));
+							
+							adr.types(defaultType);
+							
+							result = RuntimeContext.getAdDB().search(adr);
+							// apply common filters 
+							result = commonFilter(context, result);
+						}
+					} finally {
+						adr.defaultAd(false);
+						adr.types(types);
+					}
+				}
 			}
 			
 			if (btype.getType().equals(FlashAdType.TYPE)) {
@@ -98,15 +131,13 @@ public final class AdProvider {
 			processedResult.addAll(result);
 			/*
 			 * Aus den restlichen Bannern eins auswählen
-			 * 
-			 * Aktuell wird dies zufällig gemacht!
 			 */
 			AdDefinition banner = SELECTOR.selectBanner(processedResult, context);
 			
 			return banner;
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("", e);
 		}
 		
 		return null;

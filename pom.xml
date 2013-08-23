@@ -12,11 +12,11 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jetty.version>9.0.4.v20130625</jetty.version>
+		<jetty.version>9.0.5.v20130815</jetty.version>
 		<infinispan.version>5.2.6.Final</infinispan.version>
 		<lucene.version>4.4.0</lucene.version>
 		<hazelcast.version>2.6</hazelcast.version>
-		<mapdb.version>0.9.3</mapdb.version>
+		<mapdb.version>0.9.4</mapdb.version>
 		<guava.version>14.0.1</guava.version>
 		<guice.version>3.0</guice.version>
 		<slf4j.version>1.7.5</slf4j.version>
@@ -27,14 +27,16 @@
 		<hsqldb.version>2.2.9</hsqldb.version>
 		<uuid.version>3.2</uuid.version>
 		<mongo-driver.version>2.11.2</mongo-driver.version>
-		<fongo.version>1.1.1</fongo.version>
+		<fongo.version>1.2.0</fongo.version>
 		<junit.version>4.11</junit.version>
 		<mockito.version>1.9.5</mockito.version>
 		<jackson.version>2.2.2</jackson.version>
 		<spring.version>3.2.3.RELEASE</spring.version>
-		<freemarker.version>2.3.19</freemarker.version>
+		<freemarker.version>2.3.20</freemarker.version>
 		<kryo.version>2.21</kryo.version>
-		<jersey.version>2.0</jersey.version>
+		<jersey.version>2.2</jersey.version>
+                <wicket.version>6.10.0</wicket.version>
+                
 	</properties>
 	<licenses>
 		<license>
@@ -56,6 +58,10 @@
 		<module>modules/tools/import</module>
 		<module>modules/services/geo</module>
 		<module>modules/services/tracking</module>
+                
+                <!-- manager -->
+                <module>modules/manager/api</module>
+                <module>modules/manager/webapp</module>
 	</modules>
 
 	<dependencyManagement>
