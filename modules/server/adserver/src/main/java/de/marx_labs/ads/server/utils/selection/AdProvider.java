@@ -92,18 +92,14 @@ public final class AdProvider {
 					
 			// no products, lets load other ads
 			if (result == null) {
-				result = RuntimeContext.getAdDB().search(adr);
-				// apply common filters 
-				result = commonFilter(context, result);
+				result = processAdRequest(result, adr, context);
 				
 				// handle default ads
 				if (result == null || result.isEmpty()) {
 					List<AdType> types = adr.types();
 					adr.defaultAd(true);
 					try {
-						result = RuntimeContext.getAdDB().search(adr);
-						// apply common filters 
-						result = commonFilter(context, result);
+						result = processAdRequest(result, adr, context);
 						
 						if (result == null || result.isEmpty()) {
 							List<AdType> defaultType = new ArrayList<AdType>();
@@ -111,9 +107,7 @@ public final class AdProvider {
 							
 							adr.types(defaultType);
 							
-							result = RuntimeContext.getAdDB().search(adr);
-							// apply common filters 
-							result = commonFilter(context, result);
+							result = processAdRequest(result, adr, context);
 						}
 					} finally {
 						adr.defaultAd(false);
@@ -142,6 +136,8 @@ public final class AdProvider {
 		
 		return null;
 	}
+	
+	
 	
 	/**
 	 * Behandlung von Produkte
@@ -209,8 +205,7 @@ public final class AdProvider {
 			// Fallback auf ImageBanner
 			adr.types().remove(new FlashAdType());
 			adr.types().add(new ImageAdType());
-			result = RuntimeContext.getAdDB().search(adr);
-			result = commonFilter(context, result);
+			result = processAdRequest(result, adr, context);
 		} else {
 			String flash = (String)request.getParameter(RequestHelper.flash);
 			if (!Strings.isEmpty(flash)) {
@@ -243,17 +238,14 @@ public final class AdProvider {
 						// Fallback auf ImageBanner
 						adr.types().remove(new FlashAdType());
 						adr.types().add(new ImageAdType());
-						result = RuntimeContext.getAdDB().search(adr);
-						result = commonFilter(context, result);
+						result = processAdRequest(result, adr, context);
 					}
 				}
 			} else {
 				// Fallback auf ImageBanner um sicher zu gehen
 				adr.types().remove(new FlashAdType());
 				adr.types().add(new ImageAdType());
-				result = RuntimeContext.getAdDB().search(adr);
-				
-				result = commonFilter(context, result);
+				result = processAdRequest(result, adr, context);
 			}
 		}
 		
@@ -281,6 +273,13 @@ public final class AdProvider {
 		 */
 		result = (Collection<AdDefinition>) Collections2.filter(result, new DuplicatAdFilter(context.requestID()));
 		
+		return result;
+	}
+
+	private Collection<AdDefinition> processAdRequest(Collection<AdDefinition> result, AdRequest adr, AdContext context) throws IOException {
+		result = RuntimeContext.getAdDB().search(adr);
+		// apply common filters
+		result = commonFilter(context, result);
 		return result;
 	}
 }
