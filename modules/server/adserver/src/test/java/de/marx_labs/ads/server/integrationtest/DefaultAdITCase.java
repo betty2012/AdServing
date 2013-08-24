@@ -28,6 +28,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import com.hazelcast.core.Hazelcast;
 
 import de.marx_labs.ads.db.definition.AdDefinition;
+import de.marx_labs.ads.db.definition.impl.ad.extern.ExternAdDefinition;
 import de.marx_labs.ads.db.definition.impl.ad.image.ImageAdDefinition;
 import de.marx_labs.ads.db.services.AdFormats;
 
@@ -41,28 +42,10 @@ public class DefaultAdITCase {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-//		Thread.sleep(60000);
-		
 		
 		Map<String, AdDefinition> ads = Hazelcast.newHazelcastInstance().getMap("ads");
 				
-		for (int i = 0; i < 100; i++) {
-			ImageAdDefinition def = new ImageAdDefinition();
-			if (i % 2 == 0) {
-				def.setFormat(AdFormats.forCompoundName("468x60"));
-				def.setImageUrl("http://www.bannergestaltung.com/img/formate/468x60.gif");
-			} else {
-				def.setFormat(AdFormats.forCompoundName("120x600"));
-				def.setImageUrl("http://www.bannergestaltung.com/img/formate/120x600.gif");
-			}
-			
-			def.setTargetUrl("http://www.google.de");
-			def.setLinkTarget("_blank");
-			
-			def.setId("1" + i);
-
-			ads.put(def.getId(), def);
-		}
+		
 		
 		// define to ads for the same product
 		ImageAdDefinition def = new ImageAdDefinition();
@@ -71,17 +54,17 @@ public class DefaultAdITCase {
 		def.setTargetUrl("http://www.product_1.de");
 		def.setLinkTarget("_blank");
 		def.setId("10001");
-		def.setProduct("prod_1");
+		def.setDefaultAd(true);
 		ads.put(def.getId(), def);
 		
-		def = new ImageAdDefinition();
-		def.setFormat(AdFormats.forCompoundName("468x60"));
-		def.setImageUrl("http://www.bannergestaltung.com/img/formate/468x60.gif");
-		def.setTargetUrl("http://www.product_1.de");
-		def.setLinkTarget("_blank");
-		def.setId("10002");
-		def.setProduct("prod_1");
-		ads.put(def.getId(), def);
+		ExternAdDefinition ead = new ExternAdDefinition();
+		ead.setFormat(AdFormats.forCompoundName("468x60"));
+		ead.setExternContent("<a href=''><img src='http://www.bannergestaltung.com/img/formate/468x60.gif'/></a>");
+		ead.setTargetUrl("http://www.product_1.de");
+		ead.setLinkTarget("_blank");
+		ead.setId("10002");
+		ead.setDefaultAd(true);
+		ads.put(ead.getId(), ead);
 		
 		Thread.sleep(60000);
 	}
@@ -95,7 +78,7 @@ public class DefaultAdITCase {
 		System.out.println("test");
 		WebDriver driver = new HtmlUnitDriver(true);
 		
-		driver.get("http://localhost:9090/product.html");
+		driver.get("http://localhost:8080/default.html");
 		
 		System.out.println("title: " + driver.getTitle());
 		

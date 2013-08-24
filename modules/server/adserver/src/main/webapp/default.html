@@ -1,4 +1,4 @@
-<#--
+<!--
 
     Mad-Advertisement
     Copyright (C) 2011-2013 Thorsten Marx <thmarx@gmx.net>
@@ -13,14 +13,34 @@
     specific language governing permissions and limitations under the License.
 
 -->
-<#--  
+<html>
+<head>
+	<title>test</title>
+</head>
+<body>
 
-Extern-Banner
+	<!-- synchron -->
+	<script type="text/javascript">
+		<!--
+			mad_ad_format = "468x60";
+			mad_ad_type = "image";
+		//-->
+	</script>
+	<div id="ad1">
+		<script type="text/javascript" src="http://localhost:8080/js/ads.js"></script>
+	</div>
 
--->
-var c_ad_date = new Date().getTime();
-var c_ad_node = "c_ad_" + c_ad_date;
-var style = "width:${banner.format.width}px; height:${banner.format.height}px; position:relative;";
-document.write("<div id='" + c_ad_node + "' style='" + style + "'>");
-document.write("${banner.externContent}");
-document.write("</div>");
+
+	<!-- synchron -->
+	<script type="text/javascript">
+		<!--
+			mad_ad_format = "120x600";
+			mad_ad_type = "image";
+		//-->
+	</script>
+	<div id="ad2">
+		<!--script type="text/javascript" src="http://localhost:8080/js/ads.js"></script-->
+	</div>
+
+</body>
+</html>
